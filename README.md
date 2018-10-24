@@ -1,11 +1,9 @@
-
-
 # predictr
 Comparing the political predictive capability of markets, polling, and modeling
 
 ## Project
 
-I will be exploring the ability of four (4) different methods to accurately predict the outcome of elections:
+I will be exploring the political predictive capabilities of markets. To this end, I will be looking at the accuracy of four tools in their ability to predict 2018 midterm election results:
 
 1. Prediction markets (www.predictit.org)
 2. Forecast models (www.fivethirtyeight.com)

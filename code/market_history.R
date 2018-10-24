@@ -5,18 +5,25 @@
 library(tidyverse)
 library(httr)
 library(jsonlite)
-tic("total")
+
 # api to tibble -----------------------------------------------------------
-tic("api")
-raw <- GET(url = "https://www.predictit.org/",
-           path = "api/marketdata/all/")
-as.char <- rawToChar(raw$content)
-as.list <- fromJSON(as.char)
-as.df <- do.call(what = "rbind",
-                 args = lapply(as.list, as.data.frame))
+predictit_api <- function(api.url = "https://www.predictit.org/",
+                          api.path = "api/marketdata/all/") {
+  raw <- GET(url = api.url,
+             path = api.path)
+  as.char <- rawToChar(raw$content)
+  as.list <- fromJSON(as.char)
+  as.df <- do.call(what = "rbind",
+                   args = lapply(as.list, as.data.frame))
+  return(as.df)
+}
+
 markets.all <-
-  as_tibble(as.df) %>%
+  predictit_api(api.url = "https://www.predictit.org/",
+                api.path = "api/marketdata/all/") %>%
+  as_tibble() %>%
   select(id, shortName)
+
 
 # trim --------------------------------------------------------------------
 # select all markets having to do with re-election or midterms
@@ -27,8 +34,8 @@ markets.all <- markets.all[c(grep("re-elect", markets.all$shortName),
 markets.all <- markets.all[-grep("governor's", markets.all$shortName), ]
 
 # function ----------------------------------------------------------------
-toc()
-tic("read")
+
+# go to predictit.org and download chart data
 predictit_hist <- function(id = NULL, span = "90d") {
   # define the URL of a single market
   market.url <- paste0("https://www.predictit.org/",
@@ -36,7 +43,7 @@ predictit_hist <- function(id = NULL, span = "90d") {
                        "?marketid=", as.character(id),
                        "&timespan=", as.character(span))
   # download the chart data from defined market
-  market.history <-
+  market.chart <-
     read_csv(market.url,
              col_types = cols()) %>%
     select(DateString,
@@ -49,46 +56,56 @@ predictit_hist <- function(id = NULL, span = "90d") {
            contract = ContractName,
            price = CloseSharePrice,
            volume = TradeVolume)
-  return(market.history)
+  return(market.chart)
 }
 
 # loop pull ---------------------------------------------------------------
+
 # initialize the vector
 markets.list <- rep(list(NA), nrow(markets.all))
+
 # for every market grabed from API, load into list slot
 for (i in 1:length(markets.list)) {
   markets.list[[i]] <- predictit_hist(id = markets.all$id[i])
 }
+
 # combine the list elements
-markets <- bind_rows(markets.list)
+market.history <- bind_rows(markets.list)
+rm(markets.list)
+
+# the contract name is long and irregular
 # merge with both contract and market names
-markets <- as_tibble(merge(markets, markets.all))
+market.history <- as_tibble(merge(market.history, markets.all))
+rm(markets.all)
+
 # remove uninformative contract names
-markets <- as_tibble(markets[, -3])
-markets <- arrange(markets, date)
+market.history <- as_tibble(market.history[, -3])
+market.history <- arrange(market.history, date)
 
 # extract candidate name or district from market name
-toc()
-tic("format")
-markets$market.name <- if_else(condition = word(markets$shortName, 3) == "be",
-                               true = word(markets$shortName, 2),
-                               false =
-                                 if_else(condition = word(markets$shortName, 1) == "Will",
-                                         true = word(markets$shortName, 3),
-                                         false =
-                                           if_else(condition = word(markets$shortName, 1) == "Which",
-                                                   true = gsub("?", "", word(markets$shortName, 5), fixed = T),
-                                                   false = "FALSE")))
-market.history <- markets %>%
+market.history$name <-
+  # there are two markets for Ryan and Pelosi with different names
+  if_else(condition = word(market.history$shortName, 3) == "be",
+          true = word(market.history$shortName, 2),
+          false =
+  # the incumbent questions use a name as 3rd word
+  if_else(condition = word(market.history$shortName, 1) == "Will",
+          true = word(market.history$shortName, 3),
+          false =
+  # some house questions use a district code as 5th word
+  if_else(condition = word(market.history$shortName, 1) == "Which",
+          true = gsub("?", "", word(market.history$shortName, 5), fixed = T),
+          false = "FALSE")))
+
+# reorder and rename
+market.history <-
+  market.history %>%
   select(date,
-         market.name,
+         name,
          id,
          volume,
          price,
          shortName) %>%
-  rename(market.id = id,
-         trade.volume = volume,
-         market.price = price,
-         market.question = shortName)
+  rename(question = shortName)
 
-write_csv(market.history, "./data/market_history.csv")
+# write_csv(market.history, "./data/market_history.csv")

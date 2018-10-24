@@ -56,6 +56,7 @@ house <-
 
 # combine senate and house
 forecast.history <- rbind(senate, house)
+rm(house, senate)
 forecast.history <- arrange(forecast, date)
 
-write_csv(forecast.history, "./data/forecast_history.csv")
+# write_csv(forecast.history, "./data/forecast_history.csv")

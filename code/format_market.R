@@ -1,7 +1,7 @@
 # head --------------------------------------------------------------------
 library(tidyverse)
 
-forecast <-
+forecast.history <-
   read_csv("./data/forecast_history.csv",
                      col_types = cols()) %>%
   unite(col = code,
@@ -9,7 +9,7 @@ forecast <-
         sep = "-",
         remove = FALSE)
 
-congress <-
+congress.mebers <-
   read_csv("./data/congress_members.csv",
            col_types = cols()) %>%
   unite(col = code,
@@ -17,10 +17,10 @@ congress <-
         sep = "-",
         remove = FALSE)
 
-markets <-
+markets.history <-
   read_csv("./data/market_history.csv",
            col_types = cols()) %>%
-  # prepare empty variables to match `forecast`
+  # prepare empty variables to match forecast
   mutate(chamber = NA,
          code = NA,
          state = NA,

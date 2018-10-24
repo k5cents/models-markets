@@ -1,0 +1,49 @@
+# head --------------------------------------------------------------------
+library(tidyverse)
+
+forecast <-
+  read_csv("./data/forecast_history.csv",
+                     col_types = cols()) %>%
+  unite(col = code,
+        state, district,
+        sep = "-",
+        remove = FALSE)
+
+congress <-
+  read_csv("./data/congress_members.csv",
+           col_types = cols()) %>%
+  unite(col = code,
+        state, district,
+        sep = "-",
+        remove = FALSE)
+
+markets <-
+  read_csv("./data/market_history.csv",
+           col_types = cols()) %>%
+  # prepare empty variables to match `forecast`
+  mutate(chamber = NA,
+         code = NA,
+         state = NA,
+         district = NA,
+         party = NA,
+         candidate = NA) %>%
+  select(date,
+         chamber,
+         code,
+         state,
+         district,
+         party,
+         candidate,
+         volume,
+         price,
+         market.name,
+         id)
+
+for (i in 1:nrow(markets)) {
+  crow <- which(congress$last_name == markets$market.name[i])
+  markets$chamber[i] <- congress$chamber[crow]
+  markets$district[i] <- congress$district[crow]
+  markets$party[i] <- congress$party[crow]
+  markets$state[i] <- congress$state[crow]
+  markets$candidate[i] <- congress$last_name[crow]
+}

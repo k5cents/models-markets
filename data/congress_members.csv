@@ -1,0 +1,535 @@
+member.name,last.name,chamber,state,district,party
+Ralph Lee Abraham,Abraham,house,LA,5,R
+Alma S. Adams,Adams,house,NC,12,D
+Robert B. Aderholt,Aderholt,house,AL,4,R
+Pete Aguilar,Aguilar,house,CA,31,D
+Lamar Alexander,Alexander,senate,TN,00,R
+Rick W. Allen,Allen,house,GA,12,R
+Justin Amash,Amash,house,MI,3,R
+Aumua Amata Coleman Radewagen,Amata,house,AS,0,R
+Mark E. Amodei,Amodei,house,NV,2,R
+Jodey C. Arrington,Arrington,house,TX,19,R
+Brian Babin,Babin,house,TX,36,R
+Don Bacon,Bacon,house,NE,2,R
+Troy Balderson,Balderson,house,OH,12,R
+Tammy Baldwin,Baldwin,senate,WI,00,D
+Jim Banks,Banks,house,IN,3,R
+Lou Barletta,Barletta,house,PA,11,R
+Andy Barr,Barr,house,KY,6,R
+Nanette Diaz Barragán,Barragán,house,CA,44,D
+John Barrasso,Barrasso,senate,WY,00,R
+Joe Barton,Barton,house,TX,6,R
+Karen Bass,Bass,house,CA,37,D
+Joyce Beatty,Beatty,house,OH,3,D
+Michael F. Bennet,Bennet,senate,CO,00,D
+Ami Bera,Bera,house,CA,7,D
+Jack Bergman,Bergman,house,MI,1,R
+"Donald S. Beyer, Jr.",Beyer,house,VA,8,D
+Andy Biggs,Biggs,house,AZ,5,R
+Gus M. Bilirakis,Bilirakis,house,FL,12,R
+Rob Bishop,Bishop,house,UT,1,R
+"Sanford D. Bishop, Jr.",Bishop,house,GA,2,D
+Mike Bishop,Bishop,house,MI,8,R
+Diane Black,Black,house,TN,6,R
+Marsha Blackburn,Blackburn,house,TN,7,R
+Rod Blum,Blum,house,IA,1,R
+Earl Blumenauer,Blumenauer,house,OR,3,D
+Richard Blumenthal,Blumenthal,senate,CT,00,D
+Roy Blunt,Blunt,senate,MO,00,R
+Lisa Blunt Rochester,Blunt Rochester,house,DE,0,D
+Suzanne Bonamici,Bonamici,house,OR,1,D
+Cory A. Booker,Booker,senate,NJ,00,D
+John Boozman,Boozman,senate,AR,00,R
+Madeleine Z. Bordallo,Bordallo,house,GU,0,D
+Mike Bost,Bost,house,IL,12,R
+Brendan F. Boyle,Boyle,house,PA,13,D
+Kevin Brady,Brady,house,TX,8,R
+Robert A. Brady,Brady,house,PA,1,D
+Dave Brat,Brat,house,VA,7,R
+Mo Brooks,Brooks,house,AL,5,R
+Susan W. Brooks,Brooks,house,IN,5,R
+Sherrod Brown,Brown,senate,OH,00,D
+Anthony G. Brown,Brown,house,MD,4,D
+Julia Brownley,Brownley,house,CA,26,D
+Vern Buchanan,Buchanan,house,FL,16,R
+Ken Buck,Buck,house,CO,4,R
+Larry Bucshon,Bucshon,house,IN,8,R
+Ted Budd,Budd,house,NC,13,R
+Michael C. Burgess,Burgess,house,TX,26,R
+Richard Burr,Burr,senate,NC,00,R
+Cheri Bustos,Bustos,house,IL,17,D
+G. K. Butterfield,Butterfield,house,NC,1,D
+Bradley Byrne,Byrne,house,AL,1,R
+Ken Calvert,Calvert,house,CA,42,R
+Maria Cantwell,Cantwell,senate,WA,00,D
+Shelley Moore Capito,Capito,senate,WV,00,R
+Michael E. Capuano,Capuano,house,MA,7,D
+Salud O. Carbajal,Carbajal,house,CA,24,D
+Tony Cárdenas,Cárdenas,house,CA,29,D
+Benjamin L. Cardin,Cardin,senate,MD,00,D
+Thomas R. Carper,Carper,senate,DE,00,D
+André Carson,Carson,house,IN,7,D
+John R. Carter,Carter,house,TX,31,R
+"Earl L. ""Buddy"" Carter",Carter,house,GA,1,R
+Matt Cartwright,Cartwright,house,PA,17,D
+"Robert P. Casey, Jr.",Casey,senate,PA,00,D
+Bill Cassidy,Cassidy,senate,LA,00,R
+Kathy Castor,Castor,house,FL,14,D
+Joaquin Castro,Castro,house,TX,20,D
+Steve Chabot,Chabot,house,OH,1,R
+Liz Cheney,Cheney,house,WY,0,R
+Judy Chu,Chu,house,CA,27,D
+David N. Cicilline,Cicilline,house,RI,1,D
+Katherine M. Clark,Clark,house,MA,5,D
+Yvette D. Clarke,Clarke,house,NY,9,D
+Wm. Lacy Clay,Clay,house,MO,1,D
+Emanuel Cleaver,Cleaver,house,MO,5,D
+Michael Cloud,Cloud,house,TX,27,R
+James E. Clyburn,Clyburn,house,SC,6,D
+Mike Coffman,Coffman,house,CO,6,R
+Steve Cohen,Cohen,house,TN,9,D
+Tom Cole,Cole,house,OK,4,R
+Susan M. Collins,Collins,senate,ME,00,R
+Doug Collins,Collins,house,GA,9,R
+Chris Collins,Collins,house,NY,27,R
+James Comer,Comer,house,KY,1,R
+Barbara Comstock,Comstock,house,VA,10,R
+K. Michael Conaway,Conaway,house,TX,11,R
+Gerald E. Connolly,Connolly,house,VA,11,D
+Paul Cook,Cook,house,CA,8,R
+Christopher A. Coons,Coons,senate,DE,00,D
+Jim Cooper,Cooper,house,TN,5,D
+Bob Corker,Corker,senate,TN,00,R
+John Cornyn,Cornyn,senate,TX,00,R
+J. Luis Correa,Correa,house,CA,46,D
+Catherine Cortez Masto,Cortez Masto,senate,NV,00,D
+Jim Costa,Costa,house,CA,16,D
+Ryan A. Costello,Costello,house,PA,6,R
+Tom Cotton,Cotton,senate,AR,00,R
+Joe Courtney,Courtney,house,CT,2,D
+Kevin Cramer,Cramer,house,ND,0,R
+Mike Crapo,Crapo,senate,ID,00,R
+"Eric A. ""Rick"" Crawford",Crawford,house,AR,1,R
+Charlie Crist,Crist,house,FL,13,D
+Joseph Crowley,Crowley,house,NY,14,D
+Ted Cruz,Cruz,senate,TX,00,R
+Henry Cuellar,Cuellar,house,TX,28,D
+John Abney Culberson,Culberson,house,TX,7,R
+Elijah E. Cummings,Cummings,house,MD,7,D
+Carlos Curbelo,Curbelo,house,FL,26,R
+John R. Curtis,Curtis,house,UT,3,R
+Steve Daines,Daines,senate,MT,00,R
+Warren Davidson,Davidson,house,OH,8,R
+Danny K. Davis,Davis,house,IL,7,D
+Susan A. Davis,Davis,house,CA,53,D
+Rodney Davis,Davis,house,IL,13,R
+Peter A. DeFazio,DeFazio,house,OR,4,D
+Diana DeGette,DeGette,house,CO,1,D
+John K. Delaney,Delaney,house,MD,6,D
+Rosa L. DeLauro,DeLauro,house,CT,3,D
+Suzan K. DelBene,DelBene,house,WA,1,D
+Val Butler Demings,Demings,house,FL,10,D
+Jeff Denham,Denham,house,CA,10,R
+Mark DeSaulnier,DeSaulnier,house,CA,11,D
+Scott DesJarlais,DesJarlais,house,TN,4,R
+Theodore E. Deutch,Deutch,house,FL,22,D
+Mario Diaz-Balart,Diaz-Balart,house,FL,25,R
+Debbie Dingell,Dingell,house,MI,12,D
+Lloyd Doggett,Doggett,house,TX,35,D
+Joe Donnelly,Donnelly,senate,IN,00,D
+"Daniel M. Donovan, Jr.",Donovan,house,NY,11,R
+Michael F. Doyle,Doyle,house,PA,14,D
+Tammy Duckworth,Duckworth,senate,IL,00,D
+Sean P. Duffy,Duffy,house,WI,7,R
+Jeff Duncan,Duncan,house,SC,3,R
+"John J. Duncan, Jr.",Duncan,house,TN,2,R
+Neal P. Dunn,Dunn,house,FL,2,R
+Richard J. Durbin,Durbin,senate,IL,00,D
+Keith Ellison,Ellison,house,MN,5,D
+Tom Emmer,Emmer,house,MN,6,R
+Eliot L. Engel,Engel,house,NY,16,D
+Michael B. Enzi,Enzi,senate,WY,00,R
+Joni Ernst,Ernst,senate,IA,00,R
+Anna G. Eshoo,Eshoo,house,CA,18,D
+Adriano Espaillat,Espaillat,house,NY,13,D
+Ron Estes,Estes,house,KS,4,R
+Elizabeth H. Esty,Esty,house,CT,5,D
+Dwight Evans,Evans,house,PA,2,D
+John J. Faso,Faso,house,NY,19,R
+Dianne Feinstein,Feinstein,senate,CA,00,D
+A. Drew Ferguson IV,Ferguson,house,GA,3,R
+Deb Fischer,Fischer,senate,NE,00,R
+Brian K. Fitzpatrick,Fitzpatrick,house,PA,8,R
+Jeff Flake,Flake,senate,AZ,00,R
+"Charles J. ""Chuck"" Fleischmann",Fleischmann,house,TN,3,R
+Bill Flores,Flores,house,TX,17,R
+Jeff Fortenberry,Fortenberry,house,NE,1,R
+Bill Foster,Foster,house,IL,11,D
+Virginia Foxx,Foxx,house,NC,5,R
+Lois Frankel,Frankel,house,FL,21,D
+Rodney P. Frelinghuysen,Frelinghuysen,house,NJ,11,R
+Marcia L. Fudge,Fudge,house,OH,11,D
+Tulsi Gabbard,Gabbard,house,HI,2,D
+Matt Gaetz,Gaetz,house,FL,1,R
+Mike Gallagher,Gallagher,house,WI,8,R
+Ruben Gallego,Gallego,house,AZ,7,D
+John Garamendi,Garamendi,house,CA,3,D
+Cory Gardner,Gardner,senate,CO,00,R
+"Thomas A. Garrett, Jr.",Garrett,house,VA,5,R
+Greg Gianforte,Gianforte,house,MT,0,R
+Bob Gibbs,Gibbs,house,OH,7,R
+Kirsten E. Gillibrand,Gillibrand,senate,NY,00,D
+Louie Gohmert,Gohmert,house,TX,1,R
+Jimmy Gomez,Gomez,house,CA,34,D
+Vicente Gonzalez,Gonzalez,house,TX,15,D
+Jenniffer González-Colón,González-Colón,house,PR,0,R
+Bob Goodlatte,Goodlatte,house,VA,6,R
+Paul A. Gosar,Gosar,house,AZ,4,R
+Josh Gottheimer,Gottheimer,house,NJ,5,D
+Trey Gowdy,Gowdy,house,SC,4,R
+Lindsey Graham,Graham,senate,SC,00,R
+Kay Granger,Granger,house,TX,12,R
+Chuck Grassley,Grassley,senate,IA,00,R
+Sam Graves,Graves,house,MO,6,R
+Tom Graves,Graves,house,GA,14,R
+Garret Graves,Graves,house,LA,6,R
+Al Green,Green,house,TX,9,D
+Gene Green,Green,house,TX,29,D
+H. Morgan Griffith,Griffith,house,VA,9,R
+Raúl M. Grijalva,Grijalva,house,AZ,3,D
+Glenn Grothman,Grothman,house,WI,6,R
+Brett Guthrie,Guthrie,house,KY,2,R
+Luis V. Gutiérrez,Gutiérrez,house,IL,4,D
+Colleen Hanabusa,Hanabusa,house,HI,1,D
+Karen C. Handel,Handel,house,GA,6,R
+Gregg Harper,Harper,house,MS,3,R
+Andy Harris,Harris,house,MD,1,R
+Kamala D. Harris,Harris,senate,CA,00,D
+Vicky Hartzler,Hartzler,house,MO,4,R
+Margaret Wood Hassan,Hassan,senate,NH,00,D
+Alcee L. Hastings,Hastings,house,FL,20,D
+Orrin G. Hatch,Hatch,senate,UT,00,R
+Denny Heck,Heck,house,WA,10,D
+Martin Heinrich,Heinrich,senate,NM,00,D
+Heidi Heitkamp,Heitkamp,senate,ND,00,D
+Dean Heller,Heller,senate,NV,00,R
+Jeb Hensarling,Hensarling,house,TX,5,R
+Jaime Herrera Beutler,Herrera Beutler,house,WA,3,R
+Jody B. Hice,Hice,house,GA,10,R
+Brian Higgins,Higgins,house,NY,26,D
+Clay Higgins,Higgins,house,LA,3,R
+J. French Hill,Hill,house,AR,2,R
+James A. Himes,Himes,house,CT,4,D
+Mazie K. Hirono,Hirono,senate,HI,00,D
+John Hoeven,Hoeven,senate,ND,00,R
+George Holding,Holding,house,NC,2,R
+Trey Hollingsworth,Hollingsworth,house,IN,9,R
+Steny H. Hoyer,Hoyer,house,MD,5,D
+Richard Hudson,Hudson,house,NC,8,R
+Jared Huffman,Huffman,house,CA,2,D
+Bill Huizenga,Huizenga,house,MI,2,R
+Randy Hultgren,Hultgren,house,IL,14,R
+Duncan Hunter,Hunter,house,CA,50,R
+Will Hurd,Hurd,house,TX,23,R
+Cindy Hyde-Smith,Hyde-Smith,senate,MS,00,R
+James M. Inhofe,Inhofe,senate,OK,00,R
+Johnny Isakson,Isakson,senate,GA,00,R
+Darrell E. Issa,Issa,house,CA,49,R
+Sheila Jackson Lee,Jackson Lee,house,TX,18,D
+Pramila Jayapal,Jayapal,house,WA,7,D
+Hakeem S. Jeffries,Jeffries,house,NY,8,D
+Lynn Jenkins,Jenkins,house,KS,2,R
+Bill Johnson,Johnson,house,OH,6,R
+Eddie Bernice Johnson,Johnson,house,TX,30,D
+"Henry C. ""Hank"" Johnson, Jr.",Johnson,house,GA,4,D
+Ron Johnson,Johnson,senate,WI,00,R
+Sam Johnson,Johnson,house,TX,3,R
+Mike Johnson,Johnson,house,LA,4,R
+Walter B. Jones,Jones,house,NC,3,R
+Doug Jones,Jones,senate,AL,00,D
+Jim Jordan,Jordan,house,OH,4,R
+David P. Joyce,Joyce,house,OH,14,R
+Tim Kaine,Kaine,senate,VA,00,D
+Marcy Kaptur,Kaptur,house,OH,9,D
+John Katko,Katko,house,NY,24,R
+William R. Keating,Keating,house,MA,9,D
+Mike Kelly,Kelly,house,PA,3,R
+Robin L. Kelly,Kelly,house,IL,2,D
+Trent Kelly,Kelly,house,MS,1,R
+Joseph P. Kennedy III,Kennedy,house,MA,4,D
+John Kennedy,Kennedy,senate,LA,00,R
+Ro Khanna,Khanna,house,CA,17,D
+Ruben J. Kihuen,Kihuen,house,NV,4,D
+Daniel T. Kildee,Kildee,house,MI,5,D
+Derek Kilmer,Kilmer,house,WA,6,D
+Ron Kind,Kind,house,WI,3,D
+Peter T. King,King,house,NY,2,R
+Steve King,King,house,IA,4,R
+"Angus S. King, Jr.",King,senate,ME,00,I
+Adam Kinzinger,Kinzinger,house,IL,16,R
+Amy Klobuchar,Klobuchar,senate,MN,00,D
+Stephen Knight,Knight,house,CA,25,R
+Raja Krishnamoorthi,Krishnamoorthi,house,IL,8,D
+Ann M. Kuster,Kuster,house,NH,2,D
+David Kustoff,Kustoff,house,TN,8,R
+Jon Kyl,Kyl,senate,AZ,00,R
+Raúl R. Labrador,Labrador,house,ID,1,R
+Darin LaHood,LaHood,house,IL,18,R
+Doug LaMalfa,LaMalfa,house,CA,1,R
+Conor Lamb,Lamb,house,PA,18,D
+Doug Lamborn,Lamborn,house,CO,5,R
+Leonard Lance,Lance,house,NJ,7,R
+James R. Langevin,Langevin,house,RI,2,D
+James Lankford,Lankford,senate,OK,00,R
+Rick Larsen,Larsen,house,WA,2,D
+John B. Larson,Larson,house,CT,1,D
+Robert E. Latta,Latta,house,OH,5,R
+Brenda L. Lawrence,Lawrence,house,MI,14,D
+"Al Lawson, Jr.",Lawson,house,FL,5,D
+Patrick J. Leahy,Leahy,senate,VT,00,D
+Barbara Lee,Lee,house,CA,13,D
+Mike Lee,Lee,senate,UT,00,R
+Debbie Lesko,Lesko,house,AZ,8,R
+Sander M. Levin,Levin,house,MI,9,D
+John Lewis,Lewis,house,GA,5,D
+Jason Lewis,Lewis,house,MN,2,R
+Ted Lieu,Lieu,house,CA,33,D
+Daniel Lipinski,Lipinski,house,IL,3,D
+Frank A. LoBiondo,LoBiondo,house,NJ,2,R
+David Loebsack,Loebsack,house,IA,2,D
+Zoe Lofgren,Lofgren,house,CA,19,D
+Billy Long,Long,house,MO,7,R
+Barry Loudermilk,Loudermilk,house,GA,11,R
+Mia B. Love,Love,house,UT,4,R
+Alan S. Lowenthal,Lowenthal,house,CA,47,D
+Nita M. Lowey,Lowey,house,NY,17,D
+Frank D. Lucas,Lucas,house,OK,3,R
+Blaine Luetkemeyer,Luetkemeyer,house,MO,3,R
+Ben Ray Luján,Luján,house,NM,3,D
+Michelle Lujan Grisham,Lujan Grisham,house,NM,1,D
+Stephen F. Lynch,Lynch,house,MA,8,D
+Thomas MacArthur,MacArthur,house,NJ,3,R
+Carolyn B. Maloney,Maloney,house,NY,12,D
+Sean Patrick Maloney,Maloney,house,NY,18,D
+"Joe Manchin, III",Manchin,senate,WV,00,D
+Kenny Marchant,Marchant,house,TX,24,R
+Tom Marino,Marino,house,PA,10,R
+Edward J. Markey,Markey,senate,MA,00,D
+Roger W. Marshall,Marshall,house,KS,1,R
+Thomas Massie,Massie,house,KY,4,R
+Brian J. Mast,Mast,house,FL,18,R
+Doris O. Matsui,Matsui,house,CA,6,D
+Kevin McCarthy,McCarthy,house,CA,23,R
+Claire McCaskill,McCaskill,senate,MO,00,D
+Michael T. McCaul,McCaul,house,TX,10,R
+Tom McClintock,McClintock,house,CA,4,R
+Betty McCollum,McCollum,house,MN,4,D
+Mitch McConnell,McConnell,senate,KY,00,R
+A. Donald McEachin,McEachin,house,VA,4,D
+James P. McGovern,McGovern,house,MA,2,D
+Patrick T. McHenry,McHenry,house,NC,10,R
+David B. McKinley,McKinley,house,WV,1,R
+Cathy McMorris Rodgers,McMorris Rodgers,house,WA,5,R
+Jerry McNerney,McNerney,house,CA,9,D
+Martha McSally,McSally,house,AZ,2,R
+Mark Meadows,Meadows,house,NC,11,R
+Gregory W. Meeks,Meeks,house,NY,5,D
+Robert Menendez,Menéndez,senate,NJ,00,D
+Grace Meng,Meng,house,NY,6,D
+Jeff Merkley,Merkley,senate,OR,00,D
+Luke Messer,Messer,house,IN,6,R
+Paul Mitchell,Mitchell,house,MI,10,R
+John R. Moolenaar,Moolenaar,house,MI,4,R
+Alexander X. Mooney,Mooney,house,WV,2,R
+Gwen Moore,Moore,house,WI,4,D
+Jerry Moran,Moran,senate,KS,00,R
+Seth Moulton,Moulton,house,MA,6,D
+Markwayne Mullin,Mullin,house,OK,2,R
+Lisa Murkowski,Murkowski,senate,AK,00,R
+Christopher Murphy,Murphy,senate,CT,00,D
+Stephanie N. Murphy,Murphy,house,FL,7,D
+Patty Murray,Murray,senate,WA,00,D
+Jerrold Nadler,Nadler,house,NY,10,D
+Grace F. Napolitano,Napolitano,house,CA,32,D
+Richard E. Neal,Neal,house,MA,1,D
+Bill Nelson,Nelson,senate,FL,00,D
+Dan Newhouse,Newhouse,house,WA,4,R
+Kristi L. Noem,Noem,house,SD,0,R
+Richard M. Nolan,Nolan,house,MN,8,D
+Donald Norcross,Norcross,house,NJ,1,D
+Ralph Norman,Norman,house,SC,5,R
+Eleanor Holmes Norton,Norton,house,DC,0,D
+Devin Nunes,Nunes,house,CA,22,R
+Tom O’Halleran,O’Halleran,house,AZ,1,D
+Pete Olson,Olson,house,TX,22,R
+Beto O’Rourke,O’Rourke,house,TX,16,D
+Steven M. Palazzo,Palazzo,house,MS,4,R
+"Frank Pallone, Jr.",Pallone,house,NJ,6,D
+Gary J. Palmer,Palmer,house,AL,6,R
+Jimmy Panetta,Panetta,house,CA,20,D
+"Bill Pascrell, Jr.",Pascrell,house,NJ,9,D
+Rand Paul,Paul,senate,KY,00,R
+Erik Paulsen,Paulsen,house,MN,3,R
+"Donald M. Payne, Jr.",Payne,house,NJ,10,D
+Stevan Pearce,Pearce,house,NM,2,R
+Nancy Pelosi,Pelosi,house,CA,12,D
+David Perdue,Perdue,senate,GA,00,R
+Ed Perlmutter,Perlmutter,house,CO,7,D
+Scott Perry,Perry,house,PA,4,R
+Gary C. Peters,Peters,senate,MI,00,D
+Scott H. Peters,Peters,house,CA,52,D
+Collin C. Peterson,Peterson,house,MN,7,D
+Chellie Pingree,Pingree,house,ME,1,D
+Robert Pittenger,Pittenger,house,NC,9,R
+Stacey E. Plaskett,Plaskett,house,VI,0,D
+Mark Pocan,Pocan,house,WI,2,D
+Ted Poe,Poe,house,TX,2,R
+Bruce Poliquin,Poliquin,house,ME,2,R
+Jared Polis,Polis,house,CO,2,D
+Rob Portman,Portman,senate,OH,00,R
+Bill Posey,Posey,house,FL,8,R
+David E. Price,Price,house,NC,4,D
+Mike Quigley,Quigley,house,IL,5,D
+Jamie Raskin,Raskin,house,MD,8,D
+John Ratcliffe,Ratcliffe,house,TX,4,R
+Jack Reed,Reed,senate,RI,00,D
+Tom Reed,Reed,house,NY,23,R
+David G. Reichert,Reichert,house,WA,8,R
+James B. Renacci,Renacci,house,OH,16,R
+Tom Rice,Rice,house,SC,7,R
+Kathleen M. Rice,Rice,house,NY,4,D
+Cedric L. Richmond,Richmond,house,LA,2,D
+James E. Risch,Risch,senate,ID,00,R
+Pat Roberts,Roberts,senate,KS,00,R
+Martha Roby,Roby,house,AL,2,R
+David P. Roe,Roe,house,TN,1,R
+Harold Rogers,Rogers,house,KY,5,R
+Mike Rogers,Rogers,house,AL,3,R
+Dana Rohrabacher,Rohrabacher,house,CA,48,R
+Todd Rokita,Rokita,house,IN,4,R
+Thomas J. Rooney,Rooney,house,FL,17,R
+Francis Rooney,Rooney,house,FL,19,R
+Jacky Rosen,Rosen,house,NV,3,D
+Peter J. Roskam,Roskam,house,IL,6,R
+Ileana Ros-Lehtinen,Ros-Lehtinen,house,FL,27,R
+Dennis A. Ross,Ross,house,FL,15,R
+Keith J. Rothfus,Rothfus,house,PA,12,R
+Mike Rounds,Rounds,senate,SD,00,R
+David Rouzer,Rouzer,house,NC,7,R
+Lucille Roybal-Allard,Roybal-Allard,house,CA,40,D
+Edward R. Royce,Royce,house,CA,39,R
+Marco Rubio,Rubio,senate,FL,00,R
+Raul Ruiz,Ruiz,house,CA,36,D
+C. A. Dutch Ruppersberger,Ruppersberger,house,MD,2,D
+Bobby L. Rush,Rush,house,IL,1,D
+Steve Russell,Russell,house,OK,5,R
+John H. Rutherford,Rutherford,house,FL,4,R
+Paul D. Ryan,Ryan,house,WI,1,R
+Tim Ryan,Ryan,house,OH,13,D
+Gregorio Kilili Camacho Sablan,Sablan,house,MP,0,D
+Linda T. Sánchez,Sánchez,house,CA,38,D
+Bernard Sanders,Sanders,senate,VT,00,I
+Mark Sanford,Sanford,house,SC,1,R
+John P. Sarbanes,Sarbanes,house,MD,3,D
+Ben Sasse,Sasse,senate,NE,00,R
+Steve Scalise,Scalise,house,LA,1,R
+Janice D. Schakowsky,Schakowsky,house,IL,9,D
+Brian Schatz,Schatz,senate,HI,00,D
+Adam B. Schiff,Schiff,house,CA,28,D
+Bradley Scott Schneider,Schneider,house,IL,10,D
+Kurt Schrader,Schrader,house,OR,5,D
+Charles E. Schumer,Schumer,senate,NY,00,D
+David Schweikert,Schweikert,house,AZ,6,R
+Austin Scott,Scott,house,GA,8,R
+David Scott,Scott,house,GA,13,D
+"Robert C. ""Bobby"" Scott",Scott,house,VA,3,D
+Tim Scott,Scott,senate,SC,00,R
+"F. James Sensenbrenner, Jr.",Sensenbrenner,house,WI,5,R
+José E. Serrano,Serrano,house,NY,15,D
+Pete Sessions,Sessions,house,TX,32,R
+Terri A. Sewell,Sewell,house,AL,7,D
+Jeanne Shaheen,Shaheen,senate,NH,00,D
+Carol Shea-Porter,Shea-Porter,house,NH,1,D
+Richard C. Shelby,Shelby,senate,AL,00,R
+Brad Sherman,Sherman,house,CA,30,D
+John Shimkus,Shimkus,house,IL,15,R
+Bill Shuster,Shuster,house,PA,9,R
+Michael K. Simpson,Simpson,house,ID,2,R
+Kyrsten Sinema,Sinema,house,AZ,9,D
+Albio Sires,Sires,house,NJ,8,D
+Adam Smith,Smith,house,WA,9,D
+Adrian Smith,Smith,house,NE,3,R
+Christopher H. Smith,Smith,house,NJ,4,R
+Lamar Smith,Smith,house,TX,21,R
+Jason Smith,Smith,house,MO,8,R
+Tina Smith,Smith,senate,MN,00,D
+Lloyd Smucker,Smucker,house,PA,16,R
+Darren Soto,Soto,house,FL,9,D
+Jackie Speier,Speier,house,CA,14,D
+Debbie Stabenow,Stabenow,senate,MI,00,D
+Elise M. Stefanik,Stefanik,house,NY,21,R
+Chris Stewart,Stewart,house,UT,2,R
+Steve Stivers,Stivers,house,OH,15,R
+Dan Sullivan,Sullivan,senate,AK,00,R
+Thomas R. Suozzi,Suozzi,house,NY,3,D
+Eric Swalwell,Swalwell,house,CA,15,D
+Mark Takano,Takano,house,CA,41,D
+Scott Taylor,Taylor,house,VA,2,R
+Claudia Tenney,Tenney,house,NY,22,R
+Jon Tester,Tester,senate,MT,00,D
+Bennie G. Thompson,Thompson,house,MS,2,D
+Mike Thompson,Thompson,house,CA,5,D
+Glenn Thompson,Thompson,house,PA,5,R
+Mac Thornberry,Thornberry,house,TX,13,R
+John Thune,Thune,senate,SD,00,R
+Thom Tillis,Tillis,senate,NC,00,R
+Scott R. Tipton,Tipton,house,CO,3,R
+Dina Titus,Titus,house,NV,1,D
+Paul Tonko,Tonko,house,NY,20,D
+Patrick J. Toomey,Toomey,senate,PA,00,R
+Norma J. Torres,Torres,house,CA,35,D
+David A. Trott,Trott,house,MI,11,R
+Niki Tsongas,Tsongas,house,MA,3,D
+Michael R. Turner,Turner,house,OH,10,R
+Tom Udall,Udall,senate,NM,00,D
+Fred Upton,Upton,house,MI,6,R
+David G. Valadao,Valadao,house,CA,21,R
+Chris Van Hollen,Van Hollen,senate,MD,00,D
+Juan Vargas,Vargas,house,CA,51,D
+Marc A. Veasey,Veasey,house,TX,33,D
+Filemon Vela,Vela,house,TX,34,D
+Nydia M. Velázquez,Velázquez,house,NY,7,D
+Peter J. Visclosky,Visclosky,house,IN,1,D
+Ann Wagner,Wagner,house,MO,2,R
+Tim Walberg,Walberg,house,MI,7,R
+Greg Walden,Walden,house,OR,2,R
+Mark Walker,Walker,house,NC,6,R
+Jackie Walorski,Walorski,house,IN,2,R
+Mimi Walters,Walters,house,CA,45,R
+Timothy J. Walz,Walz,house,MN,1,D
+Mark R. Warner,Warner,senate,VA,00,D
+Elizabeth Warren,Warren,senate,MA,00,D
+Debbie Wasserman Schultz,Wasserman Schultz,house,FL,23,D
+Maxine Waters,Waters,house,CA,43,D
+Bonnie Watson Coleman,Watson Coleman,house,NJ,12,D
+"Randy K. Weber, Sr.",Weber,house,TX,14,R
+Daniel Webster,Webster,house,FL,11,R
+Peter Welch,Welch,house,VT,0,D
+Brad R. Wenstrup,Wenstrup,house,OH,2,R
+Bruce Westerman,Westerman,house,AR,4,R
+Sheldon Whitehouse,Whitehouse,senate,RI,00,D
+Roger F. Wicker,Wicker,senate,MS,00,R
+Roger Williams,Williams,house,TX,25,R
+Joe Wilson,Wilson,house,SC,2,R
+Frederica S. Wilson,Wilson,house,FL,24,D
+Robert J. Wittman,Wittman,house,VA,1,R
+Steve Womack,Womack,house,AR,3,R
+Rob Woodall,Woodall,house,GA,7,R
+Ron Wyden,Wyden,senate,OR,00,D
+John A. Yarmuth,Yarmuth,house,KY,3,D
+Kevin Yoder,Yoder,house,KS,3,R
+Ted S. Yoho,Yoho,house,FL,3,R
+Don Young,Young,house,AK,0,R
+Todd Young,Young,senate,IN,00,R
+David Young,Young,house,IA,3,R
+Lee M. Zeldin,Zeldin,house,NY,1,R

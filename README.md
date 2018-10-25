@@ -5,10 +5,10 @@ Comparing the political predictive capability of markets, polling, and modeling
 
 I will be exploring the political predictive capabilities of markets. To this end, I will be looking at the accuracy of four tools in their ability to predict 2018 midterm election results:
 
-1. Prediction markets (www.predictit.org)
-2. Forecast models (www.fivethirtyeight.com)
-3. Polling aggrigates (www.realclearpolitics.com)
-4. Individual polling (www.surveyusa.net)
+1. Prediction markets ([predictit.org](https://www.predictit.org/markets/detail/2704/Which-party-will-control-the-House-after-2018-midterms))
+2. Forecast models ([fivethirtyeight.com](https://projects.fivethirtyeight.com/2018-midterm-election-forecast/house/?ex_cid=midterms-header#change))
+3. Polling aggrigates ([realclearpolitics.com](https://www.realclearpolitics.com/epolls/2018/house/2018_elections_house_map.html)]
+4. Individual polling ([Washington Post/ABC](https://apps.washingtonpost.com/g/page/politics/washington-post-abc-news-poll-oct-8-11-2018/2340/))
 
 I hypothesize that prediction markets offer the greatest accuracy at any point further than 30 days from the election, offering a unique role in campaign resource allocation.
 

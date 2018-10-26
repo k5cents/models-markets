@@ -4,9 +4,9 @@ Using R to compare the predictive capabilities of markets and forecasts
 
 - [predictr](#predictr)
   * [Project](#project)
-    + [Prediction Markets](#prediction-markets)
+    + [Prediction markets](#prediction-markets)
     + [Forecast models](#forecast-models)
-    + [Individual polls](#individual-polls)
+    + [Individual polling](#individual-polls)
     + [Polling aggregates](#polling-aggregates)
   * [PredictIt](#predictit)
     + [About](#about)
@@ -32,7 +32,7 @@ I will be comparing the ability of markets and forecasts to accurately predict r
 3. Polling aggrigation ([realclearpolitics.com](https://www.realclearpolitics.com/epolls/2018/house/2018_elections_house_map.html))
 4. Individual polling ([Washington Post/ABC](https://apps.washingtonpost.com/g/page/politics/washington-post-abc-news-poll-oct-8-11-2018/2340/))
 
-### Prediction Markets
+### Prediction markets
 
 > Prediction markets are exchange-traded markets created for the purpose of trading the outcome of events. The [market prices](https://en.wikipedia.org/wiki/Market_price "Market price") can indicate what the crowd thinks the [probability](https://en.wikipedia.org/wiki/Probability "Probability") of the [event](https://en.wikipedia.org/wiki/Event_(probability_theory) "Event (probability theory)") is. A prediction market contract trades between 0 and 100%. It is a [binary option](https://en.wikipedia.org/wiki/Binary_option "Binary option") that will expire at the price of 0 or 100%. Prediction markets can be thought of as belonging to the more general concept of crowdsourcing which is specially designed to aggregate information on particular topics of interest. The main purposes of prediction markets are eliciting aggregating beliefs over an unknown future outcome. Traders with different beliefs trade on contracts whose payoffs are related to the unknown future outcome and the market prices of the contracts are considered as the aggregated belief. _[source: [Wikipedia](https://en.wikipedia.org/wiki/Prediction_market)]_
 
@@ -40,7 +40,7 @@ I will be comparing the ability of markets and forecasts to accurately predict r
 
 > (Forecasting models) take lots of polls, perform various types of adjustments to them, and then blend them with other kinds of empirically useful indicators (what we sometimes call “the fundamentals”) to forecast each race. Then they account for the uncertainty in the forecast and simulate the election thousands of times. Our models [are probabilistic in nature](https://fivethirtyeight.com/features/a-users-guide-to-fivethirtyeights-2016-general-election-forecast/); we do a _lot_ of thinking about these probabilities, and the goal is to develop probabilistic estimates that hold up well under real-world conditions. For instance, when we launched the 2018 House forecast, Democrats’ chances of winning the House were about 7 in 10 — right about what [Hillary Clinton’s chances were](https://fivethirtyeight.com/features/why-fivethirtyeight-gave-trump-a-better-chance-than-almost-anyone-else/) on election night in 2016! So [ignore those probabilities at your peril](https://fivethirtyeight.com/features/the-media-has-a-probability-problem/). _[source: [FiveThirtyEight](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/)]_
 
-### Individual polls
+### Individual polling
 
 > An opinion poll, often simply referred to as a poll or a survey, is a [human research survey](https://en.wikipedia.org/wiki/Survey_(human_research)) of [public opinion](https://en.wikipedia.org/wiki/Public_opinion "Public opinion") from a particular [sample](https://en.wikipedia.org/wiki/Sampling_(statistics) "Sampling (statistics)"). Opinion polls are usually designed to represent the opinions of a population by conducting a series of questions and then extrapolating generalities in ratio or within [confidence intervals](https://en.wikipedia.org/wiki/Confidence_intervals "Confidence intervals")… Over time, a number of theories and mechanisms have been offered to explain erroneous polling results. Some of these reflect errors on the part of the pollsters; many of them are statistical in nature. _[source: [Wikipedia](https://en.wikipedia.org/wiki/Opinion_poll)]_
 

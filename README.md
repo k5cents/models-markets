@@ -5,7 +5,7 @@ Using R to compare the predictive capabilities of markets and forecasts.
 - [predictr](#predictr)
   * [Project](#project)
   * [Prediction markets](#prediction-markets)
-    + [About](#about)
+    + [About PredictIt](#about)
     + [PredictIt markets](#predictit-markets)
     + [Market data](#market-data)
   * [Forecast models](#forecast-models)
@@ -40,7 +40,7 @@ I will be comparing the ability of markets and forecasts to accurately predict r
 
 I will be using the _PredictIt.org_ exchange to collect prediction market data.
 
-### About
+### About PredictIt
 
 > PredictIt is a unique and exciting real money site that tests your knowledge of political events by letting you trade shares on everything from the outcome of an election to a Supreme Court decision to major world events… PredictIt is run by [Victoria University](http://www.victoria.ac.nz/) of Wellington, New Zealand, a not-for-profit university, for educational purposes. _[source: [PredictIt](https://www.predictit.org/support/what-is-predictit)]_
 

@@ -2,6 +2,21 @@
 
 Using R to compare the predictive capabilities of markets and forecasts
 
+- [predictr](#predictr)
+  * [Project](#project)
+    + [Prediction Markets](#prediction-markets)
+    + [Forecast models](#forecast-models)
+    + [Individual polls](#individual-polls)
+    + [Polling aggregates](#polling-aggregates)
+  * [PredictIt](#predictit)
+    + [About](#about)
+    + [Markets](#markets)
+    + [Data](#data)
+  * [FiveThirtyEight](#fivethirtyeight)
+    + [About](#about-1)
+    + [Forecast](#forecast)
+    + [Data](#data-1)
+
 ## Project
 
 In recent years, the forecast model has become a stable of political punditry. Popularized by the digital journalism site [FiveThirtyEight](https://fivethirtyeight.com/), the forecast model is a statistical tool used to aggregate and balance data to calculate the probability of an electoral outcome.

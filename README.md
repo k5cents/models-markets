@@ -4,18 +4,14 @@ Using R to compare the predictive capabilities of markets and forecasts.
 
 - [predictr](#predictr)
   * [Project](#project)
-    + [Prediction markets](#prediction-markets)
-    + [Forecast models](#forecast-models)
-    + [Individual polling](#individual-polls)
-    + [Polling aggregates](#polling-aggregates)
-  * [PredictIt](#predictit)
+  * [Prediction markets](#prediction-markets)
     + [About](#about)
-    + [Markets](#markets)
-    + [Data](#data)
-  * [FiveThirtyEight](#fivethirtyeight)
-    + [About](#about-1)
-    + [Forecast](#forecast)
-    + [Data](#data-1)
+    + [PredictIt markets](#predictit-markets)
+    + [Market data](#market-data)
+  * [Forecast models](#forecast-models)
+    + [About FiveThirtyEight](#about-fivethirtyeight)
+    + [FiveThirtyEight forecast](#fivethirtyeight-forecast)
+    + [Forecast data](#forecast-data)
 
 ## Project
 
@@ -23,10 +19,14 @@ In recent years, the forecast model has become a staple of political punditry. P
 
 On the eve of the 2016 presidential election, all mainstream forecasts gave Hillary Clinton overwhelming odds to win the presidency.
 
-|Site|New York Times|FiveThirtyEight|HuffPost|PredictWise|Princeton Election Consortium|Daily Kos|
-|----|--------------|---------------|--------|-----------|-----------------------------|---------|
-|Archive|https://goo.gl/QES9vJ|https://goo.gl/CLPrUC|https://goo.gl/XJqwyD|https://goo.gl/1Mnf7m |https://goo.gl/ssbTBQ|https://goo.gl/tetg4u|
-|Probability|85% Clinton|70% Clinton|98% Clinton|89% Clinton|93% Clinton|92% Clinton|
+| Site | Archive | Probability |
+|------|---------|-------------|
+| New York Times | https://goo.gl/QES9vJ | 85% Clinton |
+| FiveThirtyEight | https://goo.gl/CLPrUC | 70% Clinton |
+| HuffPost | https://goo.gl/XJqwyD | 98% Clinton |
+| PredictWise | https://goo.gl/1Mnf7m | 89% Clinton |
+| Princeton Election Consortium | https://goo.gl/ssbTBQ | 93% Clinton |
+| Daily Kos | https://goo.gl/tetg4u | 92% Clinton |
 
 These forecasts represent the best statistical predictions possible. Yet we now know they were all wrong (some of them more than others).
 
@@ -57,11 +57,11 @@ The site is exempt from the usual ban on both online and political betting by wo
 ### PredictIt markets
 There are not markets for every midterm election. However, there _are_ markets for over 100 of the most contested congressional general elections. As of October 19th, the Cook Political Report classifies 105 House races as "competitive".
 
-|Rating|Democrat|Republican|Total|
+| Rating | Democrat | Republican | Total |
 |--|--|--|--|
-|Solid|182|145|327 _(75%)_|
-|Likely|10|50|60 _(14%)_|
-|Toss-up|3|45|48 _(11%)_|
+| Solid | 182 | 145 | 327 _(75%)_ |
+| Likely | 10| 50 | 60 _(14%)_ |
+| Toss-up | 3| 45 | 48 _(11%)_ |
 
 These competitive races aren't all represented with markets, but there is significant overlap. Enough to establish a comparison between our different predictive tools.
 

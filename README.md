@@ -2,16 +2,15 @@
 
 Using R to compare the predictive capabilities of markets and forecasts.
 
-- [predictr](#predictr)
-  * [Project](#project)
-  * [Prediction markets](#prediction-markets)
-    + [About PredictIt](#about)
-    + [PredictIt markets](#predictit-markets)
-    + [Market data](#market-data)
-  * [Forecast models](#forecast-models)
-    + [About FiveThirtyEight](#about-fivethirtyeight)
-    + [FiveThirtyEight forecast](#fivethirtyeight-forecast)
-    + [Forecast data](#forecast-data)
+ * [Project](#project)
+ * [Prediction markets](#prediction-markets)
+   + [About PredictIt](#about)
+   + [PredictIt markets](#predictit-markets)
+   + [Market data](#market-data)
+ * [Forecast models](#forecast-models)
+   + [About FiveThirtyEight](#about-fivethirtyeight)
+   + [FiveThirtyEight forecast](#fivethirtyeight-forecast)
+   + [Forecast data](#forecast-data)
 
 ## Project
 

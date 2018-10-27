@@ -67,7 +67,7 @@ These competitive races aren't all represented with markets, but there is signif
 
 ### Market data
 
-PredictIt does not provide provide a collected source of data for on-going markets, but they do provide a 90-day history for each individual market. They also provide [an application program interface (API)](https://www.predictit.org/api/marketdata/all/) to access the most recent data for every market. I was able to write a short R script to combine these two sources and centralize the relevant market history. This data is scraped, collected, and formatted with [`market_history.R`](market_history.R) and is saved as [`market_history.csv`](market_history.csv).
+PredictIt does not provide provide a collected source of data for on-going markets, but they do provide a 90-day history for each individual market. They also provide [an application program interface (API)](https://www.predictit.org/api/marketdata/all/) to access the most recent data for every market. I was able to write a short R script to combine these two sources and centralize the relevant market history. This data is scraped, collected, and formatted with [`market_history.R`](code/market_history.R) and is saved as [`market_history.csv`](data/market_history.csv).
 
     > sample_n(market_history, size = 10)
     # A tibble: 10 x 6
@@ -118,7 +118,7 @@ In the training data (most House races since 1998), the classic model only misca
 
 ### Forecast data
 
-FiveThirtyEight is kind enough to provide all their daily forecast history as CSV. For example, the house district data can [downloaded from their site](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv). I used the same techniques to reformat, using [`forecast_history.R`](forecast_history.R) save as [`forecast_history.csv`](forecast_history.csv).
+FiveThirtyEight is kind enough to provide all their daily forecast history as CSV. For example, the house district data can [downloaded from their site](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv). I used the same techniques to reformat, using [`forecast_history.R`](code/forecast_history.R) save as [`forecast_history.csv`](data/forecast_history.csv).
 
     > sample_n(forecast_history, size = 10)
     # A tibble: 10 x 9

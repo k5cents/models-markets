@@ -19,14 +19,14 @@ In recent years, the forecast model has become a staple of political punditry. P
 
 On the eve of the 2016 presidential election, all mainstream forecasts gave Hillary Clinton overwhelming odds to win the presidency.
 
-| Site | Archive | Probability |
-|------|---------|-------------|
-| New York Times | https://goo.gl/QES9vJ | 85% Clinton |
-| FiveThirtyEight | https://goo.gl/CLPrUC | 70% Clinton |
-| HuffPost | https://goo.gl/XJqwyD | 98% Clinton |
-| PredictWise | https://goo.gl/1Mnf7m | 89% Clinton |
-| Princeton Election Consortium | https://goo.gl/ssbTBQ | 93% Clinton |
-| Daily Kos | https://goo.gl/tetg4u | 92% Clinton |
+| Site | Probability |
+|------|-------------|
+| New York Times | [85% Clinton](https://goo.gl/QES9vJ) |
+| FiveThirtyEight | [70% Clinton](https://goo.gl/CLPrUC) |
+| HuffPost | [98% Clinton](https://goo.gl/XJqwyD) |
+| PredictWise | [89% Clinton](https://goo.gl/1Mnf7m) |
+| Princeton Election Consortium | [93% Clinton](https://goo.gl/ssbTBQ) |
+| Daily Kos | [92% Clinton](https://goo.gl/tetg4u ) |
 
 These forecasts represent the best statistical predictions possible. Yet we now know they were all wrong (some of them more than others).
 

@@ -16,9 +16,7 @@ Using R to compare the predictive capabilities of markets and forecasts.
 
 In recent years, the forecast model has become a staple of political punditry. Popularized by the digital journalism site [FiveThirtyEight](https://fivethirtyeight.com/), the forecast model is a statistical tool used to aggregate and balance data to calculate the probability of an electoral outcome.
 
-On the eve of the 2016 presidential election, all mainstream forecasts gave Hillary Clinton overwhelming odds to win the presidency.
-
-FiveThirtyEight's forecast gave Clinton the lowest odds, [at 70%](https://goo.gl/CLPrUC). Meanwhile, The New York Times Upshot had her at [85%]((https://goo.gl/QES9vJ)), PredictWise [89%](https://goo.gl/1Mnf7m), and the HuffPo Pollster's prediction gave Clinton an infamous [98% chance of winning](https://goo.gl/XJqwyD).
+On the eve of the 2016 presidential election, all mainstream forecasts gave Hillary Clinton overwhelming odds to win the presidency. FiveThirtyEight's forecast gave Clinton the lowest odds, [at 70%](https://goo.gl/CLPrUC). Meanwhile, The New York Times Upshot had her at [85%]((https://goo.gl/QES9vJ)), PredictWise [89%](https://goo.gl/1Mnf7m), and the HuffPo Pollster's prediction gave Clinton an infamous [98% chance of winning](https://goo.gl/XJqwyD).
 
 These forecasts represent the best statistical predictions possible. Yet we now know they were all wrong (some of them more than others).
 

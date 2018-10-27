@@ -18,14 +18,7 @@ In recent years, the forecast model has become a staple of political punditry. P
 
 On the eve of the 2016 presidential election, all mainstream forecasts gave Hillary Clinton overwhelming odds to win the presidency.
 
-| Site | Probability |
-|------|-------------|
-| New York Times | [85% Clinton](https://goo.gl/QES9vJ) |
-| FiveThirtyEight | [70% Clinton](https://goo.gl/CLPrUC) |
-| HuffPost | [98% Clinton](https://goo.gl/XJqwyD) |
-| PredictWise | [89% Clinton](https://goo.gl/1Mnf7m) |
-| Princeton Election Consortium | [93% Clinton](https://goo.gl/ssbTBQ) |
-| Daily Kos | [92% Clinton](https://goo.gl/tetg4u ) |
+FiveThirtyEight's forecast gave Clinton the lowest odds, [at 70%](https://goo.gl/CLPrUC). Meanwhile, The New York Times Upshot had her at [85%]((https://goo.gl/QES9vJ)), PredictWise [89%](https://goo.gl/1Mnf7m), and the HuffPo Pollster's prediction gave Clinton an infamous [98% chance of winning](https://goo.gl/XJqwyD).
 
 These forecasts represent the best statistical predictions possible. Yet we now know they were all wrong (some of them more than others).
 

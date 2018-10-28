@@ -32,8 +32,6 @@ I will be using the _PredictIt.org_ exchange to collect prediction market data.
 
 ### About PredictIt
 
-![PredictIt logo](https://upload.wikimedia.org/wikipedia/commons/7/77/PredictIt_logo.png)
-
 > PredictIt is a unique and exciting real money site that tests your knowledge of political events by letting you trade shares on everything from the outcome of an election to a Supreme Court decision to major world events… PredictIt is run by [Victoria University](http://www.victoria.ac.nz/) of Wellington, New Zealand, a not-for-profit university, for educational purposes. _[source: [PredictIt](https://www.predictit.org/support/what-is-predictit)]_
 
 Users of this site can legally trade on the exchange with real currency, winning money if their prediction comes true and their shares sell for $1. Traders can also sell their shares at any time, provided there is a corresponding buyer; as public opinion shifts, “Yes” or “No” shares become more or less valuable, adjusting the probability in real time as new information is introduced into the market.
@@ -83,8 +81,6 @@ PredictIt does not provide provide a collected source of data for on-going marke
 I will be using the _FiveThirtyEight.com_ model to collect forecasting data. In 2016, FiveThirtyEight's prediction was closest to reality. They are one of the few mainstream forecasters to continue their work into the 2018 midterm elections.
 
 ### About FiveThirtyEight
-
-![FiveThirtyEight logo](https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/FiveThirtyEight_Logo.svg/800px-FiveThirtyEight_Logo.svg.png)
 
 Nate Silver started FiveThirtyEight in 2008 to cover the presidential election. Silver specifically sought to answer the simple question of which democratic primary candidate would fare best against the presumptive Republican nominee. As Silver put it, “someone could look like a genius simply by doing some fairly basic research into what really has predictive power in a political campaign.” The first FiveThirtyEight model was more basic, simply aggregating polls and weighing them using past accuracy. Silver built his forecast using three guiding principles:
 

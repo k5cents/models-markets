@@ -1,5 +1,7 @@
 # predictr
 
+<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
 Using R to compare the predictive capabilities of markets and models.
 
  * [Project](#project)

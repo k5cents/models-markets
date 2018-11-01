@@ -5,7 +5,7 @@
 library(tidyverse)
 
 # read --------------------------------------------------------------------
-congress <-
+congress.members <-
   read_csv("https://theunitedstates.io/congress-legislators/legislators-current.csv",
            col_types = cols()) %>%
   select(full_name,
@@ -14,22 +14,31 @@ congress <-
          state,
          district,
          party) %>%
-  rename(member.name = full_name,
+  rename(full.name = full_name,
          chamber = type,
-         last.name = last_name) %>%
-  arrange(last.name)
+         name = last_name) %>%
+  arrange(name)
 
 # recode ------------------------------------------------------------------
-congress$district[which(is.na(congress$district))] <- "00"
-congress$chamber <- recode(congress$chamber,
-                           "sen" = "senate",
-                           "rep" = "house")
-congress$party <- recode(congress$party,
-                         "Democrat" = "D",
-                         "Republican" = "R",
-                         "Independent" = "I")
+congress.members$district[which(is.na(congress.members$district))] <- "00"
+congress.members$chamber <- recode(congress.members$chamber,
+                                   "sen" = "senate",
+                                   "rep" = "house")
+congress.members$party <- recode(congress.members$party,
+                                 "Democrat" = "D",
+                                 "Republican" = "R",
+                                 "Independent" = "I")
+
+congress.members <-
+  congress.members %>%
+  mutate(district = str_pad(string = district,
+                            side = "left",
+                            width = 2,
+                            pad = "0")) %>%
+  unite(col = code,
+        state, district,
+        sep = "-",
+        remove = FALSE)
 
 # write -------------------------------------------------------------------
-write_csv(congress, "./data/congress_members.csv")
-congress <- read_csv("./data/congress_members.csv",
-                     col_types = cols())
+write_csv(congress.members, "./data/congress_members.csv")

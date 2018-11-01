@@ -19,25 +19,8 @@ congress.mebers <-
 
 markets.history <-
   read_csv("./data/market_history.csv",
-           col_types = cols()) %>%
-  # prepare empty variables to match forecast
-  mutate(chamber = NA,
-         code = NA,
-         state = NA,
-         district = NA,
-         party = NA,
-         candidate = NA) %>%
-  select(date,
-         chamber,
-         code,
-         state,
-         district,
-         party,
-         candidate,
-         volume,
-         price,
-         market.name,
-         id)
+           col_types = cols())
+
 
 for (i in 1:nrow(markets)) {
   crow <- which(congress$last_name == markets$market.name[i])

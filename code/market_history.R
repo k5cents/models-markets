@@ -36,7 +36,7 @@ markets.all <- markets.all[-grep("governor's", markets.all$shortName), ]
 # function ----------------------------------------------------------------
 
 # go to predictit.org and download chart data
-predictit_hist <- function(id = NULL, span = "90d") {
+predictit_scrape <- function(id = NULL, span = "90d") {
   # define the URL of a single market
   market.url <- paste0("https://www.predictit.org/",
                        "Resource/DownloadMarketChartData",
@@ -65,8 +65,8 @@ predictit_hist <- function(id = NULL, span = "90d") {
 markets.list <- rep(list(NA), nrow(markets.all))
 
 # for every market grabed from API, load into list slot
-for (i in 1:length(markets.list)) {
-  markets.list[[i]] <- predictit_hist(id = markets.all$id[i])
+for (i in 1:nrow(markets.all)) {
+  markets.list[[i]] <- predictit_scrape(id = markets.all$id[i])
 }
 
 # combine the list elements

@@ -67,8 +67,8 @@ mid,question,cid,contract,option
 4016,Which party will win PA-09?,9081,Will a Democratic candidate win the 2018 House of Representatives race in Pennsylvania's 9th district?,Democratic
 4023,Which party will win MS-03?,9095,Will a Republican candidate win the 2018 House of Representatives race in Mississippi's 3rd district?,Republican
 4023,Which party will win MS-03?,9094,Will a Democratic candidate win the 2018 House of Representatives race in Mississippi's 3rd district?,Democratic
-4030,Which party will win CA-39?,9125,Will a Republican candidate win the 2018 House of Representatives race in California's 39th district?,Republican
 4030,Which party will win CA-39?,9124,Will a Democratic candidate win the 2018 House of Representatives race in California's 39th district?,Democratic
+4030,Which party will win CA-39?,9125,Will a Republican candidate win the 2018 House of Representatives race in California's 39th district?,Republican
 4039,Which party will win CA-49?,9152,Will a Democratic candidate win the 2018 House of Representatives race in California's 49th district?,Democratic
 4039,Which party will win CA-49?,9153,Will a Republican candidate win the 2018 House of Representatives race in California's 49th district?,Republican
 4104,Which party will win NJ-11?,9373,Will a Democratic candidate win the 2018 House of Representatives race in New Jersey's 11th district?,Democratic
@@ -95,8 +95,8 @@ mid,question,cid,contract,option
 4253,Which party will win PA-06?,10001,Will a Republican candidate win the 2018 House of Representatives race in Pennsylvania's 6th district?,Republican
 4255,Which party will win MN-03 election?,10007,Will a Democratic candidate win the 2018 House of Representatives election in Minnesota's 3rd district?,Democratic
 4255,Which party will win MN-03 election?,10008,Will a Republican candidate win the 2018 House of Representatives election in Minnesota's 3rd district?,Republican
-4256,Which party will win MI-08 election?,10009,Will a Republican candidate win the 2018 House of Representatives election in Michigan's 8th district?,Republican
 4256,Which party will win MI-08 election?,10010,Will a Democratic candidate win the 2018 House of Representatives election in Michigan's 8th district?,Democratic
+4256,Which party will win MI-08 election?,10009,Will a Republican candidate win the 2018 House of Representatives election in Michigan's 8th district?,Republican
 4257,Which party will win IL-12 election?,10011,Will a Republican candidate win the 2018 House of Representatives election in Illinois' 12th district?,Republican
 4257,Which party will win IL-12 election?,10005,Will a Democratic candidate win the 2018 House of Representatives election in Illinois' 12th district?,Democratic
 4258,Which party will win NJ-07 election?,10004,Will a Democratic candidate win the 2018 House of Representatives election in New Jersey's 7th district?,Democratic
@@ -184,8 +184,8 @@ mid,question,cid,contract,option
 5003,Which party will win AK at-large?,13056,Will a Dem candidate win the 2018 House of Reps race in AK?,Democratic
 5004,Which party will win MT at-large?,13059,Will a GOP candidate win the 2018 House of Reps race in MT?,Republican
 5004,Which party will win MT at-large?,13058,Will a Dem candidate win the 2018 House of Reps race in MT?,Democratic
-5005,Which party will win IL-14?,13061,Will a GOP candidate win the 2018 House of Reps race in IL's 14th district?,Republican
 5005,Which party will win IL-14?,13060,Will a Dem candidate win the 2018 House of Reps race in IL's 14th district?,Democratic
+5005,Which party will win IL-14?,13061,Will a GOP candidate win the 2018 House of Reps race in IL's 14th district?,Republican
 5006,Which party will win NC-02?,13063,Will a GOP candidate win the 2018 House of Reps race in NC's 2nd district?,Republican
 5006,Which party will win NC-02?,13062,Will a Dem candidate win the 2018 House of Reps race in NC's 2nd district?,Democratic
 5007,Which party will win NY-24?,13065,Will a GOP candidate win the 2018 House of Reps race in NY's 24th district?,Republican

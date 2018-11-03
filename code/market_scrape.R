@@ -82,8 +82,10 @@ for (i in 1:nrow(market.names)) {
 }
 
 # combine the list elements into a single tibble
-market.history <- bind_rows(markets.list)
-rm(markets.list)
+market.data <- bind_rows(markets.list)
+rm(markets.list, i)
 
-write_csv(x = market.names, path = "./data/market_names.csv")
-write_csv(x = market.history, path = "./data/market_history.csv")
+write_csv(x = market.names,
+          path = "./data/market_names.csv")
+write_csv(x = market.data,
+          path = "./data/market_data.csv")

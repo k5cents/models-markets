@@ -8,7 +8,7 @@ library(tidyverse)
 # names of relevent markets, and history of said markets
 market.names <- read_csv("./data/market_names.csv",
                          col_types = cols())
-market.data <- read_csv("./data/market_history.csv",
+market.data <- read_csv("./data/market_data.csv",
                            col_types = cols())
 
 # merge names and history -------------------------------------------------
@@ -75,8 +75,10 @@ market.history$party <-
           false = word(market.history$party, 3))))
 
 # I accidentally grabbed a market about the Nigerian president's re-election
-m <- m[-c(str_which(market.history$party, "Nigerian")), ]
-m <- m[-c(str_which(market.history$party, "Farenthold")), ]
+market.history <- market.history[-c(str_which(market.history$party,
+                                              "Nigerian")), ]
+market.history <- market.history[-c(str_which(market.history$party,
+                                              "Farenthold")), ]
 
 
 # fix the other values ----------------------------------------------------
@@ -85,11 +87,14 @@ m <- m[-c(str_which(market.history$party, "Farenthold")), ]
 
 
 # this tibble is created in `code/congress_scrape.R`
-members <- read_csv("./data/congress_members.csv",
-                    col_types = cols())
+congress.members <- read_csv("./data/congress_members.csv",
+                             col_types = cols())
 
-# replace names with their party codes from `members`
-for (i in 1:nrow(m)) {
+# replace names with their party codes from `congress.members`
+#
+# This puts D in every column
+#
+for (i in 1:nrow(market.history)) {
   market.history$party[i] <-
     # ignore D
     if_else(condition = market.history$party == "D",
@@ -98,13 +103,17 @@ for (i in 1:nrow(m)) {
     # ignore R
     if_else(condition = market.history$party == "R",
             true = "R",
-            # if it's a name, put that member's party as listed in `members`
-            false = members$party[which(members$last == market.history$party[i])][1]))
+            # if it's a name, put that member's party as listed in `congress.members`
+            false = congress.members$party[which(congress.members$last == market.history$party[i])][1]))
 }
 
-for (i in 1:nrow(m)) {
+#
+# This is closer
+#
+for (i in 1:nrow(market.history)) {
   market.history$code[i] <-
     if_else(condition = grepl(market.history$code[i], "-[0-9-]"),
             true = market.history$code[i],
-            false = members$code[which(members$last == market.history$code[i])][1])
+            false = congress.members$code[which(congress.members$last == market.history$code[i])][1])
 }
+

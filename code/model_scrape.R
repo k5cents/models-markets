@@ -10,8 +10,9 @@ senate <-
            col_types =  cols(incumbent = col_logical())) %>%
   filter(model == "classic",
          party == "D" | party == "R" | party == "I") %>%
-  rename(date = forecastdate,
-         win.prob = win_probability) %>%
+  rename(name = candidate,
+         date = forecastdate,
+         prob = win_probability) %>%
   mutate(chamber = "senate",
          voteshare = voteshare / 100,
          district = "00") %>%
@@ -20,14 +21,14 @@ senate <-
         sep = "-",
         remove = FALSE) %>%
   select(date,
-         candidate,
+         name,
          chamber,
          state,
          district,
          party,
          incumbent,
          voteshare,
-         win.prob)
+         prob)
 
 # read and format house data
 house <-
@@ -35,8 +36,9 @@ house <-
            col_types =  cols(incumbent = col_logical())) %>%
   filter(model == "classic",
          party == "D" | party == "R" | party == "I") %>%
-  rename(date = forecastdate,
-         win.prob = win_probability) %>%
+  rename(name = candidate,
+         date = forecastdate,
+         prob = win_probability) %>%
   mutate(chamber = "house",
          voteshare = voteshare / 100,
          district = str_pad(district, 2, pad = "0")) %>%
@@ -45,18 +47,41 @@ house <-
         sep = "-",
         remove = FALSE) %>%
   select(date,
-         candidate,
+         name,
          chamber,
          state,
          district,
          party,
          incumbent,
          voteshare,
-         win.prob)
+         prob)
 
 # combine senate and house
 model.history <- rbind(senate, house)
 model.history <- arrange(model.history, date)
 rm(house, senate)
 
-write_csv(forecast.history, "./data/model_history.csv")
+model.history$last <-
+  if_else(word(model.history$name, -1) == "Jr.",
+          true = word(model.history$name, -2),
+          false =  if_else(word(model.history$name, -1) == "III",
+                           true = word(model.history$name, -2),
+                           false = word(model.history$name, -1)))
+
+model.history <-
+  model.history %>%
+  unite(col = code,
+        state, district,
+        sep = "-",
+        remove = TRUE) %>%
+  select(date,
+         name,
+         last,
+         chamber,
+         code,
+         party,
+         incumbent,
+         voteshare,
+         prob)
+
+write_csv(model.history, "./data/model_history.csv")

@@ -8,15 +8,19 @@ library(tidyverse)
 congress.members <-
   read_csv("https://theunitedstates.io/congress-legislators/legislators-current.csv",
            col_types = cols()) %>%
-  select(full_name,
+  unite(col = name,
+        first_name,
+        last_name,
+        sep = " ",
+        remove = FALSE) %>%
+  select(name,
          last_name,
          type,
          state,
          district,
          party) %>%
-  rename(full.name = full_name,
-         chamber = type,
-         name = last_name) %>%
+  rename(chamber = type,
+         last = last_name) %>%
   arrange(name)
 
 # recode ------------------------------------------------------------------
@@ -38,7 +42,11 @@ congress.members <-
   unite(col = code,
         state, district,
         sep = "-",
-        remove = FALSE)
+        remove = TRUE)
+
+# Force all names to ASCII to match PredictIt format
+congress.members$last <- iconv(congress.members$last,
+                               to = "ASCII//TRANSLIT")
 
 # write -------------------------------------------------------------------
 write_csv(congress.members, "./data/congress_members.csv")

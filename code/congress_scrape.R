@@ -5,7 +5,7 @@
 library(tidyverse)
 
 # read --------------------------------------------------------------------
-congress.members <-
+congress_members <-
   read_csv("https://theunitedstates.io/congress-legislators/legislators-current.csv",
            col_types = cols()) %>%
   unite(col = name,
@@ -24,17 +24,17 @@ congress.members <-
   arrange(name)
 
 # recode ------------------------------------------------------------------
-congress.members$district[which(is.na(congress.members$district))] <- "00"
-congress.members$chamber <- recode(congress.members$chamber,
+congress_members$district[which(is.na(congress_members$district))] <- "00"
+congress_members$chamber <- recode(congress_members$chamber,
                                    "sen" = "senate",
                                    "rep" = "house")
-congress.members$party <- recode(congress.members$party,
+congress_members$party <- recode(congress_members$party,
                                  "Democrat" = "D",
                                  "Republican" = "R",
                                  "Independent" = "I")
 
-congress.members <-
-  congress.members %>%
+congress_members <-
+  congress_members %>%
   mutate(district = str_pad(string = district,
                             side = "left",
                             width = 2,
@@ -45,8 +45,8 @@ congress.members <-
         remove = TRUE)
 
 # Force all names to ASCII to match PredictIt format
-congress.members$last <- iconv(congress.members$last,
+congress_members$last <- iconv(congress_members$last,
                                to = "ASCII//TRANSLIT")
 
 # write -------------------------------------------------------------------
-write_csv(congress.members, "./data/congress_members.csv")
+write_csv(congress_members, "./data/congress_members.csv")

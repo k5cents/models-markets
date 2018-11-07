@@ -19,7 +19,7 @@ predictit_api <- function(api.url, api.path) {
   return(as_tibble(as.df))
 }
 
-market.names <-
+market_names <-
   # run the function to get the tibble of open PredictIt markets
   predictit_api(api.url = "https://www.predictit.org/",
                 api.path = "api/marketdata/all/") %>%
@@ -50,12 +50,12 @@ market.names <-
 # then downloads the market history from the provided chart
 predictit_scrape <- function(id = NULL, span = "90d") {
   # define the URL of a single market
-  market.url <- paste0("https://www.predictit.org/",
+  market_url <- paste0("https://www.predictit.org/",
                        "Resource/DownloadMarketChartData",
                        "?marketid=", as.character(id),
                        "&timespan=", as.character(span))
   # download the chart data from said market
-  market.chart <-
+  market_chart <-
     read_csv(market.url,
              col_types = cols()) %>%
     select(DateString,
@@ -70,22 +70,22 @@ predictit_scrape <- function(id = NULL, span = "90d") {
            contract = ContractName,
            price = CloseSharePrice,
            volume = TradeVolume)
-  return(market.chart)
+  return(market_chart)
 }
 
 # initialize the a list to fill with history of each market
-markets.list <- rep(list(NA), nrow(market.names))
+markets_list <- rep(list(NA), nrow(market_names))
 
 # for every market grabed from API, load history into list element
-for (i in 1:nrow(market.names)) {
-  markets.list[[i]] <- predictit_scrape(id = market.names$mid[i])
+for (i in 1:nrow(market_names)) {
+  markets_list[[i]] <- predictit_scrape(id = market_names$mid[i])
 }
 
 # combine the list elements into a single tibble
-market.data <- bind_rows(markets.list)
-rm(markets.list, i)
+market_data <- bind_rows(markets_list)
+rm(markets_list, i)
 
-write_csv(x = market.names,
+write_csv(x = market_names,
           path = "./data/market_names.csv")
-write_csv(x = market.data,
+write_csv(x = market_data,
           path = "./data/market_data.csv")

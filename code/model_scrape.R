@@ -5,7 +5,7 @@
 library(tidyverse)
 
 # read and format senate data
-senate <-
+senate_model <-
   read_csv("https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv",
            col_types =  cols(incumbent = col_logical())) %>%
   filter(model == "classic",
@@ -31,7 +31,7 @@ senate <-
          prob)
 
 # read and format house data
-house <-
+house_model <-
   read_csv("https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv",
            col_types =  cols(incumbent = col_logical())) %>%
   filter(model == "classic",
@@ -57,19 +57,19 @@ house <-
          prob)
 
 # combine senate and house
-model.history <- rbind(senate, house)
-model.history <- arrange(model.history, date)
-rm(house, senate)
+model_history <- rbind(senate_model, house_model)
+model_history <- arrange(model_history, date)
+rm(senate_model, house_model)
 
-model.history$last <-
-  if_else(word(model.history$name, -1) == "Jr.",
-          true = word(model.history$name, -2),
-          false =  if_else(word(model.history$name, -1) == "III",
-                           true = word(model.history$name, -2),
-                           false = word(model.history$name, -1)))
+model_history$last <-
+  if_else(word(model_history$name, -1) == "Jr.",
+          true = word(model_history$name, -2),
+          false =  if_else(word(model_history$name, -1) == "III",
+                           true = word(model_history$name, -2),
+                           false = word(model_history$name, -1)))
 
-model.history <-
-  model.history %>%
+model_history <-
+  model_history %>%
   unite(col = code,
         state, district,
         sep = "-",
@@ -84,4 +84,4 @@ model.history <-
          voteshare,
          prob)
 
-write_csv(model.history, "./data/model_history.csv")
+write_csv(model_history, "./data/model_history.csv")

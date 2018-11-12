@@ -104,13 +104,19 @@ for (i in 1:nrow(market_history)) {
                                                 market_history$code[i])][1])
 }
 
+# This question asks if Ryan will be re-elected, shouldn't exist. Redundant.
+market_history <- market_history[-which(market_history$mid == "3455"), ]
+
+write_csv(market_history, "./data/market_history.csv")
+
 # join markets and models -------------------------------------------------
 
 joined <-
-  inner_join(x = model_history,
-             y = market_history,
-             by = c("date", "code", "party"),
-             copy = FALSE) %>%
-  distinct()
+  right_join(x  = read_csv("./data/model_history.csv"),
+             y  = market_history,
+             by = c("date", "code", "party")) %>%
+  select(-last) %>%
+  mutate(mid = as.character(mid),
+         cid = as.character(cid))
 
 write_csv(joined, "./data/joined.csv")

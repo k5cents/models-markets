@@ -1,0 +1,11 @@
+---
+title: "Midterms, Markets, and Models"
+author: "Kiernan Nicholls"
+date: "November 12, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+

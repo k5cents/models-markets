@@ -1,5 +1,14 @@
 joined <- read_csv("./data/joined,csv")
 
+j2 <-
+  joined %>%
+  gather(prob, price,
+         key = tool,
+         value = prob) %>%
+  mutate(tool = recode(tool,
+                       "price" = "market",
+                       "prob" = "model"))
+
 difference <-
   ggplot(filter(joined, party != "I"),
          aes(x = date,
@@ -17,3 +26,10 @@ difference <-
 ggsave("./plots/difference.png",
        last_plot(),
        dpi = "retina")
+
+ggplot(data = filter(j2, party != "I"),
+       mapping = aes(x = date,
+                     y = prob)) +
+  geom_smooth(aes(color = party,
+                  linetype = tool)) +
+  scale_color_manual(values = c("blue", "red"))

@@ -7,35 +7,35 @@
    2. Aggregating polls
    3. Forecast models
    4. Prediction Markets
-1. Forecasting models
+4. Forecasting models
    1. Mathematical theory
       1. Statistical model
       2. Probability distribution and uncertainty
       3. Monte carlo simulations
-   1. History
+   2. History
       1. 2016 General Election
-   1. FiveThirtyEight
+   3. FiveThirtyEight
       1. Founding
       2. Past models
       3. 2018 Midterm Models
          1. Inputs
          2. Outputs
-1. Prediction markets
+5. Prediction markets
    1. Economic theory
       1. Futures contracts
       2. Binary options
       3. Price discovery process
       4. Efficient-market hypothesis
       5. Risk aversion
-   1. History
+   2. History
       1. Papal conclave
       2. Iowa Electronic Markets
       3. Intrade
-   1. PredictIt
+   3. PredictIt
       1. 2018 Midterm Markets
-   1. Legality
-1. Data collection
-2. Time series analysis
-3. Outcome analysis
-4. Future use
-5. Conclusion
+   4. Legality
+6. Data collection
+7. Time series analysis
+8. Outcome analysis
+9. Future use
+10. Conclusion

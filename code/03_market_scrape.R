@@ -9,7 +9,7 @@ library(jsonlite)
 # get market names --------------------------------------------------------
 
 # this function will download an API XML tree as a tibble
-predictit_api <- function(api.url, api.path) {
+scrape_predictit_api <- function(api.url, api.path) {
   raw <- GET(url = api.url,
              path = api.path)
   as.char <- rawToChar(raw$content)
@@ -21,8 +21,8 @@ predictit_api <- function(api.url, api.path) {
 
 market_names <-
   # run the function to get the tibble of open PredictIt markets
-  predictit_api(api.url = "https://www.predictit.org/",
-                api.path = "api/marketdata/all/") %>%
+  scrape_predictit_api(api.url = "https://www.predictit.org/",
+                       api.path = "api/marketdata/all/") %>%
   # the API has a 'contract' tree within each market
   # the 'contract' lists the buy options for each market
   # our function downloads these as tibbles inside of a tibble value
@@ -48,7 +48,7 @@ market_names <-
 
 # this function visits the page for a PredictIt.org market
 # then downloads the market history from the provided chart
-predictit_scrape <- function(id = NULL, span = "90d") {
+scrape_predictit_graphs <- function(id = NULL, span = "90d") {
   # define the URL of a single market
   market_url <- paste0("https://www.predictit.org/",
                        "Resource/DownloadMarketChartData",
@@ -78,7 +78,7 @@ markets_list <- rep(list(NA), nrow(market_names))
 
 # for every market grabed from API, load history into list element
 for (i in 1:nrow(market_names)) {
-  markets_list[[i]] <- predictit_scrape(id = market_names$mid[i])
+  markets_list[[i]] <- scrape_predictit_graphs(id = market_names$mid[i])
 }
 
 # combine the list elements into a single tibble

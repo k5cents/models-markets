@@ -103,8 +103,12 @@ election_results$rep <-
   str_replace(pattern = "\\*",  replacement = "0.00%")
 
 # fix percentages
-election_results$dem <- as.numeric(str_replace(election_results$dem, "%", "")) / 100
-election_results$rep <- as.numeric(str_replace(election_results$rep, "%", "")) / 100
+election_results$dem <- as.numeric(str_replace(election_results$dem,
+                                               pattern = "%",
+                                               replacement = "")) / 100
+election_results$rep <- as.numeric(str_replace(election_results$rep,
+                                               pattern = "%",
+                                               replacement = "")) / 100
 
 election_results <- arrange(election_results, code)
 

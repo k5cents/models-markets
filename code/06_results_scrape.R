@@ -73,6 +73,14 @@ election_results$class <- recode(election_results$class,
                                  "5" = "lkly R",
                                  "6" = "safe R")
 
+election_results$class <- factor(election_results$class,
+                                 levels = c("safe D",
+                                            "lkly D",
+                                            "vul D",
+                                            "vul R",
+                                            "lkly R",
+                                            "safe R"))
+
 # fix district codes
 election_results <-
   election_results %>%

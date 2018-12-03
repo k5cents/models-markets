@@ -22,7 +22,7 @@ scrape_predictit_api <- function(api.url, api.path) {
   return(as_tibble(as.df))
 }
 
-market_names <-
+########## market_names <-
   # run the function to get the tibble of open PredictIt markets
   scrape_predictit_api(api.url = "https://www.predictit.org/",
                        api.path = "api/marketdata/all/") %>%

@@ -1,4 +1,9 @@
-joined <- read_csv("./data/joined,csv")
+library(tidyverse)
+joined <-
+  read_csv("./data/joined.csv",
+           col_types = cols(mid = col_character(),
+                            cid = col_character())) %>%
+  mutate(party = recode(party, "I" = "D"))
 
 j2 <-
   joined %>%
@@ -33,3 +38,15 @@ ggplot(data = filter(j2, party != "I"),
   geom_smooth(aes(color = party,
                   linetype = tool)) +
   scale_color_manual(values = c("blue", "red"))
+
+ggplot(election_results) +
+  geom_bar(aes(x = class)) +
+  labs(title = "Cook Political Report Race Classifications",
+       y = "Number of Race",
+       x = "Cook Political Report Classification") +
+  scale_x_discrete(labels = c("Safe Democratic",
+                              "Likely Democratic",
+                              "Vulnerable Democratic",
+                              "Vulnerable Republican",
+                              "Likely Republican",
+                              "Safe Republican"))

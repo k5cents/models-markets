@@ -38,23 +38,38 @@ market_history <-
 # we want to extract the name, code, or state
 market_history$code <-
   # get Pelosi or Ryan from 2nd word if 3rd word is "be"
-  if_else(condition = word(market_history$code, 3) == "be",
-          true = word(market_history$code, 2),
+  # will get code from name in `congress_members`
+  if_else(condition = str_detect(market_history$code, "re-elected"),
+          true  = word(market_history$code, 3),
           false =
-  # get the Last name from 3rd word if 1st word is "Will"
-  if_else(condition = word(market_history$code, 1) == "Will",
-          true = word(market_history$code, 3),
+
+  # get the district code from 5th word if 6th word is "at-large"
+  # make the district code into XX-01
+  if_else(condition = str_detect(market_history$code, "at-large"),
+          true  = paste(str_remove(word(market_history$code, 5), "\\?"),
+                        "01",
+                        sep = "-"),
           false =
   # get the district code from 5th word if 1st word is "Which"
-  if_else(condition = word(market_history$code, 1) == "Which",
-          true = gsub("?", "", word(market_history$code, 5), fixed = T),
-          false = "FALSE")))
+  if_else(condition = str_detect(market_history$code, "special"),
+          true  = paste(word(market_history$code, 5),
+                        "98",
+                        sep = "-"),
+          false =
+  if_else(condition = str_detect(market_history$code, "Senate"),
+          true  = paste(word(market_history$code, 5),
+                        "99",
+                        sep = "-"),
+          false =
+  if_else(condition = str_detect(market_history$code, "re-elected"),
+          true  = word(market_history$code, 3),
+          false =
+  if_else(condition = str_detect(market_history$code, "Which party"),
+          true  = word(market_history$code, 5),
+          false = "XXXX"
+  ))))))
 
-# add "-99" to state abbs to create at-large district codes for senate races
-market_history$code <-
-  if_else(condition = nchar(market_history$code) == 2,
-          true = paste(market_history$code, "99", sep = "-"),
-          false = market_history$code)
+market_history$code[which(market_history$code == "be")] <- "Pelosi"
 
 # get party ---------------------------------------------------------------
 
@@ -96,10 +111,10 @@ for (i in 1:nrow(market_history)) {
                                                  market_history$party[i])][1]))
 }
 
-# recode the names into district codes
+# keep codes, recode the names into codes
 for (i in 1:nrow(market_history)) {
   market_history$code[i] <-
-    if_else(condition = grepl("-[0-9-]", market_history$code[i]),
+    if_else(condition = str_detect(market_history$code[i], "-[0-9-]"),
             true = market_history$code[i],
             false = congress_members$code[which(congress_members$last ==
                                                 market_history$code[i])][1])
@@ -111,6 +126,12 @@ market_history <- market_history[-which(market_history$mid == "3455"), ]
 # these markets are for special elections and need different district codes
 market_history$code[str_which(market_history$mid, "3949")] <- "MN-98"
 market_history$code[str_which(market_history$mid, "4192")] <- "MS-98"
+
+# turn the numeric market and contract IDs into characters
+market_history$mid <- as.character(market_history$mid)
+market_history$cid <- as.character(market_history$cid)
+
+market_history$code <- str_remove(market_history$code, "\\?")
 
 write_csv(market_history, "./data/market_history.csv")
 

@@ -9,8 +9,7 @@ congress_members <-
   read_csv("https://theunitedstates.io/congress-legislators/legislators-current.csv",
            col_types = cols()) %>%
   unite(col = name,
-        first_name,
-        last_name,
+        first_name, last_name,
         sep = " ",
         remove = FALSE) %>%
   select(name,
@@ -24,7 +23,7 @@ congress_members <-
   arrange(name)
 
 # recode ------------------------------------------------------------------
-congress_members$district[which(is.na(congress_members$district))] <- "00"
+congress_members$district[which(is.na(congress_members$district))] <- "99"
 congress_members$chamber <- recode(congress_members$chamber,
                                    "sen" = "senate",
                                    "rep" = "house")

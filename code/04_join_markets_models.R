@@ -50,10 +50,11 @@ market_history$code <-
           true = gsub("?", "", word(market_history$code, 5), fixed = T),
           false = "FALSE")))
 
-# add "-00" to state abbs to create at-large district codes for senate races
-market_history$code <- if_else(condition = nchar(market_history$code) == 2,
-                  true = paste(market_history$code, "00", sep = "-"),
-                  false = market_history$code)
+# add "-99" to state abbs to create at-large district codes for senate races
+market_history$code <-
+  if_else(condition = nchar(market_history$code) == 2,
+          true = paste(market_history$code, "99", sep = "-"),
+          false = market_history$code)
 
 # get party ---------------------------------------------------------------
 
@@ -104,8 +105,12 @@ for (i in 1:nrow(market_history)) {
                                                 market_history$code[i])][1])
 }
 
-# This question asks if Ryan will be re-elected, shouldn't exist. Redundant.
+# this question asking if Ryan will be re-elected is redundant.
 market_history <- market_history[-which(market_history$mid == "3455"), ]
+
+# these markets are for special elections and need different district codes
+market_history$code[str_which(market_history$mid, "3949")] <- "MN-98"
+market_history$code[str_which(market_history$mid, "4192")] <- "MS-98"
 
 write_csv(market_history, "./data/market_history.csv")
 
@@ -117,6 +122,7 @@ joined <-
              by = c("date", "code", "party")) %>%
   select(-last) %>%
   mutate(mid = as.character(mid),
-         cid = as.character(cid))
+         cid = as.character(cid)) %>%
+  arrange(date)
 
 write_csv(joined, "./data/joined.csv")

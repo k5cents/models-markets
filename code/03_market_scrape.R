@@ -7,6 +7,9 @@ library(httr)
 library(jsonlite)
 
 # get market names --------------------------------------------------------
+# THIS NO LONGER WORKS, OR IS NEEDED. TODAY'S API NO LONGER HAS THE RELEVANT
+# MARKETS, ALTHO THE CHART DATA CAN BE SCRAPED FOR 90 DAYS BEFORE CLOSURE
+
 
 # this function will download an API XML tree as a tibble
 scrape_predictit_api <- function(api.url, api.path) {
@@ -43,6 +46,10 @@ market_names <-
          str_detect(question, "Which party will") !=
   # and not having to do with governor races
          str_detect(question, "governor's"))
+
+market_names <- read_csv("./data/market_names.csv",
+                         col_types = cols(mid = col_character(),
+                                          cid = col_character()))
 
 # get market history ------------------------------------------------------
 

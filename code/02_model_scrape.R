@@ -9,22 +9,23 @@ senate_model <-
   read_csv("https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv",
            col_types =  cols(incumbent = col_logical())) %>%
   filter(model == "classic",
-         party == "D" | party == "R" | party == "I") %>%
+         party == "D" | party == "R" | party == "I",
+         candidate != "Chris McDaniel" & candidate != "Tobey Bartee") %>%
   rename(name = candidate,
          date = forecastdate,
          prob = win_probability) %>%
   mutate(chamber = "senate",
          voteshare = voteshare / 100,
-         district = "00") %>%
+         # for special elections, XX-98 rathert than XX-99
+         district = if_else(special, "98", "99")) %>%
   unite(col = code,
         state, district,
         sep = "-",
-        remove = FALSE) %>%
+        remove = TRUE) %>%
   select(date,
          name,
          chamber,
-         state,
-         district,
+         code,
          party,
          incumbent,
          voteshare,
@@ -45,12 +46,11 @@ house_model <-
   unite(col = code,
         state, district,
         sep = "-",
-        remove = FALSE) %>%
+        remove = TRUE) %>%
   select(date,
          name,
          chamber,
-         state,
-         district,
+         code,
          party,
          incumbent,
          voteshare,
@@ -70,10 +70,6 @@ model_history$last <-
 
 model_history <-
   model_history %>%
-  unite(col = code,
-        state, district,
-        sep = "-",
-        remove = TRUE) %>%
   select(date,
          name,
          last,

@@ -50,15 +50,15 @@ for (i in 1:6) {
 senate_election_results <- bind_rows(senate_results_list)
 
 senate_election_results <- arrange(senate_election_results, code)
-senate_election_results$code <- abb <- c("AZ-00", "CA-00", "CO-00", "DE-00",
-                                         "FL-00", "HI-00", "IN-00", "ME-00",
-                                         "MA-00", "MD-00", "MI-00", "MN-00",
-                                         "MN-98", "MS-00", "MS-98", "MO-00",
-                                         "MT-00", "ND-00", "NJ-00", "NM-00",
-                                         "NY-00", "NE-00", "NV-00", "OH-00",
-                                         "PA-00", "RI-00", "TN-00", "TX-00",
-                                         "UT-00", "VA-00", "VT-00", "WV-00",
-                                         "WA-00", "WI-00", "WY-00")
+senate_election_results$code <- abb <- c("AZ-99", "CA-99", "CO-99", "DE-99",
+                                         "FL-99", "HI-99", "IN-99", "ME-99",
+                                         "MA-99", "MD-99", "MI-99", "MN-99",
+                                         "MN-98", "MS-99", "MS-98", "MO-99",
+                                         "MT-99", "ND-99", "NJ-99", "NM-99",
+                                         "NY-99", "NE-99", "NV-99", "OH-99",
+                                         "PA-99", "RI-99", "TN-99", "TX-99",
+                                         "UT-99", "VA-99", "VT-99", "WV-99",
+                                         "WA-99", "WI-99", "WY-99")
 
 # combine house and senate
 election_results <- bind_rows(house_election_results,
@@ -69,9 +69,9 @@ election_results$class <- recode(election_results$class,
                                  "1" = "safe D",
                                  "2" = "lkly D",
                                  "3" = "vul D",
-                                 "4" = "vul D",
-                                 "5" = "lkly D",
-                                 "6" = "safe D")
+                                 "4" = "vul R",
+                                 "5" = "lkly R",
+                                 "6" = "safe R")
 
 # fix district codes
 election_results <-

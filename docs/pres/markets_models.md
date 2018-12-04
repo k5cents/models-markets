@@ -2,13 +2,14 @@
 title: "Models and Markets"
 author: "Kiernan Nicholls"
 date: "December 4, 2018"
-output: 
-  ioslides_presentation: 
+output:
+  ioslides_presentation:
     keep_md: yes
     widescreen: yes
-  # beamer_presentation: 
-    # keep_tex: yes
-editor_options: 
+  slidy_presentation: default
+  beamer_presentation:
+    keep_tex: yes
+editor_options:
   chunk_output_type: console
 ---
 
@@ -91,19 +92,19 @@ Trained off elections since 1998. Only miscalled 3.3% of past races.
 ## Model Data
 
 ```
-## # A tibble: 89,918 x 8
-##    date       name           chamber code  party incumbent voteshare  prob
-##    <date>     <chr>          <chr>   <chr> <chr> <lgl>         <dbl> <dbl>
-##  1 2018-08-01 Kyrsten Sinema senate  AZ-99 D     FALSE         0.511 0.738
-##  2 2018-08-01 Martha McSally senate  AZ-99 R     FALSE         0.461 0.262
-##  3 2018-08-01 Dianne Feinst… senate  CA-99 D     TRUE          0.636 0.999
-##  4 2018-08-01 Kevin de Leon  senate  CA-99 D     FALSE         0.364 0.001
-##  5 2018-08-01 Christopher M… senate  CT-99 D     TRUE          0.641 0.999
-##  6 2018-08-01 Matthew Corey  senate  CT-99 R     FALSE         0.324 0.001
-##  7 2018-08-01 Thomas R. Car… senate  DE-99 D     TRUE          0.607 0.989
-##  8 2018-08-01 Rob Arlett     senate  DE-99 R     FALSE         0.367 0.011
-##  9 2018-08-01 Bill Nelson    senate  FL-99 D     TRUE          0.511 0.616
-## 10 2018-08-01 Rick Scott     senate  FL-99 R     FALSE         0.489 0.384
+## # A tibble: 89,918 x 6
+##    date       chamber code  party voteshare  prob
+##    <date>     <chr>   <chr> <chr>     <dbl> <dbl>
+##  1 2018-08-01 senate  AZ-99 D         0.511 0.738
+##  2 2018-08-01 senate  AZ-99 R         0.461 0.262
+##  3 2018-08-01 senate  CA-99 D         0.636 0.999
+##  4 2018-08-01 senate  CA-99 D         0.364 0.001
+##  5 2018-08-01 senate  CT-99 D         0.641 0.999
+##  6 2018-08-01 senate  CT-99 R         0.324 0.001
+##  7 2018-08-01 senate  DE-99 D         0.607 0.989
+##  8 2018-08-01 senate  DE-99 R         0.367 0.011
+##  9 2018-08-01 senate  FL-99 D         0.511 0.616
+## 10 2018-08-01 senate  FL-99 R         0.489 0.384
 ## # ... with 89,908 more rows
 ```
 
@@ -158,19 +159,19 @@ university, for educational purposes
 ## Scraped Market Data
 
 ```
-## # A tibble: 24,556 x 6
-##    date         mid   cid contract                             price volume
-##    <date>     <dbl> <dbl> <chr>                                <dbl>  <dbl>
-##  1 2018-08-10  2918  5264 Will Elizabeth Warren be re-elected?  0.95     56
-##  2 2018-08-11  2918  5264 Will Elizabeth Warren be re-elected?  0.95     50
-##  3 2018-08-12  2918  5264 Will Elizabeth Warren be re-elected?  0.89    100
-##  4 2018-08-13  2918  5264 Will Elizabeth Warren be re-elected?  0.9      40
-##  5 2018-08-14  2918  5264 Will Elizabeth Warren be re-elected?  0.91     61
-##  6 2018-08-15  2918  5264 Will Elizabeth Warren be re-elected?  0.91     85
-##  7 2018-08-16  2918  5264 Will Elizabeth Warren be re-elected?  0.91     59
-##  8 2018-08-17  2918  5264 Will Elizabeth Warren be re-elected?  0.91      0
-##  9 2018-08-18  2918  5264 Will Elizabeth Warren be re-elected?  0.91      0
-## 10 2018-08-19  2918  5264 Will Elizabeth Warren be re-elected?  0.95     50
+## # A tibble: 24,556 x 5
+##    date       mid   cid   price volume
+##    <date>     <chr> <chr> <dbl>  <dbl>
+##  1 2018-08-10 2918  5264   0.95     56
+##  2 2018-08-11 2918  5264   0.95     50
+##  3 2018-08-12 2918  5264   0.89    100
+##  4 2018-08-13 2918  5264   0.9      40
+##  5 2018-08-14 2918  5264   0.91     61
+##  6 2018-08-15 2918  5264   0.91     85
+##  7 2018-08-16 2918  5264   0.91     59
+##  8 2018-08-17 2918  5264   0.91      0
+##  9 2018-08-18 2918  5264   0.91      0
+## 10 2018-08-19 2918  5264   0.95     50
 ## # ... with 24,546 more rows
 ```
 
@@ -188,22 +189,17 @@ university, for educational purposes
 
 ```r
 if_else(str_detect(market_history$code, "re-elected"),
-        true = word(market_history$code, 3),
-        false = 
-  if_else(str_detect(market_history$code, "at-large"),
-          true = paste(word(market_history$code, 5), "01", sep = "-"),
-          false = 
-    if_else(str_detect(market_history$code, "special"),
-            true = paste(word(market_history$code, 5), "98", sep = "-"),
-            false = 
-      if_else(str_detect(market_history$code, "Senate"),
-              true = paste(word(market_history$code, 5), "99", sep = "-"),
-              false = 
-        if_else(str_detect(market_history$code, "re-elected"),
-                true = word(market_history$code, 3),
-                false = 
-          if_else(str_detect(market_history$code, "Which party"),
-                  true = word(market_history$code, 5), "ERROR"))))))
+        word(market_history$code, 3),
+if_else(str_detect(market_history$code, "at-large"),
+        paste(word(market_history$code, 5), "01", sep = "-"),
+if_else(str_detect(market_history$code, "special"),
+        paste(word(market_history$code, 5), "98", sep = "-"),
+if_else(str_detect(market_history$code, "Senate"),
+        paste(word(market_history$code, 5), "99", sep = "-"),
+if_else(str_detect(market_history$code, "re-elected"),
+        word(market_history$code, 3),
+if_else(str_detect(market_history$code, "Which party"),
+        word(market_history$code, 5), "ERROR"))))))
 ```
 
 
@@ -231,19 +227,19 @@ if_else(str_detect(market_history$code, "re-elected"),
 
 
 ```
-## # A tibble: 24,555 x 9
-##    date       code  party voteshare  prob mid   cid   price volume
-##    <date>     <chr> <chr>     <dbl> <dbl> <chr> <chr> <dbl>  <dbl>
-##  1 2018-08-10 MA-99 D         0.641 0.999 2918  5264   0.95     56
-##  2 2018-08-10 TX-99 R         0.514 0.742 2928  5313   0.7    1303
-##  3 2018-08-10 VT-99 D         0.680 1     2940  5368   0.95    542
-##  4 2018-08-10 WV-99 D         0.529 0.859 2941  5369   0.75    533
-##  5 2018-08-10 IN-99 D         0.530 0.864 2998  5563   0.39     12
-##  6 2018-08-10 CA-12 D         0.898 1     3450  7165   0.9      51
-##  7 2018-08-10 ND-99 D         0.510 0.594 3480  7266   0.42     81
-##  8 2018-08-10 MO-99 D         0.510 0.733 3484  7270   0.47    333
-##  9 2018-08-10 WI-99 D         0.577 0.977 3485  7271   0.83      0
-## 10 2018-08-10 MI-99 D         0.572 0.985 3489  7287   0.79    390
+## # A tibble: 24,555 x 6
+##    date       code  party  prob price volume
+##    <date>     <chr> <chr> <dbl> <dbl>  <dbl>
+##  1 2018-08-10 MA-99 D     0.999  0.95     56
+##  2 2018-08-10 TX-99 R     0.742  0.7    1303
+##  3 2018-08-10 VT-99 D     1      0.95    542
+##  4 2018-08-10 WV-99 D     0.859  0.75    533
+##  5 2018-08-10 IN-99 D     0.864  0.39     12
+##  6 2018-08-10 CA-12 D     1      0.9      51
+##  7 2018-08-10 ND-99 D     0.594  0.42     81
+##  8 2018-08-10 MO-99 D     0.733  0.47    333
+##  9 2018-08-10 WI-99 D     0.977  0.83      0
+## 10 2018-08-10 MI-99 D     0.985  0.79    390
 ## # ... with 24,545 more rows
 ```
 
@@ -251,19 +247,19 @@ if_else(str_detect(market_history$code, "re-elected"),
 
 
 ```
-## # A tibble: 46,138 x 6
-##    date       name             code  party tool    prob
-##    <date>     <chr>            <chr> <chr> <chr>  <dbl>
-##  1 2018-08-10 Martha McSally   AZ-99 R     model  0.272
-##  2 2018-08-10 Martha McSally   AZ-99 R     market 0.02 
-##  3 2018-08-10 Nancy Pelosi     CA-12 D     model  1    
-##  4 2018-08-10 Nancy Pelosi     CA-12 D     market 0.9  
-##  5 2018-08-10 Devin Nunes      CA-22 R     model  0.96 
-##  6 2018-08-10 Devin Nunes      CA-22 R     market 0.65 
-##  7 2018-08-10 Diane L. Harkey  CA-49 R     model  0.197
-##  8 2018-08-10 Diane L. Harkey  CA-49 R     market 0.03 
-##  9 2018-08-10 Dianne Feinstein CA-99 D     model  0.999
-## 10 2018-08-10 Kevin de Leon    CA-99 D     model  0.001
+## # A tibble: 46,138 x 5
+##    date       code  party tool    prob
+##    <date>     <chr> <chr> <chr>  <dbl>
+##  1 2018-08-10 AZ-99 R     model  0.272
+##  2 2018-08-10 AZ-99 R     market 0.02 
+##  3 2018-08-10 CA-12 D     model  1    
+##  4 2018-08-10 CA-12 D     market 0.9  
+##  5 2018-08-10 CA-22 R     model  0.96 
+##  6 2018-08-10 CA-22 R     market 0.65 
+##  7 2018-08-10 CA-49 R     model  0.197
+##  8 2018-08-10 CA-49 R     market 0.03 
+##  9 2018-08-10 CA-99 D     model  0.999
+## 10 2018-08-10 CA-99 D     model  0.001
 ## # ... with 46,128 more rows
 ```
 

@@ -2,13 +2,14 @@
 title: "Models and Markets"
 author: "Kiernan Nicholls"
 date: "December 4, 2018"
-output: 
-  ioslides_presentation: 
+output:
+  beamer_presentation:
+    keep_tex: yes
+  slidy_presentation: default
+  ioslides_presentation:
     keep_md: yes
     widescreen: yes
-  # beamer_presentation: 
-    # keep_tex: yes
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -99,7 +100,7 @@ Trained off elections since 1998. Only miscalled 3.3% of past races.
 model_history <- 
   read_csv("./data/model_history.csv",
            col_types = cols()) %>% 
-  select(-last)
+  select(-last, -name, -incumbent, chamber)
 
 print(model_history)
 ```
@@ -155,7 +156,9 @@ university, for educational purposes
 ## Scraped Market Data
 ```{r market info, echo=FALSE, message=FALSE, warning=FALSE}
 market_data <- read_csv("./data/market_data.csv",
-                        col_types = cols())
+                        col_types = cols(mid = col_character(),
+                                         cid = col_character())) %>% 
+  select(-contract)
 
 print(market_data)
 ```
@@ -173,22 +176,17 @@ print(market_data)
 
 ```{r ifelse, eval=FALSE, echo=TRUE}
 if_else(str_detect(market_history$code, "re-elected"),
-        true = word(market_history$code, 3),
-        false = 
-  if_else(str_detect(market_history$code, "at-large"),
-          true = paste(word(market_history$code, 5), "01", sep = "-"),
-          false = 
-    if_else(str_detect(market_history$code, "special"),
-            true = paste(word(market_history$code, 5), "98", sep = "-"),
-            false = 
-      if_else(str_detect(market_history$code, "Senate"),
-              true = paste(word(market_history$code, 5), "99", sep = "-"),
-              false = 
-        if_else(str_detect(market_history$code, "re-elected"),
-                true = word(market_history$code, 3),
-                false = 
-          if_else(str_detect(market_history$code, "Which party"),
-                  true = word(market_history$code, 5), "ERROR"))))))
+        word(market_history$code, 3),
+if_else(str_detect(market_history$code, "at-large"),
+        paste(word(market_history$code, 5), "01", sep = "-"),
+if_else(str_detect(market_history$code, "special"),
+        paste(word(market_history$code, 5), "98", sep = "-"),
+if_else(str_detect(market_history$code, "Senate"),
+        paste(word(market_history$code, 5), "99", sep = "-"),
+if_else(str_detect(market_history$code, "re-elected"),
+        word(market_history$code, 3),
+if_else(str_detect(market_history$code, "Which party"),
+        word(market_history$code, 5), "ERROR"))))))
 ```
 
 
@@ -211,7 +209,7 @@ joined <-
   mutate(party = recode(party, "I" = "D"))
 
 joined %>% 
-  select(-name, -chamber, -incumbent) %>% 
+  select(-name, -chamber, -incumbent, -voteshare, -mid, -cid) %>% 
   print()
 ```
 
@@ -227,7 +225,7 @@ joined_tidy <-
                        "price" = "market",
                        "prob" = "model")) %>% 
   filter(date < "2018-11-06") %>% 
-  select(date, name, code, party, tool, prob) %>%
+  select(date, code, party, tool, prob) %>%
   arrange(date, code)
 
 print(joined_tidy)

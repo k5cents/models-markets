@@ -274,20 +274,20 @@ Trained off elections since 1998. Only miscalled 3.3\% of past races.
 \begin{frame}[fragile]{Model Data}
 
 \begin{verbatim}
-## 
-## % Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-## % Date and time: Tue, Dec 04, 2018 - 02:19:17 PM
-## \begin{table}[!htbp] \centering 
-##   \caption{} 
-##   \label{} 
-## \begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
-## \\[-1.8ex]\hline 
-## \hline \\[-1.8ex] 
-## Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Pctl(25)} & \multicolumn{1}{c}{Pctl(75)} & \multicolumn{1}{c}{Max} \\ 
-## \hline \\[-1.8ex] 
-## \hline \\[-1.8ex] 
-## \end{tabular} 
-## \end{table}
+## # A tibble: 89,918 x 6
+##    date       chamber code  party voteshare  prob
+##    <date>     <chr>   <chr> <chr>     <dbl> <dbl>
+##  1 2018-08-01 senate  AZ-99 D         0.511 0.738
+##  2 2018-08-01 senate  AZ-99 R         0.461 0.262
+##  3 2018-08-01 senate  CA-99 D         0.636 0.999
+##  4 2018-08-01 senate  CA-99 D         0.364 0.001
+##  5 2018-08-01 senate  CT-99 D         0.641 0.999
+##  6 2018-08-01 senate  CT-99 R         0.324 0.001
+##  7 2018-08-01 senate  DE-99 D         0.607 0.989
+##  8 2018-08-01 senate  DE-99 R         0.367 0.011
+##  9 2018-08-01 senate  FL-99 D         0.511 0.616
+## 10 2018-08-01 senate  FL-99 R         0.489 0.384
+## # ... with 89,908 more rows
 \end{verbatim}
 
 \end{frame}
@@ -401,19 +401,19 @@ purposes
 \begin{frame}[fragile]{Scraped Market Data}
 
 \begin{verbatim}
-## # A tibble: 24,556 x 6
-##    date         mid   cid contract                             price volume
-##    <date>     <dbl> <dbl> <chr>                                <dbl>  <dbl>
-##  1 2018-08-10  2918  5264 Will Elizabeth Warren be re-elected?  0.95     56
-##  2 2018-08-11  2918  5264 Will Elizabeth Warren be re-elected?  0.95     50
-##  3 2018-08-12  2918  5264 Will Elizabeth Warren be re-elected?  0.89    100
-##  4 2018-08-13  2918  5264 Will Elizabeth Warren be re-elected?  0.9      40
-##  5 2018-08-14  2918  5264 Will Elizabeth Warren be re-elected?  0.91     61
-##  6 2018-08-15  2918  5264 Will Elizabeth Warren be re-elected?  0.91     85
-##  7 2018-08-16  2918  5264 Will Elizabeth Warren be re-elected?  0.91     59
-##  8 2018-08-17  2918  5264 Will Elizabeth Warren be re-elected?  0.91      0
-##  9 2018-08-18  2918  5264 Will Elizabeth Warren be re-elected?  0.91      0
-## 10 2018-08-19  2918  5264 Will Elizabeth Warren be re-elected?  0.95     50
+## # A tibble: 24,556 x 5
+##    date       mid   cid   price volume
+##    <date>     <chr> <chr> <dbl>  <dbl>
+##  1 2018-08-10 2918  5264   0.95     56
+##  2 2018-08-11 2918  5264   0.95     50
+##  3 2018-08-12 2918  5264   0.89    100
+##  4 2018-08-13 2918  5264   0.9      40
+##  5 2018-08-14 2918  5264   0.91     61
+##  6 2018-08-15 2918  5264   0.91     85
+##  7 2018-08-16 2918  5264   0.91     59
+##  8 2018-08-17 2918  5264   0.91      0
+##  9 2018-08-18 2918  5264   0.91      0
+## 10 2018-08-19 2918  5264   0.95     50
 ## # ... with 24,546 more rows
 \end{verbatim}
 
@@ -445,22 +445,17 @@ purposes
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"re-elected"}\NormalTok{),}
-        \DataTypeTok{true =} \KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{3}\NormalTok{),}
-        \DataTypeTok{false =} 
-  \KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"at-large"}\NormalTok{),}
-          \DataTypeTok{true =} \KeywordTok{paste}\NormalTok{(}\KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"01"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"-"}\NormalTok{),}
-          \DataTypeTok{false =} 
-    \KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"special"}\NormalTok{),}
-            \DataTypeTok{true =} \KeywordTok{paste}\NormalTok{(}\KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"98"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"-"}\NormalTok{),}
-            \DataTypeTok{false =} 
-      \KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"Senate"}\NormalTok{),}
-              \DataTypeTok{true =} \KeywordTok{paste}\NormalTok{(}\KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"99"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"-"}\NormalTok{),}
-              \DataTypeTok{false =} 
-        \KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"re-elected"}\NormalTok{),}
-                \DataTypeTok{true =} \KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{3}\NormalTok{),}
-                \DataTypeTok{false =} 
-          \KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"Which party"}\NormalTok{),}
-                  \DataTypeTok{true =} \KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"ERROR"}\NormalTok{))))))}
+        \KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{3}\NormalTok{),}
+\KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"at-large"}\NormalTok{),}
+        \KeywordTok{paste}\NormalTok{(}\KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"01"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"-"}\NormalTok{),}
+\KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"special"}\NormalTok{),}
+        \KeywordTok{paste}\NormalTok{(}\KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"98"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"-"}\NormalTok{),}
+\KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"Senate"}\NormalTok{),}
+        \KeywordTok{paste}\NormalTok{(}\KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"99"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"-"}\NormalTok{),}
+\KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"re-elected"}\NormalTok{),}
+        \KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{3}\NormalTok{),}
+\KeywordTok{if_else}\NormalTok{(}\KeywordTok{str_detect}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\StringTok{"Which party"}\NormalTok{),}
+        \KeywordTok{word}\NormalTok{(market_history}\OperatorTok{$}\NormalTok{code, }\DecValTok{5}\NormalTok{), }\StringTok{"ERROR"}\NormalTok{))))))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -490,19 +485,19 @@ purposes
 \begin{frame}[fragile]{Joining Markets and Models}
 
 \begin{verbatim}
-## # A tibble: 24,555 x 9
-##    date       code  party voteshare  prob mid   cid   price volume
-##    <date>     <chr> <chr>     <dbl> <dbl> <chr> <chr> <dbl>  <dbl>
-##  1 2018-08-10 MA-99 D         0.641 0.999 2918  5264   0.95     56
-##  2 2018-08-10 TX-99 R         0.514 0.742 2928  5313   0.7    1303
-##  3 2018-08-10 VT-99 D         0.680 1     2940  5368   0.95    542
-##  4 2018-08-10 WV-99 D         0.529 0.859 2941  5369   0.75    533
-##  5 2018-08-10 IN-99 D         0.530 0.864 2998  5563   0.39     12
-##  6 2018-08-10 CA-12 D         0.898 1     3450  7165   0.9      51
-##  7 2018-08-10 ND-99 D         0.510 0.594 3480  7266   0.42     81
-##  8 2018-08-10 MO-99 D         0.510 0.733 3484  7270   0.47    333
-##  9 2018-08-10 WI-99 D         0.577 0.977 3485  7271   0.83      0
-## 10 2018-08-10 MI-99 D         0.572 0.985 3489  7287   0.79    390
+## # A tibble: 24,555 x 6
+##    date       code  party  prob price volume
+##    <date>     <chr> <chr> <dbl> <dbl>  <dbl>
+##  1 2018-08-10 MA-99 D     0.999  0.95     56
+##  2 2018-08-10 TX-99 R     0.742  0.7    1303
+##  3 2018-08-10 VT-99 D     1      0.95    542
+##  4 2018-08-10 WV-99 D     0.859  0.75    533
+##  5 2018-08-10 IN-99 D     0.864  0.39     12
+##  6 2018-08-10 CA-12 D     1      0.9      51
+##  7 2018-08-10 ND-99 D     0.594  0.42     81
+##  8 2018-08-10 MO-99 D     0.733  0.47    333
+##  9 2018-08-10 WI-99 D     0.977  0.83      0
+## 10 2018-08-10 MI-99 D     0.985  0.79    390
 ## # ... with 24,545 more rows
 \end{verbatim}
 
@@ -511,19 +506,19 @@ purposes
 \begin{frame}[fragile]{Tidy Data}
 
 \begin{verbatim}
-## # A tibble: 46,138 x 6
-##    date       name             code  party tool    prob
-##    <date>     <chr>            <chr> <chr> <chr>  <dbl>
-##  1 2018-08-10 Martha McSally   AZ-99 R     model  0.272
-##  2 2018-08-10 Martha McSally   AZ-99 R     market 0.02 
-##  3 2018-08-10 Nancy Pelosi     CA-12 D     model  1    
-##  4 2018-08-10 Nancy Pelosi     CA-12 D     market 0.9  
-##  5 2018-08-10 Devin Nunes      CA-22 R     model  0.96 
-##  6 2018-08-10 Devin Nunes      CA-22 R     market 0.65 
-##  7 2018-08-10 Diane L. Harkey  CA-49 R     model  0.197
-##  8 2018-08-10 Diane L. Harkey  CA-49 R     market 0.03 
-##  9 2018-08-10 Dianne Feinstein CA-99 D     model  0.999
-## 10 2018-08-10 Kevin de Leon    CA-99 D     model  0.001
+## # A tibble: 46,138 x 5
+##    date       code  party tool    prob
+##    <date>     <chr> <chr> <chr>  <dbl>
+##  1 2018-08-10 AZ-99 R     model  0.272
+##  2 2018-08-10 AZ-99 R     market 0.02 
+##  3 2018-08-10 CA-12 D     model  1    
+##  4 2018-08-10 CA-12 D     market 0.9  
+##  5 2018-08-10 CA-22 R     model  0.96 
+##  6 2018-08-10 CA-22 R     market 0.65 
+##  7 2018-08-10 CA-49 R     model  0.197
+##  8 2018-08-10 CA-49 R     market 0.03 
+##  9 2018-08-10 CA-99 D     model  0.999
+## 10 2018-08-10 CA-99 D     model  0.001
 ## # ... with 46,128 more rows
 \end{verbatim}
 

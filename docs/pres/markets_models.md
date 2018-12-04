@@ -6,6 +6,8 @@ output:
   ioslides_presentation: 
     keep_md: yes
     widescreen: yes
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -46,12 +48,21 @@ _e.g., RealClearPolitics_
 
 ## Forecasting Models
 
+Montel carlo simulations = probability distribution
+
+1. Define a domain of possible inputs
+2. Generate inputs randomly from a probability distribution over the domain
+3. Perform a deterministic computation on the inputs
+4. Aggregate the results
+
+* Draw share of vote, compared
+* 20,000 interations
+* Law of large numbers
 
 ## About FiveThirtyEight
 
 * Founded in 2008, sold to NYT then ABC
 * Least inaccurate in 2016
-
 
 > Someone could look like a genius simply by doing some fairly basic research
 into what really has predictive power in a political campaign
@@ -124,7 +135,6 @@ university, for educational purposes
   * Either $1 or $0
   * Sell at any time
 
-
 ## PredictIt Markets
 
 * Will Donald Trump be president at year-end 2018?
@@ -194,25 +204,6 @@ if_else(str_detect(market_history$code, "re-elected"),
                   true = word(market_history$code, 5), "ERROR"))))))
 ```
 
-## Market Data Combination
-
-
-```
-## # A tibble: 539 x 5
-##    name              last      chamber code  party
-##    <chr>             <chr>     <chr>   <chr> <chr>
-##  1 A. Ferguson       Ferguson  house   GA-03 R    
-##  2 A. McEachin       McEachin  house   VA-04 D    
-##  3 Adam Kinzinger    Kinzinger house   IL-16 R    
-##  4 Adam Schiff       Schiff    house   CA-28 D    
-##  5 Adam Smith        Smith     house   WA-09 D    
-##  6 Adrian Smith      Smith     house   NE-03 R    
-##  7 Adriano Espaillat Espaillat house   NY-13 D    
-##  8 Al Green          Green     house   TX-09 D    
-##  9 Al Lawson         Lawson    house   FL-05 D    
-## 10 Alan Lowenthal    Lowenthal house   CA-47 D    
-## # ... with 529 more rows
-```
 
 ## Market Data Combination
 
@@ -319,8 +310,10 @@ if_else(str_detect(market_history$code, "re-elected"),
 
 ## Post-Election Results
 
-1. > 50% probability constitues call
-2. 
+1. Any given time, >50% is a predicted winner
+2. For each day, ask if guess matches winner
+3. Average across all races
+4. Plot over time
 
 ## Accuracy Over Time
 

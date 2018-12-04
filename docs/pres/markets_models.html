@@ -139,6 +139,21 @@
 
 </article></slide><slide class=""><hgroup><h2>Forecasting Models</h2></hgroup><article  id="forecasting-models">
 
+<p>Montel carlo simulations = probability distribution</p>
+
+<ol>
+<li>Define a domain of possible inputs</li>
+<li>Generate inputs randomly from a probability distribution over the domain</li>
+<li>Perform a deterministic computation on the inputs</li>
+<li>Aggregate the results</li>
+</ol>
+
+<ul>
+<li>Draw share of vote, compared</li>
+<li>20,000 interations</li>
+<li>Law of large numbers</li>
+</ul>
+
 </article></slide><slide class=""><hgroup><h2>About FiveThirtyEight</h2></hgroup><article  id="about-fivethirtyeight">
 
 <ul>
@@ -290,23 +305,6 @@
 
 </article></slide><slide class=""><hgroup><h2>Market Data Combination</h2></hgroup><article  id="market-data-combination">
 
-<pre >## # A tibble: 539 x 5
-##    name              last      chamber code  party
-##    &lt;chr&gt;             &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;
-##  1 A. Ferguson       Ferguson  house   GA-03 R    
-##  2 A. McEachin       McEachin  house   VA-04 D    
-##  3 Adam Kinzinger    Kinzinger house   IL-16 R    
-##  4 Adam Schiff       Schiff    house   CA-28 D    
-##  5 Adam Smith        Smith     house   WA-09 D    
-##  6 Adrian Smith      Smith     house   NE-03 R    
-##  7 Adriano Espaillat Espaillat house   NY-13 D    
-##  8 Al Green          Green     house   TX-09 D    
-##  9 Al Lawson         Lawson    house   FL-05 D    
-## 10 Alan Lowenthal    Lowenthal house   CA-47 D    
-## # ... with 529 more rows</pre>
-
-</article></slide><slide class=""><hgroup><h2>Market Data Combination</h2></hgroup><article  id="market-data-combination-1">
-
 <pre >## # A tibble: 24,466 x 7
 ##    date         mid   cid price volume code  party
 ##    &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
@@ -400,10 +398,10 @@
 </article></slide><slide class=""><hgroup><h2>Post-Election Results</h2></hgroup><article  id="post-election-results">
 
 <ol>
-<li><blockquote>
-<p>50% probability constitues call</p>
-</blockquote></li>
-<li></li>
+<li>Any given time, &gt;50% is a predicted winner</li>
+<li>For each day, ask if guess matches winner</li>
+<li>Average across all races</li>
+<li>Plot over time</li>
 </ol>
 
 </article></slide><slide class=""><hgroup><h2>Accuracy Over Time</h2></hgroup><article  id="accuracy-over-time">

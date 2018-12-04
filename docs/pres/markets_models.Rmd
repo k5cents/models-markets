@@ -6,8 +6,8 @@ output:
   ioslides_presentation: 
     keep_md: yes
     widescreen: yes
-  beamer_presentation: 
-    keep_tex: yes
+  # beamer_presentation: 
+    # keep_tex: yes
 editor_options: 
   chunk_output_type: console
 ---

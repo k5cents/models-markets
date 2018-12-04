@@ -14,6 +14,8 @@ j2 <-
                        "price" = "market",
                        "prob" = "model"))
 
+# time difference model vs market -----------------------------------------
+
 difference <-
   ggplot(filter(joined, party != "I"),
          aes(x = date,
@@ -39,14 +41,32 @@ ggplot(data = filter(j2, party != "I"),
                   linetype = tool)) +
   scale_color_manual(values = c("blue", "red"))
 
+# cook class barplots -----------------------------------------------------
+
 ggplot(election_results) +
   geom_bar(aes(x = class)) +
-  labs(title = "Cook Political Report Race Classifications",
+  labs(title = "Number of Races by Cook Report Classification",
+       subtitle = nrow(election_results),
        y = "Number of Race",
        x = "Cook Political Report Classification") +
-  scale_x_discrete(labels = c("Safe Democratic",
-                              "Likely Democratic",
-                              "Vulnerable Democratic",
-                              "Vulnerable Republican",
-                              "Likely Republican",
-                              "Safe Republican"))
+  scale_x_discrete(labels = c("Safe Dem",
+                              "Likely Dem",
+                              "Vulnerable Dem",
+                              "Vulnerable Rep",
+                              "Likely Rep",
+                              "Safe Rep"))
+
+ggplot(filter(election_results, code %in% joined$code)) +
+  geom_bar(aes(x = class)) +
+  labs(title = "Number of Races by Cook Report Classification",
+       subtitle = nrow(filter(election_results, code %in% joined$code)),
+       y = "Number of Race",
+       x = "Cook Political Report Classification") +
+  scale_x_discrete(labels = c("Safe Dem",
+                              "Likely Dem",
+                              "Vulnerable Dem",
+                              "Vulnerable Rep",
+                              "Likely Rep",
+                              "Safe Rep"))
+
+model_history %>% arrange(last)

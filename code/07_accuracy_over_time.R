@@ -65,8 +65,8 @@ accuracy <-
   filter(day < "2018-11-06") %>%
   arrange(day) %>%
   mutate(tool = recode(tool,
-                       "model" = "model_accuracy",
-                       "market" = "market_accuracy"))
+                       "model_accuracy" = "model",
+                       "market_accuracy" = "market"))
 
 write_csv(accuracy, "./data/accuracy.csv")
 

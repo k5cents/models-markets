@@ -1,15 +1,15 @@
 ---
 title: "Models and Markets"
-subtitle: "Comparing Elective Capabilities"
+subtitle: "Comparing Predictive Capabilities"
 author: "Kiernan Nicholls"
 date: "December 4, 2018"
 output:
-  beamer_presentation:
-    keep_tex: yes
-  slidy_presentation: default
   ioslides_presentation:
     keep_md: yes
     widescreen: yes
+  slidy_presentation: default
+  beamer_presentation:
+    keep_tex: yes
 editor_options:
   chunk_output_type: console
 ---
@@ -211,6 +211,9 @@ joined <-
                             cid = col_character())) %>% 
   mutate(party = recode(party, "I" = "D"))
 
+joined$party[which(joined$name == "Kevin de Leon")] <- "R"
+joined[which(joined$name == "Chris Pappas" & joined$price == 0.01), ] <- NA
+
 joined %>% 
   select(-name, -chamber, -incumbent, -voteshare, -mid, -cid) %>% 
   print()
@@ -275,7 +278,6 @@ ggplot(MA99) +
   geom_hline(aes(yintercept = 0.50))
 ```
 
-
 ## Probability by Tool
 
 ```{r prob tool, echo=FALSE, message=FALSE, warning=FALSE}
@@ -306,6 +308,41 @@ ggplot(joined,
   ylab("Market Price - Model Prob") +
   geom_hline(yintercept = 0)
 ```
+
+## Difference in Tools
+
+```{r aug10 label, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+ggplot(filter(joined, party == "D" & date == "2018-09-01")) +
+  geom_label(aes(prob, price, 
+                 fill = incumbent, 
+                 label = code)) +
+  geom_abline(slope = 1, intercept = 0) +
+  scale_fill_manual(values = c("yellow", "purple")) +
+  labs(title = "Democratic Model Probability and Market Price",
+       subtitle = "2018-09-01",
+       x = "Model Probability",
+       y = "Contract Price")
+```
+
+## Difference in Tools
+
+```{r nov05 label, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(filter(joined, party == "D" & date == "2018-11-05")) +
+  geom_label(aes(prob, price, 
+                 fill = incumbent, 
+                 label = code)) +
+  geom_abline(slope = 1, intercept = 0) +
+  scale_fill_manual(values = c("yellow", "purple")) +
+  labs(title = "Democratic Model Probability and Market Price",
+       subtitle = "2018-11-05",
+       x = "Model Probability",
+       y = "Contract Price")
+```
+
+## Weird Markets
+![NJ-02](NJ-02.png)
 
 ## Scraping Results
 

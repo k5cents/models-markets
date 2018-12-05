@@ -113,7 +113,7 @@
 \setcounter{secnumdepth}{0}
 
 \title{Models and Markets}
-\subtitle{Comparing Elective Capabilities}
+\subtitle{Comparing Predictive Capabilities}
 \author{Kiernan Nicholls}
 \date{December 4, 2018}
 
@@ -511,7 +511,7 @@ purposes
 \begin{frame}[fragile]{Tidy Data}
 
 \begin{verbatim}
-## # A tibble: 46,138 x 5
+## # A tibble: 45,962 x 5
 ##    date       code  party tool    prob
 ##    <date>     <chr> <chr> <chr>  <dbl>
 ##  1 2018-08-10 AZ-99 R     model  0.272
@@ -523,8 +523,8 @@ purposes
 ##  7 2018-08-10 CA-49 R     model  0.197
 ##  8 2018-08-10 CA-49 R     market 0.03 
 ##  9 2018-08-10 CA-99 D     model  0.999
-## 10 2018-08-10 CA-99 D     model  0.001
-## # ... with 46,128 more rows
+## 10 2018-08-10 CA-99 R     model  0.001
+## # ... with 45,952 more rows
 \end{verbatim}
 
 \end{frame}
@@ -556,6 +556,28 @@ purposes
 \begin{frame}{Difference in Tools}
 
 \includegraphics{markets_models_files/figure-beamer/diff-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Difference in Tools}
+
+\includegraphics{markets_models_files/figure-beamer/aug10 label-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Difference in Tools}
+
+\includegraphics{markets_models_files/figure-beamer/nov05 label-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Weird Markets}
+
+\begin{figure}
+\centering
+\includegraphics{NJ-02.png}
+\caption{NJ-02}
+\end{figure}
 
 \end{frame}
 

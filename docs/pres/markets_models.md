@@ -1,6 +1,6 @@
 ---
 title: "Models and Markets"
-subtitle: "Comparing Elective Capabilities"
+subtitle: "Comparing Predictive Capabilities"
 author: "Kiernan Nicholls"
 date: "December 4, 2018"
 output:
@@ -249,7 +249,7 @@ if_else(str_detect(market_history$code, "Which party"),
 
 
 ```
-## # A tibble: 46,138 x 5
+## # A tibble: 45,962 x 5
 ##    date       code  party tool    prob
 ##    <date>     <chr> <chr> <chr>  <dbl>
 ##  1 2018-08-10 AZ-99 R     model  0.272
@@ -261,8 +261,8 @@ if_else(str_detect(market_history$code, "Which party"),
 ##  7 2018-08-10 CA-49 R     model  0.197
 ##  8 2018-08-10 CA-49 R     market 0.03 
 ##  9 2018-08-10 CA-99 D     model  0.999
-## 10 2018-08-10 CA-99 D     model  0.001
-## # ... with 46,128 more rows
+## 10 2018-08-10 CA-99 R     model  0.001
+## # ... with 45,952 more rows
 ```
 
 ## Probability Boxplots
@@ -276,7 +276,6 @@ if_else(str_detect(market_history$code, "Which party"),
 ## Probability Over Time
 ![](markets_models_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
-
 ## Probability by Tool
 
 ![](markets_models_files/figure-html/prob tool-1.png)<!-- -->
@@ -284,6 +283,17 @@ if_else(str_detect(market_history$code, "Which party"),
 ## Difference in Tools
 
 ![](markets_models_files/figure-html/diff-1.png)<!-- -->
+
+## Difference in Tools
+
+![](markets_models_files/figure-html/aug10 label-1.png)<!-- -->
+
+## Difference in Tools
+
+![](markets_models_files/figure-html/nov05 label-1.png)<!-- -->
+
+## Weird Markets
+![NJ-02](NJ-02.png)
 
 ## Scraping Results
 
@@ -327,9 +337,12 @@ if_else(str_detect(market_history$code, "Which party"),
 ## Conclusion
 
 ```
-## 
-## <table style="text-align:center"><tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Pctl(25)</td><td>Pctl(75)</td><td>Max</td></tr>
-## <tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr></table>
+## # A tibble: 3 x 3
+##   day        market model
+##   <date>      <dbl> <dbl>
+## 1 2018-08-10  0.920 0.851
+## 2 2018-09-22  0.908 0.846
+## 3 2018-11-05  0.880 0.873
 ```
 
 * Methods converge

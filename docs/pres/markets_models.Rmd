@@ -1,5 +1,6 @@
 ---
 title: "Models and Markets"
+subtitle: "Comparing Elective Capabilities"
 author: "Kiernan Nicholls"
 date: "December 4, 2018"
 output:
@@ -28,6 +29,7 @@ library(magrittr)
 * Resource allocation
 * Strategy adjustment
 * Quantitative journalism
+* Uncertainty is scary
 
 ## How to Predict Elections
 
@@ -64,17 +66,19 @@ Montel carlo simulations = probability distribution
 3. Perform a deterministic computation on the inputs
 4. Aggregate the results
 
-* Draw share of vote, compared
+* Poll, average, deviation
 * 20,000 interations
 * Law of large numbers
 
 ## About FiveThirtyEight
 
 * Founded in 2008, sold to NYT then ABC
-* Least inaccurate in 2016
+* Least inaccurate in 2016 (Clinton @ 71%)
 
 > Someone could look like a genius simply by doing some fairly basic research
 into what really has predictive power in a political campaign
+
+> — Nate Silver
 
 ## FiveThirtyEight Forecast
 
@@ -89,11 +93,6 @@ other factors.
 comparable districts with polling.
 3. **Fundamentals**: District partisanship, past performance, generic ballot,
 fundraising, experience, scandals
-
-Trained off elections since 1998. Only miscalled 3.3% of past races.
-
-## Model Uncertainty
-![model_histogram](538_histogram.png)
 
 ## Model Data
 ```{r model history, echo=FALSE}
@@ -143,6 +142,9 @@ university, for educational purposes
 * Will Facebook’s Mark Zuckerberg run for president in 2020?
 * How many tweets will @realDonaldTrump post from noon Oct. 10 to noon Oct. 17?
 
+## PredictIt Markets
+![2020 Dem Primary](2020_dem_market.png)
+
 ## PredicIt Data
 ![Donnelly Chart](donnelly_graph.png)
 
@@ -155,9 +157,10 @@ university, for educational purposes
 
 ## Scraped Market Data
 ```{r market info, echo=FALSE, message=FALSE, warning=FALSE}
-market_data <- read_csv("./data/market_data.csv",
-                        col_types = cols(mid = col_character(),
-                                         cid = col_character())) %>% 
+market_data <- 
+  read_csv("./data/market_data.csv",
+           col_types = cols(mid = col_character(),
+                            cid = col_character())) %>% 
   select(-contract)
 
 print(market_data)
@@ -215,7 +218,7 @@ joined %>%
 
 ## Tidy Data
 
-```{r joined tidy, echo=FALSE, message=FALSE, warning=FALSE }
+```{r joined tidy, echo=FALSE, message=FALSE, warning=FALSE}
 joined_tidy <- 
   joined %>%
   gather(prob, price,
@@ -239,6 +242,39 @@ ggplot(joined_tidy) +
   facet_wrap(~ tool) +
   scale_fill_manual(values = c("royalblue2", "red2"))
 ```
+
+## Probability Over Time
+
+```{r}
+IN99 <- filter(joined_tidy, code == "IN-99" & party == "D")
+ggplot(IN99) +
+  geom_line(aes(x = date, 
+                y = prob, 
+                color = tool),
+            size = 2) +
+  labs(title = "Joe Donnelly Victory Over Time",
+       y = "Probability",
+       x = "Date") +
+  scale_x_date() + 
+  geom_vline(aes(xintercept = IN99$date[which(IN99$prob == 0.560)][1])) +
+  geom_hline(aes(yintercept = 0.50))
+```
+
+## Probability Over Time
+```{r}
+MA99 <- filter(joined_tidy, code == "MA-99" & party == "D")
+ggplot(MA99) +
+  geom_line(aes(x = date, 
+                y = prob, 
+                color = tool),
+            size = 2) +
+  labs(title = "Elizabeth Warren Victory Over Time",
+       y = "Probability",
+       x = "Date") +
+  scale_x_date() + 
+  geom_hline(aes(yintercept = 0.50))
+```
+
 
 ## Probability by Tool
 
@@ -270,9 +306,6 @@ ggplot(joined,
   ylab("Market Price - Model Prob") +
   geom_hline(yintercept = 0)
 ```
-
-## AP Election Results
-![Election Tables](election_table.png)
 
 ## Scraping Results
 
@@ -326,7 +359,7 @@ ggplot(filter(election_results, code %in% joined$code)) +
 
 ## Post-Election Results
 
-1. Any given time, >50% is a predicted winner
+1. Any given time, > 50% is a predicted winner
 2. For each day, ask if guess matches winner
 3. Average across all races
 4. Plot over time
@@ -346,4 +379,14 @@ ggplot(accuracy) +
        y = "Percent Accurately Predicted",
        x = "Date")
 ```
+
+## Conclusion
+```{r}
+spread(accuracy, key = tool, value = accuracy) %>% 
+  slice(c(1, 44, 88))
+```
+
+* Methods converge
+* With lack of polling, markets have value
+* Underestimate Incumbent Democrats
 

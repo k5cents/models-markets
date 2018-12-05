@@ -113,6 +113,7 @@
 \setcounter{secnumdepth}{0}
 
 \title{Models and Markets}
+\subtitle{Comparing Elective Capabilities}
 \author{Kiernan Nicholls}
 \date{December 4, 2018}
 
@@ -129,6 +130,8 @@
   Strategy adjustment
 \item
   Quantitative journalism
+\item
+  Uncertainty is scary
 \end{itemize}
 
 \end{frame}
@@ -208,7 +211,7 @@ Montel carlo simulations = probability distribution
 \begin{itemize}
 \tightlist
 \item
-  Draw share of vote, compared
+  Poll, average, deviation
 \item
   20,000 interations
 \item
@@ -224,12 +227,16 @@ Montel carlo simulations = probability distribution
 \item
   Founded in 2008, sold to NYT then ABC
 \item
-  Least inaccurate in 2016
+  Least inaccurate in 2016 (Clinton @ 71\%)
 \end{itemize}
 
 \begin{quote}
 Someone could look like a genius simply by doing some fairly basic
 research into what really has predictive power in a political campaign
+\end{quote}
+
+\begin{quote}
+--- Nate Silver
 \end{quote}
 
 \end{frame}
@@ -256,18 +263,6 @@ and simulates the election thousands of times.
   \textbf{Fundamentals}: District partisanship, past performance,
   generic ballot, fundraising, experience, scandals
 \end{enumerate}
-
-Trained off elections since 1998. Only miscalled 3.3\% of past races.
-
-\end{frame}
-
-\begin{frame}{Model Uncertainty}
-
-\begin{figure}
-\centering
-\includegraphics{538_histogram.png}
-\caption{model\_histogram}
-\end{figure}
 
 \end{frame}
 
@@ -368,6 +363,16 @@ purposes
   How many tweets will @realDonaldTrump post from noon Oct. 10 to noon
   Oct. 17?
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}{PredictIt Markets}
+
+\begin{figure}
+\centering
+\includegraphics{2020_dem_market.png}
+\caption{2020 Dem Primary}
+\end{figure}
 
 \end{frame}
 
@@ -530,6 +535,18 @@ purposes
 
 \end{frame}
 
+\begin{frame}{Probability Over Time}
+
+\includegraphics{markets_models_files/figure-beamer/unnamed-chunk-1-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Probability Over Time}
+
+\includegraphics{markets_models_files/figure-beamer/unnamed-chunk-2-1.pdf}
+
+\end{frame}
+
 \begin{frame}{Probability by Tool}
 
 \includegraphics{markets_models_files/figure-beamer/prob tool-1.pdf}
@@ -539,16 +556,6 @@ purposes
 \begin{frame}{Difference in Tools}
 
 \includegraphics{markets_models_files/figure-beamer/diff-1.pdf}
-
-\end{frame}
-
-\begin{frame}{AP Election Results}
-
-\begin{figure}
-\centering
-\includegraphics{election_table.png}
-\caption{Election Tables}
-\end{figure}
 
 \end{frame}
 
@@ -591,7 +598,7 @@ purposes
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Any given time, \textgreater{}50\% is a predicted winner
+  Any given time, \textgreater{} 50\% is a predicted winner
 \item
   For each day, ask if guess matches winner
 \item
@@ -605,6 +612,29 @@ purposes
 \begin{frame}{Accuracy Over Time}
 
 \includegraphics{markets_models_files/figure-beamer/accuracy-1.pdf}
+
+\end{frame}
+
+\begin{frame}[fragile]{Conclusion}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   day        market model
+##   <date>      <dbl> <dbl>
+## 1 2018-08-10  0.920 0.851
+## 2 2018-09-22  0.908 0.846
+## 3 2018-11-05  0.880 0.873
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Methods converge
+\item
+  With lack of polling, markets have value
+\item
+  Underestimate Incumbent Democrats
+\end{itemize}
 
 \end{frame}
 

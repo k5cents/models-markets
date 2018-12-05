@@ -1,5 +1,6 @@
 ---
 title: "Models and Markets"
+subtitle: "Comparing Elective Capabilities"
 author: "Kiernan Nicholls"
 date: "December 4, 2018"
 output:
@@ -22,6 +23,7 @@ editor_options:
 * Resource allocation
 * Strategy adjustment
 * Quantitative journalism
+* Uncertainty is scary
 
 ## How to Predict Elections
 
@@ -58,17 +60,19 @@ Montel carlo simulations = probability distribution
 3. Perform a deterministic computation on the inputs
 4. Aggregate the results
 
-* Draw share of vote, compared
+* Poll, average, deviation
 * 20,000 interations
 * Law of large numbers
 
 ## About FiveThirtyEight
 
 * Founded in 2008, sold to NYT then ABC
-* Least inaccurate in 2016
+* Least inaccurate in 2016 (Clinton @ 71%)
 
 > Someone could look like a genius simply by doing some fairly basic research
 into what really has predictive power in a political campaign
+
+> — Nate Silver
 
 ## FiveThirtyEight Forecast
 
@@ -83,11 +87,6 @@ other factors.
 comparable districts with polling.
 3. **Fundamentals**: District partisanship, past performance, generic ballot,
 fundraising, experience, scandals
-
-Trained off elections since 1998. Only miscalled 3.3% of past races.
-
-## Model Uncertainty
-![model_histogram](538_histogram.png)
 
 ## Model Data
 
@@ -145,6 +144,9 @@ university, for educational purposes
 * Will Ted Cruz be re-elected to the U.S. Senate in Texas in 2018?
 * Will Facebook’s Mark Zuckerberg run for president in 2020?
 * How many tweets will @realDonaldTrump post from noon Oct. 10 to noon Oct. 17?
+
+## PredictIt Markets
+![2020 Dem Primary](2020_dem_market.png)
 
 ## PredicIt Data
 ![Donnelly Chart](donnelly_graph.png)
@@ -267,6 +269,14 @@ if_else(str_detect(market_history$code, "Which party"),
 
 ![](markets_models_files/figure-html/prob box-1.png)<!-- -->
 
+## Probability Over Time
+
+![](markets_models_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
+## Probability Over Time
+![](markets_models_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+
 ## Probability by Tool
 
 ![](markets_models_files/figure-html/prob tool-1.png)<!-- -->
@@ -274,9 +284,6 @@ if_else(str_detect(market_history$code, "Which party"),
 ## Difference in Tools
 
 ![](markets_models_files/figure-html/diff-1.png)<!-- -->
-
-## AP Election Results
-![Election Tables](election_table.png)
 
 ## Scraping Results
 
@@ -308,7 +315,7 @@ if_else(str_detect(market_history$code, "Which party"),
 
 ## Post-Election Results
 
-1. Any given time, >50% is a predicted winner
+1. Any given time, > 50% is a predicted winner
 2. For each day, ask if guess matches winner
 3. Average across all races
 4. Plot over time
@@ -316,4 +323,16 @@ if_else(str_detect(market_history$code, "Which party"),
 ## Accuracy Over Time
 
 ![](markets_models_files/figure-html/accuracy-1.png)<!-- -->
+
+## Conclusion
+
+```
+## 
+## <table style="text-align:center"><tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Pctl(25)</td><td>Pctl(75)</td><td>Max</td></tr>
+## <tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr></table>
+```
+
+* Methods converge
+* With lack of polling, markets have value
+* Underestimate Incumbent Democrats
 

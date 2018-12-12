@@ -80,16 +80,16 @@ traders.
 
 ### Polling
 
-Individual polling is the most simple and most common form of quantitative election
-prediction. While the exact methodology varies
-slightly from pollster to pollster, there are some fundemental constants to the field. Generally speaking, individual polling uses
-probability-sampling where each individual in the population has a known,
-predetermined likelihood of being included in the sample. Polling often uses
-random digit dialing to generate both listed and unlisted telephone numbers. Random
-sampling is an unbiased technique to draw a highly representative sample from
-the overall population in question. If one is interested in the election results
-of a given state or district, a sample is drawn from a sample frame of potential
-voters.
+Individual polling is the most simple and most common form of quantitative
+election prediction. While the exact methodology varies slightly from pollster
+to pollster, there are some fundemental constants to the field. Generally
+speaking, individual polling uses probability-sampling where each individual in
+the population has a known, predetermined likelihood of being included in the
+sample. Polling often uses random digit dialing to generate both listed and
+unlisted telephone numbers. Random sampling is an unbiased technique to draw a
+highly representative sample from the overall population in question. If one is
+interested in the election results of a given state or district, a sample is
+drawn from a sample frame of potential voters.
 
 The random numbers are then called by a pollster who administers a
 computer-assisted interview, which in our case inquires as to the respondent’s

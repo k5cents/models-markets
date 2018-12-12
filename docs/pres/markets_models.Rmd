@@ -312,8 +312,6 @@ ggplot(joined,
 ## Difference in Tools
 
 ```{r aug10 label, echo=FALSE, message=FALSE, warning=FALSE}
-
-
 ggplot(filter(joined, party == "D" & date == "2018-09-01")) +
   geom_label(aes(prob, price, 
                  fill = incumbent, 

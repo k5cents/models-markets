@@ -2,15 +2,19 @@
 
 Using R to compare the predictive capabilities of markets and models.
 
- * [Project](#project)
- * [Prediction markets](#prediction-markets)
-   + [About PredictIt](#about)
-   + [PredictIt markets](#predictit-markets)
-   + [Market data](#market-data)
- * [Forecast models](#forecast-models)
-   + [About FiveThirtyEight](#about-fivethirtyeight)
-   + [FiveThirtyEight forecast](#fivethirtyeight-forecast)
-   + [Forecast data](#forecast-data)
+## Why prediction elections?
+
+* Resource allocation
+* Strategy analysis
+* Data journalism
+* Uncertainty is scary!
+
+## How to predict elections
+
+* Individual opinion polling
+* Polling aggrigation
+* Forecast modeling
+* Prediction markets
 
 ## Project
 
@@ -79,18 +83,6 @@ PredictIt does not provide provide a collected source of data for on-going marke
 > (Forecasting models) take lots of polls, perform various types of adjustments to them, and then blend them with other kinds of empirically useful indicators (what we sometimes call “the fundamentals”) to forecast each race. Then they account for the uncertainty in the forecast and simulate the election thousands of times. Our models [are probabilistic in nature](https://fivethirtyeight.com/features/a-users-guide-to-fivethirtyeights-2016-general-election-forecast/); we do a _lot_ of thinking about these probabilities, and the goal is to develop probabilistic estimates that hold up well under real-world conditions. For instance, when we launched the 2018 House forecast, Democrats’ chances of winning the House were about 7 in 10 — right about what [Hillary Clinton’s chances were](https://fivethirtyeight.com/features/why-fivethirtyeight-gave-trump-a-better-chance-than-almost-anyone-else/) on election night in 2016! So [ignore those probabilities at your peril](https://fivethirtyeight.com/features/the-media-has-a-probability-problem/). _[source: [FiveThirtyEight](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/)]_
 
 I will be using the _FiveThirtyEight.com_ model to collect forecasting data. In 2016, FiveThirtyEight's prediction was closest to reality. They are one of the few mainstream forecasters to continue their work into the 2018 midterm elections.
-
-### About FiveThirtyEight
-
-Nate Silver started FiveThirtyEight in 2008 to cover the presidential election. Silver specifically sought to answer the simple question of which democratic primary candidate would fare best against the presumptive Republican nominee. As Silver put it, “someone could look like a genius simply by doing some fairly basic research into what really has predictive power in a political campaign.” The first FiveThirtyEight model was more basic, simply aggregating polls and weighing them using past accuracy. Silver built his forecast model using three guiding principles:
-
-1. **Think probabilistically**. FiveThirtyEight aims to express the full range of possible outcomes and the probability of each.
-2. **Today’s forecast is the first forecast of the rest of your life**. The prediction should change to be as good as possible, regardless of past data or ideas.
-3. **Look for consensus**. Evidence suggests that aggregates or group forecasts are more accurate than individual ones.
-
-The blog was brought under the New York Times in 2010, ESPN in 2014, and ABC in 2018. When the site was bought by ESPN, they expanded from 2 full time staff to 20. The site covers politics, sports, science & health, economics, and culture.
-
-In the 2012 presidential general election, FiveThirtyEight was able to accurately predict the winner of 50/50 states. In 2016, the presidential forecast model gave Hillary Clinton a 71% chance of winning, significant lower than the likes of HuffPo or the New York Times.
 
 ### FiveThirtyEight forecast
 

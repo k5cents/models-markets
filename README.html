@@ -153,18 +153,18 @@ $(document).ready(function () {
 <div id="forecasting-models" class="section level2">
 <h2>Forecasting models</h2>
 <blockquote>
-<p>(Forecasting models) take lots of polls, perform various types of adjustments to them, and then blend them with other kinds of empirically useful indicators (what we sometimes call “the fundamentals”) to forecast each race. Then they account for the uncertainty in the forecast and simulate the election thousands of times. Our models <a href="https://fivethirtyeight.com/features/a-users-guide-to-fivethirtyeights-2016-general-election-forecast/">are probabilistic in nature</a>; we do a <em>lot</em> of thinking about these probabilities, and the goal is to develop probabilistic estimates that hold up well under real-world conditions. For instance, when we launched the 2018 House forecast, Democrats’ chances of winning the House were about 7 in 10 — right about what <a href="https://fivethirtyeight.com/features/why-fivethirtyeight-gave-trump-a-better-chance-than-almost-anyone-else/">Hillary Clinton’s chances were</a> on election night in 2016! So <a href="https://fivethirtyeight.com/features/the-media-has-a-probability-problem/">ignore those probabilities at your peril</a>.</p>
+<p>(Forecasting models) take lots of polls, perform various types of adjustments to them, and then blend them with other kinds of empirically useful indicators (what we sometimes call “the fundamentals”) to forecast each race. Then they account for the uncertainty in the forecast and simulate the election thousands of times. Our models <a href="https://goo.gl/WYd6qc">are probabilistic in nature</a>; we do a <em>lot</em> of thinking about these probabilities, and the goal is to develop probabilistic estimates that hold up well under real-world conditions. For instance, when we launched the 2018 House forecast, Democrats’ chances of winning the House were about 7 in 10 — right about what <a href="https://goo.gl/1c4nZj">Hillary Clinton’s chances were</a> on election night in 2016! So <a href="https://goo.gl/c3Jm2z">ignore those probabilities at your peril</a>.</p>
 </blockquote>
 <p>I will be using the <em>FiveThirtyEight.com</em> model to collect forecasting data. In 2016, FiveThirtyEight’s prediction was closest to reality. They are one of the few mainstream forecasters to continue their work into the 2018 midterm elections.</p>
-<p>As FiveThirtyEight <a href="https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/">explains on their site</a>,</p>
+<p>As FiveThirtyEight <a href="https://goo.gl/cx52rv">explains on their site</a>,</p>
 <blockquote>
 <p>The House, Senate and gubernatorial models use a broad variety of indicators in addition to polling. With 435 separate House races every other year — plus races for each of the 100 Senate seats once every six years and each of the 50 governorships at least once every four years2 — it’s possible to make robust empirical assessments of which factors really predict congressional and gubernatorial races well and which ones don’t. Nonetheless, our models default toward using polling once there’s a lot of high-quality polling in a particular state or district. In Senate and gubernatorial races, most states have abundant polling. But this is less true in the House, where districts are polled sporadically and polling can be an adventure because of small sample sizes and the demographic peculiarities of each district.</p>
 </blockquote>
 <p>FiveThirtyEight provides three versions of their forecast model that use different amounts of data beyond their adjusted polling aggregation. In their own words, “you should think of Classic as the preferred or default version of FiveThirtyEight’s forecast”. Their classic model uses data from three sources:</p>
 <ol style="list-style-type: decimal">
-<li>Polling: District-by-district polling, adjusted for house effects and other factors.</li>
-<li>CANTOR: A proprietary system which infers results for districts with little or no polling from comparable districts that do have polling.</li>
-<li>Fundamentals: Non-polling factors such as fundraising and past election results that historically help in predicting congressional races.
+<li><strong>Polling</strong>: District-by-district polling, adjusted for house effects and other factors.</li>
+<li><strong>CANTOR</strong>: A proprietary system which infers results for districts with little or no polling from comparable districts that do have polling.</li>
+<li><strong>Fundamentals</strong>: Non-polling factors such as fundraising and past election results that historically help in predicting congressional races.
 <ul>
 <li>Incumbency</li>
 <li>State partisanship</li>
@@ -200,16 +200,16 @@ $(document).ready(function () {
 <div id="prediction-markets" class="section level2">
 <h2>Prediction markets</h2>
 <blockquote>
-<p>Prediction markets are exchange-traded markets created for the purpose of trading the outcome of events. The <a href="https://en.wikipedia.org/wiki/Market_price" title="Market price">market prices</a> can indicate what the crowd thinks the <a href="https://en.wikipedia.org/wiki/Probability" title="Probability">probability</a> of the <a href="https://en.wikipedia.org/wiki/Event_(probability_theory)" title="Event (probability theory)">event</a> is. A prediction market contract trades between 0 and 100%. It is a <a href="https://en.wikipedia.org/wiki/Binary_option%20%22Binary%20option%22">binary option</a> that will expire at the price of 0 or 100%. Prediction markets can be thought of as belonging to the more general concept of crowdsourcing which is specially designed to aggregate information on particular topics of interest. The main purposes of prediction markets are eliciting aggregating beliefs over an unknown future outcome. Traders with different beliefs trade on contracts whose payoffs are related to the unknown future outcome and the market prices of the contracts are considered as the aggregated belief. <em>[source: <a href="https://en.wikipedia.org/wiki/Prediction_market">Wikipedia</a>]</em></p>
+<p>Prediction markets are exchange-traded markets created for the purpose of trading the outcome of events. The market prices can indicate what the crowd thinks the probability of the event is. A prediction market contract trades between 0 and 100%. It is a binary option that will expire at the price of 0 or 100%. Prediction markets can be thought of as belonging to the more general concept of crowdsourcing which is specially designed to aggregate information on particular topics of interest. The main purposes of prediction markets are eliciting aggregating beliefs over an unknown future outcome. Traders with different beliefs trade on contracts whose payoffs are related to the unknown future outcome and the market prices of the contracts are considered as the aggregated belief.</p>
 </blockquote>
 <p>I will be using the <em>PredictIt.org</em> exchange to collect prediction market data.</p>
 <div id="about-predictit" class="section level3">
 <h3>About PredictIt</h3>
 <blockquote>
-<p>PredictIt is a unique and exciting real money site that tests your knowledge of political events by letting you trade shares on everything from the outcome of an election to a Supreme Court decision to major world events… PredictIt is run by <a href="http://www.victoria.ac.nz/">Victoria University</a> of Wellington, New Zealand, a not-for-profit university, for educational purposes. <em>[source: <a href="https://www.predictit.org/support/what-is-predictit">PredictIt</a>]</em></p>
+<p>PredictIt is a unique and exciting real money site that tests your knowledge of political events by letting you trade shares on everything from the outcome of an election to a Supreme Court decision to major world events… PredictIt is run by <a href="http://www.victoria.ac.nz/">Victoria University</a> of Wellington, New Zealand, a not-for-profit university, for educational purposes.</p>
 </blockquote>
 <p>Users of this site can legally trade on the exchange with real currency, winning money if their prediction comes true and their shares sell for $1. Traders can also sell their shares at any time, provided there is a corresponding buyer; as public opinion shifts, “Yes” or “No” shares become more or less valuable, adjusting the probability in real time as new information is introduced into the market.</p>
-<p>The site is exempt from the usual ban on both online and political betting by working with researchers to study prediction markets as a political tool. In October of 2014, the Commodity Futures Trading Commission granted the site a <a href="https://www.cftc.gov/sites/default/files/idc/groups/public/@lrlettergeneral/documents/letter/14-130.pdf">No-Action letter</a> allowing them to operate in spite of such laws. The site hosts markets on nearly every conceivable political event, electoral or otherwise:</p>
+<p>The site is exempt from the usual ban on both online and political betting by working with researchers to study prediction markets as a political tool. In October of 2014, the Commodity Futures Trading Commission granted the site a <a href="https://goo.gl/PAaquy">No-Action letter</a> allowing them to operate in spite of such laws. The site hosts markets on nearly every conceivable political event, electoral or otherwise:</p>
 <ul>
 <li><a href="https://goo.gl/E1KvPA">Will Donald Trump be president at year-end 2018?</a></li>
 <li><a href="https://goo.gl/zbTbe3">Will the federal government be shut down on February 9?</a></li>
@@ -220,34 +220,56 @@ $(document).ready(function () {
 </div>
 <div id="predictit-markets" class="section level3">
 <h3>PredictIt markets</h3>
-<p>There are not markets for every midterm election. However, there <em>are</em> markets for over 100 of the most contested congressional general elections. As of October 19th, the Cook Political Report classifies 105 House races as “competitive”.</p>
+<p>There are not markets for every midterm election. Traders are only interested in betting on markets where they think they have a competitive edge over other traders. The Cook Political Report lists 334 races as safe for either party, 42 as likely, and only 94 as vulnerable. Of those elections with markets on PredictIt, only 21 are safe, 15 likely, and 77 vulnerable. Over 80% of vulnerable elections are being traded on the markets, compared to less than 8% of safe elections.</p>
 <table>
+<caption>Number of Races Predicted by Each Tool</caption>
 <thead>
 <tr class="header">
-<th>Rating</th>
-<th>Democrat</th>
-<th>Republican</th>
-<th>Total</th>
+<th></th>
+<th align="right">Democrat</th>
+<th align="left"></th>
+<th align="right">Republican</th>
+<th align="left"></th>
+<th align="right">Total</th>
+<th align="left"></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Safe</td>
-<td>193</td>
-<td>141</td>
-<td>334</td>
+<td>Rating</td>
+<td align="right">Model</td>
+<td align="left">Market</td>
+<td align="right">Model</td>
+<td align="left">Market</td>
+<td align="right">Model</td>
+<td align="left">Market</td>
 </tr>
 <tr class="even">
-<td>Likely</td>
-<td>13</td>
-<td>29</td>
-<td>42</td>
+<td>Safe</td>
+<td align="right">193</td>
+<td align="left">12</td>
+<td align="right">141</td>
+<td align="left">9</td>
+<td align="right">334</td>
+<td align="left">21</td>
 </tr>
 <tr class="odd">
+<td>Likely</td>
+<td align="right">15</td>
+<td align="left">7</td>
+<td align="right">29</td>
+<td align="left">8</td>
+<td align="right">42</td>
+<td align="left">21</td>
+</tr>
+<tr class="even">
 <td>Vulnerable</td>
-<td>15</td>
-<td>79</td>
-<td>94</td>
+<td align="right">15</td>
+<td align="left">13</td>
+<td align="right">78</td>
+<td align="left">64</td>
+<td align="right">94</td>
+<td align="left">77</td>
 </tr>
 </tbody>
 </table>

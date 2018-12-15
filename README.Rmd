@@ -234,11 +234,13 @@ PredictIt does not provide provide a collected source of data for on-going
 markets, but they do provide a 90-day history for each individual market. They
 also provide [an application program interface
 (API)](https://www.predictit.org/api/marketdata/all/) to access the most recent
-data for every market. I wrote three R scripts to collect, format, and join the
-market as needed for analysis: (1) [`market_names.R`](code/market_names.R) to
-scrape the API for market information, (2) [`market_data.R`](code.market_data.R)
-to scrape the chart information for price history, and (3)
-[`join_markets_models.R`](join_markets_models.R)
+data for every market. I wrote two R scripts to collect, format, and join the
+market as needed for analysis: [`market_names.R`](code/market_names.R) to scrape
+the API for market information and [`market_data.R`](code.market_data.R) to
+scrape the chart information for price history. Here, `price` indicates the
+probability of that contract coming true and `volume` indicates the toal number
+of contracts exchanged on that day (more volume yields more accurate price
+discovery)
  
 ```{r market history, echo=FALSE, warning=FALSE, message=FALSE}
 market_joined <- 

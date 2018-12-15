@@ -38,7 +38,7 @@ volume <-
 
 ggplot(volume) +
   geom_bar(aes(x = date, y = traded, fill = party), stat = "identity") +
-  scale_fill_manual(values = c("D" = "blue", "R" = "red")) +
+  scale_fill_manual(values = c("D" = "blue", "R" = "red", "I" = "green")) +
   labs(title = "Sum of Daily Traded Shares by Party",
        subtitle = "Daily contract volume multiplied closing price",
        x = "Date",

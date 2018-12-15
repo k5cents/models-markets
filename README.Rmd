@@ -17,9 +17,15 @@ library(jsonlite)
 
 ```{r read data, echo=FALSE, message=FALSE, warning=FALSE}
 congress_members <- read_csv("./data/congress_members.csv")
-model_history <- read_csv("./data/model_history.csv")
-market_history <- read_csv("./data/market_history.csv")
-joined <- read_csv("./data/joined.csv")
+model_history    <- read_csv("./data/model_history.csv")
+market_names     <- read_csv("./data/market_names.csv", 
+                             col_types = cols(mid = col_character(),
+                                              cid = col_character()))
+market_data      <- read_csv("./data/market_data.csv", 
+                             col_types = cols(mid = col_character(),
+                                              cid = col_character()))
+market_history   <- read_csv("./data/market_history.csv")
+joined           <- read_csv("./data/joined.csv")
 election_results <- read_csv("./data/election_results.csv")
 ```
 
@@ -144,8 +150,7 @@ races in the training data.
 ### Forecast data
 
 FiveThirtyEight is kind enough to provide all their daily forecast history as
-CSV. For example, the house district data can [downloaded from their
-site](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv).
+CSV. For example, the house district data can [downloaded from their site](https://goo.gl/pXYvYJ).
 I used the same techniques to reformat, using [`forecast_history.R`](code/forecast_history.R) and saving as [`forecast_history.csv`](data/forecast_history.csv).
 
 The following is a random sample of the data after joining together the predictions for both chambers and doing some slight formatting for consistency's sake.
@@ -196,7 +201,7 @@ electoral or otherwise:
 * [Will the federal government be shut down on February 9?](https://goo.gl/zbTbe3)
 * [Will Ted Cruz be re-elected to the U.S. Senate in Texas in 2018?](https://goo.gl/c5sVUU)
 * [Will Facebook’s Mark Zuckerberg run for president in 2020?](https://goo.gl/yFA2n3)
-* [How many tweets will @realDonaldTrump post from noon Oct. 10 to noon Oct. 17?](https://goo.gl/bJk9bj)
+* [How many tweets will \@realDonaldTrump post this week?](https://goo.gl/bJk9bj)
 
 ### PredictIt markets
 
@@ -213,18 +218,15 @@ rt <- table(election_results$class)
 mt <- table(filter(election_results, code %in% joined$code)$class)
 ```
 
-: Number of Races Predicted by Each Tool
-
 |            | Democrat         || Republican         || Total         ||
-|------------|---------:|:-------|-----------:|:-------|------:|:-------|
+|------------|----------|--------|------------|--------|-------|--------|
 | Rating     | Model    | Market | Model      | Market | Model | Market |
 | Safe       | 193      | 12     | 141        | 9      | 334   | 21     |
 | Likely     | 15       | 7      | 29         | 8      | 42    | 21     |
 | Vulnerable | 15       | 13     | 78         | 64     | 94    | 77     |
 
-These competitive races aren't all represented with markets, but there is
-significant overlap. Enough to establish a comparison between our different
-predictive tools.
+The overlap in competitive markets allows us to compare the predictive
+capabilities of each tool.
 
 ### Market data
 
@@ -232,23 +234,68 @@ PredictIt does not provide provide a collected source of data for on-going
 markets, but they do provide a 90-day history for each individual market. They
 also provide [an application program interface
 (API)](https://www.predictit.org/api/marketdata/all/) to access the most recent
-data for every market. I was able to write a short R script to combine these two
-sources and centralize the relevant market history. This data is scraped,
-collected, and formatted with [`market_history.R`](code/market_history.R) and is
-saved as [`market_history.csv`](data/market_history.csv).
+data for every market. I wrote three R scripts to collect, format, and join the
+market as needed for analysis: (1) [`market_names.R`](code/market_names.R) to
+scrape the API for market information, (2) [`market_data.R`](code.market_data.R)
+to scrape the chart information for price history, and (3)
+[`join_markets_models.R`](join_markets_models.R)
+ 
+```{r market history, echo=FALSE, warning=FALSE, message=FALSE}
+market_joined <- 
+  left_join(market_data, market_names) %>% 
+  select(-question, -option) %>% 
+  arrange(date)
+print(market_joined)
+```
 
-    > sample_n(market_history, size = 10)
-    # A tibble: 10 x 6
-       date       name        id volume price question
-       <date>     <chr>    <int>  <int> <dbl> <chr>
-     1 2018-09-16 PA-17     4271      4  0.87 Which party will win PA-17?
-     2 2018-10-15 NJ-02     3862      0  0.05 Which party will win NJ-02?
-     3 2018-07-29 NH-01     3767      0  0.25 Which party will win NH-01?
-     4 2018-08-12 MS-03     4023      0  0.1  Which party will win MS-03?
-     5 2018-08-19 Donnelly  2998    217  0.42 Will Joe Donnelly be re-elected?
-     6 2018-08-30 Manchin   2941    460  0.74 Will Joe Manchin be re-elected?
-     7 2018-08-29 FL-27     3738    281  0.86 Which party will win FL-27?
-     8 2018-08-19 Nelson    2999      0  0.5  Will Bill Nelson be re-elected?
-     9 2018-10-11 SC-04     4106      0  0.1  Which party will win SC-04?
-    10 2018-08-28 SC-04     4106      0  0.98 Which party will win SC-04?
+## Data Analysis
+
+### Combined Data
+
+Using the `date`, `code`, and `party` as key variables, we can combine the model
+and market data with a left relational join. Using the `tidyr` package tools, we
+can turn this into tidy data, where each row is 1 predition and there is a new
+variable to indicate the predictive tool used.
+
+```{r join data, echo=FALSE, warning=FALSE, message=FALSE}
+joined <- 
+  read_csv("./data/joined.csv",
+           col_types = cols(mid = col_character(),
+                            cid = col_character())) %>% 
+  mutate(party = recode(party, "I" = "D"))
+
+joined$party[which(joined$name == "Kevin de Leon")] <- "R"
+joined[which(joined$name == "Chris Pappas" & joined$price == 0.01), ] <- NA
+
+joined_tidy <- 
+  joined %>%
+  gather(prob, price,
+         key = tool,
+         value = prob) %>%
+  mutate(tool = recode(tool,
+                       "price" = "market",
+                       "prob" = "model")) %>% 
+  select(-mid, -cid, -chamber, -volume) %>% 
+  filter(date < "2018-11-06") %>% 
+  arrange(date, code)
+
+print(joined_tidy)
+```
+
+### Example Data
+
+```{r}
+ggplot(filter(joined_tidy, code == "MA-99" | code == "IN-99" & party == "D")) +
+  geom_line(aes(x = date, 
+                y = prob, 
+                color = tool),
+            size = 2) +
+  labs(title = "Probabiulity of Victory Over Time",
+       subtitle = "Two Incumbent Democrats, Donnelly (lost) and Warren (won)",
+       y = "Probability",
+       x = "Date") +
+  scale_x_date() + 
+  geom_hline(aes(yintercept = 0.50)) +
+  facet_grid(~code)
+```
 

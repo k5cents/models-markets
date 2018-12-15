@@ -132,8 +132,7 @@ races in the training data.
 ### Forecast data
 
 FiveThirtyEight is kind enough to provide all their daily forecast history as
-CSV. For example, the house district data can [downloaded from their
-site](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv).
+CSV. For example, the house district data can [downloaded from their site](https://goo.gl/pXYvYJ).
 I used the same techniques to reformat, using [`forecast_history.R`](code/forecast_history.R) and saving as [`forecast_history.csv`](data/forecast_history.csv).
 
 The following is a random sample of the data after joining together the predictions for both chambers and doing some slight formatting for consistency's sake.
@@ -198,7 +197,7 @@ electoral or otherwise:
 * [Will the federal government be shut down on February 9?](https://goo.gl/zbTbe3)
 * [Will Ted Cruz be re-elected to the U.S. Senate in Texas in 2018?](https://goo.gl/c5sVUU)
 * [Will Facebook’s Mark Zuckerberg run for president in 2020?](https://goo.gl/yFA2n3)
-* [How many tweets will @realDonaldTrump post from noon Oct. 10 to noon Oct. 17?](https://goo.gl/bJk9bj)
+* [How many tweets will \@realDonaldTrump post this week?](https://goo.gl/bJk9bj)
 
 ### PredictIt markets
 
@@ -212,18 +211,15 @@ of safe elections.
 
 
 
-: Number of Races Predicted by Each Tool
-
 |            | Democrat         || Republican         || Total         ||
-|------------|---------:|:-------|-----------:|:-------|------:|:-------|
+|------------|----------|--------|------------|--------|-------|--------|
 | Rating     | Model    | Market | Model      | Market | Model | Market |
 | Safe       | 193      | 12     | 141        | 9      | 334   | 21     |
 | Likely     | 15       | 7      | 29         | 8      | 42    | 21     |
 | Vulnerable | 15       | 13     | 78         | 64     | 94    | 77     |
 
-These competitive races aren't all represented with markets, but there is
-significant overlap. Enough to establish a comparison between our different
-predictive tools.
+The overlap in competitive markets allows us to compare the predictive
+capabilities of each tool.
 
 ### Market data
 
@@ -231,23 +227,74 @@ PredictIt does not provide provide a collected source of data for on-going
 markets, but they do provide a 90-day history for each individual market. They
 also provide [an application program interface
 (API)](https://www.predictit.org/api/marketdata/all/) to access the most recent
-data for every market. I was able to write a short R script to combine these two
-sources and centralize the relevant market history. This data is scraped,
-collected, and formatted with [`market_history.R`](code/market_history.R) and is
-saved as [`market_history.csv`](data/market_history.csv).
+data for every market. I wrote three R scripts to collect, format, and join the
+market as needed for analysis: (1) [`market_names.R`](code/market_names.R) to
+scrape the API for market information, (2) [`market_data.R`](code.market_data.R)
+to scrape the chart information for price history, and (3)
+[`join_markets_models.R`](join_markets_models.R)
+ 
 
-    > sample_n(market_history, size = 10)
-    # A tibble: 10 x 6
-       date       name        id volume price question
-       <date>     <chr>    <int>  <int> <dbl> <chr>
-     1 2018-09-16 PA-17     4271      4  0.87 Which party will win PA-17?
-     2 2018-10-15 NJ-02     3862      0  0.05 Which party will win NJ-02?
-     3 2018-07-29 NH-01     3767      0  0.25 Which party will win NH-01?
-     4 2018-08-12 MS-03     4023      0  0.1  Which party will win MS-03?
-     5 2018-08-19 Donnelly  2998    217  0.42 Will Joe Donnelly be re-elected?
-     6 2018-08-30 Manchin   2941    460  0.74 Will Joe Manchin be re-elected?
-     7 2018-08-29 FL-27     3738    281  0.86 Which party will win FL-27?
-     8 2018-08-19 Nelson    2999      0  0.5  Will Bill Nelson be re-elected?
-     9 2018-10-11 SC-04     4106      0  0.1  Which party will win SC-04?
-    10 2018-08-28 SC-04     4106      0  0.98 Which party will win SC-04?
+```
+## # A tibble: 24,556 x 6
+##    date       mid   cid   contract                             price volume
+##    <date>     <chr> <chr> <chr>                                <dbl>  <dbl>
+##  1 2018-08-10 2918  5264  Will Elizabeth Warren be re-elected?  0.95     56
+##  2 2018-08-10 2928  5313  Will Ted Cruz be re-elected?          0.7    1303
+##  3 2018-08-10 2940  5368  Will Bernie Sanders be re-elected?    0.95    542
+##  4 2018-08-10 2941  5369  Will Joe Manchin be re-elected?       0.75    533
+##  5 2018-08-10 2998  5563  Will Joe Donnelly be re-elected?      0.39     12
+##  6 2018-08-10 3450  7165  Will Pelosi be re-elected?            0.9      51
+##  7 2018-08-10 3455  7182  Will Ryan be re-elected?              0.03      4
+##  8 2018-08-10 3480  7266  Will Heidi Heitkamp be re-elected?    0.42     81
+##  9 2018-08-10 3484  7270  Will Claire McCaskill be re-elected?  0.47    333
+## 10 2018-08-10 3485  7271  Will Tammy Baldwin be re-elected?     0.83      0
+## # ... with 24,546 more rows
+```
+
+## Data Analysis
+
+### Combined Data
+
+Using the `date`, `code`, and `party` as key variables, we can combine the model
+and market data with a left relational join. Using the `tidyr` package tools, we
+can turn this into tidy data, where each row is 1 predition and there is a new
+variable to indicate the predictive tool used.
+
+
+```
+## # A tibble: 45,962 x 8
+##    date       name             code  party incumbent voteshare tool    prob
+##    <date>     <chr>            <chr> <chr> <lgl>         <dbl> <chr>  <dbl>
+##  1 2018-08-10 Martha McSally   AZ-99 R     FALSE         0.461 model  0.272
+##  2 2018-08-10 Martha McSally   AZ-99 R     FALSE         0.461 market 0.02 
+##  3 2018-08-10 Nancy Pelosi     CA-12 D     TRUE          0.898 model  1    
+##  4 2018-08-10 Nancy Pelosi     CA-12 D     TRUE          0.898 market 0.9  
+##  5 2018-08-10 Devin Nunes      CA-22 R     TRUE          0.564 model  0.96 
+##  6 2018-08-10 Devin Nunes      CA-22 R     TRUE          0.564 market 0.65 
+##  7 2018-08-10 Diane L. Harkey  CA-49 R     FALSE         0.467 model  0.197
+##  8 2018-08-10 Diane L. Harkey  CA-49 R     FALSE         0.467 market 0.03 
+##  9 2018-08-10 Dianne Feinstein CA-99 D     TRUE          0.636 model  0.999
+## 10 2018-08-10 Kevin de Leon    CA-99 R     FALSE         0.364 model  0.001
+## # ... with 45,952 more rows
+```
+
+### Example Data
+
+
+```r
+ggplot(filter(joined_tidy, code == "MA-99" | code == "IN-99" & party == "D")) +
+  geom_line(aes(x = date, 
+                y = prob, 
+                color = tool),
+            size = 2) +
+  labs(title = "Probabiulity of Victory Over Time",
+       subtitle = "Two Incumbent Democrats, Donnelly (lost) and Warren (won)",
+       y = "Probability",
+       x = "Date") +
+  scale_x_date() + 
+  geom_hline(aes(yintercept = 0.50)) +
+  facet_grid(~code)
+```
+
+![](README_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 

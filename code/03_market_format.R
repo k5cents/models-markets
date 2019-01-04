@@ -8,7 +8,7 @@ m <-
                             ContractSymbol = col_character())) %>%
   rename(mid      = MarketId,
          symbol   = MarketSymbol,
-         option   = ContractName,
+         party    = ContractName,
          open     = OpenPrice,
          close    = ClosePrice,
          high     = HighPrice,
@@ -16,7 +16,7 @@ m <-
          vol      = Volume,
          date     = Date) %>%
   filter(date >= "2018-08-01") %>%
-  mutate(option = recode(option,
+  mutate(party = recode(party,
                          "Democratic" = "D",
                          "Republican" = "R",
                          "Democratic or DFL" = "D")) %>%
@@ -48,12 +48,12 @@ m <- m[-str_which(m$mid, "3455"), ] # paul ryan not needed
 c <- read_csv("./data/congress_members.csv", col_types = cols())
 
 for (i in 1:nrow(m)) {
-  if(is.na(m$option[i])) {
-    m$option[i] <- c$party[which(str_sub(tolower(c$last), 1, 4) ==
+  if (is.na(m$party[i])) {
+    m$party[i] <- c$party[which(str_sub(tolower(c$last), 1, 4) ==
                                    str_sub(tolower(m$name), 1, 4)[i])][1]
   }
 }
-m %<>% select(-name) %>% rename(party = option)
+
 m %<>% mutate(party = recode(party, "I" = "D"))
 
 md <- read_csv("./data/market_data.csv")
@@ -63,4 +63,4 @@ n_distinct(md$mid)
 n_distinct(mh$mid)
 n_distinct(m$mid)
 
-unique(mh$mid) %in% unique(m$mid)
+unique(mh$mid)[which(!unique(mh$mid) %in% unique(m$mid))]

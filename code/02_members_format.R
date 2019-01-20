@@ -4,6 +4,8 @@ library(tidyverse)
 library(magrittr)
 
 members <-
+
+  # Take members of the 115th congress
   members_115 %>%
   select(last_name,
          govtrack_id,
@@ -16,7 +18,11 @@ members <-
   rename(name    = last_name,
          chamber = type,
          gid     = govtrack_id) %>%
+
+  # Convert the names to ASCII for better cross compatability
   mutate(name = iconv(name, to = "ASCII//TRANSLIT"),
+
+         # Recode values to match markets and models
          chamber = recode(chamber,
                           "rep" = "house",
                           "sen" = "senate"),
@@ -29,6 +35,8 @@ members <-
                             side = "left",
                             width = 2,
                             pad = "0")) %>%
+
+  # Create district code as relational key
   unite(col = code,
         state, district,
         sep = "-",

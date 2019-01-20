@@ -31,8 +31,8 @@ model_seat <- read_csv("https://web.archive.org/web/20181106210048/https://proje
 # Archived: 2018-11-06 at 21:00
 model_senate <- read_csv("https://web.archive.org/web/20181106210048/https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv")
 
-# write_csv(members_115,        "./input/members_115.csv")
-# write_csv(members_116,        "./input/members_116.csv")
+# write_csv(members_115,    "./input/members_115.csv")
+# write_csv(members_116,    "./input/members_116.csv")
 # write_csv(model_district, "./input/model_district.csv")
 # write_csv(model_house,    "./input/model_house.csv")
 # write_csv(model_seat,     "./input/model_seat.csv")

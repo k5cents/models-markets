@@ -26,7 +26,7 @@ model_house <- read_csv("https://web.archive.org/web/20181106120623/https://proj
 # Archived: 2018-11-06 at 21:00
 model_seat <- read_csv("https://web.archive.org/web/20181106210048/https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv")
 
-# District level FiveThirtyEight model
+# National level FiveThirtyEight Senate model
 # Updated:  2018-11-06 at 11:06
 # Archived: 2018-11-06 at 21:00
 model_senate <- read_csv("https://web.archive.org/web/20181106210048/https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv")

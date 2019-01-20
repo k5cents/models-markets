@@ -1,5 +1,5 @@
 # Kiernan Nicholls
-# Collect members of current congress
+# Format members of current congress
 library(tidyverse)
 library(magrittr)
 

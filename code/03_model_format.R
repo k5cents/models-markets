@@ -1,6 +1,7 @@
 # Kiernan Nicholls
 # Format forecast model data
 library(tidyverse)
+library(magrittr)
 
 model_history <-
   model_seat %>%

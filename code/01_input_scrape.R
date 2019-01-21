@@ -35,6 +35,15 @@ model_seat <- read_csv("https://projects.fivethirtyeight.com/congress-model-2018
 # model_senate <- read_csv("https://web.archive.org/web/20181106210048/https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv")
 model_senate <- read_csv("https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv")
 
+# Prediction Market data courtesy of PredictIt.org
+# Advance data provided to partnered researchers
+# See /old for code to scrape similar public data
+market_data <- read_csv(file = "./input/market_data.csv",
+                        na = c("n/a", "NA"),
+                        col_types = cols(MarketId = col_character(),
+                                         ContractName = col_character(),
+                                         ContractSymbol = col_character()))
+
 # write_csv(members_115,    "./input/members_115.csv")
 # write_csv(members_116,    "./input/members_116.csv")
 # write_csv(model_district, "./input/model_district.csv")

@@ -33,6 +33,7 @@ model_history <-
          model) %>%
   filter(name != "Others")
 
+# Extract the last name for matching
 model_history$name <-
   if_else(word(model_history$name, -1) == "Jr.",
           true = word(model_history$name, -2),
@@ -43,6 +44,8 @@ model_history$name <-
 model_history %<>% arrange(date, name)
 model_history$special[is.na(model_history$special)] <- FALSE
 
+# Seperate model data by model format
+# According to 538, the "classic" model can be used as a default
 model <- filter(model_history, model == "classic") %>% select(-model)
 model_lite <- filter(model_history, model == "lite") %>% select(-model)
 model_delux <- filter(model_history, model == "deluxe") %>% select(-model)

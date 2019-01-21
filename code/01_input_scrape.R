@@ -44,7 +44,7 @@ market_data <- read_csv(file = "./input/market_data.csv",
                                          ContractName = col_character(),
                                          ContractSymbol = col_character()))
 
-read_github <- function(user, repo, branch = "master", folder, file) {
+read_github <- function(user, repo, branch = "master", folder, file, ...) {
   github_url <- paste("https://raw.githubusercontent.com",
                       user,
                       repo,
@@ -52,13 +52,17 @@ read_github <- function(user, repo, branch = "master", folder, file) {
                       folder,
                       file,
                       sep = "/")
-  read_csv(github_url)
+  read_csv(github_url, ...)
 }
 
 election_results <- read_github(user   = "fivethirtyeight",
                                 repo   = "data",
                                 folder = "forecast-review",
-                                file   = "forecast_results_2018.csv")
+                                file   = "forecast_results_2018.csv",
+                                col_types = cols(cycle = col_character(),
+                                                 Democrat_Won = col_logical(),
+                                                 Republican_Won = col_logical(),
+                                                 uncalled = col_logical()))
 
 lean_district <- read_github(user   = "fivethirtyeight",
                              repo   = "data",

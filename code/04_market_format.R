@@ -1,11 +1,7 @@
 library(tidyverse)
 library(magrittr)
-m <-
-  read_csv(file = "./data/market_file.csv",
-           na = c("n/a", "NA"),
-           col_types = cols(MarketId = col_character(),
-                            ContractName = col_character(),
-                            ContractSymbol = col_character())) %>%
+market <-
+  market_data %>%
   rename(mid      = MarketId,
          symbol   = MarketSymbol,
          party    = ContractName,
@@ -22,43 +18,35 @@ m <-
                          "Democratic or DFL" = "D")) %>%
   select(date, everything(), -ContractSymbol, -MarketName)
 
-m$symbol <- str_remove(m$symbol, ".2018")
-m$symbol <- str_remove(m$symbol, ".18")
+market$symbol <- str_remove(market$symbol, ".2018")
+market$symbol <- str_remove(market$symbol, ".18")
 
-m <- separate(m,
-              col = symbol,
-              into = c("name", "code"),
-              sep = "\\.",
-              remove = TRUE,
-              extra = "drop",
-              fill = "left")
+market <- separate(market,
+                   col = symbol,
+                   into = c("name", "code"),
+                   sep = "\\.",
+                   remove = TRUE,
+                   extra = "drop",
+                   fill = "left")
 
-m$code <- str_replace(m$code, "SENATE", "99")
-m$code <- str_replace(m$code, "SEN",    "99")
-m$code <- str_replace(m$code, "SE",     "99")
-m$code <- str_replace(m$code, "AL",     "01") # at large
-m$code <- str_replace(m$code, "OH12G",  "OH12") # not sure
-m$code[which(m$name == "SPEC")] <- "MS98" # special election
-m$code[which(m$code == "MN99")] <- "MN98" # special election
-m$code <- paste(str_sub(m$code, 1, 2), str_sub(m$code, 3, 4), sep = "-")
-m$name[which(m$name == "PARTY")] <- NA # no name
-m$name[which(m$name == "SPEC")] <- NA # no name
-m <- m[-str_which(m$mid, "3455"), ] # paul ryan not needed
+market$code <- str_replace(market$code, "SENATE", "99")
+market$code <- str_replace(market$code, "SEN",    "99")
+market$code <- str_replace(market$code, "SE",     "99")
+market$code <- str_replace(market$code, "AL",     "01") # at large
+market$code <- str_replace(market$code, "OH12G",  "OH12") # not sure
+market$code[which(market$name == "SPEC")] <- "MS98" # special election
+market$code[which(market$code == "MN99")] <- "MN98" # special election
+market$code <- paste(str_sub(market$code, 1, 2),
+                     str_sub(market$code, 3, 4),
+                     sep = "-")
 
-c <- read_csv("./data/congress_members.csv", col_types = cols())
-
-for (i in 1:nrow(m)) {
-  if (is.na(m$party[i])) {
-    m$party[i] <- c$party[which(str_sub(tolower(c$last), 1, 4) ==
-                                   str_sub(tolower(m$name), 1, 4)[i])][1]
-  }
-}
+market$name[which(market$name == "PARTY")] <- NA # no name
+market$name[which(market$name == "SPEC")] <- NA # no name
+market <- market[-str_which(market$mid, "3455"), ] # paul ryan not needed
 
 for (i in 1:nrow(m)) {
-  if (!is.na(m$party[i])) {
-    m$name[i] <- c$last[which(str_sub(tolower(c$last), 1, 4) ==
-                                str_sub(tolower(m$name), 1, 4)[i])][1]
+  if (is.na(market$party[i])) {
+    market$party[i] <- members$party[which(str_sub(tolower(members$name), 1, 4) ==
+                                   str_sub(tolower(market$name), 1, 4)[i])][1]
   }
 }
-
-m %<>% mutate(party = recode(party, "I" = "D"))

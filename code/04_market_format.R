@@ -1,5 +1,8 @@
+# Kiernan Nicholls
+# Format market data from PredictIt
 library(tidyverse)
 library(magrittr)
+
 market <-
   market_data %>%
   rename(mid      = MarketId,

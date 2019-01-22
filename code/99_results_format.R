@@ -1,3 +1,8 @@
+# Kiernan Nicholls
+# Format election results
+library(tidyverse)
+library(magrittr)
+
 election_results %<>%
   filter(branch != "Governor" & version == "classic") %>%
   select(race,
@@ -21,4 +26,5 @@ election_results %<>%
   unite(col = code,
         state, district,
         sep = "-",
-        remove = TRUE)
+        remove = TRUE) %>%
+  select(-uncalled)

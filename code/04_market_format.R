@@ -47,9 +47,10 @@ market$name[which(market$name == "PARTY")] <- NA # no name
 market$name[which(market$name == "SPEC")] <- NA # no name
 market <- market[-str_which(market$mid, "3455"), ] # paul ryan not needed
 
-for (i in 1:nrow(m)) {
+for (i in 1:nrow(market)) {
   if (is.na(market$party[i])) {
-    market$party[i] <- members$party[which(str_sub(tolower(members$name), 1, 4) ==
-                                   str_sub(tolower(market$name), 1, 4)[i])][1]
+    market$party[i] <-
+      members$party[which(str_sub(tolower(members$name), 1, 4)
+                          == str_sub(tolower(market$name), 1, 4)[i])][1]
   }
 }

@@ -3,7 +3,8 @@
 library(tidyverse)
 library(magrittr)
 
-election_results %<>%
+election_results <-
+  election_results %>%
   filter(branch != "Governor" & version == "classic") %>%
   select(race,
          # The two winner variables are redundant

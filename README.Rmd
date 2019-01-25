@@ -17,15 +17,15 @@ Using R to compare the predictive capabilities of markets and models.
 ## Project Background
 
 The forecast model has become a staple of political punditry. Popularized by the
-data journalism site [FiveThirtyEight][1], the
-forecast model is a statistical tool used to incorporate a number of
-quantitative inputs and output a probabilistic view of all possible outcomes.
+data journalism site [FiveThirtyEight][01], the forecast model is a statistical
+tool used to incorporate a number of quantitative inputs and output a
+probabilistic view of all possible outcomes.
 
 On the eve of the 2016 Presidential election, all mainstream forecasts gave
 Hillary Clinton significant odds to win the presidency. FiveThirtyEight's
-forecast model gave Clinton the lowest odds [at 71%][2]. Meanwhile, The New York
-Times Upshot calculated [85%][3] and the HuffPo Pollster's published an infamous
-[98% chance of a Clinton victory][4].
+forecast model gave Clinton the lowest odds [at 71%][02]. Meanwhile, The New
+York Times Upshot calculated [85%][03] and the HuffPo Pollster's published an
+infamous [98% chance of a Clinton victory][04].
 
 Is there a better alternative to forecasting models?
 
@@ -40,21 +40,19 @@ predict the winner of 2018 midterm congressional elections.
 
 ### Polling and Aggrigation
 
-Opinion polling is the most common form of election predicting. By 
-[randomly sampling][5] the
-overall population of potential voters, pollsters can ask a thousand Americans
-their voting intentions and determine the likely division of votes in the actual
-election. Sampling errors and systemic errors prevent this statistical tool from
-perfectly predicting the election. By aggregating a bunch of polls and averaging
-their results, sites like
-[RealClearPolitics][6] take advantage of the
-[law of large numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers) to
+Opinion polling is the most common form of election predicting. 
+By [randomly sampling][05] the overall population of potential voters, pollsters
+can ask a thousand Americans their voting intentions and determine the likely
+division of votes in the actual election. Sampling errors and systemic errors
+prevent this statistical tool from perfectly predicting the election. By
+aggregating a bunch of polls and averaging their results, sites like
+[RealClearPolitics][06] take advantage of the [law of large numbers][07] to
 better calculate the true opinion of the population.
 
 ### Forecasting Models
 
-In [the word's](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/)
-of Nate Silver, FiveThirty's founder and primary author of their model: 
+In [the word's][08] of Nate Silver, FiveThirty's founder and primary author of
+their model:
 
 > (Forecasting models) take lots of polls, perform various types of adjustments
 to them, and then blend them with other kinds of empirically useful indicators
@@ -71,9 +69,8 @@ exactly what data is being incorporated in what ways. In the "classic" version
 of their model, three types of quantitative data are used:
 
 1. **Polling**: District-by-district polling, adjusted for house effects and
-other factors in some unknownn way. 
-[FiveThirtyEight rates pollsters](https://projects.fivethirtyeight.com/pollster-ratings/) 
-to adjust their findings.
+other factors in some unknownn way. [FiveThirtyEight rates pollsters][09] to
+adjust their findings.
 2. **C.A.N.T.O.R.**: A proprietary system which infers results for districts
 with little or no polling from similar districts where polling has been done.
 3. **Fundamentals**: Non-polling factors that historically help in predicting
@@ -89,13 +86,11 @@ congressional races:
     
 From everything that has been said publicly about the mathematics of their
 model, FiveThirtyEight uses these quantitative inputs to predict each
-candidate's share of the vote. The model is then uses the statistical
-program Stata to run a 
-[Monte Carlo simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method).
-By predicting the lower limit, upper limit, central tendency, and distribution
-of shares of the vote for two candidates, you can simulate a given election
-20,000 times and simply use the percentage of victories as the probability of
-actual victory.
+candidate's share of the vote. The model is then uses the statistical program
+Stata to run a [Monte Carlo simulation][10]. By predicting the lower limit,
+upper limit, central tendency, and distribution of shares of the vote for two
+candidates, you can simulate a given election 20,000 times and simply use the
+percentage of victories as the probability of actual victory.
 
 In the training data (most House races since 1998), the classic model correctly
 predicted _96.7%_ of races at the time of election. FiveThirtyEight points out
@@ -111,10 +106,10 @@ percentage.
 The team at FiveThirtyEight made public a portion of their model's output as
 four separate `.csv` files on their website:
 
-1. [Senate national forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
-2. [Senate seat forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
-3. [House national forecast](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
-4. [House district forecasts](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
+1. [Senate national forecast][11]
+2. [Senate seat forecast][12]
+3. [House national forecast][13]
+4. [House district forecasts][14]
 
 The two national forecasts provide the FiveThirtyEight calculations for each
 party's probability of winning a majority in their respective chambers on any
@@ -138,7 +133,8 @@ district level. For each observation, there are 12 variables recorded:
 10. The candidate's ~minimum share of the vote (10th percentile)
 10. The candidate's ~maximum share of the vote (90th percentile)
 
-Below is a sample of variables to show the structure of the data as provided by FiveThirtyEight.
+Below is a sample of variables to show the structure of the data as provided by
+FiveThirtyEight.
 
 ```{r model_data, echo=FALSE, message=FALSE}
 read_csv("./input/model_district.csv") %>% 
@@ -153,7 +149,7 @@ read_csv("./input/model_district.csv") %>%
 ### PredictIt Markets
 
 PredictIt markets are comprised of "markets" and "contracts." As they explain on
-[their website](https://www.predictit.org/support/faq):
+[their website][15]:
 
 > Every question posed by PredictIt is known as a ‘market’. Some markets have
 simple yes or no answers, while others can have multiple possible answers.
@@ -166,8 +162,8 @@ Single-contract markets resolve either to ‘Yes’ or ‘No’. In multiple-con
 markets, only one contract can resolve to ‘Yes’. All others will resolve to
 ‘No’.
 
-On [their webstie](https://www.predictit.org/research), PredictIt outlines their
-data agreement with academic researchers:
+On [their webstie][16], PredictIt outlines their data agreement with academic
+researchers:
 
 > In order to take full advantage of the research opportunities presented by
 prediction markets like PredictIt, we make our data available to members of the
@@ -176,10 +172,9 @@ wealth of information that can be used to further our understanding of a wide
 array of subjects in fields of study as diverse as microeconomics, political
 behavior, computer science and game theory.
 
-I scraped [the PredictIt API](https://www.predictit.org/api/marketdata/all/)
-before the election and used the data to find all market ID's related to
-Congressional elections. PredictIt then provided the revelant market data as a
-`.csv` file.
+I scraped [the PredictIt API][17] before the election and used the data to find
+all market ID's related to Congressional elections. PredictIt then provided the
+revelant market data as a `.csv` file.
 
 Each observation represents one day's opening, closing, low, and high price for
 a single contract from a single market. There are 44,711 observations covering
@@ -228,9 +223,20 @@ read_csv(file = "./input/market_data.csv",
 
 ## Biblography
 
-[1]: https://fivethirtyeight.com/ "538 home page"
-[2]: https://goo.gl/CLPrUC "538 2016"
-[3]: https://goo.gl/QES9vJ "NYT Upshot 2016"
-[4]: https://goo.gl/XJqwyD "HuffPo 2016"
-[5]: https://en.wikipedia.org/wiki/Sampling_(statistics) "Sandom sampling wiki"
-[6]: https://www.realclearpolitics.com/ "RCP home page"
+[01]: https://fivethirtyeight.com/ "538 home page"
+[02]: https://goo.gl/CLPrUC "538 2016"
+[03]: https://goo.gl/QES9vJ "NYT Upshot 2016"
+[04]: https://goo.gl/XJqwyD "HuffPo 2016"
+[05]: https://en.wikipedia.org/wiki/Sampling_(statistics) "Sandom sampling wiki"
+[06]: https://www.realclearpolitics.com/ "RCP home page"
+[07]: https://en.wikipedia.org/wiki/Law_of_large_numbers "Law large nums wiki"
+[08]: https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/ "538 model how"
+[09]: https://projects.fivethirtyeight.com/pollster-ratings/ "538 poll ratings"
+[10]: https://en.wikipedia.org/wiki/Monte_Carlo_method "Monte carlo sim wiki"
+[11]: https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv "Sen nat model"
+[12]: https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv "Sen seat model"
+[13]: https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv "House nat model"
+[14]: https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv "House dis model"
+[15]: https://www.predictit.org/support/faq "PredictIt FAQ"
+[16]: https://www.predictit.org/research "PredictIt research"
+[17]: https://www.predictit.org/api/marketdata/all/ "PredictIt API"

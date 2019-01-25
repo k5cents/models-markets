@@ -73,7 +73,7 @@ I will be using the FiveThirtyEight model to collect forecasting data. In 2016,
 FiveThirtyEight's prediction was closest to reality. They are one of the few
 mainstream forecasters to continue their work into the 2018 midterm elections.
 
-The exact process of the FiveThirtyEight is proprietary, so we can't know exaclty what data is being incorperated in what ways. In the "classic" version of their model, three types of quantifiable data are used:
+The exact process of the FiveThirtyEight is proprietary, so we can't know exaclty what data is being incorperated in what ways. In the "classic" version of their model, three types of quantitative data are used:
 
 1. **Polling**: District-by-district polling, adjusted for house effects and
 other factors.
@@ -88,6 +88,8 @@ with little or no polling from comparable districts where polling has been done.
     * Incumbent voting record
     * Challenger experience
     * Scandals
+    
+From everything that has been said publically about the mathematics of their model, FiveThirtyEight uses these quantitative inputs to predict each candidate's share of the vote. The model is then run using the statistical program Stata to run a [Monte Carlo simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method)
 
 In the training data (most House races since 1998), the classic model correctly
 predicted _96.7%_ of races at the time of election. FiveThirtyEight points out
@@ -111,13 +113,13 @@ The two national forecasts provide the FiveThirtyEight calculations for each par
 
 The seat and district level forecasts will be used in this project. Each observation represents _one_ day's probability of victory for _one_ candidate. For each observation, there are 12 variables recorded:
 
-1. The date of the prediction (August 1st to Election Day)
-2. The state of the election
-3. The district of the election (for House races)
-4. Whether the election is a special election
-5. The candidate's name 
-6. The candidate's party
-7. The model used to calculate the values (classic, lite, or delux)
+1. The date of the prediction (starting on August 1st, 2018)
+2. The State the election is in
+3. The Congressional district the election is in
+4. Whether the election is a "special election"
+5. The candidate's full name
+6. The candidate's political party
+7. The model version (classic, lite, or delux)
 8. The candidate's probabiliy of victory
 9. The candidate's expected share of the vote (50th percentile)
 10. The candidate's ~minimum share of the vote (10th percentile)
@@ -126,17 +128,14 @@ The seat and district level forecasts will be used in this project. Each observa
 Below is a sample of variables to show the structure of the data as provided by FiveThirtyEight.
 
 ```{r model_date, echo=FALSE, message=FALSE}
-read_csv("https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv") %>% 
-  filter(model == "classic") %>% 
-  select(forecastdate,
-         state,
-         party,
-         incumbent,
-         voteshare,
-         win_probability) %>% 
+read_csv("https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv") %>% 
+  select(-candidate,
+         -special, 
+         -model,
+         -p10_voteshare, 
+         -p90_voteshare) %>% 
   print()
 ```
-
 
 ### PredictIt Markets
 

@@ -71,7 +71,7 @@ one of the few mainstream forecasters to continue their work into the
 
 The exact process of the FiveThirtyEight is proprietary, so we can't
 know exaclty what data is being incorperated in what ways. In the
-"classic" version of their model, three types of quantifiable data are
+"classic" version of their model, three types of quantitative data are
 used:
 
 1.  **Polling**: District-by-district polling, adjusted for house
@@ -89,6 +89,12 @@ used:
     -   Incumbent voting record
     -   Challenger experience
     -   Scandals
+
+From everything that has been said publically about the mathematics of
+their model, FiveThirtyEight uses these quantitative inputs to predict
+each candidate's share of the vote. The model is then run using the
+statistical program Stata to run a [Monte Carlo
+simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method)
 
 In the training data (most House races since 1998), the classic model
 correctly predicted *96.7%* of races at the time of election.
@@ -123,13 +129,13 @@ The seat and district level forecasts will be used in this project. Each
 observation represents *one* day's probability of victory for *one*
 candidate. For each observation, there are 12 variables recorded:
 
-1.  The date of the prediction (August 1st to Election Day)
-2.  The state of the election
-3.  The district of the election (for House races)
-4.  Whether the election is a special election
-5.  The candidate's name
-6.  The candidate's party
-7.  The model used to calculate the values (classic, lite, or delux)
+1.  The date of the prediction (starting on August 1st, 2018)
+2.  The State the election is in
+3.  The Congressional district the election is in
+4.  Whether the election is a "special election"
+5.  The candidate's full name
+6.  The candidate's political party
+7.  The model version (classic, lite, or delux)
 8.  The candidate's probabiliy of victory
 9.  The candidate's expected share of the vote (50th percentile)
 10. The candidate's ~minimum share of the vote (10th percentile)
@@ -138,20 +144,20 @@ candidate. For each observation, there are 12 variables recorded:
 Below is a sample of variables to show the structure of the data as
 provided by FiveThirtyEight.
 
-    ## # A tibble: 9,451 x 6
-    ##    forecastdate state party incumbent voteshare win_probability
-    ##    <date>       <chr> <chr> <lgl>         <dbl>           <dbl>
-    ##  1 2018-08-01   AZ    D     FALSE         51.1         0.738   
-    ##  2 2018-08-01   AZ    R     FALSE         46.1         0.262   
-    ##  3 2018-08-01   AZ    G     FALSE          2.82        0       
-    ##  4 2018-08-01   CA    D     TRUE          63.6         0.999   
-    ##  5 2018-08-01   CA    D     FALSE         36.4         0.000600
-    ##  6 2018-08-01   CT    D     TRUE          64.1         0.999   
-    ##  7 2018-08-01   CT    R     FALSE         32.4         0.0011  
-    ##  8 2018-08-01   CT    <NA>  FALSE          3.48        0       
-    ##  9 2018-08-01   DE    D     TRUE          60.7         0.989   
-    ## 10 2018-08-01   DE    R     FALSE         36.7         0.0113  
-    ## # ... with 9,441 more rows
+    ## # A tibble: 302,859 x 7
+    ##    forecastdate state district party incumbent win_probability voteshare
+    ##    <date>       <chr>    <dbl> <chr> <lgl>               <dbl>     <dbl>
+    ##  1 2018-08-01   AK           1 R     TRUE               0.718      49.4 
+    ##  2 2018-08-01   AK           1 D     FALSE              0.282      44.1 
+    ##  3 2018-08-01   AK           1 <NA>  FALSE              0           6.54
+    ##  4 2018-08-01   AL           1 R     TRUE               0.999      64.9 
+    ##  5 2018-08-01   AL           1 D     FALSE              0.0007     35.1 
+    ##  6 2018-08-01   AL           2 R     TRUE               0.973      58.2 
+    ##  7 2018-08-01   AL           2 D     FALSE              0.0271     41.8 
+    ##  8 2018-08-01   AL           3 R     TRUE               0.997      62.3 
+    ##  9 2018-08-01   AL           3 D     FALSE              0.0028     37.7 
+    ## 10 2018-08-01   AL           4 R     TRUE               1          76.3 
+    ## # ... with 302,849 more rows
 
 ### PredictIt Markets
 

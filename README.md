@@ -131,7 +131,7 @@ candidate. There are 28,353 observations in the Senate seat level file
 and 302,859 for the House district level. For each observation, there
 are 12 variables recorded:
 
-1.  The date of the prediction (starting on August 1st, 2018)
+1.  The date of the prediction (starting on 2018-08-01)
 2.  The State the election is in
 3.  The Congressional district the election is in
 4.  Whether the election is a "special election"
@@ -201,32 +201,32 @@ observations covering 145 contracts across 118 markets. For each
 observation there are 11 variables:
 
 1.  Market ID
-2.  Market name (The "question" being asked)
+2.  Market name (the "question" being asked)
 3.  Market symbol
-4.  Contract name (The possible "answers")
+4.  Contract name (the possible "answers")
 5.  Contract symbol
-6.  Prediction date (Earlier is January 27th, 2017)
+6.  Prediction date (earliest is 201-01-27)
 7.  Opening contract price
 8.  Low contract price
 9.  High contract price
-10. Closing contract price
+10. Closing contract price (that day's final prediction)
 
 Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt.
 
     ## # A tibble: 44,711 x 6
-    ##    MarketId MarketSymbol       ContractSymbol Date       ClosePrice Volume
-    ##    <chr>    <chr>              <chr>          <date>          <dbl>  <dbl>
-    ##  1 4255     MN03.2018          DEM.MN03.2018  2018-04-25       0.63      0
-    ##  2 4016     PA09.2018          DEM.PA09.2018  2018-04-16       0.18      0
-    ##  3 3863     TX05.2018          DEM.TX05.2018  2018-10-19       0.06      0
-    ##  4 3481     TEST.MTSENATE.2018 <NA>           2018-03-18       0.7       0
-    ##  5 3767     NH01.2018          GOP.NH01.2018  2018-05-01       0.2       0
-    ##  6 3864     TX21.2018          GOP.TX21.2018  2018-10-16       0.92      0
-    ##  7 3883     TX29.2018          DEM.TX29.2018  2017-12-04       0.93      0
-    ##  8 3772     TNSEN18            GOP.TNSEN18    2017-12-14       0.61    823
-    ##  9 4106     SC04.2018          DEM.SC04.2018  2018-10-28       0.05      0
-    ## 10 3767     NH01.2018          GOP.NH01.2018  2018-07-30       0.25      0
+    ##    MarketId MarketSymbol      ContractSymbol   Date       ClosePrice Volume
+    ##    <chr>    <chr>             <chr>            <date>          <dbl>  <dbl>
+    ##  1 3812     AZSEN18           DEM.AZSEN18      2018-06-16      0.66       0
+    ##  2 4015     MD06.2018         DEM.MD06.2018    2018-10-08      0.98       0
+    ##  3 3864     TX21.2018         GOP.TX21.2018    2018-07-21      0.9        0
+    ##  4 3772     TNSEN18           GOP.TNSEN18      2018-02-27      0.67      48
+    ##  5 3455     RYAN.WI01.2018    <NA>             2017-08-01      0.85       1
+    ##  6 3949     PARTY.MNSEN.18    DEM.PARTY.MNSEN… 2018-04-19      0.83      54
+    ##  7 3530     COFF.CO06.2018    <NA>             2018-01-29      0.290      0
+    ##  8 4824     CA45.2018         GOP.CA45.2018    2018-11-13      0.02    5491
+    ##  9 4253     PA06.2018         GOP.PA06.2018    2018-07-28      0.07       0
+    ## 10 2999     NELSON.FLSENATE.… <NA>             2018-09-06      0.45    1345
     ## # ... with 44,701 more rows
 
 Data Wrangling

@@ -123,7 +123,7 @@ observation represents one day's probability of victory for one candidate. There
 are 28,353 observations in the Senate seat level file and 302,859 for the House
 district level. For each observation, there are 12 variables recorded:
 
-1. The date of the prediction (starting on August 1st, 2018)
+1. The date of the prediction (starting on 2018-08-01)
 2. The State the election is in
 3. The Congressional district the election is in
 4. Whether the election is a "special election"
@@ -173,15 +173,15 @@ a single contract from a single market. There are 44,711 observations covering
 145 contracts across 118 markets. For each observation there are 11 variables:
 
 1. Market ID
-2. Market name (The "question" being asked)
+2. Market name (the "question" being asked)
 3. Market symbol
-4. Contract name (The possible "answers")
+4. Contract name (the possible "answers")
 5. Contract symbol
-6. Prediction date (Earlier is January 27th, 2017)
+6. Prediction date (earliest is 201-01-27)
 7. Opening contract price
 8. Low contract price
 9. High contract price
-10. Closing contract price
+10. Closing contract price (that day's final prediction)
 
 Below is a random sample of observations with a selection of variables to show
 the structure of the data as provided by PredictIt.

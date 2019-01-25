@@ -45,6 +45,9 @@ model_history$name <-
 model_history %<>% arrange(date, name)
 model_history$special[is.na(model_history$special)] <- FALSE
 
+# Recode incumbent Independents for relational joins
+model_history[model_history$incumbent & model_history$party == "I", ]$party <- "D"
+
 # Seperate model data by model format
 # According to 538, the "classic" model can be used as a default
 model <- filter(model_history, model == "classic") %>% select(-model)

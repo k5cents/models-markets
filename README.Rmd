@@ -109,7 +109,8 @@ percentage.
 
 ### FiveThirtyEight Model
 
-The team at FiveThirtyEight made public a portion of their model's output as four separate `.csv` files on their website: 
+The team at FiveThirtyEight made public a portion of their model's output as
+four separate `.csv` files on their website:
 
 1. [Senate national forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
 2. [Senate seat forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)

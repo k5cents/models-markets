@@ -137,7 +137,7 @@ district level. For each observation, there are 12 variables recorded:
 
 Below is a sample of variables to show the structure of the data as provided by FiveThirtyEight.
 
-```{r model_date, echo=FALSE, message=FALSE}
+```{r model_data, echo=FALSE, message=FALSE}
 read_csv("./input/model_district.csv") %>% 
   select(-candidate,
          -special, 
@@ -186,7 +186,7 @@ a single contract from a single market. There are 44,711 observations covering
 Below is a random sample of observations with a selection of variables to show
 the structure of the data as provided by PredictIt.
 
-```{r}
+```{r market_data, echo=FALSE, message=FALSE}
 read_csv(file = "./input/market_data.csv",
          na = c("n/a", "NA"),
          col_types = cols(MarketId = col_character(),

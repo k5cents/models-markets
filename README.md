@@ -214,35 +214,19 @@ observation there are 11 variables:
 Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt.
 
-    read_csv(file = "./input/market_data.csv",
-             na = c("n/a", "NA"),
-             col_types = cols(MarketId = col_character(),
-                              ContractName = col_character(),
-                              ContractSymbol = col_character())) %>%
-      # Randomly arrange the tibble
-      mutate(rand = sample(1:nrow(.), nrow(.), replace = F)) %>%
-      arrange(rand) %>% 
-      select(-MarketName, 
-             -ContractName, 
-             -LowPrice, 
-             -OpenPrice, 
-             -HighPrice,
-             -rand) %>% 
-      print()
-
     ## # A tibble: 44,711 x 6
     ##    MarketId MarketSymbol       ContractSymbol Date       ClosePrice Volume
     ##    <chr>    <chr>              <chr>          <date>          <dbl>  <dbl>
-    ##  1 4304     WI01.2018          DEM.WI01.2018  2018-05-20       0.55    398
-    ##  2 4257     IL12.2018          DEM.IL12.2018  2018-09-20       0.49     20
-    ##  3 3864     TX21.2018          GOP.TX21.2018  2018-02-21       0.7       0
-    ##  4 4104     NJ11.2018          GOP.NJ11.2018  2018-03-01       0.28     10
-    ##  5 3489     STAB.MISENATE.2018 <NA>           2017-08-07       0.71     12
-    ##  6 3886     VA02.2018          DEM.VA02.2018  2018-05-06       0.64      0
-    ##  7 3608     HELL.NVSENATE.2018 <NA>           2018-10-27       0.53   2427
-    ##  8 3863     TX05.2018          DEM.TX05.2018  2018-08-25       0.03      0
-    ##  9 3883     TX29.2018          DEM.TX29.2018  2017-12-30       0.89      0
-    ## 10 4257     IL12.2018          DEM.IL12.2018  2018-11-06       0.37    233
+    ##  1 4255     MN03.2018          DEM.MN03.2018  2018-04-25       0.63      0
+    ##  2 4016     PA09.2018          DEM.PA09.2018  2018-04-16       0.18      0
+    ##  3 3863     TX05.2018          DEM.TX05.2018  2018-10-19       0.06      0
+    ##  4 3481     TEST.MTSENATE.2018 <NA>           2018-03-18       0.7       0
+    ##  5 3767     NH01.2018          GOP.NH01.2018  2018-05-01       0.2       0
+    ##  6 3864     TX21.2018          GOP.TX21.2018  2018-10-16       0.92      0
+    ##  7 3883     TX29.2018          DEM.TX29.2018  2017-12-04       0.93      0
+    ##  8 3772     TNSEN18            GOP.TNSEN18    2017-12-14       0.61    823
+    ##  9 4106     SC04.2018          DEM.SC04.2018  2018-10-28       0.05      0
+    ## 10 3767     NH01.2018          GOP.NH01.2018  2018-07-30       0.25      0
     ## # ... with 44,701 more rows
 
 Data Wrangling

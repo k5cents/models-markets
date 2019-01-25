@@ -102,6 +102,57 @@ Prediction Data
 
 ### FiveThirtyEight Model
 
+The team at FiveThirtyEight made public a portion of their model's
+output as four seperate `.csv` files on their website:
+
+1.  [Senate national
+    forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
+2.  [Senate seat
+    forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
+3.  [House national
+    forecast](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
+4.  [House district
+    forecasts](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
+
+The two national forecasts provide the FiveThirtyEight calculations for
+each party's probability of winning a majority in their respective
+chambers on any given day (e.g., "The Democratic party has an 85% chance
+of winning a majority in the House").
+
+The seat and district level forecasts will be used in this project. Each
+observation represents *one* day's probability of victory for *one*
+candidate. For each observation, there are 12 variables recorded:
+
+1.  The date of the prediction (August 1st to Election Day)
+2.  The state of the election
+3.  The district of the election (for House races)
+4.  Whether the election is a special election
+5.  The candidate's name
+6.  The candidate's party
+7.  The model used to calculate the values (classic, lite, or delux)
+8.  The candidate's probabiliy of victory
+9.  The candidate's expected share of the vote (50th percentile)
+10. The candidate's ~minimum share of the vote (10th percentile)
+11. The candidate's ~maximum share of the vote (90th percentile)
+
+Below is a sample of variables to show the structure of the data as
+provided by FiveThirtyEight.
+
+    ## # A tibble: 9,451 x 6
+    ##    forecastdate state party incumbent voteshare win_probability
+    ##    <date>       <chr> <chr> <lgl>         <dbl>           <dbl>
+    ##  1 2018-08-01   AZ    D     FALSE         51.1         0.738   
+    ##  2 2018-08-01   AZ    R     FALSE         46.1         0.262   
+    ##  3 2018-08-01   AZ    G     FALSE          2.82        0       
+    ##  4 2018-08-01   CA    D     TRUE          63.6         0.999   
+    ##  5 2018-08-01   CA    D     FALSE         36.4         0.000600
+    ##  6 2018-08-01   CT    D     TRUE          64.1         0.999   
+    ##  7 2018-08-01   CT    R     FALSE         32.4         0.0011  
+    ##  8 2018-08-01   CT    <NA>  FALSE          3.48        0       
+    ##  9 2018-08-01   DE    D     TRUE          60.7         0.989   
+    ## 10 2018-08-01   DE    R     FALSE         36.7         0.0113  
+    ## # ... with 9,441 more rows
+
 ### PredictIt Markets
 
 Project Findings

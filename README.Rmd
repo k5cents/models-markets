@@ -7,6 +7,7 @@ output: md_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 # _predictr_
@@ -98,6 +99,44 @@ percentage.
 ## Prediction Data
 
 ### FiveThirtyEight Model
+
+The team at FiveThirtyEight made public a portion of their model's output as four seperate `.csv` files on their website: 
+
+1. [Senate national forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
+2. [Senate seat forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
+3. [House national forecast](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
+4. [House district forecasts](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
+
+The two national forecasts provide the FiveThirtyEight calculations for each party's probability of winning a majority in their respective chambers on any given day (e.g., "The Democratic party has an 85% chance of winning a majority in the House"). 
+
+The seat and district level forecasts will be used in this project. Each observation represents _one_ day's probability of victory for _one_ candidate. For each observation, there are 12 variables recorded:
+
+1. The date of the prediction (August 1st to Election Day)
+2. The state of the election
+3. The district of the election (for House races)
+4. Whether the election is a special election
+5. The candidate's name 
+6. The candidate's party
+7. The model used to calculate the values (classic, lite, or delux)
+8. The candidate's probabiliy of victory
+9. The candidate's expected share of the vote (50th percentile)
+10. The candidate's ~minimum share of the vote (10th percentile)
+10. The candidate's ~maximum share of the vote (90th percentile)
+
+Below is a sample of variables to show the structure of the data as provided by FiveThirtyEight.
+
+```{r model_date, echo=FALSE, message=FALSE}
+read_csv("https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv") %>% 
+  filter(model == "classic") %>% 
+  select(forecastdate,
+         state,
+         party,
+         incumbent,
+         voteshare,
+         win_probability) %>% 
+  print()
+```
+
 
 ### PredictIt Markets
 

@@ -99,6 +99,18 @@ percentage.
 
 ### Prediction Markets
 
+As summarized [on Wikipedia][18]:
+
+> Prediction markets (also known as predictive markets, information markets,
+decision markets, idea futures, event derivatives, or virtual markets) are
+exchange-traded markets created for the purpose of trading the outcome of
+events. The market prices can indicate what the crowd thinks the probability of
+the event is. A prediction market contract trades between 0 and 100%... The main
+purposes of prediction markets are eliciting aggregating beliefs over an unknown
+future outcome. Traders with different beliefs trade on contracts whose payoffs
+are related to the unknown future outcome and the market prices of the contracts
+are considered as the aggregated belief.
+
 ## Prediction Data
 
 ### FiveThirtyEight Model
@@ -240,3 +252,4 @@ read_csv(file = "./input/market_data.csv",
 [15]: https://www.predictit.org/support/faq "PredictIt FAQ"
 [16]: https://www.predictit.org/research "PredictIt research"
 [17]: https://www.predictit.org/api/marketdata/all/ "PredictIt API"
+[18]: https://en.wikipedia.org/wiki/Prediction_market "Prediction markets wiki"

@@ -2,6 +2,7 @@
 # Scrape archived websites and github repos for initial data
 library(tidyverse)
 
+# Functions to scrape CSV from web.archive.org and github.com
 read_archive <- function(archive, date, site, folder, file) {
   archive_url <- paste("https://web.archive.org/web",
                        str_remove_all(string = as.character(date),
@@ -26,7 +27,6 @@ read_github <- function(user, repo, branch, folder, file, ...) {
 
 # Current members of the 115th Congress
 # Archived: 2018-10-22 at 18:11
-
 members_115 <- read_archive(date = "2018-10-22 18:11:18",
                             site = "https://theunitedstates.io",
                             folder = "congress-legislators",
@@ -71,6 +71,8 @@ model_senate <- read_archive(date   = "2018-11-06 21:00:48",
                              folder = "congress-model-2018",
                              file   = "senate_national_forecast.csv")
 
+polls_senate <- read_archive()
+
 # Prediction Market data courtesy of PredictIt.org
 # Advance data provided to partnered researchers
 # See /old for code to scrape similar public data
@@ -110,3 +112,21 @@ lean_states <-
               repo   = "data",
               folder = "partisan-lean",
               file   = "fivethirtyeight_partisan_lean_STATES.csv")
+
+
+# Polls used to create the 538 models
+# Archived 2019-01-29 21:45:47
+polls_senate <- read_archive(date = "2019-01-29 21:45:47",
+                             site = "https://projects.fivethirtyeight.com",
+                             folder = "polls-page",
+                             file = "senate_polls.csv")
+
+polls_house <- read_archive(date = "2019-01-29 21:45:47",
+                            site = "https://projects.fivethirtyeight.com",
+                            folder = "polls-page",
+                            file = "house_polls.csv")
+
+polls_generic <- read_archive(date = "2019-01-29 21:45:47",
+                              site = "https://projects.fivethirtyeight.com",
+                              folder = "polls-page",
+                              file = "generic_ballot_polls.csv")

@@ -108,6 +108,20 @@ blowouts, inflating this accuracy percentage.
 
 ### Prediction Markets
 
+As summarized [on
+Wikipedia](https://en.wikipedia.org/wiki/Prediction_market "Prediction markets wiki"):
+
+> Prediction markets (also known as predictive markets, information
+> markets, decision markets, idea futures, event derivatives, or virtual
+> markets) are exchange-traded markets created for the purpose of
+> trading the outcome of events. The market prices can indicate what the
+> crowd thinks the probability of the event is. A prediction market
+> contract trades between 0 and 100%... The main purposes of prediction
+> markets are eliciting aggregating beliefs over an unknown future
+> outcome. Traders with different beliefs trade on contracts whose
+> payoffs are related to the unknown future outcome and the market
+> prices of the contracts are considered as the aggregated belief.
+
 Prediction Data
 ---------------
 
@@ -224,16 +238,16 @@ to show the structure of the data as provided by PredictIt:
     ## # A tibble: 44,711 x 6
     ##    MarketId MarketSymbol        ContractSymbol Date       ClosePrice Volume
     ##    <chr>    <chr>               <chr>          <date>          <dbl>  <dbl>
-    ##  1 3490     BROW.OHSENATE.2018  <NA>           2018-09-23      0.88    1940
-    ##  2 4643     NY14.2018           GOP.NY14.2018  2018-10-17      0.01       0
-    ##  3 3485     BALD.WISENATE.2018  <NA>           2018-05-27      0.76       0
-    ##  4 4786     OH12G.2018          GOP.OH12G.2018 2018-10-16      0.73      20
-    ##  5 4258     NJ07.2018           DEM.NJ07.2018  2018-06-13      0.66       1
-    ##  6 3503     KING.MESENATE.2018  <NA>           2017-09-16      0.83       0
-    ##  7 3862     NJ02.2018           GOP.NJ02.2018  2017-11-16      0.290      1
-    ##  8 3864     TX21.2018           DEM.TX21.2018  2018-08-07      0.27     326
-    ##  9 2999     NELSON.FLSENATE.20… <NA>           2018-01-20      0.7        5
-    ## 10 4177     PASEN18             GOP.PASEN18    2018-04-13      0.15       0
+    ##  1 4138     MN08.2018           DEM.MN08.2018  2018-09-25       0.45    282
+    ##  2 3497     HEIN.NMSENATE.2018  <NA>           2018-01-31       0.92     10
+    ##  3 2941     MANCHIN.WVSENATE.2… <NA>           2018-07-23       0.75     51
+    ##  4 4253     PA06.2018           DEM.PA06.2018  2018-10-16       0.95      0
+    ##  5 4232     CASE.PASENATE.2018  <NA>           2018-05-11       0.88    380
+    ##  6 4156     FL17.2018           GOP.FL17.2018  2018-04-02       0.85      0
+    ##  7 3608     HELL.NVSENATE.2018  <NA>           2017-10-13       0.13      1
+    ##  8 3767     NH01.2018           DEM.NH01.2018  2018-09-15       0.81      0
+    ##  9 2941     MANCHIN.WVSENATE.2… <NA>           2017-07-23       0.67     56
+    ## 10 3513     HURD.TX23.2018      <NA>           2017-09-28       0.41     10
     ## # ... with 44,701 more rows
 
 Data Wrangling

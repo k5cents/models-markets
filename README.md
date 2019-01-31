@@ -3,19 +3,19 @@
 
 Using R to compare the predictive capabilities of markets and models.
 
-  * [Project Background](#project-background)
-  * [Predictive Methods](#predictive-methods)
-    + [Polling and Aggrigation](#polling-and-aggrigation)
-    + [Forecasting Models](#forecasting-models)
-    + [Prediction Markets](#prediction-markets)
-  * [Prediction Data](#prediction-data)
-    + [FiveThirtyEight Model](#fivethirtyeight-model)
-    + [PredictIt Markets](#predictit-markets)
-  * [Data Wrangling](#data-wrangling)
-  * [Data Exploration](#data-exploration)
-  * [Project Findings](#project-findings)
-  * [Conclusion](#conclusion)
-  * [Biblography](#biblography)
+  1. [Project Background](#project-background)
+  1. [Predictive Methods](#predictive-methods)
+     1. [Polling and Aggrigation](#polling-and-aggrigation)
+     1. [Forecasting Models](#forecasting-models)
+     1. [Prediction Markets](#prediction-markets)
+  1. [Prediction Data](#prediction-data)
+     1. [FiveThirtyEight Model](#fivethirtyeight-model)
+     1. [PredictIt Markets](#predictit-markets)
+  1. [Data Wrangling](#data-wrangling)
+  1. [Data Exploration](#data-exploration)
+  1. [Project Findings](#project-findings)
+  1. [Conclusion](#conclusion)
+  1. [Biblography](#biblography)
 
 Project Background
 ------------------

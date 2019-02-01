@@ -22,3 +22,5 @@ probs <-
          key = "method",
          value = "prob") %>%
   arrange(date, code, name, method)
+
+## write_csv(probs, "./output/joined_probs.csv")

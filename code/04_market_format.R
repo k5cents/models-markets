@@ -46,6 +46,7 @@ market$code <- paste(str_sub(market$code, 1, 2),
 market$name[which(market$name == "PARTY")] <- NA # no name
 market$name[which(market$name == "SPEC")] <- NA # no name
 market <- market[-str_which(market$mid, "3455"), ] # paul ryan not needed
+market <- market[-str_which(market$mid, "3507"), ] # jeff flake not needed
 
 for (i in 1:nrow(market)) {
   if (is.na(market$party[i])) {
@@ -54,3 +55,7 @@ for (i in 1:nrow(market)) {
                           == str_sub(tolower(market$name), 1, 4)[i])][1]
   }
 }
+
+market$code[market$mid == "3857"] <- "CA-99" # PredictIt miscoded as AZ-99
+
+market <- market %>% select(-name)

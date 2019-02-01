@@ -15,6 +15,7 @@ library(tidyverse)
 ## write_csv(polls_house,        "./input/polls_house.csv")
 ## write_csv(polls_senate,        "./input/polls_senate.csv")
 
+market_data      <- read_csv("./input/market_data.csv")
 members_115      <- read_csv("./input/members_115.csv")
 members_116      <- read_csv("./input/members_116.csv")
 model_district   <- read_csv("./input/model_district.csv")

@@ -14,6 +14,21 @@ library(tidyverse)
 
 Using R to compare the predictive capabilities of markets and models.
 
+1. [Project Background](#project-background)
+1. [Predictive Methods](#predictive-methods)
+    1. [Polling and Aggrigation](###polling-and-aggrigation)
+    1. [Forecasting Models](#forecasting-models)
+    1. [Prediction Markets](#prediction-markets)
+1. [Prediction Data](#prediction-data)
+    1. [FiveThirtyEight Model](#fivethirtyeight-model)
+    1. [PredictIt Markets](#predictit-markets)
+1. [Data Wrangling](#data-wrangling)
+1. [Data Exploration](#data-exploration)
+1. [Project Findings](#project-findings)
+1. [Conclusion](#conclusion)
+1. [Biblography](#biblography)
+
+
 ## Project Background
 
 The forecast model has become a staple of political punditry. Popularized by the

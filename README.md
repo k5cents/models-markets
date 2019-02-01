@@ -3,19 +3,19 @@
 
 Using R to compare the predictive capabilities of markets and models.
 
-  1. [Project Background](#project-background)
-  1. [Predictive Methods](#predictive-methods)
-     1. [Polling and Aggrigation](#polling-and-aggrigation)
-     1. [Forecasting Models](#forecasting-models)
-     1. [Prediction Markets](#prediction-markets)
-  1. [Prediction Data](#prediction-data)
-     1. [FiveThirtyEight Model](#fivethirtyeight-model)
-     1. [PredictIt Markets](#predictit-markets)
-  1. [Data Wrangling](#data-wrangling)
-  1. [Data Exploration](#data-exploration)
-  1. [Project Findings](#project-findings)
-  1. [Conclusion](#conclusion)
-  1. [Biblography](#biblography)
+1.  [Project Background](#project-background)
+2.  [Predictive Methods](#predictive-methods)
+    1.  [Polling and Aggrigation](###polling-and-aggrigation)
+    2.  [Forecasting Models](#forecasting-models)
+    3.  [Prediction Markets](#prediction-markets)
+3.  [Prediction Data](#prediction-data)
+    1.  [FiveThirtyEight Model](#fivethirtyeight-model)
+    2.  [PredictIt Markets](#predictit-markets)
+4.  [Data Wrangling](#data-wrangling)
+5.  [Data Exploration](#data-exploration)
+6.  [Project Findings](#project-findings)
+7.  [Conclusion](#conclusion)
+8.  [Biblography](#biblography)
 
 Project Background
 ------------------
@@ -250,18 +250,18 @@ Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt:
 
     ## # A tibble: 44,711 x 6
-    ##    MarketId MarketSymbol        ContractSymbol Date       ClosePrice Volume
-    ##    <chr>    <chr>               <chr>          <date>          <dbl>  <dbl>
-    ##  1 4138     MN08.2018           DEM.MN08.2018  2018-09-25       0.45    282
-    ##  2 3497     HEIN.NMSENATE.2018  <NA>           2018-01-31       0.92     10
-    ##  3 2941     MANCHIN.WVSENATE.2… <NA>           2018-07-23       0.75     51
-    ##  4 4253     PA06.2018           DEM.PA06.2018  2018-10-16       0.95      0
-    ##  5 4232     CASE.PASENATE.2018  <NA>           2018-05-11       0.88    380
-    ##  6 4156     FL17.2018           GOP.FL17.2018  2018-04-02       0.85      0
-    ##  7 3608     HELL.NVSENATE.2018  <NA>           2017-10-13       0.13      1
-    ##  8 3767     NH01.2018           DEM.NH01.2018  2018-09-15       0.81      0
-    ##  9 2941     MANCHIN.WVSENATE.2… <NA>           2017-07-23       0.67     56
-    ## 10 3513     HURD.TX23.2018      <NA>           2017-09-28       0.41     10
+    ##    MarketId MarketSymbol       ContractSymbol Date       ClosePrice Volume
+    ##    <chr>    <chr>              <chr>          <date>          <dbl>  <dbl>
+    ##  1 4030     CA39.2018          GOP.CA39.2018  2018-09-19      0.570     25
+    ##  2 4638     CA48.2018          GOP.CA48.2018  2018-11-07      0.01    8752
+    ##  3 3739     MI11.2018          DEM.MI11.2018  2017-12-20      0.570      0
+    ##  4 3739     MI11.2018          GOP.MI11.2018  2017-12-31      0.42       0
+    ##  5 3450     PELO.CA12.2018     <NA>           2018-03-10      0.87       0
+    ##  6 3539     SHEA.NH01.2018     <NA>           2017-09-11      0.87       0
+    ##  7 3480     HEIT.NDSENATE.2018 <NA>           2017-11-29      0.59       0
+    ##  8 3772     TNSEN18            DEM.TNSEN18    2018-11-07      0.01    3451
+    ##  9 3513     HURD.TX23.2018     <NA>           2018-07-11      0.37       0
+    ## 10 3739     MI11.2018          GOP.MI11.2018  2017-11-02      0.65       0
     ## # ... with 44,701 more rows
 
 Data Wrangling

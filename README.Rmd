@@ -16,7 +16,7 @@ Using R to compare the predictive capabilities of markets and models.
 
 1. [Project Background](#project-background)
 1. [Predictive Methods](#predictive-methods)
-    1. [Polling and Aggrigation](###polling-and-aggrigation)
+    1. [Polling and Aggregation](###polling-and-aggregation)
     1. [Forecasting Models](#forecasting-models)
     1. [Prediction Markets](#prediction-markets)
 1. [Prediction Data](#prediction-data)
@@ -26,7 +26,7 @@ Using R to compare the predictive capabilities of markets and models.
 1. [Data Exploration](#data-exploration)
 1. [Project Findings](#project-findings)
 1. [Conclusion](#conclusion)
-1. [Biblography](#biblography)
+1. [Bibliography](#bibliography)
 
 
 ## Project Background
@@ -66,7 +66,7 @@ better calculate the true opinion of the population.
 
 ### Forecasting Models
 
-In [the word's][08] of Nate Silver, FiveThirty's founder and primary author of
+In [the word's][08] of Nate Silver, FiveThirtyEight's founder and primary author of
 their model:
 
 > (Forecasting models) take lots of polls, perform various types of adjustments
@@ -84,7 +84,7 @@ exactly what data is being incorporated in what ways. In the "classic" version
 of their model, three types of quantitative data are used:
 
 1. **Polling**: District-by-district polling, adjusted for house effects and
-other factors in some unknownn way. [FiveThirtyEight rates pollsters][09] to
+other factors in some unknown way. [FiveThirtyEight rates pollsters][09] to
 adjust their findings.
 2. **C.A.N.T.O.R.**: A proprietary system which infers results for districts
 with little or no polling from similar districts where polling has been done.
@@ -201,7 +201,7 @@ behavior, computer science and game theory.
 
 I scraped [the PredictIt API][17] before the election and used the data to find
 all market ID's related to Congressional elections. PredictIt then provided the
-revelant market data as a `.csv` file.
+relevant market data as a `.csv` file.
 
 Each observation represents one day's opening, closing, low, and high price for
 a single contract from a single market. There are 44,711 observations covering
@@ -239,8 +239,24 @@ read_csv(file = "./input/market_data.csv",
   print()
 ```
 
-
 ## Data Wrangling
+
+By formatting the above data sets to contain relational keys of `date`, `code`,
+and `party` we can perform a left-wise join on the data to combine the prediction
+data from the PredictIt markets and FiveThirtyEight model. The `code` variable
+is the primary key, created with the `state` and `district` variables from
+FiveThirtyEight and the `ContractSymbol` variable from PredictIt. For House
+races, the number is the Congressional District. For Senate races, "-99"
+indicates a on-time election and "-98" indicates a special election.
+
+We then gather the variables to make out data frame "tidy" with each observation
+representing one prediction (on one date, for one candidate, with one method).
+The resulting data set has 29,602 observations with nine variables.
+
+```{r joined_probs, echo=FALSE, message=FALSE}
+read_csv("./output/joined_probs.csv") %>% 
+  print()
+```
 
 ## Data Exploration
 

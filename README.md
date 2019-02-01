@@ -5,7 +5,7 @@ Using R to compare the predictive capabilities of markets and models.
 
 1.  [Project Background](#project-background)
 2.  [Predictive Methods](#predictive-methods)
-    1.  [Polling and Aggrigation](###polling-and-aggrigation)
+    1.  [Polling and Aggregation](###polling-and-aggregation)
     2.  [Forecasting Models](#forecasting-models)
     3.  [Prediction Markets](#prediction-markets)
 3.  [Prediction Data](#prediction-data)
@@ -15,7 +15,7 @@ Using R to compare the predictive capabilities of markets and models.
 5.  [Data Exploration](#data-exploration)
 6.  [Project Findings](#project-findings)
 7.  [Conclusion](#conclusion)
-8.  [Biblography](#biblography)
+8.  [Bibliography](#bibliography)
 
 Project Background
 ------------------
@@ -67,7 +67,8 @@ to better calculate the true opinion of the population.
 
 In [the
 word's](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/ "538 model how")
-of Nate Silver, FiveThirty's founder and primary author of their model:
+of Nate Silver, FiveThirtyEight's founder and primary author of their
+model:
 
 > (Forecasting models) take lots of polls, perform various types of
 > adjustments to them, and then blend them with other kinds of
@@ -87,7 +88,7 @@ know exactly what data is being incorporated in what ways. In the
 used:
 
 1.  **Polling**: District-by-district polling, adjusted for house
-    effects and other factors in some unknownn way. [FiveThirtyEight
+    effects and other factors in some unknown way. [FiveThirtyEight
     rates
     pollsters](https://projects.fivethirtyeight.com/pollster-ratings/ "538 poll ratings")
     to adjust their findings.
@@ -227,7 +228,7 @@ PredictIt outlines their data agreement with academic researchers:
 I scraped [the PredictIt
 API](https://www.predictit.org/api/marketdata/all/ "PredictIt API")
 before the election and used the data to find all market ID's related to
-Congressional elections. PredictIt then provided the revelant market
+Congressional elections. PredictIt then provided the relevant market
 data as a `.csv` file.
 
 Each observation represents one day's opening, closing, low, and high
@@ -250,22 +251,51 @@ Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt:
 
     ## # A tibble: 44,711 x 6
-    ##    MarketId MarketSymbol       ContractSymbol Date       ClosePrice Volume
-    ##    <chr>    <chr>              <chr>          <date>          <dbl>  <dbl>
-    ##  1 4030     CA39.2018          GOP.CA39.2018  2018-09-19      0.570     25
-    ##  2 4638     CA48.2018          GOP.CA48.2018  2018-11-07      0.01    8752
-    ##  3 3739     MI11.2018          DEM.MI11.2018  2017-12-20      0.570      0
-    ##  4 3739     MI11.2018          GOP.MI11.2018  2017-12-31      0.42       0
-    ##  5 3450     PELO.CA12.2018     <NA>           2018-03-10      0.87       0
-    ##  6 3539     SHEA.NH01.2018     <NA>           2017-09-11      0.87       0
-    ##  7 3480     HEIT.NDSENATE.2018 <NA>           2017-11-29      0.59       0
-    ##  8 3772     TNSEN18            DEM.TNSEN18    2018-11-07      0.01    3451
-    ##  9 3513     HURD.TX23.2018     <NA>           2018-07-11      0.37       0
-    ## 10 3739     MI11.2018          GOP.MI11.2018  2017-11-02      0.65       0
+    ##    MarketId MarketSymbol       ContractSymbol  Date       ClosePrice Volume
+    ##    <chr>    <chr>              <chr>           <date>          <dbl>  <dbl>
+    ##  1 3503     KING.MESENATE.2018 <NA>            2017-12-13       0.84      0
+    ##  2 3520     KNIG.CA25.2018     <NA>            2017-12-30       0.34      0
+    ##  3 3737     WA08.2018          GOP.WA08.2018   2017-12-02       0.26      0
+    ##  4 3481     TEST.MTSENATE.2018 <NA>            2018-08-18       0.65      0
+    ##  5 3481     TEST.MTSENATE.2018 <NA>            2018-03-11       0.72     55
+    ##  6 3520     KNIG.CA25.2018     <NA>            2018-02-18       0.38      0
+    ##  7 2918     WARREN.MASENATE.2… <NA>            2018-10-22       0.96    495
+    ##  8 4271     PA17.2018          DEM.PA17.2018   2018-04-02       0.87      1
+    ##  9 3866     VA06.2018          DEM.VA06.2018   2018-07-31       0.1      68
+    ## 10 4192     SPEC.MSSEN.18      GOP.SPEC.MSSEN… 2018-08-15       0.93     50
     ## # ... with 44,701 more rows
 
 Data Wrangling
 --------------
+
+By formatting the above data sets to contain relational keys of `date`,
+`code`, and `party` we can perform a left-wise join on the data to
+combine the prediction data from the PredictIt markets and
+FiveThirtyEight model. The `code` variable is the primary key, created
+with the `state` and `district` variables from FiveThirtyEight and the
+`ContractSymbol` variable from PredictIt. For House races, the number is
+the Congressional District. For Senate races, "-99" indicates a on-time
+election and "-98" indicates a special election.
+
+We then gather the variables to make out data frame "tidy" with each
+observation representing one prediction (on one date, for one candidate,
+with one method). The resulting data set has 29,602 observations with
+nine variables.
+
+    ## # A tibble: 29,602 x 9
+    ##    date       code  name    chamber party incumbent special method  prob
+    ##    <date>     <chr> <chr>   <chr>   <chr> <lgl>     <lgl>   <chr>  <dbl>
+    ##  1 2018-08-01 AZ-99 McSally senate  R     FALSE     FALSE   market 0.34 
+    ##  2 2018-08-01 AZ-99 McSally senate  R     FALSE     FALSE   model  0.262
+    ##  3 2018-08-01 AZ-99 Sinema  senate  D     FALSE     FALSE   market 0.66 
+    ##  4 2018-08-01 AZ-99 Sinema  senate  D     FALSE     FALSE   model  0.738
+    ##  5 2018-08-01 CA-10 Denham  house   R     TRUE      FALSE   market 0.42 
+    ##  6 2018-08-01 CA-10 Denham  house   R     TRUE      FALSE   model  0.295
+    ##  7 2018-08-01 CA-12 Pelosi  house   D     TRUE      FALSE   market 0.91 
+    ##  8 2018-08-01 CA-12 Pelosi  house   D     TRUE      FALSE   model  1    
+    ##  9 2018-08-01 CA-22 Nunes   house   R     TRUE      FALSE   market 0.7  
+    ## 10 2018-08-01 CA-22 Nunes   house   R     TRUE      FALSE   model  0.951
+    ## # ... with 29,592 more rows
 
 Data Exploration
 ----------------

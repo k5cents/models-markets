@@ -2,6 +2,7 @@
 # Code to write and read files from 01_input_scrape.R
 library(tidyverse)
 
+# Write the data from 01_input_scrape.R
 ## write_csv(members_115,        "./input/members_115.csv")
 ## write_csv(members_116,        "./input/members_116.csv")
 ## write_csv(model_district,     "./input/model_district.csv")
@@ -15,6 +16,7 @@ library(tidyverse)
 ## write_csv(polls_house,        "./input/polls_house.csv")
 ## write_csv(polls_senate,        "./input/polls_senate.csv")
 
+# Read saved and written data
 market_data      <- read_csv("./input/market_data.csv")
 members_115      <- read_csv("./input/members_115.csv")
 members_116      <- read_csv("./input/members_116.csv")
@@ -28,3 +30,15 @@ lean_states      <- read_csv("./input/lean_states.csv")
 polls_generic    <- read_csv("./input/polls_generic.csv")
 polls_house      <- read_csv("./input/polls_house.csv")
 polls_senate     <- read_csv("./input/polls_senate.csv")
+
+# Source the formating codes
+source("./code/02_members_format.R", echo = TRUE)
+source("./code/03_model_format.R", echo = TRUE)
+source("./code/04_market_format.R", echo = TRUE)
+
+# Write formated data
+## write_csv(members,     "./output/members.csv")
+## write_csv(model,       "./output/model.csv")
+## write_csv(model_lite,  "./output/model_lite.csv")
+## write_csv(model_delux, "./output/model_delux.csv")
+## write_csv(market,      "./output/market.csv")

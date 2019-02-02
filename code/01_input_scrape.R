@@ -71,8 +71,6 @@ model_senate <- read_archive(date   = "2018-11-06 21:00:48",
                              folder = "congress-model-2018",
                              file   = "senate_national_forecast.csv")
 
-polls_senate <- read_archive()
-
 # Prediction Market data courtesy of PredictIt.org
 # Advance data provided to partnered researchers
 # See /old for code to scrape similar public data

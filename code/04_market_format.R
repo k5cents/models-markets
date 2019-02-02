@@ -1,7 +1,6 @@
 # Kiernan Nicholls
 # Format market data from PredictIt
 library(tidyverse)
-library(magrittr)
 
 market <-
   market_data %>%
@@ -14,7 +13,6 @@ market <-
          low      = LowPrice,
          vol      = Volume,
          date     = Date) %>%
-  filter(date >= "2018-08-01") %>%
   mutate(party = recode(party,
                          "Democratic" = "D",
                          "Republican" = "R",

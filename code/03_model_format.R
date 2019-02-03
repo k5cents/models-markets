@@ -1,7 +1,6 @@
 # Kiernan Nicholls
 # Format forecast model data
 library(tidyverse)
-library(magrittr)
 
 model_history <-
   model_seat %>%
@@ -42,7 +41,7 @@ model_history$name <-
                            true = word(model_history$name, -2),
                            false = word(model_history$name, -1)))
 
-model_history %<>% arrange(date, name)
+model_history <- model_history %>% arrange(date, name)
 model_history$special[is.na(model_history$special)] <- FALSE
 
 # Recode incumbent Independents for relational joins

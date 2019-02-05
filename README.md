@@ -137,6 +137,17 @@ Wikipedia](https://en.wikipedia.org/wiki/Prediction_market "Prediction markets w
 > payoffs are related to the unknown future outcome and the market
 > prices of the contracts are considered as the aggregated belief.
 
+By utlizing the economic forces of risk aversion and self-interest,
+prediction markets aim to overcome the implicit biases of the traders.
+Traders continually buy and sell contracts that pay out at $1 based on
+the outcome of the election.
+
+If a trader believes a candidate has a 75% chance of winning an
+election, he might buy a hundred contracts at $0.75 each. Should events
+unfold to increase or decrease this probability, the trader can sell
+these shares for more or less than he originally paid, updating the
+market equilibrium price to reflect current probabilities.
+
 Prediction Data
 ---------------
 
@@ -251,18 +262,18 @@ Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt:
 
     ## # A tibble: 44,711 x 6
-    ##    MarketId MarketSymbol       ContractSymbol  Date       ClosePrice Volume
-    ##    <chr>    <chr>              <chr>           <date>          <dbl>  <dbl>
-    ##  1 3503     KING.MESENATE.2018 <NA>            2017-12-13       0.84      0
-    ##  2 3520     KNIG.CA25.2018     <NA>            2017-12-30       0.34      0
-    ##  3 3737     WA08.2018          GOP.WA08.2018   2017-12-02       0.26      0
-    ##  4 3481     TEST.MTSENATE.2018 <NA>            2018-08-18       0.65      0
-    ##  5 3481     TEST.MTSENATE.2018 <NA>            2018-03-11       0.72     55
-    ##  6 3520     KNIG.CA25.2018     <NA>            2018-02-18       0.38      0
-    ##  7 2918     WARREN.MASENATE.2… <NA>            2018-10-22       0.96    495
-    ##  8 4271     PA17.2018          DEM.PA17.2018   2018-04-02       0.87      1
-    ##  9 3866     VA06.2018          DEM.VA06.2018   2018-07-31       0.1      68
-    ## 10 4192     SPEC.MSSEN.18      GOP.SPEC.MSSEN… 2018-08-15       0.93     50
+    ##    MarketId MarketSymbol        ContractSymbol Date       ClosePrice Volume
+    ##    <chr>    <chr>               <chr>          <date>          <dbl>  <dbl>
+    ##  1 3767     NH01.2018           GOP.NH01.2018  2018-03-12       0.25      0
+    ##  2 3866     VA06.2018           GOP.VA06.2018  2018-08-25       0.95      0
+    ##  3 3521     ISSA.CA49.2018      <NA>           2018-01-13       0.02     10
+    ##  4 3522     DENH.CA10.2018      <NA>           2018-10-09       0.37     92
+    ##  5 4447     NV04.2018           DEM.NV04.2018  2018-06-20       0.89      0
+    ##  6 4638     CA48.2018           DEM.CA48.2018  2018-11-05       0.56   3249
+    ##  7 3532     LEWI.MN02.2018      <NA>           2017-12-22       0.51      0
+    ##  8 4263     NC09.2018           DEM.NC09.2018  2018-05-07       0.42      0
+    ##  9 3886     VA02.2018           GOP.VA02.2018  2018-09-18       0.55    298
+    ## 10 2940     SANDERS.VTSENATE.2… <NA>           2017-12-07       0.85   2915
     ## # ... with 44,701 more rows
 
 Data Wrangling

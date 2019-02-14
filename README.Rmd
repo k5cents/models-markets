@@ -124,6 +124,16 @@ future outcome. Traders with different beliefs trade on contracts whose payoffs
 are related to the unknown future outcome and the market prices of the contracts
 are considered as the aggregated belief.
 
+By utlizing the economic forces of risk aversion and self-interest, prediction
+markets aim to overcome the implicit biases of the traders. Traders continually
+buy and sell contracts that pay out at $1 based on the outcome of the election.
+
+If a trader believes a candidate has a 75% chance of winning an election, he
+might buy a hundred contracts at $0.75 each. Should events unfold to increase or
+decrease this probability, the trader can sell these shares for more or less
+than he originally paid, updating the market equilibrium price to reflect
+current probabilities.
+
 ## Prediction Data
 
 ### FiveThirtyEight Model

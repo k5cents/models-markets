@@ -29,27 +29,25 @@ Using R to compare the predictive capabilities of markets and models.
 1. [Bibliography](#bibliography)
 
 
-## Project Background
+## Project
 
 The forecast model has become a staple of political punditry. Popularized by the
 data journalism site [FiveThirtyEight][01], the forecast model is a statistical
 tool used to incorporate a number of quantitative inputs and output a
 probabilistic view of all possible outcomes.
 
-On the eve of the 2016 Presidential election, all mainstream forecasts gave
-Hillary Clinton significant odds to win the presidency. FiveThirtyEight's
-forecast model gave Clinton the lowest odds [at 71%][02]. Meanwhile, The New
-York Times Upshot calculated [85%][03] and the HuffPo Pollster's published an
-infamous [98% chance of a Clinton victory][04].
+Markets can be used as alternative method of generating similarly probabalistic
+views of election outcomes. Markets utlize the economic forces of price 
+discovery and risk aversion to overcome the implicit bias of self-interested
+traders.
 
-Is there a better alternative to forecasting models?
+I posit a null hypothesis of no difference in accuracy between forecasting
+models and prediction markets in their ability to predict 2018 congressional
+midterm elections. 
 
-Markets can be used to ascertain a probabilistic prediction of election results.
-Instead of a incorporating quantitative inputs, a market has self-interested
-traders bet on the outcomes to determine the likelihood of each.
-
-This project compares the accuracy of markets and models in their ability to
-predict the winner of 2018 midterm congressional elections.
+I will be using model data from the proprietary model written
+by the journalist at FiveThirtyEight and market data from the PredictIt exchange
+run by the Victoria University of Wellington, New Zealand.
 
 ## Predictive Methods
 

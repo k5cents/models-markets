@@ -17,8 +17,8 @@ Using R to compare the predictive capabilities of markets and models.
 7.  [Conclusion](#conclusion)
 8.  [Bibliography](#bibliography)
 
-Project Background
-------------------
+Project
+-------
 
 The forecast model has become a staple of political punditry.
 Popularized by the data journalism site
@@ -27,23 +27,18 @@ forecast model is a statistical tool used to incorporate a number of
 quantitative inputs and output a probabilistic view of all possible
 outcomes.
 
-On the eve of the 2016 Presidential election, all mainstream forecasts
-gave Hillary Clinton significant odds to win the presidency.
-FiveThirtyEight's forecast model gave Clinton the lowest odds [at
-71%](https://goo.gl/CLPrUC "538 2016"). Meanwhile, The New York Times
-Upshot calculated [85%](https://goo.gl/QES9vJ "NYT Upshot 2016") and the
-HuffPo Pollster's published an infamous [98% chance of a Clinton
-victory](https://goo.gl/XJqwyD "HuffPo 2016").
+Markets can be used as alternative method of generating similarly
+probabalistic views of election outcomes. Markets utlize the economic
+forces of price discovery and risk aversion to overcome the implicit
+bias of self-interested traders.
 
-Is there a better alternative to forecasting models?
+I posit a null hypothesis of no difference in accuracy between
+forecasting models and prediction markets in their ability to predict
+2018 congressional midterm elections.
 
-Markets can be used to ascertain a probabilistic prediction of election
-results. Instead of a incorporating quantitative inputs, a market has
-self-interested traders bet on the outcomes to determine the likelihood
-of each.
-
-This project compares the accuracy of markets and models in their
-ability to predict the winner of 2018 midterm congressional elections.
+I will be using model data from the proprietary model written by the
+journalist at FiveThirtyEight and market data from the PredictIt
+exchange run by the Victoria University of Wellington, New Zealand.
 
 Predictive Methods
 ------------------
@@ -251,18 +246,18 @@ Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt:
 
     ## # A tibble: 44,711 x 6
-    ##    MarketId MarketSymbol       ContractSymbol  Date       ClosePrice Volume
-    ##    <chr>    <chr>              <chr>           <date>          <dbl>  <dbl>
-    ##  1 3503     KING.MESENATE.2018 <NA>            2017-12-13       0.84      0
-    ##  2 3520     KNIG.CA25.2018     <NA>            2017-12-30       0.34      0
-    ##  3 3737     WA08.2018          GOP.WA08.2018   2017-12-02       0.26      0
-    ##  4 3481     TEST.MTSENATE.2018 <NA>            2018-08-18       0.65      0
-    ##  5 3481     TEST.MTSENATE.2018 <NA>            2018-03-11       0.72     55
-    ##  6 3520     KNIG.CA25.2018     <NA>            2018-02-18       0.38      0
-    ##  7 2918     WARREN.MASENATE.2… <NA>            2018-10-22       0.96    495
-    ##  8 4271     PA17.2018          DEM.PA17.2018   2018-04-02       0.87      1
-    ##  9 3866     VA06.2018          DEM.VA06.2018   2018-07-31       0.1      68
-    ## 10 4192     SPEC.MSSEN.18      GOP.SPEC.MSSEN… 2018-08-15       0.93     50
+    ##    MarketId MarketSymbol       ContractSymbol Date       ClosePrice Volume
+    ##    <chr>    <chr>              <chr>          <date>          <dbl>  <dbl>
+    ##  1 3772     TNSEN18            GOP.TNSEN18    2018-04-17       0.55     31
+    ##  2 3738     FL27.2018          GOP.FL27.2018  2017-11-11       0.31      0
+    ##  3 3864     TX21.2018          GOP.TX21.2018  2018-08-04       0.86      0
+    ##  4 3736     PA15.2018          GOP.PA15.2018  2018-08-06       0.93      0
+    ##  5 3496     MENE.NJSENATE.2018 <NA>           2018-02-21       0.77     32
+    ##  6 4824     CA45.2018          GOP.CA45.2018  2018-10-08       0.41      3
+    ##  7 3450     PELO.CA12.2018     <NA>           2018-09-13       0.93     27
+    ##  8 3480     HEIT.NDSENATE.2018 <NA>           2018-04-26       0.48    131
+    ##  9 2928     CRUZ.TXSENATE.2018 <NA>           2018-10-24       0.82  12693
+    ## 10 4156     FL17.2018          DEM.FL17.2018  2018-10-06       0.02      0
     ## # ... with 44,701 more rows
 
 Data Wrangling

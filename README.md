@@ -37,7 +37,7 @@ forecasting models and prediction markets in their ability to predict
 2018 congressional midterm elections.
 
 I will be using model data from the proprietary model written by the
-journalist at FiveThirtyEight and market data from the PredictIt
+journalist at FiveThirtyEight.com and market data from the PredictIt.org
 exchange run by the Victoria University of Wellington, New Zealand.
 
 Predictive Methods
@@ -257,18 +257,18 @@ Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt:
 
     ## # A tibble: 44,711 x 6
-    ##    MarketId MarketSymbol       ContractSymbol  Date       ClosePrice Volume
-    ##    <chr>    <chr>              <chr>           <date>          <dbl>  <dbl>
-    ##  1 3737     WA08.2018          DEM.WA08.2018   2018-03-18      0.78       0
-    ##  2 4255     MN03.2018          GOP.MN03.2018   2018-07-20      0.570     25
-    ##  3 4192     SPEC.MSSEN.18      DEM.SPEC.MSSEN… 2018-03-27      0.22       0
-    ##  4 3935     TX06.2018          DEM.TX06.2018   2018-03-29      0.27       0
-    ##  5 3496     MENE.NJSENATE.2018 <NA>            2018-06-13      0.82      50
-    ##  6 4192     SPEC.MSSEN.18      DEM.SPEC.MSSEN… 2018-07-24      0.13      25
-    ##  7 4016     PA09.2018          DEM.PA09.2018   2018-10-19      0.08       0
-    ##  8 2918     WARREN.MASENATE.2… <NA>            2018-04-29      0.9        0
-    ##  9 3736     PA15.2018          DEM.PA15.2018   2018-07-04      0.13       0
-    ## 10 3739     MI11.2018          DEM.MI11.2018   2018-03-07      0.64       0
+    ##    MarketId MarketSymbol       ContractSymbol Date       ClosePrice Volume
+    ##    <chr>    <chr>              <chr>          <date>          <dbl>  <dbl>
+    ##  1 3490     BROW.OHSENATE.2018 <NA>           2018-05-05      0.81      61
+    ##  2 4271     PA17.2018          GOP.PA17.2018  2018-05-03      0.3        0
+    ##  3 4039     CA49.2018          GOP.CA49.2018  2018-04-16      0.24       0
+    ##  4 4039     CA49.2018          DEM.CA49.2018  2018-07-30      0.77       0
+    ##  5 4016     PA09.2018          GOP.PA09.2018  2018-02-08      0.82       4
+    ##  6 4126     NY19.2018          DEM.NY19.2018  2018-06-16      0.570      0
+    ##  7 3455     RYAN.WI01.2018     <NA>           2017-12-03      0.75      15
+    ##  8 3608     HELL.NVSENATE.2018 <NA>           2018-09-22      0.35     101
+    ##  9 3520     KNIG.CA25.2018     <NA>           2017-11-25      0.34      47
+    ## 10 4557     VASEN18            GOP.VASEN18    2018-08-09      0.05       0
     ## # ... with 44,701 more rows
 
 Data Wrangling
@@ -305,6 +305,26 @@ nine variables.
 
 Data Exploration
 ----------------
+
+The FiveThirtyEight model generates daily probabilities for every
+election in both house. The PredictIt.org markets do not; some markets
+were open for trading as early as Januray and the rest were added over
+time. Furthermore, the traders on PredictIt.org are not interested in
+betting on every election, as the vast majority have little risk (only
+91 races were traded on prediction markets by election day).
+
+Below are histograms of the Democratic candidate's probabilities the day
+before the election with both tools. Note how the model, which includes
+every race, gives the vast majority of candidates a less than 10% or
+greater than 90% chance of winning their respective elections.
+
+![](README_files/figure-markdown_strict/model_dist-1.png)
+
+Most of those "safe" elections are not traded on the prediction markets.
+The races for which there are markets are much more uniformly
+distributed in their probability.
+
+![](README_files/figure-markdown_strict/market_dist-1.png)
 
 Project Findings
 ----------------

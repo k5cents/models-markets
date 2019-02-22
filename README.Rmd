@@ -7,7 +7,9 @@ cache: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 10,
+                      fig.height = 5)
 library(tidyverse)
 library(knitr)
 ```

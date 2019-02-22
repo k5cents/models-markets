@@ -204,63 +204,63 @@ congressional district model.
 <tbody>
 <tr class="odd">
 <td align="left">2018-10-09</td>
-<td align="left">WA</td>
-<td align="right">8</td>
-<td align="left">Dino Rossi</td>
-<td align="left">R</td>
+<td align="left">MS</td>
+<td align="right">2</td>
+<td align="left">Others</td>
+<td align="left">NA</td>
 <td align="left">FALSE</td>
-<td align="right">0.398</td>
-<td align="right">48.95</td>
-<td align="right">43.53</td>
-<td align="right">54.34</td>
+<td align="right">0.000</td>
+<td align="right">2.54</td>
+<td align="right">0.62</td>
+<td align="right">5.05</td>
 </tr>
 <tr class="even">
-<td align="left">2018-09-22</td>
-<td align="left">MO</td>
-<td align="right">6</td>
-<td align="left">Sam Graves</td>
+<td align="left">2018-09-27</td>
+<td align="left">AZ</td>
+<td align="right">3</td>
+<td align="left">Nick Pierson</td>
 <td align="left">R</td>
-<td align="left">TRUE</td>
-<td align="right">1.000</td>
-<td align="right">63.66</td>
-<td align="right">58.54</td>
-<td align="right">68.80</td>
+<td align="left">FALSE</td>
+<td align="right">0.001</td>
+<td align="right">28.69</td>
+<td align="right">21.34</td>
+<td align="right">36.05</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-10-13</td>
-<td align="left">OK</td>
-<td align="right">2</td>
-<td align="left">Jason Nichols</td>
+<td align="left">2018-09-16</td>
+<td align="left">CA</td>
+<td align="right">12</td>
+<td align="left">Nancy Pelosi</td>
+<td align="left">D</td>
+<td align="left">TRUE</td>
+<td align="right">1.000</td>
+<td align="right">90.91</td>
+<td align="right">85.62</td>
+<td align="right">96.12</td>
+</tr>
+<tr class="even">
+<td align="left">2018-09-05</td>
+<td align="left">MI</td>
+<td align="right">10</td>
+<td align="left">Kimberly Bizon</td>
 <td align="left">D</td>
 <td align="left">FALSE</td>
 <td align="right">0.002</td>
-<td align="right">33.71</td>
-<td align="right">27.69</td>
-<td align="right">39.72</td>
-</tr>
-<tr class="even">
-<td align="left">2018-10-29</td>
-<td align="left">TX</td>
-<td align="right">12</td>
-<td align="left">Kay Granger</td>
-<td align="left">R</td>
-<td align="left">TRUE</td>
-<td align="right">1.000</td>
-<td align="right">65.46</td>
-<td align="right">61.33</td>
-<td align="right">69.57</td>
+<td align="right">34.72</td>
+<td align="right">29.22</td>
+<td align="right">40.21</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-09-15</td>
-<td align="left">CA</td>
-<td align="right">45</td>
-<td align="left">Katie Porter</td>
-<td align="left">D</td>
+<td align="left">2018-09-24</td>
+<td align="left">MS</td>
+<td align="right">1</td>
+<td align="left">Tracella Lou O'Hara Hill</td>
+<td align="left">REF</td>
 <td align="left">FALSE</td>
-<td align="right">0.404</td>
-<td align="right">48.96</td>
-<td align="right">43.33</td>
-<td align="right">54.62</td>
+<td align="right">0.000</td>
+<td align="right">2.77</td>
+<td align="right">0.80</td>
+<td align="right">5.24</td>
 </tr>
 </tbody>
 </table>
@@ -335,54 +335,54 @@ markets.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">4257</td>
-<td align="left">IL12.2018</td>
-<td align="left">GOP.IL12.2018</td>
-<td align="left">2018-08-07</td>
-<td align="right">0.42</td>
-<td align="right">0.42</td>
-<td align="right">0.42</td>
+<td align="left">3531</td>
+<td align="left">CURB.FL26.2018</td>
+<td align="left">NA</td>
+<td align="left">2017-11-29</td>
+<td align="right">0.36</td>
+<td align="right">0.36</td>
+<td align="right">0.36</td>
 <td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">5004</td>
+<td align="left">MTAL.2018</td>
+<td align="left">GOP.MTAL.2018</td>
+<td align="left">2018-11-02</td>
+<td align="right">0.64</td>
+<td align="right">0.69</td>
+<td align="right">0.69</td>
+<td align="right">27</td>
+</tr>
+<tr class="odd">
+<td align="left">2999</td>
+<td align="left">NELSON.FLSENATE.2018</td>
+<td align="left">NA</td>
+<td align="left">2018-04-29</td>
+<td align="right">0.63</td>
+<td align="right">0.67</td>
+<td align="right">0.63</td>
+<td align="right">68</td>
 </tr>
 <tr class="even">
 <td align="left">2998</td>
 <td align="left">DONNELLY.INSENATE.2018</td>
 <td align="left">NA</td>
-<td align="left">2017-05-01</td>
-<td align="right">0.39</td>
-<td align="right">0.44</td>
-<td align="right">0.44</td>
-<td align="right">13</td>
-</tr>
-<tr class="odd">
-<td align="left">4232</td>
-<td align="left">CASE.PASENATE.2018</td>
-<td align="left">NA</td>
-<td align="left">2018-08-27</td>
-<td align="right">0.87</td>
-<td align="right">0.88</td>
-<td align="right">0.87</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">2998</td>
-<td align="left">DONNELLY.INSENATE.2018</td>
-<td align="left">NA</td>
-<td align="left">2017-03-17</td>
-<td align="right">0.37</td>
-<td align="right">0.37</td>
-<td align="right">0.37</td>
+<td align="left">2018-04-13</td>
+<td align="right">0.59</td>
+<td align="right">0.59</td>
+<td align="right">0.59</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">3484</td>
-<td align="left">MCCA.MOSENATE.2018</td>
-<td align="left">NA</td>
-<td align="left">2018-07-10</td>
-<td align="right">0.47</td>
+<td align="left">4831</td>
+<td align="left">NY22.2018</td>
+<td align="left">GOP.NY22.2018</td>
+<td align="left">2018-10-21</td>
+<td align="right">0.46</td>
 <td align="right">0.50</td>
-<td align="right">0.48</td>
-<td align="right">721</td>
+<td align="right">0.46</td>
+<td align="right">3</td>
 </tr>
 </tbody>
 </table>

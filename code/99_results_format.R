@@ -1,7 +1,5 @@
 # Kiernan Nicholls
 # Format election results
-library(tidyverse)
-library(magrittr)
 
 election_results <-
   election_results %>%
@@ -24,7 +22,7 @@ election_results <-
                             side = "left",
                             pad = "0"),
          won = if_else(uncalled, NA, won)) %>%
-  unite(col = code,
+  unite(col = race,
         state, district,
         sep = "-",
         remove = TRUE) %>%

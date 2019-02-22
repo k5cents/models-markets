@@ -145,6 +145,8 @@ updating the market equilibrium price to reflect current probabilities.
 Prediction Data
 ---------------
 
+### Data Tables
+
 ### FiveThirtyEight Model Data
 
 The team at FiveThirtyEight makes public a portion of their model's
@@ -195,7 +197,7 @@ congressional district model data set.
 <col width="5%" />
 <col width="7%" />
 <col width="6%" />
-<col width="15%" />
+<col width="18%" />
 <col width="5%" />
 <col width="8%" />
 <col width="6%" />
@@ -222,74 +224,74 @@ congressional district model data set.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-08-24</td>
-<td align="left">MO</td>
-<td align="right">5</td>
+<td align="left">2018-10-11</td>
+<td align="left">CA</td>
+<td align="right">53</td>
 <td align="left">NA</td>
-<td align="left">Emanuel Cleaver</td>
-<td align="left">D</td>
-<td align="left">TRUE</td>
-<td align="left">lite</td>
-<td align="right">0.998</td>
-<td align="right">65.20</td>
-<td align="right">57.96</td>
-<td align="right">72.44</td>
-</tr>
-<tr class="even">
-<td align="left">2018-10-20</td>
-<td align="left">OR</td>
-<td align="right">4</td>
-<td align="left">NA</td>
-<td align="left">Arthur B. Robinson</td>
+<td align="left">Morgan Murtaugh</td>
 <td align="left">R</td>
 <td align="left">FALSE</td>
 <td align="left">lite</td>
-<td align="right">0.008</td>
-<td align="right">34.14</td>
-<td align="right">27.14</td>
-<td align="right">41.10</td>
+<td align="right">0.000</td>
+<td align="right">25.77</td>
+<td align="right">19.13</td>
+<td align="right">32.36</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-03</td>
+<td align="left">OH</td>
+<td align="right">8</td>
+<td align="left">NA</td>
+<td align="left">Vanessa Enoch</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="left">lite</td>
+<td align="right">0.009</td>
+<td align="right">35.51</td>
+<td align="right">28.24</td>
+<td align="right">42.78</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-08-02</td>
-<td align="left">WI</td>
+<td align="left">2018-11-01</td>
+<td align="left">VA</td>
 <td align="right">1</td>
 <td align="left">NA</td>
-<td align="left">Bryan Steil</td>
+<td align="left">Robert J. Wittman</td>
 <td align="left">R</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">deluxe</td>
-<td align="right">0.696</td>
-<td align="right">50.00</td>
-<td align="right">44.77</td>
-<td align="right">55.13</td>
+<td align="right">0.986</td>
+<td align="right">58.51</td>
+<td align="right">53.75</td>
+<td align="right">63.23</td>
 </tr>
 <tr class="even">
-<td align="left">2018-09-20</td>
-<td align="left">NY</td>
-<td align="right">7</td>
+<td align="left">2018-08-16</td>
+<td align="left">KY</td>
+<td align="right">4</td>
 <td align="left">NA</td>
-<td align="left">Others</td>
+<td align="left">Seth Hall</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="left">classic</td>
+<td align="right">0.001</td>
+<td align="right">33.83</td>
+<td align="right">28.53</td>
+<td align="right">39.07</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-09-15</td>
+<td align="left">NJ</td>
+<td align="right">3</td>
 <td align="left">NA</td>
+<td align="left">Lawrence Berlinski Jr.</td>
+<td align="left">CON</td>
 <td align="left">FALSE</td>
 <td align="left">classic</td>
 <td align="right">0.000</td>
-<td align="right">10.32</td>
-<td align="right">4.89</td>
-<td align="right">16.51</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-10-30</td>
-<td align="left">WV</td>
-<td align="right">3</td>
-<td align="left">NA</td>
-<td align="left">Carol Miller</td>
-<td align="left">R</td>
-<td align="left">FALSE</td>
-<td align="left">lite</td>
-<td align="right">0.628</td>
-<td align="right">51.41</td>
-<td align="right">45.93</td>
-<td align="right">56.92</td>
+<td align="right">2.49</td>
+<td align="right">0.67</td>
+<td align="right">4.80</td>
 </tr>
 </tbody>
 </table>
@@ -357,53 +359,53 @@ markets.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">3530</td>
-<td align="left">COFF.CO06.2018</td>
-<td align="left">NA</td>
-<td align="left">2018-08-12</td>
-<td align="right">0.37</td>
-<td align="right">0.37</td>
-<td align="right">0.37</td>
+<td align="left">4192</td>
+<td align="left">SPEC.MSSEN.18</td>
+<td align="left">DEM.SPEC.MSSEN.18</td>
+<td align="left">2018-04-10</td>
+<td align="right">0.25</td>
+<td align="right">0.25</td>
+<td align="right">0.25</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">3812</td>
-<td align="left">AZSEN18</td>
-<td align="left">DEM.AZSEN18</td>
-<td align="left">2018-09-26</td>
-<td align="right">0.56</td>
-<td align="right">0.59</td>
-<td align="right">0.58</td>
-<td align="right">238</td>
+<td align="left">3767</td>
+<td align="left">NH01.2018</td>
+<td align="left">DEM.NH01.2018</td>
+<td align="left">2018-03-22</td>
+<td align="right">0.79</td>
+<td align="right">0.79</td>
+<td align="right">0.79</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">2999</td>
-<td align="left">NELSON.FLSENATE.2018</td>
-<td align="left">NA</td>
-<td align="left">2017-05-14</td>
-<td align="right">0.74</td>
-<td align="right">0.74</td>
-<td align="right">0.74</td>
-<td align="right">0</td>
+<td align="left">4104</td>
+<td align="left">NJ11.2018</td>
+<td align="left">DEM.NJ11.2018</td>
+<td align="left">2018-09-28</td>
+<td align="right">0.80</td>
+<td align="right">0.82</td>
+<td align="right">0.82</td>
+<td align="right">10</td>
 </tr>
 <tr class="even">
 <td align="left">3772</td>
 <td align="left">TNSEN18</td>
-<td align="left">GOP.TNSEN18</td>
-<td align="left">2018-07-10</td>
-<td align="right">0.48</td>
-<td align="right">0.57</td>
-<td align="right">0.56</td>
-<td align="right">1499</td>
+<td align="left">DEM.TNSEN18</td>
+<td align="left">2018-03-09</td>
+<td align="right">0.32</td>
+<td align="right">0.34</td>
+<td align="right">0.34</td>
+<td align="right">10</td>
 </tr>
 <tr class="odd">
-<td align="left">3520</td>
-<td align="left">KNIG.CA25.2018</td>
-<td align="left">NA</td>
-<td align="left">2017-12-26</td>
-<td align="right">0.39</td>
-<td align="right">0.39</td>
-<td align="right">0.39</td>
+<td align="left">4256</td>
+<td align="left">MI08.2018</td>
+<td align="left">GOP.MI08.2018</td>
+<td align="left">2018-08-01</td>
+<td align="right">0.59</td>
+<td align="right">0.59</td>
+<td align="right">0.59</td>
 <td align="right">0</td>
 </tr>
 </tbody>
@@ -450,7 +452,7 @@ nine variables.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">AZ-99</td>
 <td align="left">McSally</td>
 <td align="left">senate</td>
@@ -458,10 +460,10 @@ nine variables.
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
 <td align="left">market</td>
-<td align="right">0.340</td>
+<td align="right">0.350</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">AZ-99</td>
 <td align="left">McSally</td>
 <td align="left">senate</td>
@@ -469,10 +471,10 @@ nine variables.
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
 <td align="left">model</td>
-<td align="right">0.262</td>
+<td align="right">0.271</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">AZ-99</td>
 <td align="left">Sinema</td>
 <td align="left">senate</td>
@@ -483,7 +485,7 @@ nine variables.
 <td align="right">0.660</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">AZ-99</td>
 <td align="left">Sinema</td>
 <td align="left">senate</td>
@@ -491,10 +493,10 @@ nine variables.
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
 <td align="left">model</td>
-<td align="right">0.738</td>
+<td align="right">0.729</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">CA-10</td>
 <td align="left">Denham</td>
 <td align="left">house</td>
@@ -505,7 +507,7 @@ nine variables.
 <td align="right">0.420</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">CA-10</td>
 <td align="left">Denham</td>
 <td align="left">house</td>
@@ -513,10 +515,10 @@ nine variables.
 <td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">model</td>
-<td align="right">0.295</td>
+<td align="right">0.309</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">CA-12</td>
 <td align="left">Pelosi</td>
 <td align="left">house</td>
@@ -524,10 +526,10 @@ nine variables.
 <td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">market</td>
-<td align="right">0.910</td>
+<td align="right">0.900</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">CA-12</td>
 <td align="left">Pelosi</td>
 <td align="left">house</td>
@@ -538,7 +540,7 @@ nine variables.
 <td align="right">1.000</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">CA-22</td>
 <td align="left">Nunes</td>
 <td align="left">house</td>
@@ -549,7 +551,7 @@ nine variables.
 <td align="right">0.700</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-01</td>
+<td align="left">2018-08-02</td>
 <td align="left">CA-22</td>
 <td align="left">Nunes</td>
 <td align="left">house</td>
@@ -557,7 +559,7 @@ nine variables.
 <td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">model</td>
-<td align="right">0.951</td>
+<td align="right">0.952</td>
 </tr>
 </tbody>
 </table>
@@ -594,17 +596,6 @@ races predicted on August 1st, increasing to 189 races by election day.
 In the combined data set, only days for which there are predictions by
 both methods are included.
 
-    market %>% 
-      filter(date < "2018-11-05") %>% 
-      group_by(date) %>%
-      summarise(count = n()) %>% 
-      ggplot() +
-      geom_line(aes(date, count)) +
-      labs(title = "Increase in Election Markets Over Time",
-           subtitle = "On PredictIt.org",
-           x = "Date",
-           y = "Number of Elections")
-
-![](README_files/figure-markdown_strict/unnamed-chunk-1-1.png)
+![](README_files/figure-markdown_strict/n_markets-1.png)
 
 ------------------------------------------------------------------------

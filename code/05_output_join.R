@@ -1,14 +1,14 @@
 # Kiernan Nicholls
 # Join market and model probabilities
-library(tidyverse)
 
-probs <-
+predictions <-
   left_join(x = market,
             y = model,
-            by = c("date", "code", "party")) %>%
-  filter(date < "2018-11-06") %>%
+            by = c("date", "race", "party")) %>%
+  filter(date > "2018-08-01",
+         date < "2018-11-06") %>%
   select(date,
-         code,
+         race,
          name,
          chamber,
          party,
@@ -21,6 +21,4 @@ probs <-
   gather(market, model,
          key = "method",
          value = "prob") %>%
-  arrange(date, code, name, method)
-
-## write_csv(probs, "./output/joined_probs.csv")
+  arrange(date, race, name, method)

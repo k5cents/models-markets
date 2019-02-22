@@ -1,7 +1,7 @@
 # Kiernan Nicholls
 # Format market data from PredictIt
-library(tidyverse)
 
+# Reorder and recode market data input
 market <-
   market_data %>%
   rename(mid      = MarketId,
@@ -14,46 +14,50 @@ market <-
          vol      = Volume,
          date     = Date) %>%
   mutate(party = recode(party,
-                         "Democratic" = "D",
-                         "Republican" = "R",
-                         "Democratic or DFL" = "D")) %>%
+                        "Democratic"        = "D",
+                        "Democratic or DFL" = "D",
+                        "Republican"        = "R")) %>%
   select(date, everything(), -ContractSymbol, -MarketName)
 
+# Remove year information from symbol strings
 market$symbol <- str_remove(market$symbol, ".2018")
 market$symbol <- str_remove(market$symbol, ".18")
 
+# Divide the market symbol into the name and race code
 market <- separate(market,
                    col = symbol,
-                   into = c("name", "code"),
+                   into = c("name", "race"),
                    sep = "\\.",
                    remove = TRUE,
                    extra = "drop",
                    fill = "left")
 
-market$code <- str_replace(market$code, "SENATE", "99")
-market$code <- str_replace(market$code, "SEN",    "99")
-market$code <- str_replace(market$code, "SE",     "99")
-market$code <- str_replace(market$code, "AL",     "01") # at large
-market$code <- str_replace(market$code, "OH12G",  "OH12") # not sure
-market$code[which(market$name == "SPEC")] <- "MS98" # special election
-market$code[which(market$code == "MN99")] <- "MN98" # special election
-market$code <- paste(str_sub(market$code, 1, 2),
-                     str_sub(market$code, 3, 4),
+market$race <- str_replace(market$race, "SENATE", "99")
+market$race <- str_replace(market$race, "SEN",    "99")
+market$race <- str_replace(market$race, "SE",     "99")
+market$race <- str_replace(market$race, "AL",     "01")   # at large
+market$race <- str_replace(market$race, "OH12G",  "OH12") # not sure
+market$race[which(market$name == "SPEC")] <- "MS98"       # special election
+market$race[which(market$race == "MN99")] <- "MN98"       # special election
+market$race <- paste(str_sub(market$race, 1, 2),          # insert hyphen
+                     str_sub(market$race, 3, 4),
                      sep = "-")
 
-market$name[which(market$name == "PARTY")] <- NA # no name
-market$name[which(market$name == "SPEC")] <- NA # no name
+# Remove markets without relevant information
+market$name[which(market$name == "PARTY")] <- NA   # no name
+market$name[which(market$name == "SPEC")] <- NA    # no name
 market <- market[-str_which(market$mid, "3455"), ] # paul ryan not needed
 market <- market[-str_which(market$mid, "3507"), ] # jeff flake not needed
 
 for (i in 1:nrow(market)) {
   if (is.na(market$party[i])) {
     market$party[i] <-
-      members$party[which(str_sub(tolower(members$name), 1, 4)
-                          == str_sub(tolower(market$name), 1, 4)[i])][1]
-  }
+      members$party[str_sub(tolower(members$name), 1, 4)
+                       == str_sub(tolower(market$name), 1, 4)[i]][1]
+
+    }
 }
 
-market$code[market$mid == "3857"] <- "CA-99" # PredictIt miscoded as AZ-99
+market$race[market$mid == "3857"] <- "CA-99" # PredictIt miscoded as AZ-99
 
 market <- market %>% select(-name)

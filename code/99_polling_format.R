@@ -1,7 +1,6 @@
 # Kiernan Nicholls
 # Format polling data as provided by 538
-library(tidyverse)
-library(lubridate)
+
 
 # A key for pollster and sponsor IDs
 polling_key <-
@@ -47,8 +46,8 @@ polling_data <-
   filter(party == "DEM" | party == "REP" | party == "IND") %>%
   arrange(start_date)
 
-polling_data$start_date <-  mdy(polling_data$start_date)
-polling_data$end_date <- mdy(polling_data$end_date)
+polling_data$start_date <-  lubridate::mdy(polling_data$start_date)
+polling_data$end_date <- lubridate::mdy(polling_data$end_date)
 polling_data$poll <- as.character(polling_data$poll)
 polling_data$pollster <- as.character(polling_data$pollster)
 polling_data$sponsor <- as.character(polling_data$sponsor)
@@ -80,13 +79,13 @@ polling_data <-
   select(-state) %>%
   rename(state = abb) %>%
   unite(state, district,
-        col = code,
+        col = race,
         sep = "-",
         remove = TRUE) %>%
   mutate(length = end_date - start_date) %>%
   select(start_date,
          length,
-         code,
+         race,
          name,
          party,
          chamber,

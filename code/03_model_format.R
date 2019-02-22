@@ -1,6 +1,5 @@
 # Kiernan Nicholls
-# Format forecast model data
-library(tidyverse)
+# Format forecast model data from FiveThirtyEight
 
 model_history <-
   model_seat %>%
@@ -10,7 +9,7 @@ model_history <-
   mutate(chamber = if_else(is.na(chamber), "house", chamber),
          district = str_pad(district, width = 2, pad = 0),
          win_probability = round(win_probability, 3)) %>%
-  unite(col = code,
+  unite(col = race,
         state, district,
         sep = "-",
         remove = TRUE) %>%
@@ -22,7 +21,7 @@ model_history <-
   select(date,
          name,
          chamber,
-         code,
+         race,
          party,
          special,
          incumbent,
@@ -35,9 +34,9 @@ model_history <-
 
 # Extract the last name for matching
 model_history$name <-
-  if_else(word(model_history$name, -1) == "Jr.",
+  if_else(condition = word(model_history$name, -1) == "Jr.",
           true = word(model_history$name, -2),
-          false =  if_else(word(model_history$name, -1) == "III",
+          false =  if_else(condition = word(model_history$name, -1) == "III",
                            true = word(model_history$name, -2),
                            false = word(model_history$name, -1)))
 

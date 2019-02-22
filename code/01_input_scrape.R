@@ -1,9 +1,10 @@
 # Kiernan Nicholls
 # Scrape archived websites and github repos for initial data
+# Run all formatting code at once
 library(tidyverse)
 
 # Functions to scrape CSV from web.archive.org and github.com
-read_archive <- function(archive, date, site, folder, file) {
+read_archive <- function(archive, date, site, folder, file, ...) {
   archive_url <- paste("https://web.archive.org/web",
                        str_remove_all(string = as.character(date),
                                       pattern = "[[:punct:]\\s]"),
@@ -11,7 +12,7 @@ read_archive <- function(archive, date, site, folder, file) {
                        folder,
                        file,
                        sep = "/")
-  read_csv(archive_url)
+  read_csv(archive_url, ...)
 }
 
 read_github <- function(user, repo, branch, folder, file, ...) {
@@ -128,3 +129,42 @@ polls_generic <- read_archive(date = "2019-01-29 21:45:47",
                               site = "https://projects.fivethirtyeight.com",
                               folder = "polls-page",
                               file = "generic_ballot_polls.csv")
+
+# Read in the GovTrack stats for 115th
+house_115_stats <-
+  read_archive(date = "2019-01-21 17:13:08",
+               site = "https://www.govtrack.us",
+               folder = "data/us/115/stats",
+               file = "sponsorshipanalysis_h.txt",
+               col_types = cols(ID = col_character())) %>%
+  mutate(chamber = "house")
+
+senate_115_stats <-
+  read_archive(date = "2019-01-21 17:13:08",
+               site = "https://www.govtrack.us",
+               folder = "data/us/115/stats",
+               file = "sponsorshipanalysis_s.txt",
+               col_types = cols(ID = col_character())) %>%
+  mutate(chamber = "senate")
+
+# Bind House and Senate GovTrack stats
+members_115_stats <-
+  bind_rows(house_115_stats, senate_115_stats) %>%
+  select(ID,
+         chamber,
+         party,
+         ideology,
+         leadership) %>%
+  rename(gid = ID) %>%
+  mutate(party = recode(party,
+                        "Democrat" = "D",
+                        "Republican" = "R"))
+
+# Run all scripts to format inputs
+# Read names of all code scripts
+code_filenames <- list.files(path = "./code", full.names = TRUE)
+# Source scripts from names
+for (i in 2:length(code_filenames)) {
+  source(file = code_filenames[i], echo = FALSE)
+}
+rm(code_filenames, i, house_115_stats, senate_115_stats)

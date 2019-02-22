@@ -183,8 +183,8 @@ are 12 variables recorded:
 10. The candidate's ~minimum share of the vote (10th percentile)
 11. The candidate's ~maximum share of the vote (90th percentile)
 
-Below is a sample of variables to show the structure of the data as
-provided by FiveThirtyEight.
+Below is a random sample of observations from the FiveThirtyEight
+congressional district model.
 
 <table>
 <thead>
@@ -192,6 +192,7 @@ provided by FiveThirtyEight.
 <th align="left">Date</th>
 <th align="left">State</th>
 <th align="right">District</th>
+<th align="left">Candidate</th>
 <th align="left">Party</th>
 <th align="left">Incumbent</th>
 <th align="right">Win Probability</th>
@@ -200,49 +201,54 @@ provided by FiveThirtyEight.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-08-01</td>
-<td align="left">AK</td>
-<td align="right">1</td>
+<td align="left">2018-08-30</td>
+<td align="left">IL</td>
+<td align="right">16</td>
+<td align="left">Adam Kinzinger</td>
 <td align="left">R</td>
 <td align="left">TRUE</td>
-<td align="right">0.7185</td>
-<td align="right">49.35</td>
+<td align="right">0.9273</td>
+<td align="right">58.36</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-01</td>
-<td align="left">AK</td>
-<td align="right">1</td>
-<td align="left">D</td>
-<td align="left">FALSE</td>
-<td align="right">0.2815</td>
-<td align="right">44.11</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-08-01</td>
-<td align="left">AK</td>
-<td align="right">1</td>
-<td align="left">NA</td>
+<td align="left">2018-10-06</td>
+<td align="left">CA</td>
+<td align="right">37</td>
+<td align="left">Ron J. Bassilian</td>
+<td align="left">R</td>
 <td align="left">FALSE</td>
 <td align="right">0.0000</td>
-<td align="right">6.54</td>
-</tr>
-<tr class="even">
-<td align="left">2018-08-01</td>
-<td align="left">AL</td>
-<td align="right">1</td>
-<td align="left">R</td>
-<td align="left">TRUE</td>
-<td align="right">0.9993</td>
-<td align="right">64.90</td>
+<td align="right">9.18</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-08-01</td>
-<td align="left">AL</td>
-<td align="right">1</td>
+<td align="left">2018-11-02</td>
+<td align="left">TX</td>
+<td align="right">17</td>
+<td align="left">Peter Churchman</td>
+<td align="left">LIB</td>
+<td align="left">FALSE</td>
+<td align="right">0.0000</td>
+<td align="right">2.23</td>
+</tr>
+<tr class="even">
+<td align="left">2018-09-26</td>
+<td align="left">GA</td>
+<td align="right">11</td>
+<td align="left">Flynn D. Broady Jr.</td>
 <td align="left">D</td>
 <td align="left">FALSE</td>
-<td align="right">0.0007</td>
-<td align="right">35.10</td>
+<td align="right">0.0005</td>
+<td align="right">34.49</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-10-14</td>
+<td align="left">GA</td>
+<td align="right">12</td>
+<td align="left">Francys Johnson</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="right">0.0091</td>
+<td align="right">40.34</td>
 </tr>
 </tbody>
 </table>
@@ -303,56 +309,85 @@ Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt:
 
 <table>
+<colgroup>
+<col width="8%" />
+<col width="17%" />
+<col width="12%" />
+<col width="9%" />
+<col width="11%" />
+<col width="8%" />
+<col width="9%" />
+<col width="11%" />
+<col width="12%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Market ID</th>
 <th align="left">Market Symbol</th>
 <th align="left">Contract Symbol</th>
 <th align="left">Date</th>
+<th align="right">Opening Price</th>
+<th align="right">Low Price</th>
+<th align="right">High Price</th>
 <th align="right">Closing Price</th>
 <th align="right">Trading Volume</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">3738</td>
-<td align="left">FL27.2018</td>
-<td align="left">DEM.FL27.2018</td>
-<td align="left">2018-01-01</td>
-<td align="right">0.84</td>
-<td align="right">64</td>
+<td align="left">3864</td>
+<td align="left">TX21.2018</td>
+<td align="left">DEM.TX21.2018</td>
+<td align="left">2017-12-12</td>
+<td align="right">0.27</td>
+<td align="right">0.27</td>
+<td align="right">0.27</td>
+<td align="right">0.27</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">4807</td>
-<td align="left">BLUM.IA01.2018</td>
-<td align="left">NA</td>
-<td align="left">2018-10-27</td>
-<td align="right">0.22</td>
-<td align="right">474</td>
+<td align="left">3866</td>
+<td align="left">VA06.2018</td>
+<td align="left">DEM.VA06.2018</td>
+<td align="left">2017-12-05</td>
+<td align="right">0.04</td>
+<td align="right">0.04</td>
+<td align="right">0.04</td>
+<td align="right">0.04</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">2941</td>
-<td align="left">MANCHIN.WVSENATE.2018</td>
+<td align="left">2940</td>
+<td align="left">SANDERS.VTSENATE.2018</td>
 <td align="left">NA</td>
-<td align="left">2017-09-13</td>
-<td align="right">0.62</td>
-<td align="right">1</td>
+<td align="left">2017-03-19</td>
+<td align="right">0.80</td>
+<td align="right">0.80</td>
+<td align="right">0.80</td>
+<td align="right">0.80</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">4271</td>
-<td align="left">PA17.2018</td>
-<td align="left">DEM.PA17.2018</td>
-<td align="left">2018-08-29</td>
-<td align="right">0.93</td>
-<td align="right">1</td>
+<td align="left">4258</td>
+<td align="left">NJ07.2018</td>
+<td align="left">DEM.NJ07.2018</td>
+<td align="left">2018-07-26</td>
+<td align="right">0.67</td>
+<td align="right">0.67</td>
+<td align="right">0.67</td>
+<td align="right">0.67</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">3514</td>
-<td align="left">BACO.NE02.2018</td>
-<td align="left">NA</td>
-<td align="left">2018-06-21</td>
-<td align="right">0.58</td>
-<td align="right">26</td>
+<td align="left">4016</td>
+<td align="left">PA09.2018</td>
+<td align="left">DEM.PA09.2018</td>
+<td align="left">2018-09-30</td>
+<td align="right">0.25</td>
+<td align="right">0.25</td>
+<td align="right">0.25</td>
+<td align="right">0.25</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>

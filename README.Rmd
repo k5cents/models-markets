@@ -169,28 +169,26 @@ district level. For each observation, there are 12 variables recorded:
 10. The candidate's ~minimum share of the vote (10th percentile)
 10. The candidate's ~maximum share of the vote (90th percentile)
 
-Below is a sample of variables to show the structure of the data as provided by
-FiveThirtyEight.
+Below is a random sample of observations from the FiveThirtyEight congressional
+district model.
 
 ```{r model_data, echo=FALSE, message=FALSE}
-model_district <- 
-  read_csv("./input/model_district.csv") %>% 
-  select(-candidate,
-         -special, 
-         -model,
-         -p10_voteshare, 
-         -p90_voteshare)
-kable(x = model_district[1:5, ], 
-      format = "markdown",
-      digits = 4,
-      col.names = c("Date", 
-                    "State",
-                    "District",
-                    "Party",
-                    "Incumbent",
-                    "Win Probability",
-                    "Share of Vote"),
-      caption = "299,760 observations of 7 variables")
+model_district <- read_csv("./input/model_district.csv") 
+
+model_district %>%
+  select(-model, -special, -p10_voteshare, -p90_voteshare) %>% 
+  sample_n(5) %>% 
+  kable(format = "markdown",
+        digits = 4,
+        col.names = c("Date", 
+                      "State", 
+                      "District", 
+                      "Candidate", 
+                      "Party",
+                      "Incumbent", 
+                      "Win Probability", 
+                      "Share of Vote"),
+        caption = "299,760 observations of 7 variables")
 ```
 
 ### PredictIt Markets
@@ -242,31 +240,27 @@ Below is a random sample of observations with a selection of variables to show
 the structure of the data as provided by PredictIt:
 
 ```{r market_data, echo=FALSE, message=FALSE}
-market_data <- 
-  read_csv(file = "./input/market_data.csv",
-         na = c("n/a", "NA"),
-         col_types = cols(MarketId = col_character(),
-                          ContractName = col_character(),
-                          ContractSymbol = col_character())) %>%
-  # Randomly arrange the tibble
-  mutate(rand = sample(1:nrow(.), nrow(.), replace = F)) %>%
-  arrange(rand) %>% 
+market_data <- read_csv(file = "./input/market_data.csv",
+                        na = c("n/a", "NA"),
+                        col_types = cols(MarketId = col_character(),
+                                         ContractName = col_character(),
+                                         ContractSymbol = col_character()))
+market_data %>% 
   select(-MarketName, 
-         -ContractName, 
-         -LowPrice, 
-         -OpenPrice, 
-         -HighPrice,
-         -rand)
-kable(x = market_data[1:5, ], 
-      format = "markdown",
-      digits = 4,
-      col.names = c("Market ID", 
-                    "Market Symbol",
-                    "Contract Symbol",
-                    "Date",
-                    "Closing Price",
-                    "Trading Volume"),
-      caption = "44,711 observations of 6 variables")
+         -ContractName) %>% 
+  sample_n(5) %>% 
+  kable(format = "markdown",
+        digits = 4,
+        col.names = c("Market ID", 
+                      "Market Symbol",
+                      "Contract Symbol",
+                      "Date",
+                      "Opening Price",
+                      "Low Price",
+                      "High Price",
+                      "Closing Price",
+                      "Trading Volume"),
+        caption = "44,711 observations of 6 variables")
 ```
 
 ## Data Wrangling
@@ -285,19 +279,21 @@ The resulting data set has 29,602 observations with nine variables.
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
 joined_probs <- read_csv("./output/joined_probs.csv")
-kable(x = joined_probs[1:10, ], 
-      format = "markdown",
-      digits = 4,
-      col.names = c("Date", 
-                    "Race",
-                    "Candidate",
-                    "Chamber",
-                    "Party",
-                    "Incumbent",
-                    "Special",
-                    "Method",
-                    "Probability"),
-      caption = "29,602 observations of 9 variables")
+
+joined_probs %>% 
+  .[1:10, ] %>% 
+  kable(format = "markdown",
+        digits = 4,
+        col.names = c("Date", 
+                      "Race",
+                      "Candidate",
+                      "Chamber",
+                      "Party",
+                      "Incumbent",
+                      "Special",
+                      "Method",
+                      "Probability"),
+        caption = "29,602 observations of 9 variables")
 ```
 
 ## Data Exploration

@@ -179,14 +179,14 @@ model_district %>%
   select(-model, -special) %>%
   sample_n(5) %>% 
   kable(format = "markdown",
-        digits = 4,
+        digits = 3,
         col.names = c("Date", 
                       "State", 
                       "District", 
-                      "Candidate", 
+                      "Name", 
                       "Party",
                       "Incumbent", 
-                      "Win Probability", 
+                      "Win Prob.", 
                       "Avg Share",
                       "Min Share",
                       "Max Share"),
@@ -238,8 +238,7 @@ a single contract from a single market. There are 44,711 observations covering
 9. High contract price
 10. Closing contract price (that day's final prediction)
 
-Below is a random sample of observations with a selection of variables to show
-the structure of the data as provided by PredictIt:
+Below is a random sample of observations from the PreditIt trading markets.
 
 ```{r market_data, echo=FALSE, message=FALSE}
 market_data <- read_csv(file = "./input/market_data.csv",
@@ -253,15 +252,15 @@ market_data %>%
          -OpenPrice) %>% 
   sample_n(5) %>% 
   kable(format = "markdown",
-        digits = 4,
-        col.names = c("Market ID", 
-                      "Market Symbol",
-                      "Contract Symbol",
+        digits = 3,
+        col.names = c("ID", 
+                      "Market",
+                      "Contract",
                       "Date",
-                      "Low Price",
-                      "High Price",
-                      "Closing Price",
-                      "Trading Volume"),
+                      "Low",
+                      "High",
+                      "Close",
+                      "Volume"),
         caption = "44,711 observations of 6 variables")
 ```
 
@@ -288,7 +287,7 @@ joined_probs %>%
         digits = 4,
         col.names = c("Date", 
                       "Race",
-                      "Candidate",
+                      "Name",
                       "Chamber",
                       "Party",
                       "Incumbent",

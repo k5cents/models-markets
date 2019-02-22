@@ -186,28 +186,16 @@ are 12 variables recorded:
 Below is a random sample of observations from the FiveThirtyEight
 congressional district model.
 
-<table style="width:100%;">
-<colgroup>
-<col width="10%" />
-<col width="6%" />
-<col width="8%" />
-<col width="15%" />
-<col width="6%" />
-<col width="9%" />
-<col width="14%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-</colgroup>
+<table>
 <thead>
 <tr class="header">
 <th align="left">Date</th>
 <th align="left">State</th>
 <th align="right">District</th>
-<th align="left">Candidate</th>
+<th align="left">Name</th>
 <th align="left">Party</th>
 <th align="left">Incumbent</th>
-<th align="right">Win Probability</th>
+<th align="right">Win Prob.</th>
 <th align="right">Avg Share</th>
 <th align="right">Min Share</th>
 <th align="right">Max Share</th>
@@ -215,64 +203,64 @@ congressional district model.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-08-20</td>
-<td align="left">AL</td>
-<td align="right">3</td>
-<td align="left">Mike Rogers</td>
-<td align="left">R</td>
-<td align="left">TRUE</td>
-<td align="right">0.9951</td>
-<td align="right">65.18</td>
-<td align="right">58.25</td>
-<td align="right">72.05</td>
-</tr>
-<tr class="even">
-<td align="left">2018-10-27</td>
-<td align="left">KS</td>
-<td align="right">3</td>
-<td align="left">Sharice Davids</td>
-<td align="left">D</td>
-<td align="left">FALSE</td>
-<td align="right">0.7832</td>
-<td align="right">50.96</td>
-<td align="right">46.49</td>
-<td align="right">55.36</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-10-06</td>
-<td align="left">VA</td>
-<td align="right">5</td>
-<td align="left">Denver Riggleman</td>
-<td align="left">R</td>
-<td align="left">FALSE</td>
-<td align="right">0.6504</td>
-<td align="right">51.45</td>
-<td align="right">46.45</td>
-<td align="right">56.39</td>
-</tr>
-<tr class="even">
-<td align="left">2018-10-16</td>
-<td align="left">TX</td>
-<td align="right">31</td>
-<td align="left">John Carter</td>
-<td align="left">R</td>
-<td align="left">TRUE</td>
-<td align="right">0.9178</td>
-<td align="right">53.58</td>
-<td align="right">48.83</td>
-<td align="right">58.29</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-09-08</td>
+<td align="left">2018-08-04</td>
 <td align="left">NY</td>
-<td align="right">20</td>
-<td align="left">Francis Vitollo</td>
+<td align="right">21</td>
+<td align="left">Others</td>
+<td align="left">NA</td>
+<td align="left">FALSE</td>
+<td align="right">0.000</td>
+<td align="right">3.09</td>
+<td align="right">0.85</td>
+<td align="right">5.98</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-18</td>
+<td align="left">NE</td>
+<td align="right">2</td>
+<td align="left">Don Bacon</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="right">0.688</td>
+<td align="right">52.29</td>
+<td align="right">46.13</td>
+<td align="right">58.51</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-09-18</td>
+<td align="left">NV</td>
+<td align="right">4</td>
+<td align="left">Others</td>
+<td align="left">NA</td>
+<td align="left">FALSE</td>
+<td align="right">0.000</td>
+<td align="right">5.15</td>
+<td align="right">1.97</td>
+<td align="right">8.96</td>
+</tr>
+<tr class="even">
+<td align="left">2018-10-17</td>
+<td align="left">NY</td>
+<td align="right">13</td>
+<td align="left">Jineea Butler</td>
 <td align="left">R</td>
 <td align="left">FALSE</td>
-<td align="right">0.0001</td>
-<td align="right">31.04</td>
-<td align="right">26.10</td>
-<td align="right">35.93</td>
+<td align="right">0.000</td>
+<td align="right">7.43</td>
+<td align="right">4.08</td>
+<td align="right">10.80</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-08-30</td>
+<td align="left">CA</td>
+<td align="right">31</td>
+<td align="left">Pete Aguilar</td>
+<td align="left">D</td>
+<td align="left">TRUE</td>
+<td align="right">0.997</td>
+<td align="right">62.51</td>
+<td align="right">57.28</td>
+<td align="right">67.75</td>
 </tr>
 </tbody>
 </table>
@@ -329,82 +317,72 @@ observation there are 11 variables:
 9.  High contract price
 10. Closing contract price (that day's final prediction)
 
-Below is a random sample of observations with a selection of variables
-to show the structure of the data as provided by PredictIt:
+Below is a random sample of observations from the PreditIt trading
+markets.
 
 <table>
-<colgroup>
-<col width="10%" />
-<col width="14%" />
-<col width="15%" />
-<col width="10%" />
-<col width="10%" />
-<col width="10%" />
-<col width="13%" />
-<col width="14%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Market ID</th>
-<th align="left">Market Symbol</th>
-<th align="left">Contract Symbol</th>
+<th align="left">ID</th>
+<th align="left">Market</th>
+<th align="left">Contract</th>
 <th align="left">Date</th>
-<th align="right">Low Price</th>
-<th align="right">High Price</th>
-<th align="right">Closing Price</th>
-<th align="right">Trading Volume</th>
+<th align="right">Low</th>
+<th align="right">High</th>
+<th align="right">Close</th>
+<th align="right">Volume</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">3866</td>
-<td align="left">VA06.2018</td>
-<td align="left">GOP.VA06.2018</td>
-<td align="left">2018-05-22</td>
-<td align="right">0.85</td>
-<td align="right">0.85</td>
-<td align="right">0.85</td>
+<td align="left">4039</td>
+<td align="left">CA49.2018</td>
+<td align="left">DEM.CA49.2018</td>
+<td align="left">2018-02-13</td>
+<td align="right">0.78</td>
+<td align="right">0.78</td>
+<td align="right">0.78</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">3450</td>
-<td align="left">PELO.CA12.2018</td>
+<td align="left">3862</td>
+<td align="left">NJ02.2018</td>
+<td align="left">DEM.NJ02.2018</td>
+<td align="left">2018-09-09</td>
+<td align="right">0.94</td>
+<td align="right">0.94</td>
+<td align="right">0.94</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">3767</td>
+<td align="left">NH01.2018</td>
+<td align="left">GOP.NH01.2018</td>
+<td align="left">2018-06-10</td>
+<td align="right">0.26</td>
+<td align="right">0.26</td>
+<td align="right">0.26</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">3521</td>
+<td align="left">ISSA.CA49.2018</td>
 <td align="left">NA</td>
-<td align="left">2017-10-05</td>
-<td align="right">0.85</td>
-<td align="right">0.87</td>
-<td align="right">0.85</td>
-<td align="right">10</td>
-</tr>
-<tr class="odd">
-<td align="left">4015</td>
-<td align="left">MD06.2018</td>
-<td align="left">GOP.MD06.2018</td>
-<td align="left">2018-05-24</td>
-<td align="right">0.14</td>
-<td align="right">0.14</td>
-<td align="right">0.14</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">4281</td>
-<td align="left">CT05.2018</td>
-<td align="left">GOP.CT05.2018</td>
-<td align="left">2018-09-12</td>
-<td align="right">0.10</td>
-<td align="right">0.10</td>
-<td align="right">0.10</td>
+<td align="left">2018-10-25</td>
+<td align="right">0.02</td>
+<td align="right">0.02</td>
+<td align="right">0.02</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">4105</td>
-<td align="left">NY09.2018</td>
-<td align="left">DEM.NY09.2018</td>
-<td align="left">2018-07-05</td>
-<td align="right">0.95</td>
-<td align="right">0.95</td>
-<td align="right">0.95</td>
-<td align="right">0</td>
+<td align="left">3490</td>
+<td align="left">BROW.OHSENATE.2018</td>
+<td align="left">NA</td>
+<td align="left">2018-03-27</td>
+<td align="right">0.81</td>
+<td align="right">0.81</td>
+<td align="right">0.81</td>
+<td align="right">2</td>
 </tr>
 </tbody>
 </table>
@@ -431,7 +409,7 @@ nine variables.
 <tr class="header">
 <th align="left">Date</th>
 <th align="left">Race</th>
-<th align="left">Candidate</th>
+<th align="left">Name</th>
 <th align="left">Chamber</th>
 <th align="left">Party</th>
 <th align="left">Incumbent</th>

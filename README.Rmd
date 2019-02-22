@@ -28,9 +28,6 @@ Using R to compare the predictive capabilities of markets and models.
     1. [PredictIt Markets](#predictit-markets)
 1. [Data Wrangling](#data-wrangling)
 1. [Data Exploration](#data-exploration)
-1. [Project Findings](#project-findings)
-1. [Conclusion](#conclusion)
-1. [Bibliography](#bibliography)
 
 ## Project
 
@@ -40,17 +37,18 @@ tool used to incorporate a number of quantitative inputs and output a
 probabilistic view of all possible outcomes.
 
 Markets can be used as alternative method of generating similarly probabilistic
-views of election outcomes. Markets utilize the economic forces of price 
-discovery and risk aversion to overcome the implicit bias of self-interested
-traders.
+views of outcomes. Markets utilize the economic forces of price discovery and
+risk aversion to overcome the implicit bias of self-interested traders on a
+binary options exchange.
 
-I posit a null hypothesis of no difference in accuracy between forecasting
-models and prediction markets in their ability to predict 2018 congressional
-midterm elections. 
+How do these two predictive methods fare in their ability to prediction
+elections? I posit a null hypothesis of no difference in accuracy between
+forecasting models and prediction markets in their ability to predict 2018
+congressional midterm elections.
 
-I will be using model data from the proprietary model written by the journalist
-at FiveThirtyEight.com and market data from the PredictIt.org exchange run by
-the Victoria University of Wellington, New Zealand.
+I will be using public model data from the proprietary model written by the
+journalists at FiveThirtyEight and market data from the PredictIt exchange run
+by the Victoria University of Wellington, New Zealand.
 
 ## Predictive Methods
 
@@ -61,14 +59,14 @@ By [randomly sampling][05] the overall population of potential voters, pollsters
 can ask a thousand Americans their voting intentions and determine the likely
 division of votes in the actual election. Sampling errors and systemic errors
 prevent this statistical tool from perfectly predicting the election. By
-aggregating a bunch of polls and averaging their results, sites like
+aggregating a bunch of polls and averaging result, sites like
 [RealClearPolitics][06] take advantage of the [law of large numbers][07] to
 better calculate the true opinion of the population.
 
 ### Forecasting Models
 
-In [the word's][08] of Nate Silver, FiveThirtyEight's founder and primary author of
-their model:
+In [the word's][08] of Nate Silver, FiveThirtyEight's founder and the primary
+author of their election forecasting model:
 
 > (Forecasting models) take lots of polls, perform various types of adjustments
 to them, and then blend them with other kinds of empirically useful indicators
@@ -79,15 +77,16 @@ of times.
 I will be using the FiveThirtyEight model to collect forecasting data. In 2016,
 FiveThirtyEight's prediction was closest to reality. They are one of the few
 mainstream forecasters to continue their work into the 2018 midterm elections.
+Furthermore, the make the top-line output of their model free to the public.
 
-The exact process of the FiveThirtyEight is proprietary, so we can't know
-exactly what data is being incorporated in what ways. In the "classic" version
-of their model, three types of quantitative data are used:
+The exact process of the FiveThirtyEight model is proprietary, so we can't know
+exactly what data is being incorporated in what ways. We do know that the
+"classic" version of their model, three types of quantitative data are used:
 
 1. **Polling**: District-by-district polling, adjusted for house effects and
 other factors in some unknown way. [FiveThirtyEight rates pollsters][09] to
 adjust their findings.
-2. **C.A.N.T.O.R.**: A proprietary system which infers results for districts
+2. **CANTOR**: A proprietary system which infers results for districts
 with little or no polling from similar districts where polling has been done.
 3. **Fundamentals**: Non-polling factors that historically help in predicting
 congressional races:
@@ -103,15 +102,14 @@ congressional races:
 From everything that has been said publicly about the mathematics of their
 model, FiveThirtyEight uses these quantitative inputs to predict each
 candidate's share of the vote. The model is then uses the statistical program
-Stata to run a [Monte Carlo simulation][10]. By predicting the lower limit,
-upper limit, central tendency, and distribution of shares of the vote for two
-candidates, you can simulate a given election 20,000 times and simply use the
-percentage of victories as the probability of actual victory.
+Stata to run a [Monte Carlo simulation][10]. By estimating the probability
+distribution in two candidate's shares of the vote, such simulation can be run
+tens of thousands of times. From these simulations, the percentage of one
+candidate winning is equal to their probability of winning on election day.
 
 In the training data (most House races since 1998), the classic model correctly
-predicted _96.7%_ of races at the time of election. FiveThirtyEight points out
-that the _vast_ majority of races are blowouts, inflating this accuracy
-percentage.
+predicted **96.7%** of races at the time of election. FiveThirtyEight points out
+that the _vast_ majority of races are blowouts and very easy to predict.
 
 ### Prediction Markets
 
@@ -132,16 +130,16 @@ markets aim to overcome the implicit biases of the traders. Traders continually
 buy and sell contracts that pay out at $1 based on the outcome of the election.
 
 If a trader believes a candidate has a 75% chance of winning an election, he
-might buy a hundred contracts at $0.75 each. Should events unfold to increase or
-decrease this probability, the trader can sell these shares for more or less
-than he originally paid, updating the market equilibrium price to reflect
-current probabilities.
+should buy a hundred contracts at a price less than $0.75 each. Should events
+unfold to increase or decrease this probability, the trader can sell these
+shares for more or less than he originally paid, updating the market equilibrium
+price to reflect current probabilities.
 
 ## Prediction Data
 
-### FiveThirtyEight Model
+### FiveThirtyEight Model Data
 
-The team at FiveThirtyEight made public a portion of their model's output as
+The team at FiveThirtyEight makes public a portion of their model's output as
 four separate `.csv` files on their website:
 
 1. [Senate national forecast][11]
@@ -151,43 +149,47 @@ four separate `.csv` files on their website:
 
 The two national forecasts provide the FiveThirtyEight calculations for each
 party's probability of winning a majority in their respective chambers on any
-given day (e.g., "The Democratic party has an 85% chance of winning a majority
-in the House").
+given day (e.g., "Today, he Democratic party has an 85% chance of winning
+control of the House of Representatives with a simple majority of seats").
 
-The seat and district level forecasts will be used in this project. Each
-observation represents one day's probability of victory for one candidate. There
-are 28,353 observations in the Senate seat level file and 302,859 for the House
-district level. For each observation, there are 12 variables recorded:
+The Senate seat and House district level forecasts will be used in this project.
+Each observation represents one day's probability of victory for one candidate.
+There are 28,353 observations in the Senate seat level file and 302,859 for the
+House district level. Together, There are about 3,380 unique daily predictions from
+August 1st to November 5th (97 days).
 
-1. The date of the prediction (starting on 2018-08-01)
-2. The State the election is in
-3. The Congressional district the election is in
-4. Whether the election is a "special election"
-5. The candidate's full name
-6. The candidate's political party
-7. The model version (classic, lite, or deluxe)
-8. The candidate's probability of victory
-9. The candidate's expected share of the vote (50th percentile)
-10. The candidate's ~minimum share of the vote (10th percentile)
-10. The candidate's ~maximum share of the vote (90th percentile)
+For each observation, there are 12 variables recorded:
+
+1. The **date** of the prediction
+2. The **State** the election is in
+3. The Congressional **district** the election is in
+4. Whether the election is a "**special** election"
+5. The candidate's full **name**
+6. The candidate's political **party**
+7. The **model** version (classic, lite, or deluxe)
+8. The candidate's **probability** of victory
+9. The candidate's **expected share** of the vote (50th percentile)
+10. The candidate's ≈**minimum share** of the vote (10th percentile)
+10. The candidate's ≈**maximum share** of the vote (90th percentile)
 
 Below is a random sample of observations from the FiveThirtyEight congressional
-district model.
+district model data set.
 
 ```{r model_data, echo=FALSE, message=FALSE}
 model_district <- read_csv("./input/model_district.csv") 
 
 model_district %>%
-  select(-model, -special) %>%
   sample_n(5) %>% 
   kable(format = "markdown",
         digits = 3,
         col.names = c("Date", 
                       "State", 
-                      "District", 
+                      "District",
+                      "Special",
                       "Name", 
                       "Party",
-                      "Incumbent", 
+                      "Incumbent",
+                      "Model",
                       "Win Prob.", 
                       "Avg Share",
                       "Min Share",
@@ -195,21 +197,14 @@ model_district %>%
         caption = "299,760 observations of 7 variables")
 ```
 
-### PredictIt Markets
+### PredictIt Markets Data
 
 PredictIt markets are comprised of "markets" and "contracts." As they explain on
 [their website][15]:
 
-> Every question posed by PredictIt is known as a ‘market’. Some markets have
-simple yes or no answers, while others can have multiple possible answers.
-
-> Each possible answer to the question posed in a market is known as a
-‘contract’. Markets that ask simple yes or no answers are known as
-‘single-contract markets’, while those with multiple possible choices – like the
-winner of an election – are called ‘multiple-contract markets’...
-Single-contract markets resolve either to ‘Yes’ or ‘No’. In multiple-contract
-markets, only one contract can resolve to ‘Yes’. All others will resolve to
-‘No’.
+> Every question posed by PredictIt is known as a "market" ... Each possible
+answer to the question posed in a market is known as a "contract" ...
+Single-contract markets resolve either to "Yes" or "No".
 
 On [their webstie][16], PredictIt outlines their data agreement with academic
 researchers:
@@ -268,13 +263,19 @@ market_data %>%
 
 ## Data Wrangling
 
-By formatting the above data sets to contain relational keys of `date`, `code`,
-and `party` we can perform a left-wise join on the data to combine the prediction
-data from the PredictIt markets and FiveThirtyEight model. The `code` variable
-is the primary key, created with the `state` and `district` variables from
-FiveThirtyEight and the `ContractSymbol` variable from PredictIt. For House
-races, the number is the Congressional District. For Senate races, "-99"
-indicates a on-time election and "-98" indicates a special election.
+The above data sets were formatted to contain three relational keys variables: `date`, `code`, and `party`. 
+
+The `code` variable is created by combinding the `state` and `district`
+variables from FiveThirtyEight and extracted `MarketSymbol` variable from
+PredictIt. For House races, the number refers to the Congressional District. For
+Senate races, 99 indicates a on-time election and 98 indicates a special
+election.
+
+The `party` variable is included in the model data by default. For market data,
+House race party variables are is extracted from "DEM" and "GOP" in the
+`ContractSymbol` character string. Senate race party variables are obtained
+using the incumbet's name in the `MarketSymbol` character string and the
+`/congress-legislators` data set maintained by the [@United States project][19].
 
 We then gather the variables to make out data frame "tidy" with each observation
 representing one prediction (on one date, for one candidate, with one method).
@@ -320,8 +321,11 @@ included in both data sets will be used. This should not greatly bias results,
 as the majority of races not shared have essentially foregone conclusions.
 
 ```{r dist, echo=FALSE, message=FALSE, warning=FALSE}
-left_join(x = read_csv("./output/model.csv"),
-          y = read_csv("./output/market.csv"),
+model <- read_csv("./output/model.csv")
+market <- read_csv("./output/market.csv")
+
+left_join(x = model,
+          y = market,
           by = c("date", "code", "party")) %>%
   filter(date == "2018-11-05", party == "D") %>%
   select(date,
@@ -345,6 +349,25 @@ left_join(x = read_csv("./output/model.csv"),
   scale_fill_manual(values = c("#595959", "darkred"))
 ```
 
+The FiveThirtyEight model predicts 480 races every day from August 1st to
+November 5th. Below is a graph showing the number of election markets on the
+PredictIt exchange over that same time period. There are 127 races predicted
+on August 1st, increasing to 189 races by election day. In the combined data
+set, only days for which there are predictions by both methods are included.
+
+```{r}
+market %>% 
+  filter(date < "2018-11-05") %>% 
+  group_by(date) %>%
+  summarise(count = n()) %>% 
+  ggplot() +
+  geom_line(aes(date, count)) +
+  labs(title = "Increase in Election Markets Over Time",
+       subtitle = "On PredictIt.org",
+       x = "Date",
+       y = "Number of Elections")
+```
+
 ----
 
 [01]: https://fivethirtyeight.com/ "538 home page"
@@ -365,3 +388,4 @@ left_join(x = read_csv("./output/model.csv"),
 [16]: https://www.predictit.org/research "PredictIt research"
 [17]: https://www.predictit.org/api/marketdata/all/ "PredictIt API"
 [18]: https://en.wikipedia.org/wiki/Prediction_market "Prediction markets wiki"
+[19]: https://theunitedstates.io/ "@United States"

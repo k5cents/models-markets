@@ -28,7 +28,7 @@ quantitative inputs and output a probabilistic view of all possible
 outcomes.
 
 Markets can be used as alternative method of generating similarly
-probabalistic views of election outcomes. Markets utlize the economic
+probabilistic views of election outcomes. Markets utilize the economic
 forces of price discovery and risk aversion to overcome the implicit
 bias of self-interested traders.
 
@@ -132,7 +132,7 @@ Wikipedia](https://en.wikipedia.org/wiki/Prediction_market "Prediction markets w
 > payoffs are related to the unknown future outcome and the market
 > prices of the contracts are considered as the aggregated belief.
 
-By utlizing the economic forces of risk aversion and self-interest,
+By utilizing the economic forces of risk aversion and self-interest,
 prediction markets aim to overcome the implicit biases of the traders.
 Traders continually buy and sell contracts that pay out at $1 based on
 the outcome of the election.
@@ -203,64 +203,64 @@ congressional district model.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-10-09</td>
-<td align="left">MS</td>
-<td align="right">2</td>
-<td align="left">Others</td>
-<td align="left">NA</td>
-<td align="left">FALSE</td>
-<td align="right">0.000</td>
-<td align="right">2.54</td>
-<td align="right">0.62</td>
-<td align="right">5.05</td>
-</tr>
-<tr class="even">
-<td align="left">2018-09-27</td>
-<td align="left">AZ</td>
-<td align="right">3</td>
-<td align="left">Nick Pierson</td>
-<td align="left">R</td>
-<td align="left">FALSE</td>
-<td align="right">0.001</td>
-<td align="right">28.69</td>
-<td align="right">21.34</td>
-<td align="right">36.05</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-09-16</td>
-<td align="left">CA</td>
+<td align="left">2018-10-06</td>
+<td align="left">NC</td>
 <td align="right">12</td>
-<td align="left">Nancy Pelosi</td>
+<td align="left">Alma Adams</td>
 <td align="left">D</td>
 <td align="left">TRUE</td>
 <td align="right">1.000</td>
-<td align="right">90.91</td>
-<td align="right">85.62</td>
-<td align="right">96.12</td>
+<td align="right">78.89</td>
+<td align="right">72.58</td>
+<td align="right">85.23</td>
 </tr>
 <tr class="even">
-<td align="left">2018-09-05</td>
-<td align="left">MI</td>
-<td align="right">10</td>
-<td align="left">Kimberly Bizon</td>
-<td align="left">D</td>
-<td align="left">FALSE</td>
-<td align="right">0.002</td>
-<td align="right">34.72</td>
-<td align="right">29.22</td>
-<td align="right">40.21</td>
+<td align="left">2018-09-13</td>
+<td align="left">GA</td>
+<td align="right">7</td>
+<td align="left">Rob Woodall</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="right">0.655</td>
+<td align="right">51.36</td>
+<td align="right">46.99</td>
+<td align="right">55.81</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-09-24</td>
-<td align="left">MS</td>
-<td align="right">1</td>
-<td align="left">Tracella Lou O'Hara Hill</td>
-<td align="left">REF</td>
+<td align="left">2018-09-21</td>
+<td align="left">MI</td>
+<td align="right">5</td>
+<td align="left">Travis Wines</td>
+<td align="left">R</td>
 <td align="left">FALSE</td>
-<td align="right">0.000</td>
-<td align="right">2.77</td>
-<td align="right">0.80</td>
-<td align="right">5.24</td>
+<td align="right">0.001</td>
+<td align="right">32.90</td>
+<td align="right">27.37</td>
+<td align="right">38.43</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-24</td>
+<td align="left">AZ</td>
+<td align="right">8</td>
+<td align="left">Hiral Tipirneni</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="right">0.126</td>
+<td align="right">45.70</td>
+<td align="right">40.92</td>
+<td align="right">50.52</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-11-05</td>
+<td align="left">TN</td>
+<td align="right">1</td>
+<td align="left">Phil Roe</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="right">1.000</td>
+<td align="right">77.39</td>
+<td align="right">70.50</td>
+<td align="right">84.16</td>
 </tr>
 </tbody>
 </table>
@@ -317,7 +317,7 @@ observation there are 11 variables:
 9.  High contract price
 10. Closing contract price (that day's final prediction)
 
-Below is a random sample of observations from the PreditIt trading
+Below is a random sample of observations from the PredictIt trading
 markets.
 
 <table>
@@ -335,54 +335,54 @@ markets.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">3531</td>
-<td align="left">CURB.FL26.2018</td>
-<td align="left">NA</td>
-<td align="left">2017-11-29</td>
-<td align="right">0.36</td>
-<td align="right">0.36</td>
-<td align="right">0.36</td>
+<td align="left">4016</td>
+<td align="left">PA09.2018</td>
+<td align="left">GOP.PA09.2018</td>
+<td align="left">2018-04-23</td>
+<td align="right">0.86</td>
+<td align="right">0.86</td>
+<td align="right">0.86</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">5004</td>
-<td align="left">MTAL.2018</td>
-<td align="left">GOP.MTAL.2018</td>
-<td align="left">2018-11-02</td>
-<td align="right">0.64</td>
-<td align="right">0.69</td>
-<td align="right">0.69</td>
-<td align="right">27</td>
-</tr>
-<tr class="odd">
-<td align="left">2999</td>
-<td align="left">NELSON.FLSENATE.2018</td>
+<td align="left">2940</td>
+<td align="left">SANDERS.VTSENATE.2018</td>
 <td align="left">NA</td>
-<td align="left">2018-04-29</td>
-<td align="right">0.63</td>
-<td align="right">0.67</td>
-<td align="right">0.63</td>
-<td align="right">68</td>
-</tr>
-<tr class="even">
-<td align="left">2998</td>
-<td align="left">DONNELLY.INSENATE.2018</td>
-<td align="left">NA</td>
-<td align="left">2018-04-13</td>
-<td align="right">0.59</td>
-<td align="right">0.59</td>
-<td align="right">0.59</td>
+<td align="left">2018-04-25</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">4831</td>
-<td align="left">NY22.2018</td>
-<td align="left">GOP.NY22.2018</td>
-<td align="left">2018-10-21</td>
-<td align="right">0.46</td>
-<td align="right">0.50</td>
-<td align="right">0.46</td>
-<td align="right">3</td>
+<td align="left">3489</td>
+<td align="left">STAB.MISENATE.2018</td>
+<td align="left">NA</td>
+<td align="left">2018-08-16</td>
+<td align="right">0.76</td>
+<td align="right">0.78</td>
+<td align="right">0.78</td>
+<td align="right">165</td>
+</tr>
+<tr class="even">
+<td align="left">3481</td>
+<td align="left">TEST.MTSENATE.2018</td>
+<td align="left">NA</td>
+<td align="left">2018-06-20</td>
+<td align="right">0.63</td>
+<td align="right">0.66</td>
+<td align="right">0.63</td>
+<td align="right">75</td>
+</tr>
+<tr class="odd">
+<td align="left">4448</td>
+<td align="left">NV03.2018</td>
+<td align="left">DEM.NV03.2018</td>
+<td align="left">2018-10-10</td>
+<td align="right">0.79</td>
+<td align="right">0.79</td>
+<td align="right">0.79</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
@@ -536,24 +536,25 @@ Data Exploration
 ----------------
 
 The FiveThirtyEight model generates daily probabilities for every
-election in both house. The PredictIt.org markets do not; some markets
-were open for trading as early as Januray and the rest were added over
-time. Furthermore, the traders on PredictIt.org are not interested in
-betting on every election, as the vast majority have little risk (only
-91 races were traded on prediction markets by election day).
+election in both chambers. On PredictIt.org, some markets were open for
+trading as early as January and the rest were added over time.
+Furthermore, the traders on PredictIt.org are not interested in betting
+on every election, as the vast majority have little risk (only 91 races
+were traded on prediction markets by election day).
 
-Below are histograms of the Democratic candidate's probabilities the day
-before the election with both tools. Note how the model, which includes
-every race, gives the vast majority of candidates a less than 10% or
-greater than 90% chance of winning their respective elections.
+Below are histograms of the Democratic candidates' probabilities the day
+before the election, split by the predictive method used. Note how the
+model, which includes every race, gives the vast majority of candidates
+a less than 10% or greater than 90% chance of winning their respective
+elections. The market, on the other hand, is more uniform it its
+distribution of probabilities. Also note the greater focus on Senate
+races on the prediction markets.
+
+When comparing the two methods on their ability to predict elections,
+only races included in both data sets will be used. This should not
+greatly bias results, as the majority of races not shared have
+essentially foregone conclusions.
 
 ![](README_files/figure-markdown_strict/dist-1.png)
 
-Project Findings
-----------------
-
-Conclusion
-----------
-
-Biblography
------------
+------------------------------------------------------------------------

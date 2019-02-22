@@ -39,8 +39,8 @@ data journalism site [FiveThirtyEight][01], the forecast model is a statistical
 tool used to incorporate a number of quantitative inputs and output a
 probabilistic view of all possible outcomes.
 
-Markets can be used as alternative method of generating similarly probabalistic
-views of election outcomes. Markets utlize the economic forces of price 
+Markets can be used as alternative method of generating similarly probabilistic
+views of election outcomes. Markets utilize the economic forces of price 
 discovery and risk aversion to overcome the implicit bias of self-interested
 traders.
 
@@ -127,7 +127,7 @@ future outcome. Traders with different beliefs trade on contracts whose payoffs
 are related to the unknown future outcome and the market prices of the contracts
 are considered as the aggregated belief.
 
-By utlizing the economic forces of risk aversion and self-interest, prediction
+By utilizing the economic forces of risk aversion and self-interest, prediction
 markets aim to overcome the implicit biases of the traders. Traders continually
 buy and sell contracts that pay out at $1 based on the outcome of the election.
 
@@ -240,7 +240,7 @@ a single contract from a single market. There are 44,711 observations covering
 9. High contract price
 10. Closing contract price (that day's final prediction)
 
-Below is a random sample of observations from the PreditIt trading markets.
+Below is a random sample of observations from the PredictIt trading markets.
 
 ```{r market_data, echo=FALSE, message=FALSE}
 market_data <- read_csv(file = "./input/market_data.csv",
@@ -302,16 +302,22 @@ joined_probs %>%
 ## Data Exploration
 
 The FiveThirtyEight model generates daily probabilities for every election in
-both house. The PredictIt.org markets do not; some markets were open for trading
-as early as Januray and the rest were added over time. Furthermore, the traders
-on PredictIt.org are not interested in betting on every election, as the vast
+both chambers. On PredictIt.org, some markets were open for trading as early as
+January and the rest were added over time. Furthermore, the traders on
+PredictIt.org are not interested in betting on every election, as the vast
 majority have little risk (only 91 races were traded on prediction markets by
 election day).
 
-Below are histograms of the Democratic candidate's probabilities the day before
-the election with both tools. Note how the model, which includes every race,
-gives the vast majority of candidates a less than 10% or greater than 90% chance
-of winning their respective elections.
+Below are histograms of the Democratic candidates' probabilities the day before
+the election, split by the predictive method used. Note how the model, which
+includes every race, gives the vast majority of candidates a less than 10% or
+greater than 90% chance of winning their respective elections. The market, on
+the other hand, is more uniform it its distribution of probabilities. Also note
+the greater focus on Senate races on the prediction markets.
+
+When comparing the two methods on their ability to predict elections, only races
+included in both data sets will be used. This should not greatly bias results,
+as the majority of races not shared have essentially foregone conclusions.
 
 ```{r dist, echo=FALSE, message=FALSE, warning=FALSE}
 left_join(x = read_csv("./output/model.csv"),
@@ -339,11 +345,7 @@ left_join(x = read_csv("./output/model.csv"),
   scale_fill_manual(values = c("#595959", "darkred"))
 ```
 
-## Project Findings
-
-## Conclusion
-
-## Biblography
+----
 
 [01]: https://fivethirtyeight.com/ "538 home page"
 [02]: https://web.archive.org/web/20161107220421/https://projects.fivethirtyeight.com/2016-election-forecast/ "538 2016"

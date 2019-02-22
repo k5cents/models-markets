@@ -186,20 +186,66 @@ are 12 variables recorded:
 Below is a sample of variables to show the structure of the data as
 provided by FiveThirtyEight.
 
-    ## # A tibble: 299,760 x 7
-    ##    forecastdate state district party incumbent win_probability voteshare
-    ##    <date>       <chr>    <dbl> <chr> <lgl>               <dbl>     <dbl>
-    ##  1 2018-08-01   AK           1 R     TRUE               0.718      49.4 
-    ##  2 2018-08-01   AK           1 D     FALSE              0.282      44.1 
-    ##  3 2018-08-01   AK           1 <NA>  FALSE              0           6.54
-    ##  4 2018-08-01   AL           1 R     TRUE               0.999      64.9 
-    ##  5 2018-08-01   AL           1 D     FALSE              0.0007     35.1 
-    ##  6 2018-08-01   AL           2 R     TRUE               0.973      58.2 
-    ##  7 2018-08-01   AL           2 D     FALSE              0.0271     41.8 
-    ##  8 2018-08-01   AL           3 R     TRUE               0.997      62.3 
-    ##  9 2018-08-01   AL           3 D     FALSE              0.0028     37.7 
-    ## 10 2018-08-01   AL           4 R     TRUE               1          76.3 
-    ## # ... with 299,750 more rows
+<table>
+<thead>
+<tr class="header">
+<th align="left">Date</th>
+<th align="left">State</th>
+<th align="right">District</th>
+<th align="left">Party</th>
+<th align="left">Incumbent</th>
+<th align="right">Win Probability</th>
+<th align="right">Share of Vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">AK</td>
+<td align="right">1</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="right">0.7185</td>
+<td align="right">49.35</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-01</td>
+<td align="left">AK</td>
+<td align="right">1</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="right">0.2815</td>
+<td align="right">44.11</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">AK</td>
+<td align="right">1</td>
+<td align="left">NA</td>
+<td align="left">FALSE</td>
+<td align="right">0.0000</td>
+<td align="right">6.54</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-01</td>
+<td align="left">AL</td>
+<td align="right">1</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="right">0.9993</td>
+<td align="right">64.90</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">AL</td>
+<td align="right">1</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="right">0.0007</td>
+<td align="right">35.10</td>
+</tr>
+</tbody>
+</table>
 
 ### PredictIt Markets
 
@@ -256,20 +302,60 @@ observation there are 11 variables:
 Below is a random sample of observations with a selection of variables
 to show the structure of the data as provided by PredictIt:
 
-    ## # A tibble: 44,711 x 6
-    ##    MarketId MarketSymbol       ContractSymbol Date       ClosePrice Volume
-    ##    <chr>    <chr>              <chr>          <date>          <dbl>  <dbl>
-    ##  1 3490     BROW.OHSENATE.2018 <NA>           2018-05-05      0.81      61
-    ##  2 4271     PA17.2018          GOP.PA17.2018  2018-05-03      0.3        0
-    ##  3 4039     CA49.2018          GOP.CA49.2018  2018-04-16      0.24       0
-    ##  4 4039     CA49.2018          DEM.CA49.2018  2018-07-30      0.77       0
-    ##  5 4016     PA09.2018          GOP.PA09.2018  2018-02-08      0.82       4
-    ##  6 4126     NY19.2018          DEM.NY19.2018  2018-06-16      0.570      0
-    ##  7 3455     RYAN.WI01.2018     <NA>           2017-12-03      0.75      15
-    ##  8 3608     HELL.NVSENATE.2018 <NA>           2018-09-22      0.35     101
-    ##  9 3520     KNIG.CA25.2018     <NA>           2017-11-25      0.34      47
-    ## 10 4557     VASEN18            GOP.VASEN18    2018-08-09      0.05       0
-    ## # ... with 44,701 more rows
+<table>
+<thead>
+<tr class="header">
+<th align="left">Market ID</th>
+<th align="left">Market Symbol</th>
+<th align="left">Contract Symbol</th>
+<th align="left">Date</th>
+<th align="right">Closing Price</th>
+<th align="right">Trading Volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3738</td>
+<td align="left">FL27.2018</td>
+<td align="left">DEM.FL27.2018</td>
+<td align="left">2018-01-01</td>
+<td align="right">0.84</td>
+<td align="right">64</td>
+</tr>
+<tr class="even">
+<td align="left">4807</td>
+<td align="left">BLUM.IA01.2018</td>
+<td align="left">NA</td>
+<td align="left">2018-10-27</td>
+<td align="right">0.22</td>
+<td align="right">474</td>
+</tr>
+<tr class="odd">
+<td align="left">2941</td>
+<td align="left">MANCHIN.WVSENATE.2018</td>
+<td align="left">NA</td>
+<td align="left">2017-09-13</td>
+<td align="right">0.62</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">4271</td>
+<td align="left">PA17.2018</td>
+<td align="left">DEM.PA17.2018</td>
+<td align="left">2018-08-29</td>
+<td align="right">0.93</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">3514</td>
+<td align="left">BACO.NE02.2018</td>
+<td align="left">NA</td>
+<td align="left">2018-06-21</td>
+<td align="right">0.58</td>
+<td align="right">26</td>
+</tr>
+</tbody>
+</table>
 
 Data Wrangling
 --------------
@@ -288,20 +374,133 @@ observation representing one prediction (on one date, for one candidate,
 with one method). The resulting data set has 29,602 observations with
 nine variables.
 
-    ## # A tibble: 29,602 x 9
-    ##    date       code  name    chamber party incumbent special method  prob
-    ##    <date>     <chr> <chr>   <chr>   <chr> <lgl>     <lgl>   <chr>  <dbl>
-    ##  1 2018-08-01 AZ-99 McSally senate  R     FALSE     FALSE   market 0.34 
-    ##  2 2018-08-01 AZ-99 McSally senate  R     FALSE     FALSE   model  0.262
-    ##  3 2018-08-01 AZ-99 Sinema  senate  D     FALSE     FALSE   market 0.66 
-    ##  4 2018-08-01 AZ-99 Sinema  senate  D     FALSE     FALSE   model  0.738
-    ##  5 2018-08-01 CA-10 Denham  house   R     TRUE      FALSE   market 0.42 
-    ##  6 2018-08-01 CA-10 Denham  house   R     TRUE      FALSE   model  0.295
-    ##  7 2018-08-01 CA-12 Pelosi  house   D     TRUE      FALSE   market 0.91 
-    ##  8 2018-08-01 CA-12 Pelosi  house   D     TRUE      FALSE   model  1    
-    ##  9 2018-08-01 CA-22 Nunes   house   R     TRUE      FALSE   market 0.7  
-    ## 10 2018-08-01 CA-22 Nunes   house   R     TRUE      FALSE   model  0.951
-    ## # ... with 29,592 more rows
+<table>
+<thead>
+<tr class="header">
+<th align="left">Date</th>
+<th align="left">Race</th>
+<th align="left">Candidate</th>
+<th align="left">Chamber</th>
+<th align="left">Party</th>
+<th align="left">Incumbent</th>
+<th align="left">Special</th>
+<th align="left">Method</th>
+<th align="right">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">AZ-99</td>
+<td align="left">McSally</td>
+<td align="left">senate</td>
+<td align="left">R</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">market</td>
+<td align="right">0.340</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-01</td>
+<td align="left">AZ-99</td>
+<td align="left">McSally</td>
+<td align="left">senate</td>
+<td align="left">R</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">model</td>
+<td align="right">0.262</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">AZ-99</td>
+<td align="left">Sinema</td>
+<td align="left">senate</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">market</td>
+<td align="right">0.660</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-01</td>
+<td align="left">AZ-99</td>
+<td align="left">Sinema</td>
+<td align="left">senate</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">model</td>
+<td align="right">0.738</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">CA-10</td>
+<td align="left">Denham</td>
+<td align="left">house</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">market</td>
+<td align="right">0.420</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-01</td>
+<td align="left">CA-10</td>
+<td align="left">Denham</td>
+<td align="left">house</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">model</td>
+<td align="right">0.295</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">CA-12</td>
+<td align="left">Pelosi</td>
+<td align="left">house</td>
+<td align="left">D</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">market</td>
+<td align="right">0.910</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-01</td>
+<td align="left">CA-12</td>
+<td align="left">Pelosi</td>
+<td align="left">house</td>
+<td align="left">D</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">model</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-08-01</td>
+<td align="left">CA-22</td>
+<td align="left">Nunes</td>
+<td align="left">house</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">market</td>
+<td align="right">0.700</td>
+</tr>
+<tr class="even">
+<td align="left">2018-08-01</td>
+<td align="left">CA-22</td>
+<td align="left">Nunes</td>
+<td align="left">house</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">model</td>
+<td align="right">0.951</td>
+</tr>
+</tbody>
+</table>
 
 Data Exploration
 ----------------

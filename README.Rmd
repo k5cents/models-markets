@@ -3,11 +3,13 @@ title: "README"
 author: "Kiernan Nicholls"
 date: "January 23, 2019"
 output: md_document
+cache: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(knitr)
 ```
 
 # _predictr_
@@ -178,7 +180,17 @@ model_district <-
          -model,
          -p10_voteshare, 
          -p90_voteshare)
-print(model_district)
+kable(x = model_district[1:5, ], 
+      format = "markdown",
+      digits = 4,
+      col.names = c("Date", 
+                    "State",
+                    "District",
+                    "Party",
+                    "Incumbent",
+                    "Win Probability",
+                    "Share of Vote"),
+      caption = "299,760 observations of 7 variables")
 ```
 
 ### PredictIt Markets
@@ -245,7 +257,16 @@ market_data <-
          -OpenPrice, 
          -HighPrice,
          -rand)
-print(market_data)
+kable(x = market_data[1:5, ], 
+      format = "markdown",
+      digits = 4,
+      col.names = c("Market ID", 
+                    "Market Symbol",
+                    "Contract Symbol",
+                    "Date",
+                    "Closing Price",
+                    "Trading Volume"),
+      caption = "44,711 observations of 6 variables")
 ```
 
 ## Data Wrangling
@@ -264,7 +285,19 @@ The resulting data set has 29,602 observations with nine variables.
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
 joined_probs <- read_csv("./output/joined_probs.csv")
-print(joined_probs)
+kable(x = joined_probs[1:10, ], 
+      format = "markdown",
+      digits = 4,
+      col.names = c("Date", 
+                    "Race",
+                    "Candidate",
+                    "Chamber",
+                    "Party",
+                    "Incumbent",
+                    "Special",
+                    "Method",
+                    "Probability"),
+      caption = "29,602 observations of 9 variables")
 ```
 
 ## Data Exploration
@@ -320,9 +353,9 @@ ggplot(.) +
 ## Biblography
 
 [01]: https://fivethirtyeight.com/ "538 home page"
-[02]: https://goo.gl/CLPrUC "538 2016"
-[03]: https://goo.gl/QES9vJ "NYT Upshot 2016"
-[04]: https://goo.gl/XJqwyD "HuffPo 2016"
+[02]: https://web.archive.org/web/20161107220421/https://projects.fivethirtyeight.com/2016-election-forecast/ "538 2016"
+[03]: https://web.archive.org/web/20161108001708/https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html "NYT Upshot 2016"
+[04]: https://web.archive.org/web/20161107013120/http://elections.huffingtonpost.com/2016/forecast/president "HuffPo 2016"
 [05]: https://en.wikipedia.org/wiki/Sampling_(statistics) "Sandom sampling wiki"
 [06]: https://www.realclearpolitics.com/ "RCP home page"
 [07]: https://en.wikipedia.org/wiki/Law_of_large_numbers "Law large nums wiki"

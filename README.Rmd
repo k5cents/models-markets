@@ -311,36 +311,30 @@ the election with both tools. Note how the model, which includes every race,
 gives the vast majority of candidates a less than 10% or greater than 90% chance
 of winning their respective elections.
 
-```{r model_dist, echo=FALSE, message=FALSE}
-model_data <- read_csv("./output/model.csv")
-ggplot(filter(model_data, 
-              date == "2018-11-05" & party == "D")) +
-  geom_histogram(aes(x = prob),
-                 binwidth = 0.10) +
-  labs(title = "FiveThirtyEight Model's Democratic Win Probabilities",
-       subtitle = "480 Races: Both Chambers On 2018-11-05",
+```{r dist, echo=FALSE, message=FALSE, warning=FALSE}
+left_join(x = read_csv("./output/model.csv"),
+          y = read_csv("./output/market.csv"),
+          by = c("date", "code", "party")) %>%
+  filter(date == "2018-11-05", party == "D") %>%
+  select(date,
+         code,
+         chamber,
+         close,
+         prob) %>%
+  rename(market = close,
+         model = prob) %>%
+  gather(market, model,
+         key = "method",
+         value = "prob") %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = prob, fill = chamber), binwidth = 0.10) +
+  facet_wrap(~method, scales = "free_y") +
+  labs(title = "Distribution of Races by Predictive Method",
+       subtitle = "Day Before Election",
        x = "Democratic Win Probability",
        y = "Number of Races") +
-  scale_x_continuous(breaks = seq(0, 1, 0.1))
-```
-
-Most of those "safe" elections are not traded on the prediction markets. The
-races for which there are markets are much more uniformly distributed in their
-probability.
-
-```{r market_dist, echo=FALSE, message=FALSE}
-joined_probs %>% 
-  filter(method == "market",
-         date == "2018-11-05",
-         party == "D") %>% 
-ggplot(.) +
-  geom_histogram(aes(prob),
-                 binwidth = 0.1) +
-  labs(title = "PredictIt Market's Democratic Win Probabilities",
-       subtitle = "91 Races: Both Chambers On 2018-11-05",
-       x = "Democratic Win Probability",
-       y = "Number of Races") +
-  scale_x_continuous(breaks = seq(0, 1, 0.1))
+  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.25)) +
+  scale_fill_manual(values = c("#595959", "darkred"))
 ```
 
 ## Project Findings

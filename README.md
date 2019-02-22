@@ -203,64 +203,64 @@ congressional district model.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-08-04</td>
-<td align="left">NY</td>
-<td align="right">21</td>
-<td align="left">Others</td>
-<td align="left">NA</td>
+<td align="left">2018-10-09</td>
+<td align="left">WA</td>
+<td align="right">8</td>
+<td align="left">Dino Rossi</td>
+<td align="left">R</td>
 <td align="left">FALSE</td>
-<td align="right">0.000</td>
-<td align="right">3.09</td>
-<td align="right">0.85</td>
-<td align="right">5.98</td>
+<td align="right">0.398</td>
+<td align="right">48.95</td>
+<td align="right">43.53</td>
+<td align="right">54.34</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-18</td>
-<td align="left">NE</td>
+<td align="left">2018-09-22</td>
+<td align="left">MO</td>
+<td align="right">6</td>
+<td align="left">Sam Graves</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="right">1.000</td>
+<td align="right">63.66</td>
+<td align="right">58.54</td>
+<td align="right">68.80</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-10-13</td>
+<td align="left">OK</td>
 <td align="right">2</td>
-<td align="left">Don Bacon</td>
-<td align="left">R</td>
-<td align="left">TRUE</td>
-<td align="right">0.688</td>
-<td align="right">52.29</td>
-<td align="right">46.13</td>
-<td align="right">58.51</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-09-18</td>
-<td align="left">NV</td>
-<td align="right">4</td>
-<td align="left">Others</td>
-<td align="left">NA</td>
+<td align="left">Jason Nichols</td>
+<td align="left">D</td>
 <td align="left">FALSE</td>
-<td align="right">0.000</td>
-<td align="right">5.15</td>
-<td align="right">1.97</td>
-<td align="right">8.96</td>
+<td align="right">0.002</td>
+<td align="right">33.71</td>
+<td align="right">27.69</td>
+<td align="right">39.72</td>
 </tr>
 <tr class="even">
-<td align="left">2018-10-17</td>
-<td align="left">NY</td>
-<td align="right">13</td>
-<td align="left">Jineea Butler</td>
+<td align="left">2018-10-29</td>
+<td align="left">TX</td>
+<td align="right">12</td>
+<td align="left">Kay Granger</td>
 <td align="left">R</td>
-<td align="left">FALSE</td>
-<td align="right">0.000</td>
-<td align="right">7.43</td>
-<td align="right">4.08</td>
-<td align="right">10.80</td>
+<td align="left">TRUE</td>
+<td align="right">1.000</td>
+<td align="right">65.46</td>
+<td align="right">61.33</td>
+<td align="right">69.57</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-08-30</td>
+<td align="left">2018-09-15</td>
 <td align="left">CA</td>
-<td align="right">31</td>
-<td align="left">Pete Aguilar</td>
+<td align="right">45</td>
+<td align="left">Katie Porter</td>
 <td align="left">D</td>
-<td align="left">TRUE</td>
-<td align="right">0.997</td>
-<td align="right">62.51</td>
-<td align="right">57.28</td>
-<td align="right">67.75</td>
+<td align="left">FALSE</td>
+<td align="right">0.404</td>
+<td align="right">48.96</td>
+<td align="right">43.33</td>
+<td align="right">54.62</td>
 </tr>
 </tbody>
 </table>
@@ -335,54 +335,54 @@ markets.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">4039</td>
-<td align="left">CA49.2018</td>
-<td align="left">DEM.CA49.2018</td>
-<td align="left">2018-02-13</td>
-<td align="right">0.78</td>
-<td align="right">0.78</td>
-<td align="right">0.78</td>
+<td align="left">4257</td>
+<td align="left">IL12.2018</td>
+<td align="left">GOP.IL12.2018</td>
+<td align="left">2018-08-07</td>
+<td align="right">0.42</td>
+<td align="right">0.42</td>
+<td align="right">0.42</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">3862</td>
-<td align="left">NJ02.2018</td>
-<td align="left">DEM.NJ02.2018</td>
-<td align="left">2018-09-09</td>
-<td align="right">0.94</td>
-<td align="right">0.94</td>
-<td align="right">0.94</td>
-<td align="right">0</td>
+<td align="left">2998</td>
+<td align="left">DONNELLY.INSENATE.2018</td>
+<td align="left">NA</td>
+<td align="left">2017-05-01</td>
+<td align="right">0.39</td>
+<td align="right">0.44</td>
+<td align="right">0.44</td>
+<td align="right">13</td>
 </tr>
 <tr class="odd">
-<td align="left">3767</td>
-<td align="left">NH01.2018</td>
-<td align="left">GOP.NH01.2018</td>
-<td align="left">2018-06-10</td>
-<td align="right">0.26</td>
-<td align="right">0.26</td>
-<td align="right">0.26</td>
-<td align="right">0</td>
+<td align="left">4232</td>
+<td align="left">CASE.PASENATE.2018</td>
+<td align="left">NA</td>
+<td align="left">2018-08-27</td>
+<td align="right">0.87</td>
+<td align="right">0.88</td>
+<td align="right">0.87</td>
+<td align="right">6</td>
 </tr>
 <tr class="even">
-<td align="left">3521</td>
-<td align="left">ISSA.CA49.2018</td>
+<td align="left">2998</td>
+<td align="left">DONNELLY.INSENATE.2018</td>
 <td align="left">NA</td>
-<td align="left">2018-10-25</td>
-<td align="right">0.02</td>
-<td align="right">0.02</td>
-<td align="right">0.02</td>
+<td align="left">2017-03-17</td>
+<td align="right">0.37</td>
+<td align="right">0.37</td>
+<td align="right">0.37</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">3490</td>
-<td align="left">BROW.OHSENATE.2018</td>
+<td align="left">3484</td>
+<td align="left">MCCA.MOSENATE.2018</td>
 <td align="left">NA</td>
-<td align="left">2018-03-27</td>
-<td align="right">0.81</td>
-<td align="right">0.81</td>
-<td align="right">0.81</td>
-<td align="right">2</td>
+<td align="left">2018-07-10</td>
+<td align="right">0.47</td>
+<td align="right">0.50</td>
+<td align="right">0.48</td>
+<td align="right">721</td>
 </tr>
 </tbody>
 </table>
@@ -547,13 +547,7 @@ before the election with both tools. Note how the model, which includes
 every race, gives the vast majority of candidates a less than 10% or
 greater than 90% chance of winning their respective elections.
 
-![](README_files/figure-markdown_strict/model_dist-1.png)
-
-Most of those "safe" elections are not traded on the prediction markets.
-The races for which there are markets are much more uniformly
-distributed in their probability.
-
-![](README_files/figure-markdown_strict/market_dist-1.png)
+![](README_files/figure-markdown_strict/dist-1.png)
 
 Project Findings
 ----------------

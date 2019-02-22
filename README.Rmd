@@ -176,7 +176,7 @@ district model.
 model_district <- read_csv("./input/model_district.csv") 
 
 model_district %>%
-  select(-model, -special, -p10_voteshare, -p90_voteshare) %>% 
+  select(-model, -special) %>%
   sample_n(5) %>% 
   kable(format = "markdown",
         digits = 4,
@@ -187,7 +187,9 @@ model_district %>%
                       "Party",
                       "Incumbent", 
                       "Win Probability", 
-                      "Share of Vote"),
+                      "Avg Share",
+                      "Min Share",
+                      "Max Share"),
         caption = "299,760 observations of 7 variables")
 ```
 
@@ -247,7 +249,8 @@ market_data <- read_csv(file = "./input/market_data.csv",
                                          ContractSymbol = col_character()))
 market_data %>% 
   select(-MarketName, 
-         -ContractName) %>% 
+         -ContractName,
+         -OpenPrice) %>% 
   sample_n(5) %>% 
   kable(format = "markdown",
         digits = 4,
@@ -255,7 +258,6 @@ market_data %>%
                       "Market Symbol",
                       "Contract Symbol",
                       "Date",
-                      "Opening Price",
                       "Low Price",
                       "High Price",
                       "Closing Price",

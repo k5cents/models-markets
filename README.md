@@ -186,7 +186,19 @@ are 12 variables recorded:
 Below is a random sample of observations from the FiveThirtyEight
 congressional district model.
 
-<table>
+<table style="width:100%;">
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="8%" />
+<col width="15%" />
+<col width="6%" />
+<col width="9%" />
+<col width="14%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Date</th>
@@ -196,59 +208,71 @@ congressional district model.
 <th align="left">Party</th>
 <th align="left">Incumbent</th>
 <th align="right">Win Probability</th>
-<th align="right">Share of Vote</th>
+<th align="right">Avg Share</th>
+<th align="right">Min Share</th>
+<th align="right">Max Share</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-08-30</td>
-<td align="left">IL</td>
-<td align="right">16</td>
-<td align="left">Adam Kinzinger</td>
+<td align="left">2018-08-20</td>
+<td align="left">AL</td>
+<td align="right">3</td>
+<td align="left">Mike Rogers</td>
 <td align="left">R</td>
 <td align="left">TRUE</td>
-<td align="right">0.9273</td>
-<td align="right">58.36</td>
+<td align="right">0.9951</td>
+<td align="right">65.18</td>
+<td align="right">58.25</td>
+<td align="right">72.05</td>
 </tr>
 <tr class="even">
+<td align="left">2018-10-27</td>
+<td align="left">KS</td>
+<td align="right">3</td>
+<td align="left">Sharice Davids</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="right">0.7832</td>
+<td align="right">50.96</td>
+<td align="right">46.49</td>
+<td align="right">55.36</td>
+</tr>
+<tr class="odd">
 <td align="left">2018-10-06</td>
-<td align="left">CA</td>
-<td align="right">37</td>
-<td align="left">Ron J. Bassilian</td>
+<td align="left">VA</td>
+<td align="right">5</td>
+<td align="left">Denver Riggleman</td>
 <td align="left">R</td>
 <td align="left">FALSE</td>
-<td align="right">0.0000</td>
-<td align="right">9.18</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-11-02</td>
-<td align="left">TX</td>
-<td align="right">17</td>
-<td align="left">Peter Churchman</td>
-<td align="left">LIB</td>
-<td align="left">FALSE</td>
-<td align="right">0.0000</td>
-<td align="right">2.23</td>
+<td align="right">0.6504</td>
+<td align="right">51.45</td>
+<td align="right">46.45</td>
+<td align="right">56.39</td>
 </tr>
 <tr class="even">
-<td align="left">2018-09-26</td>
-<td align="left">GA</td>
-<td align="right">11</td>
-<td align="left">Flynn D. Broady Jr.</td>
-<td align="left">D</td>
-<td align="left">FALSE</td>
-<td align="right">0.0005</td>
-<td align="right">34.49</td>
+<td align="left">2018-10-16</td>
+<td align="left">TX</td>
+<td align="right">31</td>
+<td align="left">John Carter</td>
+<td align="left">R</td>
+<td align="left">TRUE</td>
+<td align="right">0.9178</td>
+<td align="right">53.58</td>
+<td align="right">48.83</td>
+<td align="right">58.29</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-10-14</td>
-<td align="left">GA</td>
-<td align="right">12</td>
-<td align="left">Francys Johnson</td>
-<td align="left">D</td>
+<td align="left">2018-09-08</td>
+<td align="left">NY</td>
+<td align="right">20</td>
+<td align="left">Francis Vitollo</td>
+<td align="left">R</td>
 <td align="left">FALSE</td>
-<td align="right">0.0091</td>
-<td align="right">40.34</td>
+<td align="right">0.0001</td>
+<td align="right">31.04</td>
+<td align="right">26.10</td>
+<td align="right">35.93</td>
 </tr>
 </tbody>
 </table>
@@ -310,15 +334,14 @@ to show the structure of the data as provided by PredictIt:
 
 <table>
 <colgroup>
-<col width="8%" />
-<col width="17%" />
-<col width="12%" />
-<col width="9%" />
-<col width="11%" />
-<col width="8%" />
-<col width="9%" />
-<col width="11%" />
-<col width="12%" />
+<col width="10%" />
+<col width="14%" />
+<col width="15%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="13%" />
+<col width="14%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -326,7 +349,6 @@ to show the structure of the data as provided by PredictIt:
 <th align="left">Market Symbol</th>
 <th align="left">Contract Symbol</th>
 <th align="left">Date</th>
-<th align="right">Opening Price</th>
 <th align="right">Low Price</th>
 <th align="right">High Price</th>
 <th align="right">Closing Price</th>
@@ -335,58 +357,53 @@ to show the structure of the data as provided by PredictIt:
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">3864</td>
-<td align="left">TX21.2018</td>
-<td align="left">DEM.TX21.2018</td>
-<td align="left">2017-12-12</td>
-<td align="right">0.27</td>
-<td align="right">0.27</td>
-<td align="right">0.27</td>
-<td align="right">0.27</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
 <td align="left">3866</td>
 <td align="left">VA06.2018</td>
-<td align="left">DEM.VA06.2018</td>
-<td align="left">2017-12-05</td>
-<td align="right">0.04</td>
-<td align="right">0.04</td>
-<td align="right">0.04</td>
-<td align="right">0.04</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">2940</td>
-<td align="left">SANDERS.VTSENATE.2018</td>
-<td align="left">NA</td>
-<td align="left">2017-03-19</td>
-<td align="right">0.80</td>
-<td align="right">0.80</td>
-<td align="right">0.80</td>
-<td align="right">0.80</td>
+<td align="left">GOP.VA06.2018</td>
+<td align="left">2018-05-22</td>
+<td align="right">0.85</td>
+<td align="right">0.85</td>
+<td align="right">0.85</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">4258</td>
-<td align="left">NJ07.2018</td>
-<td align="left">DEM.NJ07.2018</td>
-<td align="left">2018-07-26</td>
-<td align="right">0.67</td>
-<td align="right">0.67</td>
-<td align="right">0.67</td>
-<td align="right">0.67</td>
+<td align="left">3450</td>
+<td align="left">PELO.CA12.2018</td>
+<td align="left">NA</td>
+<td align="left">2017-10-05</td>
+<td align="right">0.85</td>
+<td align="right">0.87</td>
+<td align="right">0.85</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">4015</td>
+<td align="left">MD06.2018</td>
+<td align="left">GOP.MD06.2018</td>
+<td align="left">2018-05-24</td>
+<td align="right">0.14</td>
+<td align="right">0.14</td>
+<td align="right">0.14</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">4281</td>
+<td align="left">CT05.2018</td>
+<td align="left">GOP.CT05.2018</td>
+<td align="left">2018-09-12</td>
+<td align="right">0.10</td>
+<td align="right">0.10</td>
+<td align="right">0.10</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">4016</td>
-<td align="left">PA09.2018</td>
-<td align="left">DEM.PA09.2018</td>
-<td align="left">2018-09-30</td>
-<td align="right">0.25</td>
-<td align="right">0.25</td>
-<td align="right">0.25</td>
-<td align="right">0.25</td>
+<td align="left">4105</td>
+<td align="left">NY09.2018</td>
+<td align="left">DEM.NY09.2018</td>
+<td align="left">2018-07-05</td>
+<td align="right">0.95</td>
+<td align="right">0.95</td>
+<td align="right">0.95</td>
 <td align="right">0</td>
 </tr>
 </tbody>

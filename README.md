@@ -145,6 +145,11 @@ updating the market equilibrium price to reflect current probabilities.
 Prediction Data
 ---------------
 
+<<<<<<< HEAD
+=======
+### Data Tables
+
+>>>>>>> 352639f41806175f982746867efb9a7e1261e4f8
 ### FiveThirtyEight Model Data
 
 The team at FiveThirtyEight makes public a portion of their model's

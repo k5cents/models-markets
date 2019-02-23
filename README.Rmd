@@ -184,17 +184,17 @@ August 1st to November 5th (97 days).
 
 For each observation, there are 12 variables recorded:
 
-1. The **date** of the prediction
-2. The **State** the election is in
-3. The Congressional **district** the election is in
-4. Whether the election is a "**special** election"
-5. The candidate's full **name**
-6. The candidate's political **party**
-7. The **model** version (classic, lite, or deluxe)
-8. The candidate's **probability** of victory
-9. The candidate's **expected share** of the vote (50th percentile)
-10. The candidate's ≈**minimum share** of the vote (10th percentile)
-10. The candidate's ≈**maximum share** of the vote (90th percentile)
+1. The date of the prediction
+2. The State the election is in
+3. The Congressional district the election is in
+4. Whether the election is a "special election"
+5. The candidate's full name
+6. The candidate's political party
+7. The model version (classic, lite, or deluxe)
+8. The candidate's probability of victory
+9. The candidate's expected share of the vote (50th percentile)
+10. The candidate's ≈minimum share of the vote (10th percentile)
+10. The candidate's ≈maximum share of the vote (90th percentile)
 
 Below is a random sample of observations from the FiveThirtyEight congressional
 district model data set.

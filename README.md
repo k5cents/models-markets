@@ -147,6 +147,93 @@ Prediction Data
 
 ### Data Tables
 
+<table>
+<thead>
+<tr class="header">
+<th align="left">File</th>
+<th align="left">Source</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>model_seat</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">Senate seat model data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>model_district</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">House district model data</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>model_house</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">House control model data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>model_senate</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">Senate control model data</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>market_data</code></td>
+<td align="left">PredictIt</td>
+<td align="left">Prediction market history</td>
+</tr>
+<tr class="even">
+<td align="left"><code>members_115</code></td>
+<td align="left"><span class="citation">@United</span> States</td>
+<td align="left">Members of the 115th Congress</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>senate_115_stats</code></td>
+<td align="left">GovTrack</td>
+<td align="left">Ideology and Leadership of the 115th</td>
+</tr>
+<tr class="even">
+<td align="left"><code>house_115_stats</code></td>
+<td align="left">GovTrack</td>
+<td align="left">Ideology and Leadership of the 115th</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>members_116</code></td>
+<td align="left"><span class="citation">@United</span> States</td>
+<td align="left">Members of the 116th Congress</td>
+</tr>
+<tr class="even">
+<td align="left"><code>election_results</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">Winners of the 2018 Midterms</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>lean_district</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">Partisan lean of House districts</td>
+</tr>
+<tr class="even">
+<td align="left"><code>lean_states</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">Partisan lean of whole states</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>polls_generic</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">2018 midterm generic ballot polls</td>
+</tr>
+<tr class="even">
+<td align="left"><code>polls_house</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">2018 midterm House election polls</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>polls_senate</code></td>
+<td align="left">FiveThirtyEight</td>
+<td align="left">2018 midterm Senate election polls</td>
+</tr>
+</tbody>
+</table>
+
 ### FiveThirtyEight Model Data
 
 The team at FiveThirtyEight makes public a portion of their model's

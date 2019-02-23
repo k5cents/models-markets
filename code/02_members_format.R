@@ -47,6 +47,18 @@ members$race <- str_replace(string = members$race,
                             pattern = "-NA",
                             replacement = "-99")
 
+members_115_stats <-
+  bind_rows(house_115_stats, senate_115_stats) %>%
+  select(ID,
+         chamber,
+         party,
+         ideology,
+         leadership) %>%
+  rename(gid = ID) %>%
+  mutate(party = recode(party,
+                        "Democrat" = "D",
+                        "Republican" = "R"))
+
 # Add stats to frame by GovTrack ID
 members <- left_join(members,
                      members_115_stats,

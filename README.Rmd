@@ -150,7 +150,7 @@ for (i in 1:length(input_files)) {
 ```
 
 ```{r read_output, echo=FALSE, message=FALSE, warning=FALSE}
-output_fnames <- list.files(path = "./input", full.names = TRUE)
+output_fnames <- list.files(path = "./output", full.names = TRUE)
 output_files <- lapply(output_fnames, read_csv)
 output_onames <- 
   list.files(path = "./output", full.names = FALSE) %>% 
@@ -166,10 +166,10 @@ for (i in 1:length(output_files)) {
 The team at FiveThirtyEight makes public a portion of their model's output as
 four separate `.csv` files on their website:
 
-1. [Senate national forecast][11]
-2. [Senate seat forecast][12]
-3. [House national forecast][13]
-4. [House district forecasts][14]
+1. `[senate_national_forecast.csv][11]`
+2. `[senate_seat_forecast.csv][12]`
+3. `[house_national_forecast.csv][13]`
+4. `[house_district_forecast.csv][14]`
 
 The two national forecasts provide the FiveThirtyEight calculations for each
 party's probability of winning a majority in their respective chambers on any
@@ -192,30 +192,28 @@ For each observation, there are 12 variables recorded:
 6. The candidate's political party
 7. The model version (classic, lite, or deluxe)
 8. The candidate's probability of victory
-9. The candidate's expected share of the vote (50th percentile)
-10. The candidate's ≈minimum share of the vote (10th percentile)
-10. The candidate's ≈maximum share of the vote (90th percentile)
+9. The candidate's expected share of the vote
+10. The candidate's ≈minimum share of the vote
+10. The candidate's ≈maximum share of the vote
 
 Below is a random sample of observations from the FiveThirtyEight congressional
 district model data set.
 
 ```{r model_data, echo=FALSE, message=FALSE}
 model_district %>%
-  sample_n(5) %>% 
+  select(-candidate, -p10_voteshare, -p90_voteshare) %>% 
+  sample_n(5) %>%
   kable(format = "markdown",
         digits = 3,
         col.names = c("Date", 
                       "State", 
                       "District",
                       "Special",
-                      "Name", 
                       "Party",
                       "Incumbent",
                       "Model",
                       "Win Prob.", 
-                      "Avg Share",
-                      "Min Share",
-                      "Max Share"),
+                      "Avg Share"),
         caption = "299,760 observations of 7 variables")
 ```
 
@@ -247,15 +245,15 @@ a single contract from a single market. There are 44,711 observations covering
 145 contracts across 118 markets. For each observation there are 11 variables:
 
 1. Market ID
-2. Market name (the "question" being asked)
+2. Market name
 3. Market symbol
-4. Contract name (the possible "answers")
+4. Contract name
 5. Contract symbol
-6. Prediction date (earliest is 201-01-27)
+6. Prediction date
 7. Opening contract price
 8. Low contract price
 9. High contract price
-10. Closing contract price (that day's final prediction)
+10. Closing contract price
 
 Below is a random sample of observations from the PredictIt trading markets.
 
@@ -280,9 +278,9 @@ market_data %>%
 
 ## Data Wrangling
 
-The above data sets were formatted to contain three relational keys variables: `date`, `code`, and `party`. 
+The above data sets were formatted to contain three relational keys variables: `date`, `race`, and `party`. 
 
-The `code` variable is created by combinding the `state` and `district`
+The `race` variable is created by combinding the `state` and `district`
 variables from FiveThirtyEight and extracted `MarketSymbol` variable from
 PredictIt. For House races, the number refers to the Congressional District. For
 Senate races, 99 indicates a on-time election and 98 indicates a special
@@ -325,17 +323,13 @@ majority have little risk (only 91 races were traded on prediction markets by
 election day).
 
 Below are histograms of the Democratic candidates' probabilities the day before
-the election, split by the predictive method used. Note how the model, which
-includes every race, gives the vast majority of candidates a less than 10% or
-greater than 90% chance of winning their respective elections. The market, on
-the other hand, is more uniform it its distribution of probabilities. Also note
-the greater focus on Senate races on the prediction markets.
+the election, split by the predictive method used. The model, which includes
+every race, gives the vast majority of candidates a less than 10% or greater
+than 90% chance of winning their respective elections. The markets, which only
+exist for the most contentious and popular raves, are more uniform it its
+distribution of probabilities.
 
-When comparing the two methods on their ability to predict elections, only races
-included in both data sets will be used. This should not greatly bias results,
-as the majority of races not shared have essentially foregone conclusions.
-
-```{r dist, echo=FALSE, message=FALSE, warning=FALSE}
+```{r prob_dist, echo=FALSE, message=FALSE, warning=FALSE}
 left_join(x = model,
           y = market,
           by = c("date", "race", "party")) %>%
@@ -359,14 +353,9 @@ left_join(x = model,
        x = "Democratic Win Probability",
        y = "Number of Races") +
   scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.25)) +
-  scale_fill_manual(values = c("#595959", "black"))
+  scale_fill_manual(values = c("#595959", "black")) +
+  theme(legend.position = "bottom")
 ```
-
-The FiveThirtyEight model predicts 480 races every day from August 1st to
-November 5th. Below is a graph showing the number of election markets on the
-PredictIt exchange over that same time period. There are 127 races predicted
-on August 1st, increasing to 189 races by election day. In the combined data
-set, only days for which there are predictions by both methods are included.
 
 ```{r n_markets, echo=FALSE}
 market %>% 

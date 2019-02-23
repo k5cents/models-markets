@@ -376,27 +376,27 @@ markets.
 Data Wrangling
 --------------
 
-The above data sets were formatted to contain three relational keys
-variables: `date`, `race`, and `party`.
+The above data sets were formatted to contain three keys variables:
+`date`, `race`, and `party`. With these variables shared for each
+observation across both the model and market data sets, a relational
+join can be performed.
 
-The `race` variable is created by combinding the `state` and `district`
-variables from FiveThirtyEight and extracted `MarketSymbol` variable
-from PredictIt. For House races, the number refers to the Congressional
-District. For Senate races, 99 indicates a on-time election and 98
-indicates a special election.
+For model data, the `race` variable is created by combinding the `state`
+and `district` variables. For market data, the race code is extracted
+from the `MarketSymbol` variable.
 
 The `party` variable is included in the model data by default. For
-market data, House race party variables are is extracted from "DEM" and
+market data, House race party variables are extracted from "DEM" and
 "GOP" in the `ContractSymbol` character string. Senate race party
 variables are obtained using the incumbet's name in the `MarketSymbol`
 character string and the `/congress-legislators` data set maintained by
-the \[@United States
-project\][19](https://theunitedstates.io/ "@United States").
+the @United States project.
 
-We then gather the variables to make out data frame "tidy" with each
-observation representing one prediction (on one date, for one candidate,
-with one method). The resulting data set has 29,602 observations with
-nine variables.
+We then gather the variables to make the single data frame
+"[tidy](http://vita.had.co.nz/papers/tidy-data.html "Tidy data")" with
+each observation representing one prediction (on one date, for one
+candidate, with one method). The resulting data set has 29,602
+observations with nine variables.
 
 <table>
 <thead>

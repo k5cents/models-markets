@@ -137,8 +137,6 @@ price to reflect current probabilities.
 
 ## Prediction Data
 
-### Data Tables
-
 ```{r read_input, echo=FALSE, message=FALSE, warning=FALSE}
 input_fnames <- list.files(path = "./input", full.names = TRUE)
 input_files <- lapply(input_fnames, read_csv)
@@ -161,30 +159,6 @@ output_onames <-
 for (i in 1:length(output_files)) {
   assign(output_onames[i], output_files[[i]])
 }
-```
-
-```{r files, echo=FALSE, message=FALSE, warning=FALSE}
-tribble(
-  ~object, ~source, ~description,
-  "`model_seat`",       "FiveThirtyEight", "Senate seat model data",
-  "`model_district`",   "FiveThirtyEight", "House district model data",
-  "`model_house`",      "FiveThirtyEight", "House control model data",
-  "`model_senate`",     "FiveThirtyEight", "Senate control model data",
-  "`market_data`",      "PredictIt", "Prediction market history",
-  "`members_115`",      "@United States", "Members of the 115th Congress",
-  "`senate_115_stats`", "GovTrack", "Ideology and Leadership of the 115th",
-  "`house_115_stats`",  "GovTrack", "Ideology and Leadership of the 115th",
-  "`members_116`",      "@United States", "Members of the 116th Congress",
-  "`election_results`", "FiveThirtyEight", "Winners of the 2018 Midterms",
-  "`lean_district`",    "FiveThirtyEight", "Partisan lean of House districts",
-  "`lean_states`",      "FiveThirtyEight", "Partisan lean of whole states",
-  "`polls_generic`",    "FiveThirtyEight", "2018 midterm generic ballot polls",
-  "`polls_house`",      "FiveThirtyEight", "2018 midterm House election polls",
-  "`polls_senate`",     "FiveThirtyEight", "2018 midterm Senate election polls"
-) %>%
-  kable(format = "markdown",
-        digits = 3,
-        col.names = c("File", "Source", "Description"))
 ```
 
 ### FiveThirtyEight Model Data

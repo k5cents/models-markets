@@ -150,10 +150,10 @@ Prediction Data
 The team at FiveThirtyEight makes public a portion of their model's
 output as four separate `.csv` files on their website:
 
-1.  `[senate_national_forecast.csv][11]`
-2.  `[senate_seat_forecast.csv][12]`
-3.  `[house_national_forecast.csv][13]`
-4.  `[house_district_forecast.csv][14]`
+1.  [`senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv "Sen nat model")
+2.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv "Sen seat model")
+3.  [`house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv "House nat model")
+4.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv "House dis model")
 
 The two national forecasts provide the FiveThirtyEight calculations for
 each party's probability of winning a majority in their respective

@@ -29,6 +29,32 @@ Using R to compare the predictive capabilities of markets and models.
 1. [Data Wrangling](#data-wrangling)
 1. [Data Exploration](#data-exploration)
 
+```{r read_inputs, echo=FALSE, message=FALSE, warning=FALSE}
+input_fnames <- list.files(path = "./input", full.names = TRUE)
+input_files <- lapply(input_fnames, read_csv)
+input_onames <- 
+  list.files(path = "./input", full.names = FALSE) %>% 
+  str_remove(".csv")
+
+for (i in 1:length(input_files)) {
+  assign(input_onames[i], input_files[[i]])
+}
+rm(input_files)
+```
+
+```{r read_outputs, echo=FALSE, message=FALSE, warning=FALSE}
+output_fnames <- list.files(path = "./output", full.names = TRUE)
+output_files <- lapply(output_fnames, read_csv)
+output_onames <- 
+  list.files(path = "./output", full.names = FALSE) %>% 
+  str_remove(".csv")
+
+for (i in 1:length(output_files)) {
+  assign(output_onames[i], output_files[[i]])
+}
+rm(output_files)
+```
+
 ## Project
 
 The forecast model has become a staple of political punditry. Popularized by the
@@ -74,32 +100,31 @@ to them, and then blend them with other kinds of empirically useful indicators
 account for the uncertainty in the forecast and simulate the election thousands
 of times.
 
-The goal of these mathematical forcasting models, [according to Silver][21], is
-"not to divine some magic formula that miraculously predicts every election.
-Instead, it’s to make sense of publicly available information in a rigorous and
-disciplined way." 
-
 I will be using the FiveThirtyEight model's forecasting data. In 2016,
 FiveThirtyEight's prediction was closest to reality. They are also one of the
 few mainstream forecasters to continue their work into the 2018 midterm
 elections. Furthermore, the make the top-line output of their model free to the
 public.
 
+The goal of these mathematical forcasting models, [according to Silver][21], is
+"not to divine some magic formula that miraculously predicts every election.
+Instead, it’s to make sense of publicly available information in a rigorous and
+disciplined way."
+
 #### Model Inputs
 
-The exact code of the FiveThirtyEight model is proprietary, so we can't know
-exactly what data is being incorporated in what ways. We do know that the
-"classic" version of their model uses three types of quantitative data:
+FiveThirtyEight's 2018 House and Senate models incorperate four types of
+quantiative data:
 
-1. **Polling**: District levek polling. [FiveThirtyEight rates pollsters][09] to
+1. **Polling:** District levek polling. [FiveThirtyEight rates pollsters][09] to
 adjust their findings. The results are further adjusted three times:
     1. The likely voter adjustment ensures a more accurate sampling frame.
     1. The conservative timeline adjustment to favor recency.
     1. The house effects adjustment corrects for persistent statistical biases.
-1. **CANTOR**: A proprietary k-nearest neighbors algorithm to identify similar
+1. **CANTOR:** A proprietary k-nearest neighbors algorithm to identify similar
 congressional districts (based on demographic, geographic and political factors)
 to infers results for polling-sparce districts.
-1. **Fundamentals**: Non-polling factors that historically help in predicting
+1. **Fundamentals:** Non-polling factors that historically help in predicting
 congressional races:
     * Incumbency
     * Partisanship
@@ -109,25 +134,48 @@ congressional races:
     * Incumbent voting
     * Challenger experience
     * [Scandals][20]
+1. **Expert forecasts:** Ratings published by the historically accuracte experts 
+at the [Cook Political Report][22], [Inside Elections][23], and 
+[Sabato’s Crystal Ball][24].
+
+In 2018, FiveThirtyEight published three distinct models, each incorperating different ammounts of the above data. The "lite" model uses only polling and
+CANTOR data. The "classic" model uses polling and incorperates the fundamentals.
+The "delux" model is the only one to add the quanlitative forecasts of other
+experts. FiveThirtyEight has said the "classic" model can be considered the
+default, so I will primarily use that data.
 
 #### Model Outputs
 
-The goal of forcasting models is "
+In describing the process of their 2014 Senate Model, Silver explains how the
+above inputs are incorperated in producing a probabalistic output:
 
-From everything that has been said publicly about the mathematics of their
-model, FiveThirtyEight uses these quantitative inputs to predict each
-candidate's share of the vote. 
+> Most election models (including [FiveThirtyEight's]) work in something like
+the following way: First, they calculate the most likely outcome in a particular
+state (“The Republican wins by 1 point”) and then they determine the degree of
+uncertainty around that estimate. Most models do this by means of a normal
+distribution or something similar to it.
+
+FiveThirtyEight has historically considered six factors in determining the
+degree of uncertainty around their estimated division of the eventual vote. In
+an analysis of past elections, it has been proven that the degree of uncertainty
+is _greater_ when:
+
+1. There are more days to go until the election
+1. There are fewer polls
+1. The polls disagree more with one another
+1. The polling average disagrees more with the state fundamentals
+1. There are more undecideds or third-party voters in the polls
+1. The race is more lopsided
+
+With these quantiative facors in mind, the model calculates the probability
+distribution in each candidate's share of the vote.
 
 The model then runs uses these predicted shares to run a 
-[Monte Carlo simulation][10]. By estimating the probability distribution in two
-candidate's shares of the vote, such simulation can be run tens of thousands of
-times. From these simulations, the percentage of one candidate winning is equal
-to their probability of winning on election day.
-
-According to FiveThirtyEight, the classic model correctly predicted predicted
-**96.7%** of races in their training data of past elections. FiveThirtyEight
-points out that the _vast_ majority of those races are blowouts and very easy to
-predict.
+[Monte Carlo simulation][10]. In each iteration of the simulation, a share of
+the vote for each candidate in a race is drawn from the above probability
+distributions. A winner is determined and the simulation runs again. The
+percentage of simulated elections won is analogous to the probability of victory
+on election day.
 
 ### Prediction Markets
 
@@ -154,30 +202,6 @@ shares for more or less than he originally paid, updating the market equilibrium
 price to reflect current probabilities.
 
 ## Prediction Data
-
-```{r read_input, echo=FALSE, message=FALSE, warning=FALSE}
-input_fnames <- list.files(path = "./input", full.names = TRUE)
-input_files <- lapply(input_fnames, read_csv)
-input_onames <- 
-  list.files(path = "./input", full.names = FALSE) %>% 
-  str_remove(".csv")
-
-for (i in 1:length(input_files)) {
-  assign(input_onames[i], input_files[[i]])
-}
-```
-
-```{r read_output, echo=FALSE, message=FALSE, warning=FALSE}
-output_fnames <- list.files(path = "./output", full.names = TRUE)
-output_files <- lapply(output_fnames, read_csv)
-output_onames <- 
-  list.files(path = "./output", full.names = FALSE) %>% 
-  str_remove(".csv")
-
-for (i in 1:length(output_files)) {
-  assign(output_onames[i], output_files[[i]])
-}
-```
 
 ### FiveThirtyEight Model Data
 
@@ -414,3 +438,6 @@ market %>%
 [19]: http://vita.had.co.nz/papers/tidy-data.html "Tidy data"
 [20]: https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/edit?usp=sharing "scandals data"
 [21]: https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/ "538 model 2014"
+[22]: https://cookpolitical.com/ "cook"
+[23]: https://insideelections.com/ "inside"
+[24]: http://www.centerforpolitics.org/crystalball/ "sabatos"

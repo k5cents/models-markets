@@ -58,10 +58,9 @@ to better calculate the true opinion of the population.
 
 ### Forecasting Models
 
-In [the
-word's](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/ "538 model how")
-of Nate Silver, FiveThirtyEight's founder and the primary author of
-their election forecasting model:
+As Nate Silver, FiveThirtyEight's founder and the primary author of
+their model, explains in their [methedological
+article](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/ "538 model 2018"):
 
 > (Forecasting models) take lots of polls, perform various types of
 > adjustments to them, and then blend them with other kinds of
@@ -76,12 +75,18 @@ of the few mainstream forecasters to continue their work into the 2018
 midterm elections. Furthermore, the make the top-line output of their
 model free to the public.
 
-The exact code of the FiveThirtyEight model is proprietary, so we can't
-know exactly what data is being incorporated in what ways. We do know
-that the "classic" version of their model uses three types of
-quantitative data:
+The goal of these mathematical forcasting models, [according to
+Silver](https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/ "538 model 2014"),
+is "not to divine some magic formula that miraculously predicts every
+election. Instead, it’s to make sense of publicly available information
+in a rigorous and disciplined way."
 
-1.  **Polling**: District levek polling. [FiveThirtyEight rates
+#### Model Inputs
+
+FiveThirtyEight's 2018 House and Senate models incorperate four types of
+quantiative data:
+
+1.  **Polling:** District levek polling. [FiveThirtyEight rates
     pollsters](https://projects.fivethirtyeight.com/pollster-ratings/ "538 poll ratings")
     to adjust their findings. The results are further adjusted three
     times:
@@ -90,11 +95,11 @@ quantitative data:
     2.  The conservative timeline adjustment to favor recency.
     3.  The house effects adjustment corrects for persistent statistical
         biases.
-2.  **CANTOR**: A proprietary k-nearest neighbors algorithm to identify
+2.  **CANTOR:** A proprietary k-nearest neighbors algorithm to identify
     similar congressional districts (based on demographic, geographic
     and political factors) to infers results for polling-sparce
     districts.
-3.  **Fundamentals**: Non-polling factors that historically help in
+3.  **Fundamentals:** Non-polling factors that historically help in
     predicting congressional races:
     -   Incumbency
     -   Partisanship
@@ -103,22 +108,57 @@ quantitative data:
     -   Fundraising
     -   Incumbent voting
     -   Challenger experience
-    -   Scandals
+    -   [Scandals](https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/edit?usp=sharing "scandals data")
+4.  **Expert forecasts:** Ratings published by the historically
+    accuracte experts at the [Cook Political
+    Report](https://cookpolitical.com/ "cook"), [Inside
+    Elections](https://insideelections.com/ "inside"), and [Sabato’s
+    Crystal
+    Ball](http://www.centerforpolitics.org/crystalball/ "sabatos").
 
-From everything that has been said publicly about the mathematics of
-their model, FiveThirtyEight uses these quantitative inputs to predict
-each candidate's share of the vote. The model is then uses the
-statistical program Stata to run a [Monte Carlo
+In 2018, FiveThirtyEight published three distinct models, each
+incorperating different ammounts of the above data. The "lite" model
+uses only polling and CANTOR data. The "classic" model uses polling and
+incorperates the fundamentals. The "delux" model is the only one to add
+the quanlitative forecasts of other experts. FiveThirtyEight has said
+the "classic" model can be considered the default, so I will primarily
+use that data.
+
+#### Model Outputs
+
+In describing the process of their 2014 Senate Model, Silver explains
+how the above inputs are incorperated in producing a probabalistic
+output:
+
+> Most election models (including \[FiveThirtyEight's\]) work in
+> something like the following way: First, they calculate the most
+> likely outcome in a particular state (“The Republican wins by 1
+> point”) and then they determine the degree of uncertainty around that
+> estimate. Most models do this by means of a normal distribution or
+> something similar to it.
+
+FiveThirtyEight has historically considered six factors in determining
+the degree of uncertainty around their estimated division of the
+eventual vote. In an analysis of past elections, it has been proven that
+the degree of uncertainty is *greater* when:
+
+1.  There are more days to go until the election
+2.  There are fewer polls
+3.  The polls disagree more with one another
+4.  The polling average disagrees more with the state fundamentals
+5.  There are more undecideds or third-party voters in the polls
+6.  The race is more lopsided
+
+With these quantiative facors in mind, the model calculates the
+probability distribution in each candidate's share of the vote.
+
+The model then runs uses these predicted shares to run a [Monte Carlo
 simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method "Monte carlo sim wiki").
-By estimating the probability distribution in two candidate's shares of
-the vote, such simulation can be run tens of thousands of times. From
-these simulations, the percentage of one candidate winning is equal to
-their probability of winning on election day.
-
-In the training data (most House races since 1998), the classic model
-correctly predicted **96.7%** of races at the time of election.
-FiveThirtyEight points out that the *vast* majority of races are
-blowouts and very easy to predict.
+In each iteration of the simulation, a share of the vote for each
+candidate in a race is drawn from the above probability distributions. A
+winner is determined and the simulation runs again. The percentage of
+simulated elections won is analogous to the probability of victory on
+election day.
 
 ### Prediction Markets
 

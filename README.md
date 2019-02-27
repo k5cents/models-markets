@@ -70,33 +70,38 @@ their election forecasting model:
 > uncertainty in the forecast and simulate the election thousands of
 > times.
 
-I will be using the FiveThirtyEight model to collect forecasting data.
-In 2016, FiveThirtyEight's prediction was closest to reality. They are
-one of the few mainstream forecasters to continue their work into the
-2018 midterm elections. Furthermore, the make the top-line output of
-their model free to the public.
+I will be using the FiveThirtyEight model's forecasting data. In 2016,
+FiveThirtyEight's prediction was closest to reality. They are also one
+of the few mainstream forecasters to continue their work into the 2018
+midterm elections. Furthermore, the make the top-line output of their
+model free to the public.
 
-The exact process of the FiveThirtyEight model is proprietary, so we
-can't know exactly what data is being incorporated in what ways. We do
-know that the "classic" version of their model, three types of
-quantitative data are used:
+The exact code of the FiveThirtyEight model is proprietary, so we can't
+know exactly what data is being incorporated in what ways. We do know
+that the "classic" version of their model uses three types of
+quantitative data:
 
-1.  **Polling**: District-by-district polling, adjusted for house
-    effects and other factors in some unknown way. [FiveThirtyEight
-    rates
+1.  **Polling**: District levek polling. [FiveThirtyEight rates
     pollsters](https://projects.fivethirtyeight.com/pollster-ratings/ "538 poll ratings")
-    to adjust their findings.
-2.  **CANTOR**: A proprietary system which infers results for districts
-    with little or no polling from similar districts where polling has
-    been done.
+    to adjust their findings. The results are further adjusted three
+    times:
+    1.  The likely voter adjustment ensures a more accurate sampling
+        frame.
+    2.  The conservative timeline adjustment to favor recency.
+    3.  The house effects adjustment corrects for persistent statistical
+        biases.
+2.  **CANTOR**: A proprietary k-nearest neighbors algorithm to identify
+    similar congressional districts (based on demographic, geographic
+    and political factors) to infers results for polling-sparce
+    districts.
 3.  **Fundamentals**: Non-polling factors that historically help in
     predicting congressional races:
     -   Incumbency
-    -   State partisanship
-    -   Incumbent previous margins
+    -   Partisanship
+    -   Previous margin
     -   Generic ballot
     -   Fundraising
-    -   Incumbent voting record
+    -   Incumbent voting
     -   Challenger experience
     -   Scandals
 
@@ -150,14 +155,10 @@ Prediction Data
 The team at FiveThirtyEight makes public a portion of their model's
 output as four separate `.csv` files on their website:
 
-1.  [Senate national
-    forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv "Sen nat model")
-2.  [Senate seat
-    forecast](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv "Sen seat model")
-3.  [House national
-    forecast](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv "House nat model")
-4.  [House district
-    forecasts](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv "House dis model")
+1.  [`senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv "Sen nat model")
+2.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv "Sen seat model")
+3.  [`house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv "House nat model")
+4.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv "House dis model")
 
 The two national forecasts provide the FiveThirtyEight calculations for
 each party's probability of winning a majority in their respective
@@ -182,114 +183,82 @@ For each observation, there are 12 variables recorded:
 6.  The candidate's political party
 7.  The model version (classic, lite, or deluxe)
 8.  The candidate's probability of victory
-9.  The candidate's expected share of the vote (50th percentile)
-10. The candidate's ≈minimum share of the vote (10th percentile)
-11. The candidate's ≈maximum share of the vote (90th percentile)
+9.  The candidate's expected share of the vote
+10. The candidate's ≈minimum share of the vote
+11. The candidate's ≈maximum share of the vote
 
 Below is a random sample of observations from the FiveThirtyEight
 congressional district model data set.
 
-<table style="width:100%;">
-<colgroup>
-<col width="9%" />
-<col width="5%" />
-<col width="7%" />
-<col width="6%" />
-<col width="18%" />
-<col width="5%" />
-<col width="8%" />
-<col width="6%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-</colgroup>
+<table>
 <thead>
 <tr class="header">
 <th align="left">Date</th>
 <th align="left">State</th>
 <th align="right">District</th>
 <th align="left">Special</th>
-<th align="left">Name</th>
 <th align="left">Party</th>
 <th align="left">Incumbent</th>
 <th align="left">Model</th>
 <th align="right">Win Prob.</th>
 <th align="right">Avg Share</th>
-<th align="right">Min Share</th>
-<th align="right">Max Share</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2018-10-11</td>
-<td align="left">CA</td>
-<td align="right">53</td>
+<td align="left">2018-08-12</td>
+<td align="left">NC</td>
+<td align="right">6</td>
 <td align="left">NA</td>
-<td align="left">Morgan Murtaugh</td>
-<td align="left">R</td>
-<td align="left">FALSE</td>
-<td align="left">lite</td>
-<td align="right">0.000</td>
-<td align="right">25.77</td>
-<td align="right">19.13</td>
-<td align="right">32.36</td>
-</tr>
-<tr class="even">
-<td align="left">2018-08-03</td>
-<td align="left">OH</td>
-<td align="right">8</td>
-<td align="left">NA</td>
-<td align="left">Vanessa Enoch</td>
-<td align="left">D</td>
-<td align="left">FALSE</td>
-<td align="left">lite</td>
-<td align="right">0.009</td>
-<td align="right">35.51</td>
-<td align="right">28.24</td>
-<td align="right">42.78</td>
-</tr>
-<tr class="odd">
-<td align="left">2018-11-01</td>
-<td align="left">VA</td>
-<td align="right">1</td>
-<td align="left">NA</td>
-<td align="left">Robert J. Wittman</td>
 <td align="left">R</td>
 <td align="left">TRUE</td>
 <td align="left">deluxe</td>
-<td align="right">0.986</td>
-<td align="right">58.51</td>
-<td align="right">53.75</td>
-<td align="right">63.23</td>
+<td align="right">0.914</td>
+<td align="right">55.87</td>
 </tr>
 <tr class="even">
-<td align="left">2018-08-16</td>
-<td align="left">KY</td>
-<td align="right">4</td>
+<td align="left">2018-10-06</td>
+<td align="left">TN</td>
+<td align="right">7</td>
 <td align="left">NA</td>
-<td align="left">Seth Hall</td>
-<td align="left">D</td>
+<td align="left">NA</td>
 <td align="left">FALSE</td>
-<td align="left">classic</td>
-<td align="right">0.001</td>
-<td align="right">33.83</td>
-<td align="right">28.53</td>
-<td align="right">39.07</td>
+<td align="left">lite</td>
+<td align="right">0.000</td>
+<td align="right">4.00</td>
 </tr>
 <tr class="odd">
-<td align="left">2018-09-15</td>
-<td align="left">NJ</td>
+<td align="left">2018-10-19</td>
+<td align="left">ND</td>
+<td align="right">1</td>
+<td align="left">NA</td>
+<td align="left">R</td>
+<td align="left">FALSE</td>
+<td align="left">deluxe</td>
+<td align="right">0.997</td>
+<td align="right">57.32</td>
+</tr>
+<tr class="even">
+<td align="left">2018-10-06</td>
+<td align="left">LA</td>
 <td align="right">3</td>
 <td align="left">NA</td>
-<td align="left">Lawrence Berlinski Jr.</td>
-<td align="left">CON</td>
+<td align="left">D</td>
 <td align="left">FALSE</td>
-<td align="left">classic</td>
+<td align="left">deluxe</td>
 <td align="right">0.000</td>
-<td align="right">2.49</td>
-<td align="right">0.67</td>
-<td align="right">4.80</td>
+<td align="right">13.54</td>
+</tr>
+<tr class="odd">
+<td align="left">2018-10-20</td>
+<td align="left">OH</td>
+<td align="right">6</td>
+<td align="left">NA</td>
+<td align="left">D</td>
+<td align="left">FALSE</td>
+<td align="left">deluxe</td>
+<td align="right">0.000</td>
+<td align="right">32.02</td>
 </tr>
 </tbody>
 </table>
@@ -329,15 +298,15 @@ observations covering 145 contracts across 118 markets. For each
 observation there are 11 variables:
 
 1.  Market ID
-2.  Market name (the "question" being asked)
+2.  Market name
 3.  Market symbol
-4.  Contract name (the possible "answers")
+4.  Contract name
 5.  Contract symbol
-6.  Prediction date (earliest is 201-01-27)
+6.  Prediction date
 7.  Opening contract price
 8.  Low contract price
 9.  High contract price
-10. Closing contract price (that day's final prediction)
+10. Closing contract price
 
 Below is a random sample of observations from the PredictIt trading
 markets.
@@ -412,27 +381,27 @@ markets.
 Data Wrangling
 --------------
 
-The above data sets were formatted to contain three relational keys
-variables: `date`, `code`, and `party`.
+The above data sets were formatted to contain three keys variables:
+`date`, `race`, and `party`. With these variables shared for each
+observation across both the model and market data sets, a relational
+join can be performed.
 
-The `code` variable is created by combinding the `state` and `district`
-variables from FiveThirtyEight and extracted `MarketSymbol` variable
-from PredictIt. For House races, the number refers to the Congressional
-District. For Senate races, 99 indicates a on-time election and 98
-indicates a special election.
+For model data, the `race` variable is created by combinding the `state`
+and `district` variables. For market data, the race code is extracted
+from the `MarketSymbol` variable.
 
 The `party` variable is included in the model data by default. For
-market data, House race party variables are is extracted from "DEM" and
+market data, House race party variables are extracted from "DEM" and
 "GOP" in the `ContractSymbol` character string. Senate race party
 variables are obtained using the incumbet's name in the `MarketSymbol`
 character string and the `/congress-legislators` data set maintained by
-the \[@United States
-project\][19](https://theunitedstates.io/ "@United States").
+the @United States project.
 
-We then gather the variables to make out data frame "tidy" with each
-observation representing one prediction (on one date, for one candidate,
-with one method). The resulting data set has 29,602 observations with
-nine variables.
+We then gather the variables to make the single data frame
+"[tidy](http://vita.had.co.nz/papers/tidy-data.html "Tidy data")" with
+each observation representing one prediction (on one date, for one
+candidate, with one method). The resulting data set has 29,602
+observations with nine variables.
 
 <table>
 <thead>
@@ -573,26 +542,13 @@ on every election, as the vast majority have little risk (only 91 races
 were traded on prediction markets by election day).
 
 Below are histograms of the Democratic candidates' probabilities the day
-before the election, split by the predictive method used. Note how the
-model, which includes every race, gives the vast majority of candidates
-a less than 10% or greater than 90% chance of winning their respective
-elections. The market, on the other hand, is more uniform it its
-distribution of probabilities. Also note the greater focus on Senate
-races on the prediction markets.
+before the election, split by the predictive method used. The model,
+which includes every race, gives the vast majority of candidates a less
+than 10% or greater than 90% chance of winning their respective
+elections. The markets, which only exist for the most contentious and
+popular raves, are more uniform it its distribution of probabilities.
 
-When comparing the two methods on their ability to predict elections,
-only races included in both data sets will be used. This should not
-greatly bias results, as the majority of races not shared have
-essentially foregone conclusions.
-
-![](README_files/figure-markdown_strict/dist-1.png)
-
-The FiveThirtyEight model predicts 480 races every day from August 1st
-to November 5th. Below is a graph showing the number of election markets
-on the PredictIt exchange over that same time period. There are 127
-races predicted on August 1st, increasing to 189 races by election day.
-In the combined data set, only days for which there are predictions by
-both methods are included.
+![](README_files/figure-markdown_strict/prob_dist-1.png)
 
 ![](README_files/figure-markdown_strict/n_markets-1.png)
 

@@ -116,13 +116,9 @@ quantiative data:
     Crystal
     Ball](http://www.centerforpolitics.org/crystalball/ "sabatos").
 
-In 2018, FiveThirtyEight published three distinct models, each
-incorperating different ammounts of the above data. The "lite" model
-uses only polling and CANTOR data. The "classic" model uses polling and
-incorperates the fundamentals. The "delux" model is the only one to add
-the quanlitative forecasts of other experts. FiveThirtyEight has said
-the "classic" model can be considered the default, so I will primarily
-use that data.
+FiveThirtyEight uses these inputs to generate three models. The
+"classic" model (which uses polling, CANTOR, and fundamentals) is
+considered the default.
 
 #### Model Outputs
 

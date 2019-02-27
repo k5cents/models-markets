@@ -150,7 +150,7 @@ for (i in 1:length(input_files)) {
 ```
 
 ```{r read_output, echo=FALSE, message=FALSE, warning=FALSE}
-output_fnames <- list.files(path = "./input", full.names = TRUE)
+output_fnames <- list.files(path = "./output", full.names = TRUE)
 output_files <- lapply(output_fnames, read_csv)
 output_onames <- 
   list.files(path = "./output", full.names = FALSE) %>% 

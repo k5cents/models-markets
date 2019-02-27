@@ -70,33 +70,38 @@ their election forecasting model:
 > uncertainty in the forecast and simulate the election thousands of
 > times.
 
-I will be using the FiveThirtyEight model to collect forecasting data.
-In 2016, FiveThirtyEight's prediction was closest to reality. They are
-one of the few mainstream forecasters to continue their work into the
-2018 midterm elections. Furthermore, the make the top-line output of
-their model free to the public.
+I will be using the FiveThirtyEight model's forecasting data. In 2016,
+FiveThirtyEight's prediction was closest to reality. They are also one
+of the few mainstream forecasters to continue their work into the 2018
+midterm elections. Furthermore, the make the top-line output of their
+model free to the public.
 
-The exact process of the FiveThirtyEight model is proprietary, so we
-can't know exactly what data is being incorporated in what ways. We do
-know that the "classic" version of their model, three types of
-quantitative data are used:
+The exact code of the FiveThirtyEight model is proprietary, so we can't
+know exactly what data is being incorporated in what ways. We do know
+that the "classic" version of their model uses three types of
+quantitative data:
 
-1.  **Polling**: District-by-district polling, adjusted for house
-    effects and other factors in some unknown way. [FiveThirtyEight
-    rates
+1.  **Polling**: District levek polling. [FiveThirtyEight rates
     pollsters](https://projects.fivethirtyeight.com/pollster-ratings/ "538 poll ratings")
-    to adjust their findings.
-2.  **CANTOR**: A proprietary system which infers results for districts
-    with little or no polling from similar districts where polling has
-    been done.
+    to adjust their findings. The results are further adjusted three
+    times:
+    1.  The likely voter adjustment ensures a more accurate sampling
+        frame.
+    2.  The conservative timeline adjustment to favor recency.
+    3.  The house effects adjustment corrects for persistent statistical
+        biases.
+2.  **CANTOR**: A proprietary k-nearest neighbors algorithm to identify
+    similar congressional districts (based on demographic, geographic
+    and political factors) to infers results for polling-sparce
+    districts.
 3.  **Fundamentals**: Non-polling factors that historically help in
     predicting congressional races:
     -   Incumbency
-    -   State partisanship
-    -   Incumbent previous margins
+    -   Partisanship
+    -   Previous margin
     -   Generic ballot
     -   Fundraising
-    -   Incumbent voting record
+    -   Incumbent voting
     -   Challenger experience
     -   Scandals
 

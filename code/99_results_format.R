@@ -1,7 +1,7 @@
 # Kiernan Nicholls
 # Format election results
 
-election_results <-
+results <-
   election_results %>%
   filter(branch != "Governor" & version == "classic") %>%
   select(race,
@@ -15,8 +15,8 @@ election_results <-
            sep = "-",
            remove = TRUE) %>%
   mutate(district = recode(district,
-                           "99" = "S1",
-                           "98" = "S2"),
+                           "S1" = "99",
+                           "S2" = "98"),
          district = str_pad(district,
                             width = 2,
                             side = "left",

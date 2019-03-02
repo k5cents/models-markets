@@ -9,7 +9,7 @@ results <-
          # Here, TRUE indicates Dem winner
          Democrat_Won,
          uncalled) %>%
-  rename(won = Democrat_Won) %>%
+  rename(winner = Democrat_Won) %>%
   separate(col = race,
            into = c("state", "district"),
            sep = "-",
@@ -21,7 +21,7 @@ results <-
                             width = 2,
                             side = "left",
                             pad = "0"),
-         won = if_else(uncalled, NA, won)) %>%
+         winner = if_else(uncalled, NA, winner)) %>%
   unite(col = race,
         state, district,
         sep = "-",

@@ -54,44 +54,45 @@ only_gop <-
          party == "R")
 
 # Invert prices from "Yes" R to "No" R (i.e., "Yes" D)
-gop_only$open  <- 1 - gop_only$open
-gop_only$low   <- 1 - gop_only$low
-gop_only$high  <- 1 - gop_only$high
-gop_only$close <- 1 - gop_only$close
+only_gop$open  <- 1 - only_gop$open
+only_gop$low   <- 1 - only_gop$low
+only_gop$high  <- 1 - only_gop$high
+only_gop$close <- 1 - only_gop$close
 
 # Invert party from R to D
-gop_only$party <- "D"
+only_gop$party <- "D"
 
-y$open  <- 1 - y$open
-y$low   <- 1 - y$low
-y$high  <- 1 - y$low
-y$close <- 1 - y$close
-y$party <- "D"
+# Join back with original D markets
+only_dem <- filter(market, party == "D")
+markets <- bind_rows(only_gop, only_dem)
 
-y <- y %>% bind_rows(filter(market, party == "D"))
-
-x <- model %>% filter(party == "D")
-xy <-
-  left_join(y, x, by = c("date", "race", "party")) %>%
+# Join with models
+predictions2 <-
+  left_join(markets, model,
+            by = c("date", "race", "party")) %>%
   filter(date >= "2018-08-01",
          date <= "2018-11-05") %>%
-  arrange(date) %>%
   select(date, race, incumbent, chamber, prob, close) %>%
-  rename(model = prob,
+
+  # Tidy data, gather by predictive method
+  rename(model  = prob,
          market = close) %>%
   gather(model, market,
-         key = method,
+         key   = method,
          value = prob) %>%
   arrange(date) %>%
-  mutate(call = if_else(prob > 0.50, TRUE, FALSE)) %>%
+  mutate(pick = if_else(prob > 0.50, TRUE, FALSE)) %>%
+
+  # Join with election results
   left_join(results, by = "race") %>%
-  mutate(hit = if_else(call == won, TRUE, FALSE))
 
-z <-
-  xy %>%
+  # Compare the method prediction to actual winner
+  mutate(correct = if_else(pick == winner, TRUE, FALSE)) %>%
+  select(-pick, -winner)
+
+predictions2 %>%
   group_by(date, method) %>%
-  summarise(ratio = mean(hit, na.rm = TRUE))
-
-ggplot(z) +
+  summarise(ratio = mean(correct, na.rm = TRUE)) %>%
+  ggplot() +
   geom_line(aes(date, ratio, color = method), size = 2) +
   scale_color_manual(values = c("#ED713A", "#6633FF"))

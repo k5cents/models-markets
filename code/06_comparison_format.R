@@ -89,15 +89,3 @@ predictions2 <-
   # Compare the method prediction to actual winner
   mutate(correct = if_else(pick == winner, TRUE, FALSE)) %>%
   select(-pick, -winner)
-
-predictions2 %>%
-  group_by(date, method) %>%
-  summarise(ratio = mean(correct, na.rm = TRUE)) %>%
-  ggplot() +
-  geom_line(aes(date, ratio, color = method), size = 2) +
-  scale_color_manual(values = c("#ED713A", "#6633FF")) +
-  labs(title = "Accuracy over Time by Predictive Method",
-       subtitle = "FiveThirtyEight model and PredictIt markets for races of interest",
-       x = "Date of Prediction",
-       y = "Correct Predictions") +
-  scale_y_continuous(labels = scales::percent) + theme_minimal()

@@ -1,3 +1,9 @@
+# Kiernan Nicholls
+# Generate exploratory visuals
+
+col_model <- "#ED713A" # 538 brand color
+col_market <- colortools::triadic(col_model, plot = FALSE)[3] # complimentary
+
 # Accuracy of each method over time
 plot_accuracy_time <-
   predictions2 %>%
@@ -72,9 +78,9 @@ plot_races_hist <-
   facet_wrap(~method, scales = "free_y") +
   scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.25)) +
   theme(legend.position = "bottom") +
-  scale_fill_manual(values = c("#6633FF", "#ED713A")) +
+  scale_fill_manual(values = c(col_market, col_model)) +
   theme(legend.position = "none") +
   labs(title = "Distribution of Race Probabilities by Predictive Method",
        subtitle = "Day Before Election",
        x = "Democratic Win Probability",
-       y = "Number of Races") +
+       y = "Number of Races")

@@ -36,7 +36,7 @@ input_onames <-
   list.files(path = "./input", full.names = FALSE) %>% 
   str_remove(".csv")
 
-for (i in 1:length(input_files)) {
+for (i in seq_along(input_files)) {
   assign(input_onames[i], input_files[[i]])
 }
 rm(input_files)
@@ -49,10 +49,17 @@ output_onames <-
   list.files(path = "./output", full.names = FALSE) %>% 
   str_remove(".csv")
 
-for (i in 1:length(output_files)) {
+for (i in seq_along(output_files)) {
   assign(output_onames[i], output_files[[i]])
 }
 rm(output_files)
+```
+
+```{r}
+code_fnames <- list.files(path = "./code", full.names = TRUE)[-1]
+for (i in seq_along(code_fnames)) {
+  source(code_fnames[i])
+}
 ```
 
 ## Project

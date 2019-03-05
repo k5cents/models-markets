@@ -35,15 +35,6 @@ multiple_gop <- model %>%
   as_vector() %>%
   unique()
 
-# Combine stats for candidates of the party
-model %>%
-  filter(race %in% c(multiple_dems, multiple_gop)) %>%
-  group_by(date, race, party) %>%
-  summarise(prob = sum(prob),
-            min_share = sum(min_share),
-            voteshare = sum(voteshare),
-            max_share = sum(max_share))
-
 # For markets with only Republicans, take the complimentary probability
 # This process assumes all races will only have Republicans or Democrats
 # For the few elections with two candidates of 1 party, leading candidate used
@@ -62,17 +53,23 @@ only_gop$close <- 1 - only_gop$close
 # Invert party from R to D
 only_gop$party <- "D"
 
+# All markets original ask about incumbent re-election
+only_gop$incumbent <- FALSE
+
 # Join back with original D markets
-only_dem <- filter(market, party == "D")
-markets <- bind_rows(only_gop, only_dem)
+not_gop <- market %>% filter(!race %in% only_gop$race)
+
+markets2 <-
+  bind_rows(only_gop, not_gop) %>%
+  select(date, mid, race, party, vol, everything())
 
 # Join with models
-predictions2 <-
+predictions <-
   left_join(markets, model,
             by = c("date", "race", "party")) %>%
   filter(date >= "2018-08-01",
          date <= "2018-11-05") %>%
-  select(date, race, incumbent, chamber, prob, close) %>%
+  select(date, race, chamber, prob, close) %>%
 
   # Tidy data, gather by predictive method
   rename(model  = prob,

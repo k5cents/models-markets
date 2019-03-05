@@ -28,6 +28,15 @@ read_github <- function(user, repo, branch, folder, file, ...) {
   read_csv(github_url, ...)
 }
 
+# Prediction Market data courtesy of PredictIt.org
+# Advance data provided to partnered researchers
+# See /old for code to scrape similar public data
+markets_data <- read_csv(file = "./input/markets_data.csv",
+                         na = c("n/a", "NA"),
+                         col_types = cols(MarketId = col_character(),
+                                          ContractName = col_character(),
+                                          ContractSymbol = col_character()))
+
 # Current members of the 115th Congress
 # Archived: 2018-10-22 at 18:11
 members_115 <- read_archive(date = "2018-10-22 18:11:18",
@@ -79,15 +88,6 @@ model_senate <- read_archive(date   = "2018-11-06 21:00:48",
                              folder = "congress-model-2018",
                              file   = "senate_national_forecast.csv")
 write_csv(model_senate, "./input/model_senate.csv")
-
-# Prediction Market data courtesy of PredictIt.org
-# Advance data provided to partnered researchers
-# See /old for code to scrape similar public data
-market_data <- read_csv(file = "./input/market_data.csv",
-                        na = c("n/a", "NA"),
-                        col_types = cols(MarketId = col_character(),
-                                         ContractName = col_character(),
-                                         ContractSymbol = col_character()))
 
 # Midterm election results via ABC and FiveThirtyEight
 # Used in https://53eig.ht/2PiFb0f

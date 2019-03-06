@@ -65,11 +65,11 @@ markets2 <-
 
 # Join with models
 predictions <-
-  left_join(markets, model,
+  left_join(markets2, model,
             by = c("date", "race", "party")) %>%
   filter(date >= "2018-08-01",
          date <= "2018-11-05") %>%
-  select(date, race, chamber, prob, close) %>%
+  select(date, race, name, chamber, party, special, prob, close) %>%
 
   # Tidy data, gather by predictive method
   rename(model  = prob,
@@ -78,6 +78,8 @@ predictions <-
          key   = method,
          value = prob) %>%
   arrange(date) %>%
+
+  # Add the binary win/loss prediction
   mutate(pick = if_else(prob > 0.50, TRUE, FALSE)) %>%
 
   # Join with election results

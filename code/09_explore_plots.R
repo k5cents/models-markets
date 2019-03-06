@@ -6,7 +6,7 @@ col_market <- colortools::triadic(col_model, plot = FALSE)[3] # complimentary
 
 # Accuracy of each method over time
 plot_accuracy_time <-
-  predictions2 %>%
+  predictions %>%
   group_by(date, method) %>%
   summarise(accuracy = mean(correct, na.rm = TRUE)) %>%
   ggplot() +
@@ -52,10 +52,10 @@ plot_n_markets <-
   summarise(count = n()) %>%
   ggplot() +
   geom_line(mapping = aes(date, count),
-            size = 2,
-            color = "#595959") +
-  labs(title = "Increase in Election Markets Over Time",
-       subtitle = "On PredictIt.org",
+            size = 4,
+            color = col_market) +
+  labs(title = "Cumulative Number of Election Markets Over Time",
+       subtitle = "On PredictIt.org from August 1st to Election Day 2018",
        x = "Date",
        y = "Number of Elections")
 

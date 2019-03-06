@@ -57,7 +57,8 @@ members_115_stats <-
   rename(gid = ID) %>%
   mutate(party = recode(party,
                         "Democrat" = "D",
-                        "Republican" = "R"))
+                        "Republican" = "R"),
+         gid = as.character(gid))
 
 # Add stats to frame by GovTrack ID
 members <- left_join(members,

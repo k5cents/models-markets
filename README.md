@@ -14,6 +14,13 @@ Using R to compare the predictive capabilities of markets and models.
 4.  [Data Wrangling](#data-wrangling)
 5.  [Data Exploration](#data-exploration)
 
+<!-- -->
+
+    code_fnames <- list.files(path = "./code", full.names = TRUE)[-1]
+    for (i in seq_along(code_fnames)) {
+      source(code_fnames[i])
+    }
+
 Project
 -------
 
@@ -447,10 +454,10 @@ observations with nine variables.
 <th align="left">Name</th>
 <th align="left">Chamber</th>
 <th align="left">Party</th>
-<th align="left">Incumbent</th>
 <th align="left">Special</th>
 <th align="left">Method</th>
-<th align="right">Probability</th>
+<th align="left">Probability</th>
+<th align="right">Outcome</th>
 </tr>
 </thead>
 <tbody>
@@ -584,7 +591,7 @@ than 10% or greater than 90% chance of winning their respective
 elections. The markets, which only exist for the most contentious and
 popular raves, are more uniform it its distribution of probabilities.
 
-![](README_files/figure-markdown_strict/prob_dist-1.png)
+![](README_files/figure-markdown_strict/races_dist-1.png)
 
 ![](README_files/figure-markdown_strict/n_markets-1.png)
 

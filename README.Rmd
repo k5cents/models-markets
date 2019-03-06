@@ -343,19 +343,19 @@ observation representing one prediction (on one date, for one candidate, with
 one method). The resulting data set has 29,602 observations with nine variables.
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
-predictions %>% 
+predictions %>%
   .[1:10, ] %>% 
-  kable(format = "markdown",
+  knitr::kable(format = "markdown",
         digits = 4,
         col.names = c("Date", 
                       "Race",
                       "Name",
                       "Chamber",
                       "Party",
-                      "Incumbent",
                       "Special",
                       "Method",
-                      "Probability"),
+                      "Probability",
+                      "Outcome"),
         caption = "29,602 observations of 9 variables")
 ```
 
@@ -375,48 +375,12 @@ than 90% chance of winning their respective elections. The markets, which only
 exist for the most contentious and popular raves, are more uniform it its
 distribution of probabilities.
 
-```{r prob_dist, echo=FALSE, message=FALSE, warning=FALSE}
-left_join(x = model,
-          y = market,
-          by = c("date", "race", "party")) %>%
-  filter(date == "2018-11-05", 
-         party == "D") %>%
-  select(date,
-         race,
-         chamber,
-         close,
-         prob) %>%
-  rename(market = close,
-         model = prob) %>%
-  gather(market, model,
-         key = "method",
-         value = "prob") %>%
-  ggplot() +
-  geom_histogram(mapping = aes(x = prob, fill = chamber), binwidth = 0.10) +
-  facet_wrap(~method, scales = "free_y") +
-  labs(title = "Distribution of Race Probabilities by Predictive Method",
-       subtitle = "Day Before Election",
-       x = "Democratic Win Probability",
-       y = "Number of Races") +
-  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.25)) +
-  scale_fill_manual(values = c("#595959", "black")) +
-  theme(legend.position = "bottom")
+```{r races_dist, echo=FALSE, message=FALSE, warning=FALSE}
+plot_races_hist
 ```
 
 ```{r n_markets, echo=FALSE}
-market %>% 
-  filter(date > "2018-08-01",
-         date < "2018-11-05") %>% 
-  group_by(date) %>%
-  summarise(count = n()) %>% 
-  ggplot() +
-  geom_line(mapping = aes(date, count),
-            size = 2,
-            color = "#595959") +
-  labs(title = "Increase in Election Markets Over Time",
-       subtitle = "On PredictIt.org",
-       x = "Date",
-       y = "Number of Elections")
+plot_n_markets
 ```
 
 ----

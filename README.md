@@ -14,13 +14,6 @@ Using R to compare the predictive capabilities of markets and models.
 4.  [Data Wrangling](#data-wrangling)
 5.  [Data Exploration](#data-exploration)
 
-<!-- -->
-
-    code_fnames <- list.files(path = "./code", full.names = TRUE)[-1]
-    for (i in seq_along(code_fnames)) {
-      source(code_fnames[i])
-    }
-
 Project
 -------
 
@@ -593,6 +586,6 @@ popular raves, are more uniform it its distribution of probabilities.
 
 ![](README_files/figure-markdown_strict/races_dist-1.png)
 
-![](README_files/figure-markdown_strict/n_markets-1.png)
+![](README_files/figure-markdown_strict/n_markets-1.png)![](README_files/figure-markdown_strict/n_markets-2.png)
 
 ------------------------------------------------------------------------

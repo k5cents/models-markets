@@ -29,7 +29,8 @@ plot_n_polls <-
   filter(start_date > "2018-01-01",
          start_date < "2018-11-05") %>%
   ggplot(aes(start_date, cum)) +
-  geom_line(size = 2, color = "#ED713A") +
+  geom_line(size = 2,
+            color = "#ED713A") +
   labs(title = "Cumulative Number of Congressional Polls",
        subtitle = "Across all Congressional races, conducted by all polling firms in 2018",
        x = "Date",
@@ -46,18 +47,26 @@ plot_n_polls <-
 # Number of markets opened over time
 plot_n_markets <-
   market %>%
-  filter(date > "2018-08-01",
+  filter(date > "2018-01-01",
          date < "2018-11-05") %>%
   group_by(date) %>%
   summarise(count = n()) %>%
   ggplot() +
   geom_line(mapping = aes(date, count),
-            size = 4,
+            size = 2,
             color = col_market) +
-  labs(title = "Cumulative Number of Election Markets Over Time",
+  labs(title = "Cumulative Number of Election Markets",
        subtitle = "On PredictIt.org from August 1st to Election Day 2018",
        x = "Date",
-       y = "Number of Elections")
+       y = "Number of Elections") +
+  geom_vline(xintercept = as.Date("2018-08-01"), size = 1) +
+  geom_vline(xintercept = as.Date("2018-11-05"), size = 1) +
+  geom_label(mapping = aes(x = as.Date("2018-09-18"),
+                           y = 75,
+                           label = "Span of Model"),
+             fill = "#ebebeb",
+             label.size = 0,
+             size = 7)
 
 # Distribution of original probabilities by method
 plot_races_hist <-

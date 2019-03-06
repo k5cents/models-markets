@@ -55,7 +55,7 @@ for (i in seq_along(output_files)) {
 rm(output_files)
 ```
 
-```{r}
+```{r format_files, echo=FALSE, message=FALSE, warning=FALSE}
 code_fnames <- list.files(path = "./code", full.names = TRUE)[-1]
 for (i in seq_along(code_fnames)) {
   source(code_fnames[i])
@@ -381,6 +381,7 @@ plot_races_hist
 
 ```{r n_markets, echo=FALSE}
 plot_n_markets
+plot_n_polls
 ```
 
 ----

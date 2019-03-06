@@ -58,7 +58,7 @@ plot_n_markets <-
   labs(title = "Cumulative Number of Election Markets",
        subtitle = "On PredictIt.org from August 1st to Election Day 2018",
        x = "Date",
-       y = "Number of Elections") +
+       y = "Markets to Date") +
   geom_vline(xintercept = as.Date("2018-08-01"), size = 1) +
   geom_vline(xintercept = as.Date("2018-11-05"), size = 1) +
   geom_label(mapping = aes(x = as.Date("2018-09-18"),

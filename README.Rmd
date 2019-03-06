@@ -60,6 +60,7 @@ code_fnames <- list.files(path = "./code", full.names = TRUE)[-1]
 for (i in seq_along(code_fnames)) {
   source(code_fnames[i])
 }
+rm(code_fnames)
 ```
 
 ## Project
@@ -304,7 +305,7 @@ a single contract from a single market. There are 44,711 observations covering
 Below is a random sample of observations from the PredictIt trading markets.
 
 ```{r market_data, echo=FALSE, message=FALSE}
-market_data %>% 
+markets_data %>% 
   select(-MarketName, 
          -ContractName,
          -OpenPrice) %>% 

@@ -350,7 +350,7 @@ markets.
 <table>
 <thead>
 <tr class="header">
-<th align="left">ID</th>
+<th align="right">ID</th>
 <th align="left">Market</th>
 <th align="left">Contract</th>
 <th align="left">Date</th>
@@ -362,53 +362,53 @@ markets.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">4192</td>
-<td align="left">SPEC.MSSEN.18</td>
-<td align="left">DEM.SPEC.MSSEN.18</td>
-<td align="left">2018-04-10</td>
-<td align="right">0.25</td>
-<td align="right">0.25</td>
-<td align="right">0.25</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">3767</td>
-<td align="left">NH01.2018</td>
-<td align="left">DEM.NH01.2018</td>
-<td align="left">2018-03-22</td>
-<td align="right">0.79</td>
-<td align="right">0.79</td>
-<td align="right">0.79</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">4104</td>
-<td align="left">NJ11.2018</td>
-<td align="left">DEM.NJ11.2018</td>
-<td align="left">2018-09-28</td>
-<td align="right">0.80</td>
-<td align="right">0.82</td>
-<td align="right">0.82</td>
-<td align="right">10</td>
-</tr>
-<tr class="even">
-<td align="left">3772</td>
-<td align="left">TNSEN18</td>
-<td align="left">DEM.TNSEN18</td>
-<td align="left">2018-03-09</td>
+<td align="right">3608</td>
+<td align="left">HELL.NVSENATE.2018</td>
+<td align="left">n/a</td>
+<td align="left">2018-07-12</td>
 <td align="right">0.32</td>
-<td align="right">0.34</td>
-<td align="right">0.34</td>
-<td align="right">10</td>
+<td align="right">0.40</td>
+<td align="right">0.32</td>
+<td align="right">210</td>
+</tr>
+<tr class="even">
+<td align="right">4257</td>
+<td align="left">IL12.2018</td>
+<td align="left">DEM.IL12.2018</td>
+<td align="left">2018-07-20</td>
+<td align="right">0.42</td>
+<td align="right">0.42</td>
+<td align="right">0.42</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">4256</td>
-<td align="left">MI08.2018</td>
-<td align="left">GOP.MI08.2018</td>
-<td align="left">2018-08-01</td>
-<td align="right">0.59</td>
-<td align="right">0.59</td>
-<td align="right">0.59</td>
+<td align="right">3531</td>
+<td align="left">CURB.FL26.2018</td>
+<td align="left">n/a</td>
+<td align="left">2018-09-24</td>
+<td align="right">0.55</td>
+<td align="right">0.57</td>
+<td align="right">0.57</td>
+<td align="right">97</td>
+</tr>
+<tr class="even">
+<td align="right">4015</td>
+<td align="left">MD06.2018</td>
+<td align="left">DEM.MD06.2018</td>
+<td align="left">2018-05-09</td>
+<td align="right">0.91</td>
+<td align="right">0.91</td>
+<td align="right">0.91</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="right">3935</td>
+<td align="left">TX06.2018</td>
+<td align="left">DEM.TX06.2018</td>
+<td align="left">2018-08-19</td>
+<td align="right">0.13</td>
+<td align="right">0.13</td>
+<td align="right">0.13</td>
 <td align="right">0</td>
 </tr>
 </tbody>

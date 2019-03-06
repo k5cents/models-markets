@@ -46,7 +46,7 @@ plot_n_polls <-
 
 # Number of markets opened over time
 plot_n_markets <-
-  market %>%
+  markets %>%
   filter(date > "2018-01-01",
          date < "2018-11-05") %>%
   group_by(date) %>%
@@ -72,14 +72,14 @@ plot_n_markets <-
 plot_races_hist <-
   # Join market onto model keep all model races
   left_join(x = model,
-            y = market,
+            y = markets,
           by = c("date", "race", "party")) %>%
   # Show only 1 candidate per race
   filter(date == "2018-11-05", party == "D") %>%
   select(date, close, prob) %>%
-  rename(market = close,
+  rename(markets = close,
          model = prob) %>%
-  gather(market, model,
+  gather(markets, model,
          key = "method",
          value = "prob") %>%
   ggplot() +

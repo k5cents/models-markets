@@ -161,24 +161,3 @@ senate_115_stats <-
                col_types = cols(ID = col_character())) %>%
   mutate(chamber = "senate")
 write_csv(senate_115_stats, "./input/senate_115_stats.csv")
-
-# Format and Write --------------------------------------------------------
-
-# Run all scripts to format inputs
-# Read names of all code scripts
-code_filenames <- list.files(path = "./code", full.names = TRUE)
-# Source scripts from names
-for (i in 2:length(code_filenames)) {
-  source(file = code_filenames[i], echo = FALSE)
-}
-rm(code_filenames, i, house_115_stats, senate_115_stats)
-
-write_csv(members,      "./output/members.csv")
-write_csv(market,       "./output/market.csv")
-write_csv(model,        "./output/model.csv")
-write_csv(model_lite,   "./output/model_lite.csv")
-write_csv(model_delux,  "./output/model_delux.csv")
-write_csv(predictions,  "./output/predictions.csv")
-write_csv(race_lean,    "./output/race_lean.csv")
-write_csv(polling_key,  "./output/polling_key.csv")
-write_csv(polling_data, "./output/polling_data.csv")

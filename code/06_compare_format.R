@@ -7,7 +7,7 @@ library(tidyverse)
 # I will use the democratic candidate
 
 # Find races with data on only 1 candidate
-single_party_markets <- market %>%
+single_party_markets <- markets %>%
   group_by(race, date) %>%
   summarise(n = n()) %>%
   filter(n == 1) %>%
@@ -40,7 +40,7 @@ multiple_gop <- model %>%
 # For the few elections with two candidates of 1 party, leading candidate used
 
 only_gop <-
-  market %>%
+  markets %>%
   filter(race %in% single_party_markets,
          party == "R")
 
@@ -57,7 +57,7 @@ only_gop$party <- "D"
 only_gop$incumbent <- FALSE
 
 # Join back with original D markets
-not_gop <- market %>% filter(!race %in% only_gop$race)
+not_gop <- markets %>% filter(!race %in% only_gop$race)
 
 markets2 <-
   bind_rows(only_gop, not_gop) %>%

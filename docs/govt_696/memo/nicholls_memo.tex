@@ -1,0 +1,353 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Final Project Memo},
+            pdfauthor={Kiernan Nicholls},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Final Project Memo}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Kiernan Nicholls}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{October 16, 2018}
+
+
+\begin{document}
+\maketitle
+
+\subsection{Proposal}\label{proposal}
+
+I would like to study the the effectiveness of prediction markets as a
+means of forecasting political outcomes. I hypothesize that prediction
+markets serve as a more useful tool than any given public poll as a
+means of predicting the outcome of elections in the United States.
+Prediction markets theoretically encompass polling data in their
+aggregation, in addition to the benefits derived from the wisdom of the
+crowd and personal financial stakes.
+
+\subsection{Prediction Markets}\label{prediction-markets}
+
+Prediction markets are exchanges set up to trade ``stock'' in binary
+outcomes. For any given event, traders can buy shares of each of the
+binary outcomes: the event occurring or not. For every market,
+``contracts'' are automatically established between two buyers. Traders
+buy shares of each outcome based on their individual assessment of
+likelihoods combined with a financial cost-benefit, risk-reward
+analysis.
+
+For example, a market might be established that asks the question ``Will
+the Democratic party win a majority in the House of Representatives in
+the 2018 Midterm Election?'' Trades can then buy ``Yes'' and ``No''
+shares on that market. For every ``Yes'' buyer, there is a corresponding
+``No'' buyer agreeing to a contract. The price of each share is a analog
+for probability and must sum to 100. If the ``Yes'' buyer feels a share
+is worth \$0.67, then the ``No'' buyer is agreeing that his shares are
+worth \$0.33. When the event occurs in reality, the shares of each
+outcome are automatically sold for \$1 or \$0 depending on the outcome.
+If the Democratic party does win a majority, the ``Yes'' shares become
+worth \$1 each and the ``No'' shares become worthless. Essentially, the
+winner of the bet receives the funds wagered by his counterpart.
+
+Theoretically, we can use these markets as a predictive tool. In
+aggregate, the average trading price for each binary outcome should
+reflect the probability of that outcome. Both the ``Yes'' and ``No''
+buyers will want to maximize their financial gain and minimize their
+loss. Traders will not buy shares at a price higher or their believed
+worth. You would not buy a ``Yes'' share of an event at \$0.67 if you
+believe that event is unlikely to happen. In real time, the average
+trading price of shares reflect the aggregate belief of the market.
+Traders will theoretically take into account all available information
+to make smart trades, including traditional polling. Prediction markets
+do away with the mathematical nuances of random sampling and polling
+weights.
+
+As of right now, shares of Democrats winning a majority in the midterms
+are trading for \$0.67 PredictIt.org market. This can be interpreted as
+a 66\% probability. Meanwhile, the forecasting method used by
+FiveThirtyEight.com places that same probability at 84.8\%. Traders on
+the prediction market are less confident than the mathematical model. If
+my hypothesis is true, prediction markets should correctly predict the
+outcome of elections more often than polling or modeling.
+
+\subsection{PredictIt}\label{predictit}
+
+PredictIt.org is a prediction market run by non-profit Victoria
+University of Wellington, New Zealand for educational purposes. Users of
+this site can legally trade on the exchange with real currency, winning
+real money if their prediction comes true and their shares sell for \$1.
+Traders can also sell their shares at any time, provided there is a
+corresponding buyer; as public opinion shifts, ``Yes'' or ``No'' shares
+may become more or less valuable. The site is exempt from the usual ban
+on both online and political betting by working with researchers to
+study prediction markets as a political tool. In October of 2014,
+Commodity Futures Trading Commission granted the site a No Action letter
+allowing them to operate.
+
+The site hosts markets on nearly every conceivable political event,
+electoral or otherwise. Will Donald Trump be president at year-end 2018?
+Will the federal government be shut down on February 9? Will Ted Cruz be
+re-elected to the U.S. Senate in Texas in 2018? Will Facebook's Mark
+Zuckerberg run for president in 2020? How many tweets will
+@realDonaldTrump post from noon Oct. 10 to noon Oct. 17?
+
+I am interested in the election markets, comparing them to both
+individual polling (Sienna College Poll), polling averages
+(\url{https://realclearpolitics.com}), and forecast modeling
+(\url{https://fivethirtyeight.com}) as a means of predicting the winner
+of political elections.
+
+\subsection{Example Data}\label{example-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(gtrendsR)}
+\KeywordTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+First, we are going to read in FiveThirtyEight's 2018 Midterm forecast
+data for the House of Representatives. This is a proprietary model used
+to predict the outcome of the election. The model takes into account
+adjusted polling, their CANTOR method (polling from nearby districts),
+and a set of fundamental factors (fundraising, incumbency). Ultimately,
+we are looking for their predicted probability of the Democratic party
+winning control of the House of Representatives.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{forecast <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"https://goo.gl/E9XJUf"}\NormalTok{)}
+\NormalTok{forecast <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(forecast, party }\OperatorTok{==}\StringTok{ "D"}\NormalTok{)}
+\NormalTok{forecast <-}\StringTok{ }\KeywordTok{select}\NormalTok{(forecast, forecastdate, win_probability)}
+\KeywordTok{colnames}\NormalTok{(forecast) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"forecast.prob"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Then, we are going to do the same for PredictIt's public market data.
+Academic researchers have access to more detailed data, but this will do
+for now. Similarly, we are only interested in this market's probability
+of the Democratic party winning control of the House of Representatives.
+We will use the closing price of the ``Democratic'' share for every day
+as an analog for probability.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{market <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"https://goo.gl/w4K8pP"}\NormalTok{)}
+\NormalTok{market <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(market, ContractName }\OperatorTok{==}\StringTok{ "Democratic"}\NormalTok{)}
+\NormalTok{market <-}\StringTok{ }\KeywordTok{select}\NormalTok{(market, DateString, CloseSharePrice)}
+\KeywordTok{colnames}\NormalTok{(market) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"market.price"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, we can merge these two data frames by a shared date to see how
+the market and forecast change over time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predict <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{merge}\NormalTok{(forecast, market))}
+\NormalTok{predict <-}\StringTok{ }\NormalTok{predict }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{gather}\NormalTok{(}\StringTok{"market.price"}\NormalTok{, }
+         \StringTok{"forecast.prob"}\NormalTok{, }
+         \DataTypeTok{key =} \StringTok{"tool"}\NormalTok{,}
+         \DataTypeTok{value =} \StringTok{"prob"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(date)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ predict) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ date, }
+                          \DataTypeTok{y =}\NormalTok{ prob, }
+                          \DataTypeTok{color =}\NormalTok{ tool)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Market and Forceast Probabilites of Democratic Midterm Victory"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Date"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Probability / Market Price"}\NormalTok{,}
+       \DataTypeTok{color =} \StringTok{"Predictive Tool"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{nicholls_memo_files/figure-latex/plot-1.pdf}
+
+Here we can see the market price continually underestimate the
+Democrat's chances compared to the forecasting model used by
+FiveThirtyEight. Still, the trends between the two predictions are
+fairly closely linked; when one drops, so does the other, and vice
+versa.
+
+\subsection{Further Questions}\label{further-questions}
+
+I would be interested in seeing if we can statistically establishing if
+the FiveThirtyEight forecast or RealClearPolitics polling \emph{causes}
+changes in market price, or if they move independently.
+
+Once I partner with PredictIt.org as a research partner, I can gain
+access to their closed markets. A powerful test in predictive
+capabilities would be to compare the success rate of the three
+predictive tools (market, model, poll) in, say, the 2014 Midterms or the
+2016 Election.
+
+I would also be interested in using Google Trends data to see how the
+news affects the prediction market (and how Google searches affect both
+polling and market price).
+
+Here I am plotting the Google Trends ``hits'' value for ``Bill Nelson''
+against the market price for Senator Nelson's election on PredictIt.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nelson.trend <-}\StringTok{ }\KeywordTok{gtrends}\NormalTok{(}\DataTypeTok{keyword =} \StringTok{"Bill Nelson"}\NormalTok{,}
+                  \DataTypeTok{time =} \StringTok{"today 3-m"}\NormalTok{,}
+                  \DataTypeTok{gprop =} \StringTok{"web"}\NormalTok{,}
+                  \DataTypeTok{geo =} \StringTok{"US"}\NormalTok{)}
+\NormalTok{nelson.trend <-}\StringTok{ }\NormalTok{nelson.trend}\OperatorTok{$}\NormalTok{interest_over_time}
+\NormalTok{nelson.trend <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{select}\NormalTok{(nelson.trend, date, hits))}
+\NormalTok{nelson.trend}\OperatorTok{$}\NormalTok{date <-}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{as_date}\NormalTok{(nelson.trend}\OperatorTok{$}\NormalTok{date)}
+
+\NormalTok{nelson.market <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"https://www.predictit.org/Resource/DownloadMarketChartData?marketid=2999&timespan=90D"}\NormalTok{)}
+\NormalTok{nelson.market <-}\StringTok{ }\KeywordTok{select}\NormalTok{(nelson.market, DateString, CloseSharePrice)}
+\KeywordTok{colnames}\NormalTok{(nelson.market) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"market.price"}\NormalTok{)}
+
+\NormalTok{nelson <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\KeywordTok{merge}\NormalTok{(nelson.trend, nelson.market))}
+\NormalTok{nelson}\OperatorTok{$}\NormalTok{market.price <-}\StringTok{ }\NormalTok{nelson}\OperatorTok{$}\NormalTok{market.price }\OperatorTok{*}\StringTok{ }\DecValTok{100}
+
+\NormalTok{nelson <-}\StringTok{ }\NormalTok{nelson }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{gather}\NormalTok{(}\StringTok{"hits"}\NormalTok{, }\StringTok{"market.price"}\NormalTok{, }
+         \DataTypeTok{key =} \StringTok{"tool"}\NormalTok{,}
+         \DataTypeTok{value =} \StringTok{"value"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(date)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ nelson) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ date, }\DataTypeTok{y =}\NormalTok{ value, }\DataTypeTok{color =}\NormalTok{ tool)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Google Trends Hits and Prediction Market Prices"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Date"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Hits / Adjusted Market Price"}\NormalTok{,}
+       \DataTypeTok{color =} \StringTok{"Tool"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{nicholls_memo_files/figure-latex/nelson-1.pdf}
+
+We can see that the two spikes in search volume match with a drop in his
+market price (him doing poorly) and a rise in his market price (doing
+well).
+
+\subsection{Conclusion}\label{conclusion}
+
+I think there is serious value in prediction markets as a tool in
+political science. Polling can inaccurately capture a sample or
+incorrectly weigh the responses. Forecasting relies on complex and
+proprietary modeling, necessitating trust in the modelers.
+
+
+\end{document}

@@ -1,0 +1,199 @@
+---
+title: "Progress Report"
+subtitle: "GOVT-653"
+author: "Kiernan Nicholls"
+date: "March 7, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE)
+library(tidyverse)
+library(knitr)
+```
+
+```{r run_code, echo=FALSE, message=FALSE, warning=FALSE}
+code_fnames <- list.files(path = "./code", full.names = TRUE)
+for (i in seq_along(code_fnames)) {
+  source(code_fnames[i])
+}
+rm(code_fnames)
+```
+
+## Update
+
+I have not made significant changes to the research question I initially
+proposed. I am trying to determine the predictive capabilities of markets as
+they compare to the more popular mathematical forecasting models. Are prediction
+markets as (or more) accurate that forecasting models, and if so, under what
+conditions? What role might prediction markets play in the American
+Congressional campaign?
+
+In statistical terms: I propose the null hypothesis of no difference in
+proportion races correctly called by markets and models. Over one hundred races
+of interest will are predicted daily, from August 1st to November 5th, by both
+the markets on PredictIt and the model by FiveThirtyEight.
+
+## Market Data
+
+PredictIt.org was launched in late 2014 to host prediction markets, primarily on
+American politics. PredictIt is owned and operated by 
+[Victoria University of Wellington](https://www.victoria.ac.nz/) with support
+from [Aristotle, Inc.](http://aristotle.com/). PredictIt partners with academic
+researchers, providing trading data for research purposes. After signing a data
+use agreement with the site, the provided me with trading data from 118 markets
+pertaining to 2018 Midterm elections.
+
+The raw data spans 675 days from January 1, 2017 to December 12, 2018. There are
+44,711 observations of the following 11 variables:
+
+01. Market ID
+02. Market question
+03. Market symbol
+04. Contract name
+05. Contract symbol
+06. Prediction date
+07. Opening contract price
+08. Low contract price
+09. High contract price
+10. Closing contract price
+11. Volume of shares traded
+
+```{r market_data, echo=FALSE, message=FALSE, warning=FALSE}
+read_csv("./input/markets_data.csv") %>% 
+  select(-MarketName, 
+         -ContractName,
+         -HighPrice,
+         -LowPrice) %>% 
+  sample_n(10) %>% 
+  kable(digits = 3,
+        col.names = c("ID", 
+                      "Market",
+                      "Contract",
+                      "Date",
+                      "Open",
+                      "Close",
+                      "Volume"),
+        caption = "10 of 44,711 observations with 7 of 11 variables")
+```
+
+Each market poses a question (Which party will win the 2018 House of Reps race in Texas's 21st district?). The possible answers to that question (Democratic or Republican) are the contracts that comprise the market. When a trader is interested in buying shares of a contract (100 shares of a Democratic party winning the Texas 21st for \$0.69 each), they make an open offer on the market. A corresponding trader agrees to buy the converse contract (100 shares of a Republican party winning the Texas 21st for \$0.31 each). Those traders can buy or sell these shares throughout the election at whatever price another trader agrees on. After the election, each correct contract executes at $1.00, with a 10% fee going towards the operational costs of the exchange.
+
+The price of a contract is directly proportional to the trader's probabilistic
+interpretation of the election outcomes. If a trader believes a party has a high
+chance of winning an election, he will not place a bet without a low amount of
+risk. The binary outcome of the futures contracts allow for a direct
+probabilistic interpretation of the election results. 
+
+In market theory, the volume of shares traded plays a crucial role in proper
+price discovery; too few shares traded and the market may not properly react to
+changes in the election circumstances. In my analysis, a market price over $0.50
+indicates a prediction of that candidate winning the election. The closing price
+of a contract represents that day's final market prediction. We can compare each
+day's prediction with the eventual winner to assess the accuracy. The proportion
+of all races correctly predicted represents the accuracy of the markets method.
+
+## Model Data
+
+FiveThirtyEight.com was launched in 2008 by Nate Silver to aggrigate polls of
+the Democratic Presidential Primary to better forecast the winner. In the decade
+since, the model used by FiveThirtyEight has grown in complexity. For the 2018
+Midterm elections, FiveThirtyEight published models for House, Senate, and
+Governors races. The models incorperate quantitative inputs (primarily polling)
+to simulate the election and produce a probabalistic view of the election.
+
+The team at FiveThirtyEight makes public the top-line output of their models as
+four separate `.csv` files on their website:
+
+1. [`senate_national_forecast.csv`][01]
+2. [`senate_seat_forecast.csv`][02]
+3. [`house_national_forecast.csv`][03]
+4. [`house_district_forecast.csv`][04]
+
+The Senate seat and House district level forecasts will be used in this project.
+Each observation represents one day's probability of victory for one candidate.
+There are 28,353 observations at the Senate seat level and 302,859 at the House
+district level. Together, There are about 3,380 unique daily predictions from
+ (97 days).
+
+The raw data spans 97 days from August 1st to November 5th. Together, the Senate
+and House data sets contain 328,113 observations of 12 variables:
+
+01. Prediction date
+02. Election state
+03. Election Congressional district
+04. Whether the election is a "special election"
+05. Candidate's full name
+06. Candidate's political party
+07. Whether the candiate is an incumbent
+08. Model version (classic, lite, or deluxe)
+09. Candidate's probability of victory
+10. Candidate's expected share of the vote
+11. Candidate's approx. minimum share of the vote
+12. Candidate's approx. maximum share of the vote
+
+```{r model_data, echo=FALSE, message=FALSE}
+read_csv("./input/model_district.csv") %>%
+  select(-candidate, -p10_voteshare, -p90_voteshare) %>% 
+  sample_n(10) %>%
+  kable(digits = 3,
+        col.names = c("Date", 
+                      "State", 
+                      "District",
+                      "Special",
+                      "Party",
+                      "Incumbent",
+                      "Model",
+                      "Win Probability", 
+                      "Expected Share"),
+        caption = "10 of 299,760 observations with 9 of 12 variables")
+```
+
+## Tidy Data
+
+The data from the markets and model can be combined and cleaned to produce a single data
+frame with 26,778 observations of 10 variables:
+
+01. Prediction date
+02. Election code
+03. Candidate's name
+04. Election chamber
+05. Candidate's party
+06. Whether the election is a "special election"
+07. Whether the candiate is an incumbent
+08. Whether the prediction comes from the markets or model
+09. Candidate's probability of victory
+10. Whether the prediction was correct
+
+```{r prediction_data, echo=FALSE, message=FALSE}
+read_csv("./output/predictions.csv") %>%
+  select(-special) %>%
+  sample_n(10) %>%
+  kable(digits = 3,
+        col.names = c("Date", 
+                      "Race", 
+                      "Name",
+                      "Chamber",
+                      "Party",
+                      "Incumbent",
+                      "Method",
+                      "Probability", 
+                      "Outcome"),
+        caption = "10 of 26,778 observations with 9 of 10 variables")
+```
+
+## Exploratory Plots
+
+```{r print_plots, echo=FALSE, message=FALSE, warning=FALSE}
+p2_plot
+plot_races_hist
+plot_cum_markets
+plot_cum_polls
+plot_cum_dollars
+```
+
+[01]: https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv
+[02]: https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv
+[03]: https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv
+[04]: https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv

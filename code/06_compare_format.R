@@ -54,7 +54,7 @@ only_gop$close <- 1 - only_gop$close
 only_gop$party <- "D"
 
 # All markets original ask about incumbent re-election
-only_gop$incumbent <- FALSE
+# only_gop$incumbent <- FALSE
 
 # Join back with original D markets
 not_gop <- markets %>% filter(!race %in% only_gop$race)
@@ -69,7 +69,7 @@ predictions <-
             by = c("date", "race", "party")) %>%
   filter(date >= "2018-08-01",
          date <= "2018-11-05") %>%
-  select(date, race, name, chamber, party, special, prob, close) %>%
+  select(date, race, name, chamber, party, special, incumbent, prob, close) %>%
 
   # Tidy data, gather by predictive method
   rename(model  = prob,

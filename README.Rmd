@@ -226,8 +226,8 @@ control of the House of Representatives with a simple majority of seats").
 The Senate seat and House district level forecasts will be used in this project.
 Each observation represents one day's probability of victory for one candidate.
 There are 28,353 observations in the Senate seat level file and 302,859 for the
-House district level. Together, There are about 3,380 unique daily predictions from
-August 1st to November 5th (97 days).
+House district level. Together, There are about 3,380 unique daily predictions
+from August 1st to November 5th (97 days).
 
 For each observation, there are 12 variables recorded:
 
@@ -240,8 +240,8 @@ For each observation, there are 12 variables recorded:
 7. The model version (classic, lite, or deluxe)
 8. The candidate's probability of victory
 9. The candidate's expected share of the vote
-10. The candidate's ≈minimum share of the vote
-10. The candidate's ≈maximum share of the vote
+10. The candidate's minimum share of the vote
+10. The candidate's maximum share of the vote
 
 Below is a random sample of observations from the FiveThirtyEight congressional
 district model data set.
@@ -301,6 +301,7 @@ a single contract from a single market. There are 44,711 observations covering
 8. Low contract price
 9. High contract price
 10. Closing contract price
+11. Volume of shares traded
 
 Below is a random sample of observations from the PredictIt trading markets.
 
@@ -387,7 +388,6 @@ plot_cum_markets
 plot_cum_polls
 plot_cum_dollars
 ```
-----
 
 [01]: https://fivethirtyeight.com/ "538 home page"
 [02]: https://web.archive.org/web/20161107220421/https://projects.fivethirtyeight.com/2016-election-forecast/ "538 2016"

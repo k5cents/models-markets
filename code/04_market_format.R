@@ -40,11 +40,12 @@ markets$race <- str_replace(markets$race, "SE",     "99")
 markets$race <- str_replace(markets$race, "AL",     "01")   # at large
 markets$race <- str_replace(markets$race, "OH12G",  "OH12") # not sure
 markets$race[markets$name == "SPEC"] <- "MS98"              # special election
-markets$race[markets$mid == "3857"]         <- "CA-99"      # miscoded?
 markets$race[markets$race == "MN99"] <- "MN98"              # special election
 markets$race <- paste(str_sub(markets$race, 1, 2),          # state abb
                       str_sub(markets$race, 3, 4),          # market number
                       sep = "-")
+markets$race[markets$mid == "3857"]         <- "CA-99"      # miscoded?
+
 
 # Remove markets without relevant information
 markets$name[markets$name == "PARTY"] <- NA    # no name

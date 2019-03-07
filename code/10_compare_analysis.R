@@ -14,7 +14,7 @@ p2 <-
   gather(model, market,
          key   = method,
          value = prob) %>%
-  arrange(date) %>%
+  arrange(date, race, name)
 
   # Add the binary win/loss prediction
   mutate(pick = if_else(prob > 0.50, TRUE, FALSE)) %>%

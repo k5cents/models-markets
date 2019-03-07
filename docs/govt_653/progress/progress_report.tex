@@ -95,15 +95,14 @@
 I have not made significant changes to the research question I initially
 proposed. I am trying to determine the predictive capabilities of
 markets as they compare to the more popular mathematical forecasting
-models. Are prediction markets as (or more) accurate that forecasting
-models, and if so, under what conditions? What role might prediction
-markets play in the American Congressional campaign?
+models. Are prediction markets as accurate as forecasting models? Under
+what conditions does each method perform? What role might prediction
+markets play in the Congressional campaigns?
 
 In statistical terms: I propose the null hypothesis of no difference in
-proportion races correctly called by markets and models. Over one
-hundred races of interest will are predicted daily, from August 1st to
-November 5th, by both the markets on PredictIt and the model by
-FiveThirtyEight.
+proportion races correctly called by markets and models. Ultimately, I
+hope to perform a test of equal proportion on a string of prediction
+outcomes (correct or incorrect predictions).
 
 \subsection{Market Data}\label{market-data}
 
@@ -157,26 +156,26 @@ ID & Market & Contract & Date & Open & Close & Volume\tabularnewline
 ID & Market & Contract & Date & Open & Close & Volume\tabularnewline
 \midrule
 \endhead
-4341 & LAMB.CO05.2016 & n/a & 2018-04-24 & 0.31 & 0.26 &
-121\tabularnewline
-4638 & CA48.2018 & DEM.CA48.2018 & 2018-10-26 & 0.52 & 0.56 &
-154\tabularnewline
-2941 & MANCHIN.WVSENATE.2018 & n/a & 2018-08-13 & 0.76 & 0.83 &
-2074\tabularnewline
-4255 & MN03.2018 & GOP.MN03.2018 & 2018-10-07 & 0.26 & 0.14 &
-3\tabularnewline
-4177 & PASEN18 & DEM.PASEN18 & 2018-10-04 & 0.88 & 0.93 &
-1\tabularnewline
-2940 & SANDERS.VTSENATE.2018 & n/a & 2017-06-24 & 0.89 & 0.88 &
-1\tabularnewline
-2928 & CRUZ.TXSENATE.2018 & n/a & 2018-02-21 & 0.76 & 0.75 &
-118\tabularnewline
-4831 & NY22.2018 & DEM.NY22.2018 & 2018-09-30 & 0.79 & 0.79 &
+4030 & CA39.2018 & GOP.CA39.2018 & 2018-02-26 & 0.31 & 0.31 &
 0\tabularnewline
-2940 & SANDERS.VTSENATE.2018 & n/a & 2018-06-26 & 0.92 & 0.93 &
-38\tabularnewline
-4015 & MD06.2018 & DEM.MD06.2018 & 2018-01-21 & 0.91 & 0.91 &
-1\tabularnewline
+4255 & MN03.2018 & GOP.MN03.2018 & 2018-09-26 & 0.19 & 0.21 &
+2\tabularnewline
+3812 & AZSEN18 & DEM.AZSEN18 & 2017-11-16 & 0.48 & 0.57 &
+41\tabularnewline
+3532 & LEWI.MN02.2018 & n/a & 2018-05-09 & 0.36 & 0.36 &
+0\tabularnewline
+4271 & PA17.2018 & DEM.PA17.2018 & 2018-03-30 & 0.79 & 0.87 &
+16\tabularnewline
+2941 & MANCHIN.WVSENATE.2018 & n/a & 2018-04-09 & 0.73 & 0.70 &
+116\tabularnewline
+4156 & FL17.2018 & DEM.FL17.2018 & 2018-10-07 & 0.02 & 0.02 &
+0\tabularnewline
+3767 & NH01.2018 & DEM.NH01.2018 & 2018-06-12 & 0.83 & 0.83 &
+0\tabularnewline
+3503 & KING.MESENATE.2018 & n/a & 2017-11-06 & 0.87 & 0.87 &
+0\tabularnewline
+4257 & IL12.2018 & DEM.IL12.2018 & 2018-04-26 & 0.53 & 0.53 &
+0\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -210,13 +209,13 @@ correctly predicted represents the accuracy of the markets method.
 
 \subsection{Model Data}\label{model-data}
 
-FiveThirtyEight.com was launched in 2008 by Nate Silver to aggrigate
+FiveThirtyEight.com was launched in 2008 by Nate Silver to aggregate
 polls of the Democratic Presidential Primary to better forecast the
 winner. In the decade since, the model used by FiveThirtyEight has grown
 in complexity. For the 2018 Midterm elections, FiveThirtyEight published
-models for House, Senate, and Governors races. The models incorperate
+models for House, Senate, and Governors races. The models incorporate
 quantitative inputs (primarily polling) to simulate the election and
-produce a probabalistic view of the election.
+produce a probabilistic view of the election.
 
 The team at FiveThirtyEight makes public the top-line output of their
 models as four separate \texttt{.csv} files on their website:
@@ -260,7 +259,7 @@ variables:
 \item
   Candidate's political party
 \item
-  Whether the candiate is an incumbent
+  Whether the candidate is an incumbent
 \item
   Model version (classic, lite, or deluxe)
 \item
@@ -286,26 +285,26 @@ Date & State & District & Special & Party & Incumbent & Model & Win
 Probability & Expected Share\tabularnewline
 \midrule
 \endhead
-2018-09-28 & MD & 4 & NA & R & FALSE & deluxe & 0.000 &
-18.61\tabularnewline
-2018-09-21 & IL & 3 & NA & D & TRUE & classic & 1.000 &
-68.07\tabularnewline
-2018-10-13 & MO & 4 & NA & LIB & FALSE & deluxe & 0.000 &
-3.28\tabularnewline
-2018-09-11 & NC & 2 & NA & D & FALSE & lite & 0.309 &
-46.36\tabularnewline
-2018-09-22 & TN & 1 & NA & D & FALSE & deluxe & 0.000 &
-23.91\tabularnewline
-2018-09-11 & IL & 17 & NA & R & FALSE & deluxe & 0.000 &
-34.42\tabularnewline
-2018-08-09 & TX & 3 & NA & LIB & FALSE & classic & 0.000 &
-3.43\tabularnewline
-2018-09-23 & AZ & 9 & NA & R & FALSE & classic & 0.007 &
-39.61\tabularnewline
-2018-09-15 & AL & 1 & NA & D & FALSE & classic & 0.001 &
-35.06\tabularnewline
-2018-08-03 & CA & 37 & NA & R & FALSE & deluxe & 0.000 &
-10.17\tabularnewline
+2018-10-01 & MD & 4 & NA & R & FALSE & deluxe & 0.000 &
+18.67\tabularnewline
+2018-10-08 & NC & 7 & NA & R & TRUE & lite & 0.778 &
+52.06\tabularnewline
+2018-08-20 & MI & 6 & NA & R & TRUE & deluxe & 0.892 &
+53.47\tabularnewline
+2018-08-13 & CA & 11 & NA & D & TRUE & deluxe & 1.000 &
+77.44\tabularnewline
+2018-10-26 & GA & 10 & NA & R & TRUE & deluxe & 1.000 &
+67.81\tabularnewline
+2018-10-19 & AL & 7 & NA & D & TRUE & lite & 1.000 &
+100.00\tabularnewline
+2018-09-05 & TX & 8 & NA & R & TRUE & deluxe & 1.000 &
+75.15\tabularnewline
+2018-08-04 & TX & 11 & NA & LIB & FALSE & deluxe & 0.000 &
+3.31\tabularnewline
+2018-09-28 & TX & 7 & NA & D & FALSE & classic & 0.480 &
+49.80\tabularnewline
+2018-09-18 & SC & 7 & NA & D & FALSE & lite & 0.036 &
+39.82\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -330,58 +329,86 @@ produce a single data frame with 26,778 observations of 10 variables:
 \item
   Whether the election is a ``special election''
 \item
-  Whether the candiate is an incumbent
+  Whether the candidate is an incumbent
 \item
   Whether the prediction comes from the markets or model
 \item
   Candidate's probability of victory
-\item
-  Whether the prediction was correct
 \end{enumerate}
 
-\begin{longtable}[]{@{}lllllllrl@{}}
-\caption{10 of 26,778 observations with 9 of 10
-variables}\tabularnewline
+\begin{longtable}[]{@{}llllllllr@{}}
+\caption{10 of 26,778 observations with 9 variables}\tabularnewline
 \toprule
-Date & Race & Name & Chamber & Party & Incumbent & Method & Probability
-& Outcome\tabularnewline
+Date & Race & Name & Chamber & Party & Special & Incumbent & Method &
+Probability\tabularnewline
 \midrule
 \endfirsthead
 \toprule
-Date & Race & Name & Chamber & Party & Incumbent & Method & Probability
-& Outcome\tabularnewline
+Date & Race & Name & Chamber & Party & Special & Incumbent & Method &
+Probability\tabularnewline
 \midrule
 \endhead
-2018-09-19 & MI-99 & Stabenow & senate & D & TRUE & model & 0.992 &
-TRUE\tabularnewline
-2018-08-01 & PA-15 & Boser & house & D & FALSE & market & 0.070 &
-TRUE\tabularnewline
-2018-10-21 & OH-01 & Pureval & house & D & FALSE & model & 0.224 &
-TRUE\tabularnewline
-2018-10-02 & MN-08 & Stauber & house & R & FALSE & market & 0.550 &
-FALSE\tabularnewline
-2018-10-13 & WV-99 & Manchin & senate & D & TRUE & model & 0.867 &
-TRUE\tabularnewline
-2018-11-05 & MI-99 & Stabenow & senate & D & TRUE & model & 0.960 &
-TRUE\tabularnewline
-2018-08-31 & WA-08 & Schrier & house & D & FALSE & market & 0.550 &
-TRUE\tabularnewline
-2018-10-25 & NY-09 & Gayot & house & R & FALSE & model & 0.000 &
-FALSE\tabularnewline
-2018-10-29 & PA-99 & Casey & senate & D & TRUE & market & 0.920 &
-TRUE\tabularnewline
-2018-08-16 & WV-03 & Ojeda & house & D & FALSE & model & 0.060 &
-TRUE\tabularnewline
+2018-09-26 & CT-05 & Hayes & house & D & FALSE & FALSE & market &
+0.950\tabularnewline
+2018-08-09 & NC-13 & Manning & house & D & FALSE & FALSE & market &
+0.550\tabularnewline
+2018-08-09 & NY-01 & Zeldin & house & R & FALSE & TRUE & market &
+0.710\tabularnewline
+2018-10-17 & CA-10 & Denham & house & R & FALSE & TRUE & market &
+0.290\tabularnewline
+2018-08-27 & MA-99 & Warren & senate & D & FALSE & TRUE & model &
+0.999\tabularnewline
+2018-09-02 & NV-03 & Lee & house & D & FALSE & FALSE & model &
+0.687\tabularnewline
+2018-09-25 & MD-06 & Trone & house & D & FALSE & FALSE & market &
+0.990\tabularnewline
+2018-10-27 & IA-01 & Blum & house & R & FALSE & TRUE & model &
+0.034\tabularnewline
+2018-08-23 & PA-15 & Boser & house & D & FALSE & FALSE & market &
+0.040\tabularnewline
+2018-09-23 & VA-06 & Cline & house & R & FALSE & FALSE & market &
+0.920\tabularnewline
 \bottomrule
 \end{longtable}
 
 \subsection{Exploratory Plots}\label{exploratory-plots}
 
-\includegraphics{progress_report_files/figure-latex/print_plots-1.pdf}
-\includegraphics{progress_report_files/figure-latex/print_plots-2.pdf}
-\includegraphics{progress_report_files/figure-latex/print_plots-3.pdf}
-\includegraphics{progress_report_files/figure-latex/print_plots-4.pdf}
-\includegraphics{progress_report_files/figure-latex/print_plots-5.pdf}
+Below is a preliminary comparison of of each method's percentage of
+correct predictions over time. More work needs to be done to properly
+account for all the differences in the 111 races.
+
+\includegraphics{progress_report_files/figure-latex/p2_plot-1.pdf}
+
+Below are histograms comparing the distribution of probabilities in the
+raw data sets from PredictIt and FiveThirtyEight the day before the
+election. Note how the model predicts every race every day while the
+markets only focus on races of interest to the traders. The races of
+interest are those where the traders believe they can make a successful
+bet against the market, meaning a greater proportion of the races
+predicted by markets are toss-ups. Both methods will have to be assessed
+on these shared races of interest.
+
+\includegraphics{progress_report_files/figure-latex/plot_races_hist-1.pdf}
+
+Another point of difference is the number of predictions made by each
+method over time. The model model predicts every race every day, whereas
+more markets are added to the exchange every day. Below is a plot
+showing the number of open midterm election markets hosted on the
+PredictIt exchange in 2018.
+
+\includegraphics{progress_report_files/figure-latex/plot_cum_markets-1.pdf}
+
+Below are plots showing the the increase in the two underlying inputs in
+each method. While the model takes into account a number of quantitative
+factors, polling still plays the largest and more useful roll in
+predicting an election. Similarly, the accuracy of prediction markets
+relies on the volume of the markets; the greater the volume of money
+being exchanged on the markets, the greater the economic forces of price
+discovery and can capture the underlying probabilities associated with
+the market equilibrium.
+
+\includegraphics{progress_report_files/figure-latex/plot_cum_polls-1.pdf}
+\includegraphics{progress_report_files/figure-latex/plot_cum_polls-2.pdf}
 
 
 \end{document}

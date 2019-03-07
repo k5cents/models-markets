@@ -8,7 +8,9 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      cache = TRUE)
+                      cache = TRUE,
+                      fig.width = 10,
+                      fig.height = 5)
 library(tidyverse)
 library(knitr)
 ```
@@ -26,14 +28,14 @@ rm(code_fnames)
 I have not made significant changes to the research question I initially
 proposed. I am trying to determine the predictive capabilities of markets as
 they compare to the more popular mathematical forecasting models. Are prediction
-markets as (or more) accurate that forecasting models, and if so, under what
-conditions? What role might prediction markets play in the American
-Congressional campaign?
+markets as accurate as forecasting models? Under what conditions does each
+method perform? What role might prediction markets play in the Congressional
+campaigns?
 
 In statistical terms: I propose the null hypothesis of no difference in
-proportion races correctly called by markets and models. Over one hundred races
-of interest will are predicted daily, from August 1st to November 5th, by both
-the markets on PredictIt and the model by FiveThirtyEight.
+proportion races correctly called by markets and models. Ultimately, I hope to
+perform a test of equal proportion on a string of prediction outcomes (correct
+or incorrect predictions).
 
 ## Market Data
 
@@ -96,12 +98,12 @@ of all races correctly predicted represents the accuracy of the markets method.
 
 ## Model Data
 
-FiveThirtyEight.com was launched in 2008 by Nate Silver to aggrigate polls of
+FiveThirtyEight.com was launched in 2008 by Nate Silver to aggregate polls of
 the Democratic Presidential Primary to better forecast the winner. In the decade
 since, the model used by FiveThirtyEight has grown in complexity. For the 2018
 Midterm elections, FiveThirtyEight published models for House, Senate, and
-Governors races. The models incorperate quantitative inputs (primarily polling)
-to simulate the election and produce a probabalistic view of the election.
+Governors races. The models incorporate quantitative inputs (primarily polling)
+to simulate the election and produce a probabilistic view of the election.
 
 The team at FiveThirtyEight makes public the top-line output of their models as
 four separate `.csv` files on their website:
@@ -126,7 +128,7 @@ and House data sets contain 328,113 observations of 12 variables:
 04. Whether the election is a "special election"
 05. Candidate's full name
 06. Candidate's political party
-07. Whether the candiate is an incumbent
+07. Whether the candidate is an incumbent
 08. Model version (classic, lite, or deluxe)
 09. Candidate's probability of victory
 10. Candidate's expected share of the vote
@@ -161,14 +163,22 @@ frame with 26,778 observations of 10 variables:
 04. Election chamber
 05. Candidate's party
 06. Whether the election is a "special election"
-07. Whether the candiate is an incumbent
+07. Whether the candidate is an incumbent
 08. Whether the prediction comes from the markets or model
 09. Candidate's probability of victory
-10. Whether the prediction was correct
 
 ```{r prediction_data, echo=FALSE, message=FALSE}
-read_csv("./output/predictions.csv") %>%
-  select(-special) %>%
+left_join(markets, model,
+          by = c("date", "race", "party")) %>%
+  filter(date >= "2018-08-01",
+         date <= "2018-11-05") %>%
+  select(date, race, name, chamber, party, special, incumbent, prob, close) %>%
+  rename(model  = prob,
+         market = close) %>%
+  gather(model, market,
+         key   = method,
+         value = prob) %>%
+  arrange(date, race, name) %>% 
   sample_n(10) %>%
   kable(digits = 3,
         col.names = c("Date", 
@@ -176,19 +186,53 @@ read_csv("./output/predictions.csv") %>%
                       "Name",
                       "Chamber",
                       "Party",
+                      "Special",
                       "Incumbent",
                       "Method",
-                      "Probability", 
-                      "Outcome"),
-        caption = "10 of 26,778 observations with 9 of 10 variables")
+                      "Probability"),
+        caption = "10 of 26,778 observations with 9 variables")
 ```
 
 ## Exploratory Plots
 
-```{r print_plots, echo=FALSE, message=FALSE, warning=FALSE}
+Below is a preliminary comparison of of each method's percentage of correct
+predictions over time. More work needs to be done to properly account for all
+the differences in the 111 races.
+
+```{r p2_plot, echo=FALSE, message=FALSE, warning=FALSE}
 p2_plot
+```
+
+Below are histograms comparing the distribution of probabilities in the raw data
+sets from PredictIt and FiveThirtyEight the day before the election. Note how
+the model predicts every race every day while the markets only focus on races of
+interest to the traders. The races of interest are those where the traders
+believe they can make a successful bet against the market, meaning a greater
+proportion of the races predicted by markets are toss-ups. Both methods will
+have to be assessed on these shared races of interest.
+
+```{r plot_races_hist, echo=FALSE, message=FALSE, warning=FALSE}
 plot_races_hist
+```
+
+Another point of difference is the number of predictions made by each method
+over time. The model model predicts every race every day, whereas more markets
+are added to the exchange every day. Below is a plot showing the number of open
+midterm election markets hosted on the PredictIt exchange in 2018.
+
+```{r plot_cum_markets, echo=FALSE, message=FALSE, warning=FALSE}
 plot_cum_markets
+```
+
+Below are plots showing the the increase in the two underlying inputs in each
+method. While the model takes into account a number of quantitative factors,
+polling still plays the largest and more useful roll in predicting an election.
+Similarly, the accuracy of prediction markets relies on the volume of the
+markets; the greater the volume of money being exchanged on the markets, the
+greater the economic forces of price discovery and can capture the underlying
+probabilities associated with the market equilibrium.
+
+```{r plot_cum_polls, echo=FALSE, message=FALSE, warning=FALSE}
 plot_cum_polls
 plot_cum_dollars
 ```

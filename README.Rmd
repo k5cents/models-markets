@@ -114,17 +114,17 @@ few mainstream forecasters to continue their work into the 2018 midterm
 elections. Furthermore, the make the top-line output of their model free to the
 public.
 
-The goal of these mathematical forcasting models, [according to Silver][21], is
+The goal of these mathematical forecasting models, [according to Silver][21], is
 "not to divine some magic formula that miraculously predicts every election.
 Instead, it’s to make sense of publicly available information in a rigorous and
 disciplined way."
 
 #### Model Inputs
 
-FiveThirtyEight's 2018 House and Senate models incorperate four types of
-quantiative data:
+FiveThirtyEight's 2018 House and Senate models incorporate four types of
+quantitative data:
 
-1. **Polling:** District levek polling. [FiveThirtyEight rates pollsters][09] to
+1. **Polling:** District level polling. [FiveThirtyEight rates pollsters][09] to
 adjust their findings. The results are further adjusted three times:
     1. The likely voter adjustment ensures a more accurate sampling frame.
     1. The conservative timeline adjustment to favor recency.
@@ -142,7 +142,7 @@ congressional races:
     * Incumbent voting
     * Challenger experience
     * [Scandals][20]
-1. **Expert forecasts:** Ratings published by the historically accuracte experts 
+1. **Expert forecasts:** Ratings published by the historically accurate experts 
 at the [Cook Political Report][22], [Inside Elections][23], and 
 [Sabato’s Crystal Ball][24].
 
@@ -152,7 +152,7 @@ FiveThirtyEight uses these inputs to generate three models. The "classic" model
 #### Model Outputs
 
 In describing the process of their 2014 Senate Model, Silver explains how the
-above inputs are incorperated in producing a probabalistic output:
+above inputs are incorporated in producing a probabilistic output:
 
 > Most election models (including [FiveThirtyEight's]) work in something like
 the following way: First, they calculate the most likely outcome in a particular
@@ -172,7 +172,7 @@ is _greater_ when:
 1. There are more undecideds or third-party voters in the polls
 1. The race is more lopsided
 
-With these quantiative facors in mind, the model calculates the probability
+With these quantitative factors in mind, the model calculates the probability
 distribution in each candidate's share of the vote.
 
 The model then runs uses these predicted shares to run a 
@@ -329,14 +329,14 @@ The above data sets were formatted to contain three keys variables: `date`,
 `race`, and `party`. With these variables shared for each observation across
 both the model and market data sets, a relational join can be performed.
 
-For model data, the `race` variable is created by combinding the `state` and
+For model data, the `race` variable is created by combining the `state` and
 `district` variables. For market data, the race code is extracted from the
 `MarketSymbol` variable.
 
 The `party` variable is included in the model data by default. For market data,
 House race party variables are extracted from "DEM" and "GOP" in the
 `ContractSymbol` character string. Senate race party variables are obtained
-using the incumbet's name in the `MarketSymbol` character string and the
+using the incumbent's name in the `MarketSymbol` character string and the
 `/congress-legislators` data set maintained by the @United States project.
 
 We then gather the variables to make the single data frame "[tidy][19]" with each
@@ -364,22 +364,28 @@ predictions %>%
 
 The FiveThirtyEight model generates daily probabilities for every election in
 both chambers. On PredictIt.org, some markets were open for trading as early as
-January and the rest were added over time. Furthermore, the traders on
-PredictIt.org are not interested in betting on every election, as the vast
-majority have little risk (only 91 races were traded on prediction markets by
-election day).
+January _2017_ and the rest were added over time. Furthermore, the traders on
+PredictIt are not interested in betting on every election, as the vast majority
+have little risk (only 111 races were traded on prediction markets by election
+day).
 
 Below are histograms of the Democratic candidates' probabilities the day before
 the election, split by the predictive method used. The model, which includes
 every race, gives the vast majority of candidates a less than 10% or greater
 than 90% chance of winning their respective elections. The markets, which only
-exist for the most contentious and popular raves, are more uniform it its
+exist for the most contentious and popular races, are more uniform it their
 distribution of probabilities.
 
+Also below are plots showing the increase in input data over time for the
+respective methods. Both polls and dollars traded (the two primary inputs for
+each method) increase exponentially over time. Theoretically, more input data
+would improve predictive accuracy.
+
 ```{r plots, echo=FALSE, message=FALSE}
+plot_races_hist
+plot_cum_markets
 plot_cum_polls
 plot_cum_dollars
-plot_cum_markets
 ```
 ----
 

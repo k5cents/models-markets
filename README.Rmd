@@ -379,7 +379,7 @@ distribution of probabilities.
 ```{r n_markets, echo=FALSE}
 plot_races_hist
 plot_n_markets
-plot_races_hist
+
 plot_n_polls
 ```
 

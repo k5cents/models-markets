@@ -584,8 +584,12 @@ than 10% or greater than 90% chance of winning their respective
 elections. The markets, which only exist for the most contentious and
 popular raves, are more uniform it its distribution of probabilities.
 
-![](README_files/figure-markdown_strict/races_dist-1.png)
+    ## Warning: Removed 393 rows containing non-finite values (stat_bin).
 
 ![](README_files/figure-markdown_strict/n_markets-1.png)![](README_files/figure-markdown_strict/n_markets-2.png)
+
+    ## Warning: Removed 393 rows containing non-finite values (stat_bin).
+
+![](README_files/figure-markdown_strict/n_markets-3.png)![](README_files/figure-markdown_strict/n_markets-4.png)
 
 ------------------------------------------------------------------------

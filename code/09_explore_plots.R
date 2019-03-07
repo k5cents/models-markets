@@ -32,7 +32,7 @@ plot_n_polls <-
   geom_line(size = 2,
             color = "#ED713A") +
   labs(title = "Cumulative Number of Congressional Polls",
-       subtitle = "Across all Congressional races, conducted by all polling firms in 2018",
+       subtitle = "Across all Congressional races and all polling firms",
        x = "Date",
        y = "Polls to Date") +
   geom_vline(xintercept = as.Date("2018-08-01"), size = 1) +
@@ -68,6 +68,32 @@ plot_n_markets <-
              label.size = 0,
              size = 7)
 
+# Number of dollars traded over time
+plot_races_hist <-
+  markets %>%
+  filter(date > "2018-01-01",
+         date < "2018-11-05") %>%
+  group_by(date) %>%
+  mutate(traded = close * vol) %>%
+  summarise(sum = sum(traded)) %>%
+  mutate(cum = cumsum(sum)) %>%
+  ggplot(aes(date, cum)) +
+  geom_line(col = col_market, size = 2) +
+  labs(title = "Cumulative Dollars Traded on Election Markets",
+       subtitle = "Close market price multiplied by shares traded",
+       x = "Date",
+       y = "Dollars Traded to Date") +
+  geom_vline(xintercept = as.Date("2018-08-01"), size = 1) +
+  geom_vline(xintercept = as.Date("2018-11-05"), size = 1) +
+  geom_label(mapping = aes(x = as.Date("2018-09-18"),
+                           y = 75,
+                           label = "Span of Model"),
+             fill = "#ebebeb",
+             label.size = 0,
+             size = 7) +
+  scale_y_continuous(labels = scales::dollar)
+
+
 # Distribution of original probabilities by method
 plot_races_hist <-
   # Join market onto model keep all model races
@@ -93,3 +119,4 @@ plot_races_hist <-
        subtitle = "Day Before Election",
        x = "Democratic Win Probability",
        y = "Number of Races")
+

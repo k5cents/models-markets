@@ -589,7 +589,5 @@ the respective methods. Both polls and dollars traded (the two primary
 inputs for each method) increase exponentially over time. Theoretically,
 more input data would improve predictive accuracy.
 
-    ## Warning: Removed 393 rows containing non-finite values (stat_bin).
-
 ![](README_files/figure-markdown_strict/plots-1.png)![](README_files/figure-markdown_strict/plots-2.png)![](README_files/figure-markdown_strict/plots-3.png)![](README_files/figure-markdown_strict/plots-4.png)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

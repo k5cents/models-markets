@@ -381,7 +381,7 @@ respective methods. Both polls and dollars traded (the two primary inputs for
 each method) increase exponentially over time. Theoretically, more input data
 would improve predictive accuracy.
 
-```{r plots, echo=FALSE, message=FALSE}
+```{r plots, echo=FALSE, message=FALSE, warning=FALSE}
 plot_races_hist
 plot_cum_markets
 plot_cum_polls

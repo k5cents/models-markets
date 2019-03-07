@@ -56,7 +56,7 @@ rm(output_files)
 ```
 
 ```{r format_files, echo=FALSE, message=FALSE, warning=FALSE}
-code_fnames <- list.files(path = "./code", full.names = TRUE)[]
+code_fnames <- list.files(path = "./code", full.names = TRUE)
 for (i in seq_along(code_fnames)) {
   source(code_fnames[i])
 }
@@ -376,13 +376,11 @@ than 90% chance of winning their respective elections. The markets, which only
 exist for the most contentious and popular raves, are more uniform it its
 distribution of probabilities.
 
-```{r n_markets, echo=FALSE}
-plot_races_hist
-plot_n_markets
-
-plot_n_polls
+```{r plots, echo=FALSE, message=FALSE}
+plot_cum_polls
+plot_cum_dollars
+plot_cum_markets
 ```
-
 ----
 
 [01]: https://fivethirtyeight.com/ "538 home page"

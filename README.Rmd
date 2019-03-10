@@ -2,14 +2,17 @@
 title: "README"
 author: "Kiernan Nicholls"
 date: "January 23, 2019"
-output: md_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE,
+                      error = FALSE,
+                      cache = TRUE,
                       fig.width = 10,
-                      fig.height = 5,
-                      cache = TRUE)
+                      fig.height = 5)
 library(tidyverse)
 library(knitr)
 ```
@@ -29,38 +32,40 @@ Using R to compare the predictive capabilities of markets and models.
 1. [Data Wrangling](#data-wrangling)
 1. [Data Exploration](#data-exploration)
 
-```{r read_inputs, echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
-input_fnames <- list.files(path = "./input", full.names = TRUE)
-input_files <- lapply(input_fnames, read_csv)
-input_onames <- 
-  list.files(path = "./input", full.names = FALSE) %>% 
-  str_remove(".csv")
-
-for (i in seq_along(input_files)) {
-  assign(input_onames[i], input_files[[i]])
-}
-rm(input_files)
+```{r input_scrape}
+source("./code/01_input_scrape.R")
 ```
 
-```{r read_outputs, echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
-output_fnames <- list.files(path = "./output", full.names = TRUE)
-output_files <- lapply(output_fnames, read_csv)
-output_onames <- 
-  list.files(path = "./output", full.names = FALSE) %>% 
-  str_remove(".csv")
-
-for (i in seq_along(output_files)) {
-  assign(output_onames[i], output_files[[i]])
-}
-rm(output_files)
+```{r members_format}
+source("./code/02_members_format.R")
 ```
 
-```{r format_files, echo=FALSE, message=FALSE, warning=FALSE}
-code_fnames <- list.files(path = "./code", full.names = TRUE)
-for (i in seq_along(code_fnames)) {
-  source(code_fnames[i])
-}
-rm(code_fnames)
+```{r model_format}
+source("./code/03_model_format.R")
+```
+
+```{r market_format}
+source("./code/04_market_format.R")
+```
+
+```{r results_format}
+source("./code/05_results_format.R")
+```
+
+```{r compare_format}
+source("./code/06_compare_format.R")
+```
+
+```{r lean_format}
+source("./code/07_lean_format.R")
+```
+
+```{r polling_format}
+source("./code/08_polling_format.R")
+```
+
+```{r explore_plots}
+source("./code/09_explore_plots.R")
 ```
 
 ## Project
@@ -345,20 +350,21 @@ observation representing one prediction (on one date, for one candidate, with
 one method). The resulting data set has 29,602 observations with nine variables.
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
-predictions %>%
+read_csv("./output/predictions.csv") %>%
   .[1:10, ] %>% 
   knitr::kable(format = "markdown",
-        digits = 4,
-        col.names = c("Date", 
-                      "Race",
-                      "Name",
-                      "Chamber",
-                      "Party",
-                      "Special",
-                      "Method",
-                      "Probability",
-                      "Outcome"),
-        caption = "29,602 observations of 9 variables")
+               digits = 4,
+               col.names = c("Date", 
+                             "Race",
+                             "Name",
+                             "Chamber",
+                             "Party",
+                             "Special",
+                             "Incumbent",
+                             "Method",
+                             "Probability",
+                             "Outcome"),
+               caption = "29,602 observations of 9 variables")
 ```
 
 ## Data Exploration

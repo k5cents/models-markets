@@ -1,9 +1,9 @@
 # Kiernan Nicholls
 # Check predictions against election results
 
-# Some markets only have data on candidate from 1 party
-# We only need probability for one candidate in each race
-# I will use the democratic candidate
+## Some markets only have data on candidate from 1 party
+## We only need probability for one candidate in each race
+## I will use the democratic candidate
 
 # Find races with data on multiple Democratic candidates
 multiple_dem <- model %>%
@@ -32,7 +32,9 @@ multiple_gop <- model %>%
 model2 <- model %>%
   group_by(date, race, party, incumbent) %>%
   summarise(prob = sum(prob)) %>%
-  filter(party == "D")
+  ungroup() %>%
+  filter(party == "D") %>%
+  select(-party)
 
 invert_gop <- markets %>%
   group_by(date, race, party, vol, close) %>%
@@ -51,12 +53,12 @@ original_dem <- markets %>%
 markets2 <- bind_rows(invert_gop, original_dem) %>% select(-party)
 
 # Join with models
-predictions <-
-  left_join(markets2, model,
-            by = c("date", "race", "party")) %>%
+df <-
+  left_join(markets2, model2,
+            by = c("date", "race")) %>%
   filter(date >= "2018-08-01",
          date <= "2018-11-05") %>%
-  select(date, race, name, chamber, party, special, incumbent, prob, close) %>%
+  select(date, race, incumbent, vol, close, prob) %>%
 
   # Tidy data, gather by predictive method
   rename(model  = prob,
@@ -64,14 +66,12 @@ predictions <-
   gather(model, market,
          key   = method,
          value = prob) %>%
-  arrange(date) %>%
+  arrange(date, race) %>%
+  mutate(pick = if_else(prob > 0.50, TRUE, FALSE))
 
-  # Add the binary win/loss prediction
-  mutate(pick = if_else(prob > 0.50, TRUE, FALSE)) %>%
-
-  # Join with election results
+# Join with election results
+df2 <- df %>%
   left_join(results, by = "race") %>%
-
   # Compare the method prediction to actual winner
   mutate(correct = if_else(pick == winner, TRUE, FALSE)) %>%
   select(-pick, -winner)

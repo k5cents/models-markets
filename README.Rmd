@@ -1,8 +1,22 @@
 ---
 title: "README"
 author: "Kiernan Nicholls"
-date: "January 23, 2019"
-output: html_document
+date: "May, 2018"
+output:
+  html_document:
+    keep_md: true
+    fig_retina: 2
+    fig_width: 10
+    df_print: kable
+    number_sections: true
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+      fig_caption: true
+
+#   md_document:
+#     variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
@@ -10,9 +24,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       warning = FALSE,
                       message = FALSE,
                       error = FALSE,
-                      cache = TRUE,
-                      fig.width = 10,
-                      fig.height = 5)
+                      cache = TRUE)
 library(tidyverse)
 library(knitr)
 ```
@@ -20,17 +32,6 @@ library(knitr)
 # _predictr_
 
 Using R to compare the predictive capabilities of markets and models.
-
-1. [Project Background](#project-background)
-1. [Predictive Methods](#predictive-methods)
-    1. [Polling and Aggregation](###polling-and-aggregation)
-    1. [Forecasting Models](#forecasting-models)
-    1. [Prediction Markets](#prediction-markets)
-1. [Prediction Data](#prediction-data)
-    1. [FiveThirtyEight Model](#fivethirtyeight-model)
-    1. [PredictIt Markets](#predictit-markets)
-1. [Data Wrangling](#data-wrangling)
-1. [Data Exploration](#data-exploration)
 
 ```{r input_scrape}
 source("./code/01_input_scrape.R")
@@ -253,19 +254,19 @@ district model data set.
 
 ```{r model_data, echo=FALSE, message=FALSE}
 model_district %>%
-  select(-candidate, -p10_voteshare, -p90_voteshare) %>% 
+  select(-special, -p10_voteshare, -p90_voteshare) %>% 
   sample_n(5) %>%
   kable(format = "markdown",
         digits = 3,
         col.names = c("Date", 
                       "State", 
                       "District",
-                      "Special",
+                      "Candidate",
                       "Party",
                       "Incumbent",
                       "Model",
-                      "Win Prob.", 
-                      "Avg Share"),
+                      "Probability", 
+                      "Vote Share"),
         caption = "299,760 observations of 7 variables")
 ```
 
@@ -313,8 +314,7 @@ Below is a random sample of observations from the PredictIt trading markets.
 ```{r market_data, echo=FALSE, message=FALSE}
 markets_data %>% 
   select(-MarketName, 
-         -ContractName,
-         -OpenPrice) %>% 
+         -ContractName) %>% 
   sample_n(5) %>% 
   kable(format = "markdown",
         digits = 3,
@@ -322,6 +322,7 @@ markets_data %>%
                       "Market",
                       "Contract",
                       "Date",
+                      "Open",
                       "Low",
                       "High",
                       "Close",
@@ -350,19 +351,16 @@ observation representing one prediction (on one date, for one candidate, with
 one method). The resulting data set has 29,602 observations with nine variables.
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
-read_csv("./output/predictions.csv") %>%
-  .[1:10, ] %>% 
+df2 %>%
+  .[1:5, ] %>% 
   knitr::kable(format = "markdown",
                digits = 4,
                col.names = c("Date", 
                              "Race",
-                             "Name",
-                             "Chamber",
-                             "Party",
-                             "Special",
                              "Incumbent",
+                             "Volume",
                              "Method",
-                             "Probability",
+                             "Prediction",
                              "Outcome"),
                caption = "29,602 observations of 9 variables")
 ```

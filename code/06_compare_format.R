@@ -67,11 +67,10 @@ df <-
          key   = method,
          value = prob) %>%
   arrange(date, race) %>%
-  mutate(pick = if_else(prob > 0.50, TRUE, FALSE))
+  mutate(pick = if_else(prob > 0.50, TRUE, FALSE)) %>%
 
-# Join with election results
-df2 <- df %>%
+  # Join with election results
   left_join(results, by = "race") %>%
   # Compare the method prediction to actual winner
   mutate(correct = if_else(pick == winner, TRUE, FALSE)) %>%
-  select(-pick, -winner)
+  select(-incumbent, -vol)

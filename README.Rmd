@@ -185,12 +185,12 @@ capabilities.
 
 ```{r model_read}
 model_district <- read_csv("./input/model_district.csv")
-model_seat <- read_csv("./input/model_seat.csv")
-model_history <- bind_rows(model_district, model_seat)
+model_seat <- read_csv("./input/model_seat.csv") %>% rename(district = class)
+model_combined <- bind_rows(model_district, model_seat)
 ```
 
 ```{r model_stats}
-avg_daily <- model_history %>% 
+avg_daily <- model_combined %>% 
   group_by(forecastdate) %>% 
   summarise(n = n()) %>% 
   select(n) %>% 
@@ -217,10 +217,10 @@ Each observation represents one day's probability of victory for one candidate.
 There are `r nrow(model_seat)` observations in the Senate seat level file and 
 `r nrow(model_district)` for the House district level. Both data sets can be
 easily combined; together, there are an average of `r avg_daily` unique daily
-predictions from `r min(model_history$forecastdate)` to
-`r max(model_history$forecastdate)`.
+predictions from `r min(model_combined$forecastdate)` to
+`r max(model_combined$forecastdate)`.
 
-For each observation, there are `r length(model_history)` variables recorded:
+For each observation, there are `r length(model_combined)` variables recorded:
 
 1. Date
 1. State
@@ -234,11 +234,11 @@ For each observation, there are `r length(model_history)` variables recorded:
 1. Minimum share of the vote
 1. Maximum share of the vote
 
-Below is a random sample of observations from the FiveThirtyEight congressional
-district model data set.
+Below is a random sample of observations from the combined House district and
+Senare seate congressional model data sets.
 
 ```{r model_data, echo=FALSE, message=FALSE}
-model_district %>%
+model_combined %>%
   select(-special, -p10_voteshare, -p90_voteshare) %>% 
   sample_n(5) %>%
   kable(format = "markdown",
@@ -255,7 +255,18 @@ model_district %>%
         caption = "299,760 observations of 7 variables")
 ```
 
+Model data is combined and formatted with the code in 
+[/code/model_format.R]["./code/model_format.R"]
+
 ### PredictIt Markets Data
+
+```{r market_read}
+markets_data <- read_csv(file = "./input/markets_data.csv",
+                         na = c("n/a", "NA"),
+                         col_types = cols(MarketId = col_character(),
+                                          ContractName = col_character(),
+                                          ContractSymbol = col_character()))
+```
 
 Each Congressional race is predicted with it's own market where traders buy and
 sell shares of the opposing outcomes. Instead of producing a single prediction
@@ -313,37 +324,44 @@ markets_data %>%
 
 ## Data Wrangling
 
-The above data sets were formatted to contain three keys variables: `date`,
-`race`, and `party`. With these variables shared for each observation across
-both the model and market data sets, a relational join can be performed.
+```{r read_final}
+df <- read_csv("./output/df.csv")
+```
+
+The above data sets were both formatted to contain three keys variables: `date`,
+`race`, and `party`. Together, these three variables create a relational key
+that can be used to join the two data sets for comparison.
 
 For model data, the `race` variable is created by combining the `state` and
-`district` variables. For market data, the race code is extracted from the
-`MarketSymbol` variable.
+`district` variables. For market data, the `race` code is extracted from the
+`MarketSymbol` variable or candidate name.
 
-The `party` variable is included in the model data by default. For market data,
+For market data,
 House race party variables are extracted from "DEM" and "GOP" in the
 `ContractSymbol` character string. Senate race party variables are obtained
 using the incumbent's name in the `MarketSymbol` character string and the
-`/congress-legislators` data set maintained by the @United States project.
+[`/congress-legislators`][25] data set maintained by the @United States project.
 
-We then gather the variables to make the single data frame "[tidy][19]" with each
-observation representing one prediction (on one date, for one candidate, with
-one method). The resulting data set has 29,602 observations with nine variables.
+Observations can then be gathered to make the single combined data frame
+"[tidy][19]" with each observation representing one prediction (on one date, for
+one party, with one predictive method). The resulting data set has 29,602
+observations with nine variables.
+
+Redundant observations are 
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
-df2 %>%
+df %>%
   .[1:5, ] %>% 
   knitr::kable(format = "markdown",
                digits = 4,
                col.names = c("Date", 
                              "Race",
-                             "Incumbent",
-                             "Volume",
                              "Method",
                              "Prediction",
-                             "Outcome"),
-               caption = "29,602 observations of 9 variables")
+                             "Democrat Predicted",
+                             "Democrat Won",
+                             "Prediction Correct"),
+               caption = "29,400 observations of 7 variables")
 ```
 
 ## Data Exploration

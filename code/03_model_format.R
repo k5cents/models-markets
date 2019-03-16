@@ -1,12 +1,14 @@
 # Kiernan Nicholls
 # Format forecast model data from FiveThirtyEight
 
+# Format district for race variable
 model_district2 <- model_district %>%
   mutate(district = str_pad(string = district,
                             width = 2,
                             side = "left",
                             pad = "0"))
 
+# Format class for race variable
 model_seat2 <- model_seat %>%
   rename(district = class) %>%
   mutate(district = str_pad(string = district,
@@ -15,7 +17,10 @@ model_seat2 <- model_seat %>%
                             pad = "S"))
 
 model_combined <-
-  bind_rows(model_district2, model_seat2, .id = "chamber") %>%
+  bind_rows(model_district2, model_seat2,
+            # Variable identifying which data set obs originates
+            .id = "chamber") %>%
+  # Create race variable for relational join
   unite(col = race,
         state, district,
         sep = "-",
@@ -26,59 +31,31 @@ model_combined <-
          min_share = p10_voteshare,
          max_share = p90_voteshare) %>%
   filter(name != "Others") %>%
-  select(date, race, name, party, chamber, everything())
+  select(date, race, name, party, chamber, everything()) %>%
+  arrange(date, name)
 
+# Recode identifying variable for clarification
 model_combined$chamber <- recode(model_combined$chamber,
                                  "1" = "house",
                                  "2" = "senate")
 
-model_history <-
-  model_seat %>%
-  mutate(chamber = "senate",
-         district = if_else(special, 98, 99)) %>%
-  bind_rows(model_district) %>%
-  mutate(chamber = if_else(is.na(chamber), "house", chamber),
-         district = str_pad(district, width = 2, pad = 0),
-         win_probability = round(win_probability, 3)) %>%
-  unite(col = race,
-        state, district,
-        sep = "-",
-        remove = TRUE) %>%
-  rename(name = candidate,
-         date = forecastdate,
-         prob = win_probability,
-         min_share = p10_voteshare,
-         max_share = p90_voteshare) %>%
-  select(date,
-         name,
-         chamber,
-         race,
-         party,
-         special,
-         incumbent,
-         prob,
-         min_share,
-         voteshare,
-         max_share,
-         model) %>%
-  filter(name != "Others")
+# Change to numeric senate seat codes. The S2/98 are SPECIAL elections.
+model_combined$race <- str_replace_all(model_combined$race, "S1", "99")
+model_combined$race <- str_replace_all(model_combined$race, "S2", "98")
 
-# Extract the last name for matching
-model_history$name <-
-  if_else(condition = word(model_history$name, -1) == "Jr.",
-          true = word(model_history$name, -2),
-          false =  if_else(condition = word(model_history$name, -1) == "III",
-                           true = word(model_history$name, -2),
-                           false = word(model_history$name, -1)))
+# Only special elections are for senate.
+model_combined$special[is.na(model_combined$special)] <- FALSE
 
-model_history <- model_history %>% arrange(date, name)
-model_history$special[is.na(model_history$special)] <- FALSE
+# Convert percent vote share values to decimal
+model_combined[, 10:12] <- model_combined[, 10:12] * 0.01
 
-# Recode incumbent Independents for relational joins
-model_history[model_history$incumbent & model_history$party == "I", ]$party <- "D"
+# Recode incumbent Independent senators for relational joins with Markets
+# Both caucus with Democrats and were endoresed by Democratic party
+model_combined$party[model_combined$name == "Bernard Sanders"] <- "D"
+model_combined$party[model_combined$name == "Angus King"]      <- "D"
 
 # Seperate model data by model format
 # According to 538, the "classic" model can be used as a default
-model <- filter(model_history, model == "classic") %>% select(-model)
-model_lite <- filter(model_history, model == "lite") %>% select(-model)
-model_delux <- filter(model_history, model == "deluxe") %>% select(-model)
+model <- filter(model_combined, model == "classic") %>% select(-model)
+model_lite <- filter(model_combined, model == "lite") %>% select(-model)
+model_deluxe <- filter(model_combined, model == "deluxe") %>% select(-model)

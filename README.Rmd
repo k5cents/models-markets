@@ -46,9 +46,9 @@ by the Victoria University of Wellington, New Zealand.
 
 Billions of dollars and millions of individual lives depend on the outcome of
 our elections. It's human nature to attempt to predict the outcome of these
-elections. These predictive methods also allow campaign opperatives to adjust
+elections. These predictive methods also allow campaign operatives to adjust
 their tactics in response to changing voter sentiment. There are a number of
-methods historically used to predict elections, each incorperating different
+methods historically used to predict elections, each incorporating different
 types of inputs and producing different types of predictions.
 
 ### Polling and Aggrigation
@@ -64,9 +64,9 @@ of the overall population.
 
 ### Forecasting Models
 
-Polling aggrigation plays a fundamental role in even the most complex
+Polling aggregation plays a fundamental role in even the most complex
 forecasting models. However, these statistical models can be written to
-incorperate even more types of quantiative data. As Nate Silver,
+incorporate even more types of quantitative data. As Nate Silver,
 FiveThirtyEight's founder and the primary author of their model, explains in
 their [methedological article][08]:
 
@@ -114,7 +114,7 @@ at the [Cook Political Report][22], [Inside Elections][23], and
 
 FiveThirtyEight uses these inputs to generate three models. The "Lite" model
 only uses polling and CANTOR; "Classic" adds in the fundamental data; and
-"Delux" further incorperates the less quantative expert forecasts.
+"Deluxe" further incorporates the less quantitative expert forecasts.
 
 In describing the process of their 2014 Senate Model, Silver explained how the
 above inputs are incorporated in producing a probabilistic output:
@@ -176,7 +176,7 @@ probabilities.
 
 I will use historical prediction data to compare the strengths, weaknesses, and
 overall accuracy of the two predictive methods of interest. Both the markets on
-PredictIt and the model from FiveThirtyEight produced daily probabalistic
+PredictIt and the model from FiveThirtyEight produced daily probabilistic
 predictions for a number of Congressional elections. We can compare these
 predictions with the eventual election results to assess their predictive
 capabilities.
@@ -235,7 +235,7 @@ For each observation, there are `r length(model_combined)` variables recorded:
 1. Maximum share of the vote
 
 Below is a random sample of observations from the combined House district and
-Senare seate congressional model data sets.
+Senate seat congressional model data sets.
 
 ```{r model_data, echo=FALSE, message=FALSE}
 model_combined %>%
@@ -256,7 +256,7 @@ model_combined %>%
 ```
 
 Model data is combined and formatted with the code in 
-[/code/model_format.R]["./code/model_format.R"]
+[`/code/03_model_format.R`][./code/03_model_format.R]
 
 ### PredictIt Markets Data
 
@@ -270,7 +270,7 @@ markets_data <- read_csv(file = "./input/markets_data.csv",
 
 Each Congressional race is predicted with it's own market where traders buy and
 sell shares of the opposing outcomes. Instead of producing a single prediction
-every day, the market equilibrium price is contiually adjusting to take into
+every day, the market equilibrium price is continually adjusting to take into
 account the views of the traders. The history of this price is provided to
 researchers. As [PredictIt outlines][16] in their data agreement:
 
@@ -322,6 +322,9 @@ markets_data %>%
         caption = "44,711 observations of 6 variables")
 ```
 
+Market data is formatted with the code in
+[/code/04_market_format.R][./code/04_market_format.R]
+
 ## Data Wrangling
 
 ```{r read_final}
@@ -347,7 +350,21 @@ Observations can then be gathered to make the single combined data frame
 one party, with one predictive method). The resulting data set has 29,602
 observations with nine variables.
 
-Redundant observations are 
+Redundant observations are removed by selecting only democratic party 
+probabilities. Some markets are comprised of yes/no contracts for a single
+Republican incumbent's re-election probability; for such markets, the price
+(probability) can be simply inverted.
+
+Below is the data frame of historical predictions along with the election
+results. There are `r nrow(df)` observations of `r length(df)` variables:
+
+1. Date
+1. Race
+1. Predictive Method
+1. The Democratic candidate's probability of winning
+1. Whether the Democratic candidate's probability is greater than 0.50
+1. Whether the Democratic candidate's ultimately won the election
+1. Whether that prediction is correct
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
 df %>%
@@ -363,6 +380,9 @@ df %>%
                              "Prediction Correct"),
                caption = "29,400 observations of 7 variables")
 ```
+
+Final tidy joined data is combined and formatted with the code in 
+[`/code/06_compare_format.R`][/code/06_compare_format.R]
 
 ## Data Exploration
 
@@ -385,7 +405,14 @@ respective methods. Both polls and dollars traded (the two primary inputs for
 each method) increase exponentially over time. Theoretically, more input data
 would improve predictive accuracy.
 
+Code to generate exploratory plots can be found in 
+[`/code/09_explore_plots.R`][/code/09_explore_plots]
+
 ```{r plots, echo=FALSE, message=FALSE, warning=FALSE}
+model <- read_csv("./output/model.csv")
+markets <- read_csv("./output/markets.csv")
+polling_data <- read_csv("./output/polling_data.csv")
+source("./code/09_explore_plots.R")
 plot_races_hist
 plot_cum_markets
 plot_cum_polls

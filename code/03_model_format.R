@@ -1,6 +1,37 @@
 # Kiernan Nicholls
 # Format forecast model data from FiveThirtyEight
 
+model_district2 <- model_district %>%
+  mutate(district = str_pad(string = district,
+                            width = 2,
+                            side = "left",
+                            pad = "0"))
+
+model_seat2 <- model_seat %>%
+  rename(district = class) %>%
+  mutate(district = str_pad(string = district,
+                            width = 2,
+                            side = "left",
+                            pad = "S"))
+
+model_combined <-
+  bind_rows(model_district2, model_seat2, .id = "chamber") %>%
+  unite(col = race,
+        state, district,
+        sep = "-",
+        remove = TRUE) %>%
+  rename(name = candidate,
+         date = forecastdate,
+         prob = win_probability,
+         min_share = p10_voteshare,
+         max_share = p90_voteshare) %>%
+  filter(name != "Others") %>%
+  select(date, race, name, party, chamber, everything())
+
+model_combined$chamber <- recode(model_combined$chamber,
+                                 "1" = "house",
+                                 "2" = "senate")
+
 model_history <-
   model_seat %>%
   mutate(chamber = "senate",

@@ -255,9 +255,6 @@ model_combined %>%
         caption = "299,760 observations of 7 variables")
 ```
 
-Model data is combined and formatted with the code in 
-[`/code/03_model_format.R`][code/03_model_format.R]
-
 ### PredictIt Markets Data
 
 ```{r market_read}
@@ -322,9 +319,6 @@ markets_data %>%
         caption = "44,711 observations of 6 variables")
 ```
 
-Market data is formatted with the code in
-[`/code/04_market_format.R`][code/04_market_format.R]
-
 ## Data Wrangling
 
 ```{r read_final}
@@ -382,9 +376,6 @@ df %>%
                caption = "29,400 observations of 7 variables")
 ```
 
-Final tidy joined data is combined and formatted with the code in 
-[`/code/06_compare_format.R`][code/06_compare_format.R]
-
 ## Data Exploration
 
 The FiveThirtyEight model generates daily probabilities for every election in
@@ -405,9 +396,6 @@ Also below are plots showing the increase in input data over time for the
 respective methods. Both polls and dollars traded (the two primary inputs for
 each method) increase exponentially over time. Theoretically, more input data
 would improve predictive accuracy.
-
-Code to generate exploratory plots can be found in 
-[`/code/09_explore_plots.R`][code/09_explore_plots]
 
 ```{r plots, echo=FALSE, message=FALSE, warning=FALSE}
 model <- read_csv("./output/model.csv")

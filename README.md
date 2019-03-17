@@ -120,15 +120,13 @@ For each observation, there are 12 variables recorded:
 
 Below is a random sample of observations from the combined House district and Senate seat congressional model data sets.
 
-| Date       | State |  District| Candidate        | Party | Incumbent | Model   |  Probability|  Vote Share|
-|:-----------|:------|---------:|:-----------------|:------|:----------|:--------|------------:|-----------:|
-| 2018-09-25 | NJ    |         1| Donald Norcross  | D     | TRUE      | lite    |        1.000|       72.17|
-| 2018-09-09 | TX    |        29| Sylvia R. Garcia | D     | FALSE     | deluxe  |        1.000|       71.61|
-| 2018-10-24 | PA    |         3| Dwight Evans     | D     | TRUE      | deluxe  |        1.000|       92.64|
-| 2018-10-21 | IA    |         2| David Loebsack   | D     | TRUE      | deluxe  |        0.995|       57.69|
-| 2018-08-10 | LA    |         1| Jim Francis      | D     | FALSE     | classic |        0.000|       11.58|
-
-Model data is combined and formatted with the code in \[`/code/03_model_format.R`\]\[code/03\_model\_format.R\]
+| Date       | State |  District| Candidate            | Party | Incumbent | Model   |  Probability|  Vote Share|
+|:-----------|:------|---------:|:---------------------|:------|:----------|:--------|------------:|-----------:|
+| 2018-09-24 | MO    |         1| Robert Vroman        | R     | FALSE     | lite    |        0.000|       13.91|
+| 2018-09-25 | RI    |         1| David Cicilline      | D     | TRUE      | lite    |        1.000|       77.39|
+| 2018-10-09 | VA    |        11| Jeff Dove            | R     | FALSE     | classic |        0.000|       29.85|
+| 2018-10-13 | AR    |         1| Chintan Desai        | D     | FALSE     | lite    |        0.006|       34.85|
+| 2018-08-01 | NY    |        18| Sean Patrick Maloney | D     | TRUE      | classic |        0.986|       59.72|
 
 ### PredictIt Markets Data
 
@@ -154,15 +152,13 @@ Each observation represents one day's opening, closing, low, and high price for 
 
 Below is a random sample of observations from the PredictIt trading markets.
 
-| ID   | Market             | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
-|:-----|:-------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
-| 3520 | KNIG.CA25.2018     | NA            | 2018-04-08 |  0.26|  0.26|  0.26|   0.26|       0|
-| 3538 | COMS.VA10.2018     | NA            | 2018-03-07 |  0.18|  0.18|  0.22|   0.18|     282|
-| 4843 | AZ02.2018          | DEM.AZ02.2018 | 2018-11-07 |  0.99|  0.99|  0.99|   0.99|      30|
-| 3886 | VA02.2018          | GOP.VA02.2018 | 2018-05-23 |  0.56|  0.56|  0.56|   0.56|       0|
-| 3507 | FLAK.AZSENATE.2018 | NA            | 2017-12-30 |  0.05|  0.05|  0.05|   0.05|       0|
-
-Market data is formatted with the code in \[`/code/04_market_format.R`\]\[code/04\_market\_format.R\]
+| ID   | Market                | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
+|:-----|:----------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
+| 4015 | MD06.2018             | GOP.MD06.2018 | 2018-01-26 |  0.06|  0.06|  0.06|   0.06|       0|
+| 4446 | MN01.2018             | GOP.MN01.2018 | 2018-06-27 |  0.44|  0.44|  0.44|   0.44|       0|
+| 3736 | PA15.2018             | GOP.PA15.2018 | 2018-03-22 |  0.77|  0.77|  0.83|   0.83|     100|
+| 2941 | MANCHIN.WVSENATE.2018 | NA            | 2018-01-11 |  0.66|  0.66|  0.66|   0.66|       0|
+| 3496 | MENE.NJSENATE.2018    | NA            | 2018-06-29 |  0.81|  0.78|  0.81|   0.81|     100|
 
 Data Wrangling
 --------------
@@ -195,8 +191,6 @@ Below is the data frame of historical predictions along with the election result
 | 2018-08-01 | AZ-99 | market |       0.660| TRUE               | TRUE         | TRUE               |
 | 2018-08-01 | CA-10 | model  |       0.705| TRUE               | TRUE         | TRUE               |
 
-Final tidy joined data is combined and formatted with the code in \[`/code/06_compare_format.R`\]\[code/06\_compare\_format.R\]
-
 Data Exploration
 ----------------
 
@@ -205,7 +199,5 @@ The FiveThirtyEight model generates daily probabilities for every election in bo
 Below are histograms of the Democratic candidates' probabilities the day before the election, split by the predictive method used. The model, which includes every race, gives the vast majority of candidates a less than 10% or greater than 90% chance of winning their respective elections. The markets, which only exist for the most contentious and popular races, are more uniform it their distribution of probabilities.
 
 Also below are plots showing the increase in input data over time for the respective methods. Both polls and dollars traded (the two primary inputs for each method) increase exponentially over time. Theoretically, more input data would improve predictive accuracy.
-
-Code to generate exploratory plots can be found in \[`/code/09_explore_plots.R`\]\[code/09\_explore\_plots\]
 
 ![](README_files/figure-markdown_github/plots-1.png)![](README_files/figure-markdown_github/plots-2.png)![](README_files/figure-markdown_github/plots-3.png)![](README_files/figure-markdown_github/plots-4.png)

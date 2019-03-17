@@ -256,7 +256,7 @@ model_combined %>%
 ```
 
 Model data is combined and formatted with the code in 
-[`/code/03_model_format.R`][./code/03_model_format.R]
+[`/code/03_model_format.R`][code/03_model_format.R]
 
 ### PredictIt Markets Data
 
@@ -323,7 +323,7 @@ markets_data %>%
 ```
 
 Market data is formatted with the code in
-[/code/04_market_format.R][./code/04_market_format.R]
+[`/code/04_market_format.R`][code/04_market_format.R]
 
 ## Data Wrangling
 
@@ -343,7 +343,8 @@ For market data,
 House race party variables are extracted from "DEM" and "GOP" in the
 `ContractSymbol` character string. Senate race party variables are obtained
 using the incumbent's name in the `MarketSymbol` character string and the
-[`/congress-legislators`][25] data set maintained by the @United States project.
+[`/congress-legislators`][25] data set maintained by the 
+[@unitedstates project][26].
 
 Observations can then be gathered to make the single combined data frame
 "[tidy][19]" with each observation representing one prediction (on one date, for
@@ -382,7 +383,7 @@ df %>%
 ```
 
 Final tidy joined data is combined and formatted with the code in 
-[`/code/06_compare_format.R`][/code/06_compare_format.R]
+[`/code/06_compare_format.R`][code/06_compare_format.R]
 
 ## Data Exploration
 
@@ -406,7 +407,7 @@ each method) increase exponentially over time. Theoretically, more input data
 would improve predictive accuracy.
 
 Code to generate exploratory plots can be found in 
-[`/code/09_explore_plots.R`][/code/09_explore_plots]
+[`/code/09_explore_plots.R`][code/09_explore_plots]
 
 ```{r plots, echo=FALSE, message=FALSE, warning=FALSE}
 model <- read_csv("./output/model.csv")
@@ -443,3 +444,5 @@ plot_cum_dollars
 [22]: https://cookpolitical.com/ "cook"
 [23]: https://insideelections.com/ "inside"
 [24]: http://www.centerforpolitics.org/crystalball/ "sabatos"
+[25]: https://github.com/unitedstates/congress-legislators "legislators"
+[26]: https://theunitedstates.io/ "@unitedstates"

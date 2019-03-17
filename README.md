@@ -120,15 +120,15 @@ For each observation, there are 12 variables recorded:
 
 Below is a random sample of observations from the combined House district and Senate seat congressional model data sets.
 
-| Date       | State |  District| Candidate         | Party | Incumbent | Model   |  Probability|  Vote Share|
-|:-----------|:------|---------:|:------------------|:------|:----------|:--------|------------:|-----------:|
-| 2018-09-30 | FL    |        20| Alcee L. Hastings | D     | TRUE      | lite    |        1.000|      100.00|
-| 2018-08-09 | NC    |         2| Jeff Matemu       | LIB   | FALSE     | deluxe  |        0.000|        2.68|
-| 2018-08-18 | TX    |        21| Joseph Kopser     | D     | FALSE     | deluxe  |        0.121|       42.59|
-| 2018-10-05 | OR    |         1| John Verbeek      | R     | FALSE     | deluxe  |        0.000|       31.21|
-| 2018-09-08 | MS    |         2| Chris McDaniel    | R     | FALSE     | classic |        0.008|       19.26|
+| Date       | State |  District| Candidate        | Party | Incumbent | Model   |  Probability|  Vote Share|
+|:-----------|:------|---------:|:-----------------|:------|:----------|:--------|------------:|-----------:|
+| 2018-09-25 | NJ    |         1| Donald Norcross  | D     | TRUE      | lite    |        1.000|       72.17|
+| 2018-09-09 | TX    |        29| Sylvia R. Garcia | D     | FALSE     | deluxe  |        1.000|       71.61|
+| 2018-10-24 | PA    |         3| Dwight Evans     | D     | TRUE      | deluxe  |        1.000|       92.64|
+| 2018-10-21 | IA    |         2| David Loebsack   | D     | TRUE      | deluxe  |        0.995|       57.69|
+| 2018-08-10 | LA    |         1| Jim Francis      | D     | FALSE     | classic |        0.000|       11.58|
 
-Model data is combined and formatted with the code in \[`/code/03_model_format.R`\]\[./code/03\_model\_format.R\]
+Model data is combined and formatted with the code in \[`/code/03_model_format.R`\]\[code/03\_model\_format.R\]
 
 ### PredictIt Markets Data
 
@@ -156,13 +156,13 @@ Below is a random sample of observations from the PredictIt trading markets.
 
 | ID   | Market             | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
 |:-----|:-------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
-| 4255 | MN03.2018          | GOP.MN03.2018 | 2018-09-14 |  0.25|  0.22|  0.34|   0.22|       2|
-| 4232 | CASE.PASENATE.2018 | NA            | 2018-07-19 |  0.89|  0.89|  0.89|   0.89|       0|
-| 3739 | MI11.2018          | GOP.MI11.2018 | 2018-01-06 |  0.47|  0.47|  0.47|   0.47|       0|
-| 4023 | MS03.2018          | GOP.MS03.2018 | 2018-03-18 |  0.85|  0.85|  0.85|   0.85|       0|
-| 3531 | CURB.FL26.2018     | NA            | 2018-09-24 |  0.55|  0.55|  0.57|   0.57|      97|
+| 3520 | KNIG.CA25.2018     | NA            | 2018-04-08 |  0.26|  0.26|  0.26|   0.26|       0|
+| 3538 | COMS.VA10.2018     | NA            | 2018-03-07 |  0.18|  0.18|  0.22|   0.18|     282|
+| 4843 | AZ02.2018          | DEM.AZ02.2018 | 2018-11-07 |  0.99|  0.99|  0.99|   0.99|      30|
+| 3886 | VA02.2018          | GOP.VA02.2018 | 2018-05-23 |  0.56|  0.56|  0.56|   0.56|       0|
+| 3507 | FLAK.AZSENATE.2018 | NA            | 2017-12-30 |  0.05|  0.05|  0.05|   0.05|       0|
 
-Market data is formatted with the code in \[/code/04\_market\_format.R\]\[./code/04\_market\_format.R\]
+Market data is formatted with the code in \[`/code/04_market_format.R`\]\[code/04\_market\_format.R\]
 
 Data Wrangling
 --------------
@@ -171,7 +171,7 @@ The above data sets were both formatted to contain three keys variables: `date`,
 
 For model data, the `race` variable is created by combining the `state` and `district` variables. For market data, the `race` code is extracted from the `MarketSymbol` variable or candidate name.
 
-For market data, House race party variables are extracted from "DEM" and "GOP" in the `ContractSymbol` character string. Senate race party variables are obtained using the incumbent's name in the `MarketSymbol` character string and the \[`/congress-legislators`\]\[25\] data set maintained by the @United States project.
+For market data, House race party variables are extracted from "DEM" and "GOP" in the `ContractSymbol` character string. Senate race party variables are obtained using the incumbent's name in the `MarketSymbol` character string and the [`/congress-legislators`](https://github.com/unitedstates/congress-legislators "legislators") data set maintained by the \[@unitedstates project\][26](https://theunitedstates.io/ "@unitedstates").
 
 Observations can then be gathered to make the single combined data frame "[tidy](http://vita.had.co.nz/papers/tidy-data.html "Tidy data")" with each observation representing one prediction (on one date, for one party, with one predictive method). The resulting data set has 29,602 observations with nine variables.
 
@@ -195,7 +195,7 @@ Below is the data frame of historical predictions along with the election result
 | 2018-08-01 | AZ-99 | market |       0.660| TRUE               | TRUE         | TRUE               |
 | 2018-08-01 | CA-10 | model  |       0.705| TRUE               | TRUE         | TRUE               |
 
-Final tidy joined data is combined and formatted with the code in \[`/code/06_compare_format.R`\]\[/code/06\_compare\_format.R\]
+Final tidy joined data is combined and formatted with the code in \[`/code/06_compare_format.R`\]\[code/06\_compare\_format.R\]
 
 Data Exploration
 ----------------
@@ -206,6 +206,6 @@ Below are histograms of the Democratic candidates' probabilities the day before 
 
 Also below are plots showing the increase in input data over time for the respective methods. Both polls and dollars traded (the two primary inputs for each method) increase exponentially over time. Theoretically, more input data would improve predictive accuracy.
 
-Code to generate exploratory plots can be found in \[`/code/09_explore_plots.R`\]\[/code/09\_explore\_plots\]
+Code to generate exploratory plots can be found in \[`/code/09_explore_plots.R`\]\[code/09\_explore\_plots\]
 
 ![](README_files/figure-markdown_github/plots-1.png)![](README_files/figure-markdown_github/plots-2.png)![](README_files/figure-markdown_github/plots-3.png)![](README_files/figure-markdown_github/plots-4.png)

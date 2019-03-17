@@ -1,8 +1,8 @@
 # Kiernan Nicholls
 # Generate exploratory visuals
 
-col_model <- "#ED713A" # 538 brand color
-col_market <- colortools::triadic(col_model, plot = FALSE)[3] # complimentary
+color_model <- "#ED713A" # 538 brand color
+color_market <- colortools::triadic(color_model, plot = FALSE)[3] # complimentary
 
 # Distribution of original probabilities by method
 plot_races_hist <-
@@ -23,7 +23,7 @@ plot_races_hist <-
   facet_wrap(~method, scales = "free_y") +
   scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.25)) +
   theme(legend.position = "bottom") +
-  scale_fill_manual(values = c(col_market, col_model)) +
+  scale_fill_manual(values = c(color_market, color_model)) +
   theme(legend.position = "none") +
   labs(title = "Distribution of Race Probabilities by Predictive Method",
        x = "Democratic Win Probability",
@@ -56,7 +56,7 @@ plot_cum_dollars <-
   summarise(sum = sum(traded)) %>%
   mutate(cum = cumsum(sum)) %>%
   ggplot(aes(date, cum)) +
-  geom_line(col = col_market, size = 2) +
+  geom_line(col = color_market, size = 2) +
   labs(title = "Cumulative Dollars Traded on Election Markets",
        x = "Date",
        y = "Dollars Traded to Date") +
@@ -74,7 +74,7 @@ plot_cum_markets <-
   ggplot() +
   geom_line(mapping = aes(date, count),
             size = 2,
-            color = col_market) +
+            color = color_market) +
   labs(title = "Cumulative Number of Election Markets",
        x = "Date",
        y = "Markets to Date") +

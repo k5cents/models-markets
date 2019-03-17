@@ -120,13 +120,13 @@ For each observation, there are 12 variables recorded:
 
 Below is a random sample of observations from the combined House district and Senate seat congressional model data sets.
 
-| Date       | State |  District| Candidate            | Party | Incumbent | Model   |  Probability|  Vote Share|
-|:-----------|:------|---------:|:---------------------|:------|:----------|:--------|------------:|-----------:|
-| 2018-09-24 | MO    |         1| Robert Vroman        | R     | FALSE     | lite    |        0.000|       13.91|
-| 2018-09-25 | RI    |         1| David Cicilline      | D     | TRUE      | lite    |        1.000|       77.39|
-| 2018-10-09 | VA    |        11| Jeff Dove            | R     | FALSE     | classic |        0.000|       29.85|
-| 2018-10-13 | AR    |         1| Chintan Desai        | D     | FALSE     | lite    |        0.006|       34.85|
-| 2018-08-01 | NY    |        18| Sean Patrick Maloney | D     | TRUE      | classic |        0.986|       59.72|
+| Date       | State |  District| Candidate       | Party | Incumbent | Model  |  Probability|  Vote Share|
+|:-----------|:------|---------:|:----------------|:------|:----------|:-------|------------:|-----------:|
+| 2018-08-02 | NY    |        26| Renee Zeno      | R     | FALSE     | deluxe |            0|       26.96|
+| 2018-08-22 | CA    |         6| Jrmar Jefferson | D     | FALSE     | lite   |            0|       21.60|
+| 2018-09-24 | MI    |         5| Travis Wines    | R     | FALSE     | deluxe |            0|       32.65|
+| 2018-09-28 | PA    |        13| John Joyce      | R     | FALSE     | deluxe |            1|       68.78|
+| 2018-10-20 | NY    |         1| Others          | NA    | FALSE     | deluxe |            0|        2.81|
 
 ### PredictIt Markets Data
 
@@ -152,13 +152,13 @@ Each observation represents one day's opening, closing, low, and high price for 
 
 Below is a random sample of observations from the PredictIt trading markets.
 
-| ID   | Market                | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
-|:-----|:----------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
-| 4015 | MD06.2018             | GOP.MD06.2018 | 2018-01-26 |  0.06|  0.06|  0.06|   0.06|       0|
-| 4446 | MN01.2018             | GOP.MN01.2018 | 2018-06-27 |  0.44|  0.44|  0.44|   0.44|       0|
-| 3736 | PA15.2018             | GOP.PA15.2018 | 2018-03-22 |  0.77|  0.77|  0.83|   0.83|     100|
-| 2941 | MANCHIN.WVSENATE.2018 | NA            | 2018-01-11 |  0.66|  0.66|  0.66|   0.66|       0|
-| 3496 | MENE.NJSENATE.2018    | NA            | 2018-06-29 |  0.81|  0.78|  0.81|   0.81|     100|
+| ID   | Market                 | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
+|:-----|:-----------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
+| 2998 | DONNELLY.INSENATE.2018 | NA            | 2017-02-26 |  0.33|  0.33|  0.33|   0.33|       0|
+| 3532 | LEWI.MN02.2018         | NA            | 2018-05-29 |  0.40|  0.40|  0.40|   0.40|       0|
+| 4104 | NJ11.2018              | DEM.NJ11.2018 | 2018-07-10 |  0.77|  0.77|  0.82|   0.77|      55|
+| 2999 | NELSON.FLSENATE.2018   | NA            | 2018-07-27 |  0.52|  0.52|  0.53|   0.53|      56|
+| 3489 | STAB.MISENATE.2018     | NA            | 2018-08-06 |  0.84|  0.79|  0.85|   0.80|    2653|
 
 Data Wrangling
 --------------
@@ -185,11 +185,11 @@ Below is the data frame of historical predictions along with the election result
 
 | Date       | Race  | Method |  Prediction| Democrat Predicted | Democrat Won | Prediction Correct |
 |:-----------|:------|:-------|-----------:|:-------------------|:-------------|:-------------------|
-| 2018-08-01 | AZ-99 | model  |       0.738| TRUE               | TRUE         | TRUE               |
-| 2018-08-01 | AZ-99 | model  |       0.738| TRUE               | TRUE         | TRUE               |
-| 2018-08-01 | AZ-99 | market |       0.660| TRUE               | TRUE         | TRUE               |
-| 2018-08-01 | AZ-99 | market |       0.660| TRUE               | TRUE         | TRUE               |
-| 2018-08-01 | CA-10 | model  |       0.705| TRUE               | TRUE         | TRUE               |
+| 2018-08-14 | MN-01 | market |       0.510| TRUE               | FALSE        | FALSE              |
+| 2018-09-01 | MT-99 | model  |       0.891| TRUE               | TRUE         | TRUE               |
+| 2018-09-04 | WV-03 | market |       0.400| FALSE              | FALSE        | TRUE               |
+| 2018-09-07 | MN-03 | market |       0.580| TRUE               | TRUE         | TRUE               |
+| 2018-09-18 | MD-06 | model  |       0.994| TRUE               | TRUE         | TRUE               |
 
 Data Exploration
 ----------------

@@ -241,6 +241,7 @@ Senate seat congressional model data sets.
 model_combined %>%
   select(-special, -p10_voteshare, -p90_voteshare) %>% 
   sample_n(5) %>%
+  arrange(forecastdate) %>% 
   kable(format = "markdown",
         digits = 3,
         col.names = c("Date", 
@@ -304,7 +305,8 @@ Below is a random sample of observations from the PredictIt trading markets.
 markets_data %>% 
   select(-MarketName, 
          -ContractName) %>% 
-  sample_n(5) %>% 
+  sample_n(5) %>%
+  arrange(Date) %>% 
   kable(format = "markdown",
         digits = 3,
         col.names = c("ID", 
@@ -363,17 +365,18 @@ results. There are `r nrow(df)` observations of `r length(df)` variables:
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
 df %>%
-  .[1:5, ] %>% 
-  knitr::kable(format = "markdown",
-               digits = 4,
-               col.names = c("Date", 
-                             "Race",
-                             "Method",
-                             "Prediction",
-                             "Democrat Predicted",
-                             "Democrat Won",
-                             "Prediction Correct"),
-               caption = "29,400 observations of 7 variables")
+  sample_n(5) %>%
+  arrange(date) %>% 
+  kable(format = "markdown",
+        digits = 4,
+        col.names = c("Date", 
+                      "Race",
+                      "Method",
+                      "Prediction",
+                      "Democrat Predicted",
+                      "Democrat Won",
+                      "Prediction Correct"),
+        caption = "29,400 observations of 7 variables")
 ```
 
 ## Data Exploration

@@ -21,8 +21,6 @@ opts_chunk$set(
 )
 ```
 
-## _Predictr_
-
 The forecast model has become a staple of political punditry. Popularized by the
 data journalism site [FiveThirtyEight][01], the forecast model is a statistical
 tool used to incorporate a number of quantitative inputs and output a

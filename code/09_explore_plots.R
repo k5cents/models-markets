@@ -2,7 +2,7 @@
 # Generate exploratory visuals
 
 color_model <- "#ED713A" # 538 brand color
-color_market <- colortools::triadic(color_model, plot = FALSE)[3] # complimentary
+color_market <- colortools::triadic(color_model, plot = FALSE)[3] # compliment
 
 # Distribution of original probabilities by method
 plot_races_hist <-
@@ -30,8 +30,7 @@ plot_races_hist <-
        y = "Number of Races")
 
 # Number of polls conducted over time
-plot_cum_polls <-
-  polling_data %>%
+plot_cum_polls <- polling_data %>%
   group_by(start_date) %>%
   summarise(n = n()) %>%
   mutate(cum = cumsum(n)) %>%
@@ -47,8 +46,7 @@ plot_cum_polls <-
   geom_vline(xintercept = as.Date("2018-11-04"), size = 0.5)
 
 # Number of dollars traded over time
-plot_cum_dollars <-
-  markets %>%
+plot_cum_dollars <- markets %>%
   filter(date > "2018-01-01",
          date < "2018-11-05") %>%
   group_by(date) %>%
@@ -65,8 +63,7 @@ plot_cum_dollars <-
   scale_y_continuous(labels = scales::dollar)
 
 # Number of markets opened over time
-plot_cum_markets <-
-  markets %>%
+plot_cum_markets <- markets %>%
   filter(date > "2018-01-01",
          date < "2018-11-05") %>%
   group_by(date) %>%

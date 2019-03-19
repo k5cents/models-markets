@@ -13,7 +13,6 @@ read_archive <- function(archive, date, site, folder, file, ...) {
         sep = "/") %>%
     read_csv(...)
 }
-
 read_github <- function(user, repo, branch, folder, file, ...) {
   paste("https://raw.githubusercontent.com",
         user,

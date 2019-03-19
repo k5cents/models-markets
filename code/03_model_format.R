@@ -17,9 +17,7 @@ model_seat2 <- model_seat %>%
                             pad = "S"))
 
 model_combined <-
-  bind_rows(model_district2, model_seat2,
-            # Variable identifying which data set obs originates
-            .id = "chamber") %>%
+  bind_rows(model_district2, model_seat2, .id = "chamber") %>%
   # Create race variable for relational join
   unite(col = race,
         state, district,

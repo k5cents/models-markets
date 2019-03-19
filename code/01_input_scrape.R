@@ -27,62 +27,73 @@ read_github <- function(user, repo, branch, folder, file, ...) {
 # Prediction Market data courtesy of PredictIt.org
 # Advance data provided to partnered researchers
 # See /old for code to scrape similar public data
-markets_data <- read_csv(file = "./input/markets_data.csv",
-                         na = c("n/a", "NA"),
-                         col_types = cols(MarketId = col_character(),
-                                          ContractName = col_character(),
-                                          ContractSymbol = col_character()))
+DailyMarketData <-
+  read_delim(file = "./input2/DailyMarketData.csv",
+             delim = "|",
+             na = c("n/a", "NA"),
+             col_types = cols(MarketId = col_character(),
+                              ContractName = col_character(),
+                              ContractSymbol = col_character()))
+
+Market_ME02 <-
+  read_csv(file = "./input2/Market_ME02.csv",
+           col_types = cols(ContractID = col_character(),
+                            Date = col_date(format = "%m/%d/%Y"))) %>%
+  filter(Date > "2018-10-10")
+
+read_csv(file = "./input2/Market_NY27.csv", na = c("n/a", "NA")) %>%
+  slice(158:311)
+
+
 
 # Current members of the 115th Congress
 # Archived: 2018-10-22 at 18:11
-members_115 <- read_archive(date = "2018-10-22 18:11:18",
-                            site = "https://theunitedstates.io",
-                            folder = "congress-legislators",
-                            file = "legislators-current.csv")
-
-# Current members of the 116th Congress
-# Archived: 2019-01-19 at 17:30
-members_116 <- read_archive(date   = "2019-01-19 at 17:30:05",
-                            site   = "https://theunitedstates.io",
-                            folder = "congress-legislators",
-                            file   = "legislators-current.csv")
+legislators_current <-
+  read_archive(date = "2018-10-22 18:11:18",
+               site = "https://theunitedstates.io",
+               folder = "congress-legislators",
+               file = "legislators-current.csv")
 
 # District level FiveThirtyEight House model
 # Updated:  2018-11-06 at 01:56
 # Archived: 2018-11-06 at 12:06
-model_district <- read_archive(date   = "2018-11-06 12:06:23",
-                               site   = "https://projects.fivethirtyeight.com",
-                               folder = "congress-model-2018",
-                               file   = "house_district_forecast.csv")
+house_district_forecast <-
+  read_archive(date   = "2018-11-06 12:06:23",
+               site   = "https://projects.fivethirtyeight.com",
+               folder = "congress-model-2018",
+               file   = "house_district_forecast.csv")
 
 # National level FiveThirtyEight House model
 # Updated:  2018-11-06 at 01:56
 # Archived: 2018-11-06 at 12:06
-model_house <- read_archive(date   = "2018-11-06 12:06:23",
-                            site   = "https://projects.fivethirtyeight.com",
-                            folder = "congress-model-2018",
-                            file   = "house_national_forecast.csv")
+house_national_forecast <-
+  read_archive(date   = "2018-11-06 12:06:23",
+               site   = "https://projects.fivethirtyeight.com",
+               folder = "congress-model-2018",
+               file   = "house_national_forecast.csv")
 
 # Seat level FiveThirtyEight Senate model
 # Updated:  2018-11-06 at 11:06
 # Archived: 2018-11-06 at 21:00
-model_seat <- read_archive(date   = "2018-11-06 21:00:48",
-                           site   = "https://projects.fivethirtyeight.com",
-                           folder = "congress-model-2018",
-                           file   = "senate_seat_forecast.csv")
+senate_seat_forecast <-
+  read_archive(date   = "2018-11-06 21:00:48",
+               site   = "https://projects.fivethirtyeight.com",
+               folder = "congress-model-2018",
+               file   = "senate_seat_forecast.csv")
 
 # National level FiveThirtyEight Senate model
 # Updated:  2018-11-06 at 11:06
 # Archived: 2018-11-06 at 21:00
-model_senate <- read_archive(date   = "2018-11-06 21:00:48",
-                             site   = "https://projects.fivethirtyeight.com",
-                             folder = "congress-model-2018",
-                             file   = "senate_national_forecast.csv")
+senate_national_forecast <-
+  read_archive(date   = "2018-11-06 21:00:48",
+               site   = "https://projects.fivethirtyeight.com",
+               folder = "congress-model-2018",
+               file   = "senate_national_forecast.csv")
 
 # Midterm election results via ABC and FiveThirtyEight
 # Used in https://53eig.ht/2PiFb0f
 # Published 2018-12-04 5:56
-election_results <-
+forecast_results_2018 <-
   read_github(user   = "fivethirtyeight",
               branch = "master",
               repo   = "data",
@@ -96,14 +107,14 @@ election_results <-
 
 # Average difference between how a state or district votes and how the country
 # votes overall (50% pres. 2016, 25% pres. 2012, 25% state legislatures)
-lean_district <-
+fivethirtyeight_partisan_lean_DISTRICTS <-
   read_github(user   = "fivethirtyeight",
               branch = "master",
               repo   = "data",
               folder = "partisan-lean",
               file   = "fivethirtyeight_partisan_lean_DISTRICTS.csv")
 
-lean_states <-
+fivethirtyeight_partisan_lean_STATES <-
   read_github(user   = "fivethirtyeight",
               branch = "master",
               repo   = "data",
@@ -112,32 +123,37 @@ lean_states <-
 
 # Polls used to create the 538 models
 # Archived 2019-01-29 21:45:47
-polls_senate <- read_archive(date = "2019-01-29 21:45:47",
-                             site = "https://projects.fivethirtyeight.com",
-                             folder = "polls-page",
-                             file = "senate_polls.csv")
+senate_polls <-
+  read_archive(date = "2019-01-29 21:45:47",
+               site = "https://projects.fivethirtyeight.com",
+               folder = "polls-page",
+               file = "senate_polls.csv")
 
-polls_house <- read_archive(date = "2019-01-29 21:45:47",
-                            site = "https://projects.fivethirtyeight.com",
-                            folder = "polls-page",
-                            file = "house_polls.csv")
+house_polls <-
+  read_archive(date = "2019-01-29 21:45:47",
+               site = "https://projects.fivethirtyeight.com",
+               folder = "polls-page",
+               file = "house_polls.csv")
 
-polls_generic <- read_archive(date = "2019-01-29 21:45:47",
-                              site = "https://projects.fivethirtyeight.com",
-                              folder = "polls-page",
-                              file = "generic_ballot_polls.csv")
+generic_ballot_polls <-
+  read_archive(date = "2019-01-29 21:45:47",
+               site = "https://projects.fivethirtyeight.com",
+               folder = "polls-page",
+               file = "generic_ballot_polls.csv")
 
 # Read in the GovTrack stats for 115th
-house_115_stats <- read_archive(date = "2019-01-21 17:13:08",
-                                site = "https://www.govtrack.us",
-                                folder = "data/us/115/stats",
-                                file = "sponsorshipanalysis_h.txt",
-                                col_types = cols(ID = col_character())) %>%
-                   mutate(chamber = "house")
+sponsorshipanalysis_h <-
+  read_archive(date = "2019-01-21 17:13:08",
+               site = "https://www.govtrack.us",
+               folder = "data/us/115/stats",
+               file = "sponsorshipanalysis_h.txt",
+               col_types = cols(ID = col_character())) %>%
+  mutate(chamber = "house")
 
-senate_115_stats <- read_archive(date = "2019-01-21 17:13:08",
-                                 site = "https://www.govtrack.us",
-                                 folder = "data/us/115/stats",
-                                 file = "sponsorshipanalysis_s.txt",
-                                 col_types = cols(ID = col_character())) %>%
-                    mutate(chamber = "senate")
+sponsorshipanalysis_s <-
+  read_archive(date = "2019-01-21 17:13:08",
+               site = "https://www.govtrack.us",
+               folder = "data/us/115/stats",
+               file = "sponsorshipanalysis_s.txt",
+               col_types = cols(ID = col_character())) %>%
+  mutate(chamber = "senate")

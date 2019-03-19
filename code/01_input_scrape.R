@@ -129,18 +129,16 @@ polls_generic <- read_archive(date = "2019-01-29 21:45:47",
                               file = "generic_ballot_polls.csv")
 
 # Read in the GovTrack stats for 115th
-house_115_stats <-
-  read_archive(date = "2019-01-21 17:13:08",
-               site = "https://www.govtrack.us",
-               folder = "data/us/115/stats",
-               file = "sponsorshipanalysis_h.txt",
-               col_types = cols(ID = col_character())) %>%
-  mutate(chamber = "house")
+house_115_stats <- read_archive(date = "2019-01-21 17:13:08",
+                                site = "https://www.govtrack.us",
+                                folder = "data/us/115/stats",
+                                file = "sponsorshipanalysis_h.txt",
+                                col_types = cols(ID = col_character())) %>%
+                   mutate(chamber = "house")
 
-senate_115_stats <-
-  read_archive(date = "2019-01-21 17:13:08",
-               site = "https://www.govtrack.us",
-               folder = "data/us/115/stats",
-               file = "sponsorshipanalysis_s.txt",
-               col_types = cols(ID = col_character())) %>%
-  mutate(chamber = "senate")
+senate_115_stats <- read_archive(date = "2019-01-21 17:13:08",
+                                 site = "https://www.govtrack.us",
+                                 folder = "data/us/115/stats",
+                                 file = "sponsorshipanalysis_s.txt",
+                                 col_types = cols(ID = col_character())) %>%
+                    mutate(chamber = "senate")

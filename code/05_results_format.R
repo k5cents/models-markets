@@ -1,8 +1,7 @@
 # Kiernan Nicholls
 # Format election results
 
-results <-
-  election_results %>%
+results <- election_results %>%
   filter(branch != "Governor" & version == "classic") %>%
   select(race,
          # The two winner variables are redundant

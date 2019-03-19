@@ -1,6 +1,5 @@
 # Kiernan Nicholls
 # Scrape archived websites and github repos for initial data
-# Run all formatting code at once
 library(tidyverse)
 
 # Functions to scrape CSV from archive.org and github.com
@@ -25,18 +24,20 @@ read_github <- function(user, repo, branch, folder, file, ...) {
 }
 
 # Prediction Market data courtesy of PredictIt.org
-# Advance data provided to partnered researchers
-# See /old for code to scrape similar public data
+# Forecast Model data courtesy of FiveThirtyEight.com
+# Congress Member data courtsey of TheUnitedStates.io & GovTrack.us
+
+# Data originally encoded as UTF-16LE, changed to UTF-8 for compatability
 DailyMarketData <-
-  read_delim(file = "./input/DailyMarketData.csv",
-             delim = "|",
-             na = c("n/a", "NA"),
-             col_types = cols(MarketId = col_character(),
-                              ContractName = col_character(),
-                              ContractSymbol = col_character()))
+  read.delim(file = "./input/DailyMarketData.csv",
+             sep = "|",
+             fileEncoding = "UTF-16LE",
+             na.strings = "n/a") %>%
+  as_tibble()
 
 DailyMarketData %>% write_csv("./input/DailyMarketData.csv")
 
+# Maine 2nd left out
 Market_ME02 <-
   read_csv(file = "./input/Market_ME02.csv",
            col_types = cols(ContractID = col_character(),
@@ -45,6 +46,7 @@ Market_ME02 <-
 
 Market_ME02 %>% write_csv("./input/Market_ME02.csv")
 
+# New York 27th left out; data very messy
 Market_NY27 <-
   read_csv("./input/Market_NY27.csv",
            na = c("n/a", "NA"),

@@ -1,7 +1,6 @@
 # Kiernan Nicholls
 # Format polling data as provided by 538
 
-
 # A key for pollster and sponsor IDs
 polling_key <-
   bind_rows(polls_house, polls_senate) %>%

@@ -1,28 +1,16 @@
 # Kiernan Nicholls
 # Format election results
 
-results <- election_results %>%
-  filter(branch != "Governor" & version == "classic") %>%
-  select(race,
-         # The two winner variables are redundant
-         # Here, TRUE indicates Dem winner
-         Democrat_Won,
-         uncalled) %>%
-  rename(winner = Democrat_Won) %>%
-  separate(col = race,
-           into = c("state", "district"),
-           sep = "-",
-           remove = TRUE) %>%
-  mutate(district = recode(district,
-                           "S1" = "99",
-                           "S2" = "98"),
-         district = str_pad(district,
-                            width = 2,
-                            side = "left",
-                            pad = "0"),
-         winner = if_else(uncalled, NA, winner)) %>%
+results <- forecast_results_2018 %>%
+  filter(branch  != "Governor",
+         version == "classic") %>%
+  separate(col    = race,
+           into   = c("state", "district"),
+           sep    = "-") %>%
+  rename(winner   = Democrat_Won) %>%
+  mutate(winner   = if_else(uncalled, true  = NA, false = winner),
+         district = str_pad(district, width = 2,  pad   = "0")) %>%
   unite(col = race,
         state, district,
-        sep = "-",
-        remove = TRUE) %>%
-  select(-uncalled)
+        sep = "-") %>%
+  select(race, winner, category)

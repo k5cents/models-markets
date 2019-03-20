@@ -32,24 +32,24 @@ markets <- markets %>% separate(col = symbol,
                                 extra = "drop",
                                 fill = "left")
 
-markets$race %<>% str_replace("SENATE", "99")
-markets$race %<>% str_replace("SEN",    "99")
-markets$race %<>% str_replace("SE",     "99")
+markets$race %<>% str_replace("SENATE", "S1")
+markets$race %<>% str_replace("SEN",    "S1")
+markets$race %<>% str_replace("SE",     "S1")
 markets$race %<>% str_replace("AL",     "01")   # at large
 markets$race %<>% str_replace("OH12G",  "OH12") # not sure
 markets$race %<>% str_replace("MN99",   "MNS2") # special election
 markets$race[markets$name == "SPEC"] <- "MSS2"  # special election
-markets$race[markets$mid  == "3857"] <- "CA99"  # market name mustyped
+markets$race[markets$mid  == "3857"] <- "CAS1"  # market name mustyped
 markets$name[markets$name == "PARTY"] <- NA     # no name
 markets$name[markets$name == "SPEC"]  <- NA     # no name
 
 markets$race <- paste(str_sub(markets$race, 1, 2), # state abbreviation
-                      sep = "-",
+                      sep = "-",                   # put hyphen in middle
                       str_sub(markets$race, 3, 4)) # market number)
 
-markets %>% filter(mid != "3455", # paul ryan
-                   mid != "3507", # jeff flake
-                   mid != "3539") # shea-porter
+markets %<>% filter(mid != "3455", # paul ryan
+                    mid != "3507", # jeff flake
+                    mid != "3539") # shea-porter
 
 # Look into list of members and take party from candidates with a matching name
 first4 <- function(v) str_sub(tolower(v), 1, 4)

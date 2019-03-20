@@ -17,9 +17,9 @@ single_party_markets <- markets2 %>%
   as_vector() %>%
   unique()
 
+# Invert the GOP prices for markets with only GOP candidates
 invert <- function(x) 1 - x
 
-# Invert the GOP prices for markets with only GOP candidates
 invert_gop <- markets2 %>%
   filter(race %in% single_party_markets,
          party == "R") %>%
@@ -47,22 +47,19 @@ model2 <- model %>%
 
 # Join with models
 df <-
-  left_join(x = markets3,
-            y = model2,
-            by = c("date", "race")) %>%
-  filter(date >= "2018-08-01",
-         date <= "2018-11-05") %>%
-  select(date, race, close, prob) %>%
-  # Tidy data, gather by predictive method
+  left_join(x   = markets3,
+            y   = model2,
+            by  = c("date", "race")) %>%
+  filter(date  >= "2018-08-01",
+         date  <= "2018-11-05") %>%
   rename(model  = prob,
          market = close) %>%
-  gather(model, market,
-         key    = method,
-         value  = prob) %>%
+  gather(key    = method,
+         value  = prob,
+         model, market) %>%
   mutate(pick = if_else(prob > 0.50, TRUE, FALSE)) %>%
-  # Join with election results
   left_join(results, by = "race") %>%
-  # Compare the method prediction to actual winner
   mutate(correct = if_else(pick == winner, TRUE, FALSE)) %>%
+  select(date, race, method, prob, winner, correct) %>%
   arrange(date, race) %>%
   distinct()

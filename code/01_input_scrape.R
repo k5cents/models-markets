@@ -1,6 +1,11 @@
-# Kiernan Nicholls
-# Scrape archived websites and github repos for initial data
+### Kiernan Nicholls
+### Scrape archived websites and github repos for initial data
+### Prediction Market data courtesy of   https://www.predictit.org/
+### Forecast Model data courtesy of      https://fivethirtyeight.com/
+### Congress Member data courtsey of     https://theunitedstates.io/
 library(tidyverse)
+library(magrittr)
+library(lubridate)
 
 # Functions to scrape CSV from archive.org and github.com
 read_archive <- function(archive, date, site, folder, file, ...) {
@@ -12,7 +17,7 @@ read_archive <- function(archive, date, site, folder, file, ...) {
         sep = "/") %>%
     read_csv(...)
 }
-read_github <- function(user, repo, branch, folder, file, ...) {
+read_github  <- function(user, repo, branch, folder, file, ...) {
   paste("https://raw.githubusercontent.com",
         user,
         repo,
@@ -23,41 +28,37 @@ read_github <- function(user, repo, branch, folder, file, ...) {
     read_csv(...)
 }
 
-# Prediction Market data courtesy of PredictIt.org
-# Forecast Model data courtesy of FiveThirtyEight.com
-# Congress Member data courtsey of TheUnitedStates.io & GovTrack.us
-
-# Data originally encoded as UTF-16LE, changed to UTF-8 for compatability
-DailyMarketData <-
+# Market Data sent by will.jennings@predictit.org
+# Detailed market history provided to partnered academic researchers
+DailyMarketData_formatted <-
   read.delim(file = "./input/DailyMarketData.csv",
              sep = "|",
              fileEncoding = "UTF-16LE",
-             na.strings = "n/a") %>%
-  as_tibble()
+             na.strings = "n/a")
 
-DailyMarketData %>% write_csv("./input/DailyMarketData.csv")
+DailyMarketData_formatted %>% write_csv("./input/DailyMarketData_formatted.csv")
 
-# Maine 2nd left out
-Market_ME02 <-
+# Maine 2nd initially left out
+Market_ME02_formatted <-
   read_csv(file = "./input/Market_ME02.csv",
            col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y"))) %>%
-  filter(Date > "2018-10-10")
+  slice(2:176)
 
-Market_ME02 %>% write_csv("./input/Market_ME02.csv")
+Market_ME02_formatted %>% write_csv("./input/Market_ME02_formatted.csv")
 
-# New York 27th left out; data very messy
-Market_NY27 <-
-  read_csv("./input/Market_NY27.csv",
+# New York 27th initially left out
+Contract_NY27_formatted <-
+  read_csv("./input/Contract_NY27.csv",
            na = c("n/a", "NA"),
            skip = 157, # this file was a mess
            col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y"))) %>%
   slice(6:154)
 
-Market_NY27 %>% write_csv("./input/Market_NY27.csv")
+Contract_NY27_formatted %>% write_csv("./input/Contract_NY27_formatted.csv")
 
-# Current members of the 115th Congress
+# Current members of the 115th
 # Archived: 2018-10-22 at 18:11
 legislators_current <-
   read_archive(date = "2018-10-22 18:11:18",
@@ -67,7 +68,7 @@ legislators_current <-
 
 legislators_current %>% write_csv("./input/legislators_current.csv")
 
-# District level FiveThirtyEight House model
+# District level 538 House model history
 # Updated:  2018-11-06 at 01:56
 # Archived: 2018-11-06 at 12:06
 house_district_forecast <-
@@ -78,7 +79,7 @@ house_district_forecast <-
 
 house_district_forecast %>% write_csv("./input/house_district_forecast.csv")
 
-# National level FiveThirtyEight House model
+# National level 538 House model history
 # Updated:  2018-11-06 at 01:56
 # Archived: 2018-11-06 at 12:06
 house_national_forecast <-
@@ -89,7 +90,7 @@ house_national_forecast <-
 
 house_national_forecast %>% write_csv("./input/house_national_forecast.csv")
 
-# Seat level FiveThirtyEight Senate model
+# Seat level 538 Senate model history
 # Updated:  2018-11-06 at 11:06
 # Archived: 2018-11-06 at 21:00
 senate_seat_forecast <-
@@ -100,7 +101,7 @@ senate_seat_forecast <-
 
 senate_seat_forecast %>% write_csv("./input/senate_seat_forecast.csv")
 
-# National level FiveThirtyEight Senate model
+# National level 538 Senate model history
 # Updated:  2018-11-06 at 11:06
 # Archived: 2018-11-06 at 21:00
 senate_national_forecast <-
@@ -111,9 +112,9 @@ senate_national_forecast <-
 
 senate_national_forecast %>% write_csv("./input/senate_national_forecast.csv")
 
-# Midterm election results via ABC and FiveThirtyEight
+# Midterm election results via ABC and 538
 # Used in https://53eig.ht/2PiFb0f
-# Published 2018-12-04 5:56
+# Published 2018-12-04 17:56
 forecast_results_2018 <-
   read_github(user   = "fivethirtyeight",
               branch = "master",
@@ -128,8 +129,9 @@ forecast_results_2018 <-
 
 forecast_results_2018 %>% write_csv("./input/forecast_results_2018.csv")
 
-# Average difference between how a state or district votes and how the country
-# votes overall (50% pres. 2016, 25% pres. 2012, 25% state legislatures)
+# Average difference between how a district votes and the country
+# First introduced in http://53eig.ht/1rtnTwh
+# Last updated 2018-11-19 16:13
 partisan_lean_DISTRICTS <-
   read_github(user   = "fivethirtyeight",
               branch = "master",
@@ -148,7 +150,7 @@ partisan_lean_STATES <-
 
 partisan_lean_STATES %>% write_csv("./input/partisan_lean_STATES.csv")
 
-# Polls used to create the 538 models
+# Polls incorperated in the 538 models
 # Archived 2019-01-29 21:45:47
 senate_polls <-
   read_archive(date = "2019-01-29 21:45:47",
@@ -174,7 +176,9 @@ generic_ballot_polls <-
 
 generic_ballot_polls %>% write_csv("./input/generic_ballot_polls.csv")
 
-# Read in the GovTrack stats for 115th
+# The ideology and leadership scores of the 115th
+# Calculated with cosponsorship analysis
+# Archived 2019-01-21 17:13:08
 sponsorshipanalysis_h <-
   read_archive(date = "2019-01-21 17:13:08",
                site = "https://www.govtrack.us",

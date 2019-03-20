@@ -1,14 +1,28 @@
-# Kiernan Nicholls
-# Quickly read written data from 01_input_scrape
+### Kiernan Nicholls
+### Quickly read written data from 01_input_scrape
+### Properly format values and varliables
 library(tidyverse)
+library(magrittr)
+library(lubridate)
 
-DailyMarketData <- read_csv(file = "./input/DailyMarketData.csv",
-                            locale = locale(tz = "EST"),
-                            col_types = cols(
-                              MarketId = col_character(),
-                              ContractName = col_character(),
-                              ContractSymbol = col_character(),
-                              Date = col_date(format = "")))
+DailyMarketData_formatted <-
+  read_csv(file = "./input/DailyMarketData_formatted.csv",
+           locale = locale(tz = "EST"),
+           col_types = cols(
+             MarketId = col_character(),
+             ContractName = col_character(),
+             ContractSymbol = col_character(),
+             Date = col_date(format = "")))
+
+Market_ME02_formatted <-
+  read_csv(file = "./input/Market_ME02_formatted.csv",
+           col_types = cols(
+             ContractID = col_character(),
+             Date = col_date(format = "%m/%d/%Y")))
+
+Market_NY27_formatted <-
+  read_csv(file = "./input/Contract_NY27_formatted.csv",
+           col_types = cols(ContractID = col_character()))
 
 forecast_results_2018 <-
   read_csv(file = "./input/forecast_results_2018.csv",
@@ -65,14 +79,6 @@ house_polls <-
 legislators_current <-
   read_csv(file = "./input/legislators_current.csv",
            col_types = cols(govtrack_id = col_character()))
-
-Market_ME02 <- read_csv(file = "./input/Market_ME02.csv",
-                        col_types = cols(
-                          ContractID = col_character(),
-                          Date = col_date(format = "%m/%d/%Y")))
-
-Market_NY27 <- read_csv(file = "./input/Market_NY27.csv",
-                        col_types = cols(ContractID = col_character()))
 
 partisan_lean_DISTRICTS  <- read_csv("./input/partisan_lean_DISTRICTS.csv")
 

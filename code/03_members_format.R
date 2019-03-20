@@ -1,6 +1,5 @@
-# Kiernan Nicholls
-# Format members of current congress
-library(magrittr)
+### Kiernan Nicholls
+### Format members of current congress
 
 members <- legislators_current %>%
   rename(chamber = type,
@@ -17,7 +16,7 @@ members <- legislators_current %>%
          chamber) %>%
   arrange(chamber)
 
-# Recode, Encode, and Pad format
+# Recode, Encode, and Pad
 members$name %<>% iconv(to = "ASCII//TRANSLIT")
 members$chamber %<>% recode("rep" = "house", "sen" = "senate")
 members$district %<>%  str_pad(width = 2, pad = "0")
@@ -39,20 +38,14 @@ members <- members %<>%
   select(-senate_class) %>%
   arrange(name)
 
-# Format member stats for j
+# Format member stats for join
 members_stats <-
-  bind_rows(sponsorshipanalysis_h,
-            sponsorshipanalysis_s) %>%
-  select(ID,
-         chamber,
-         party,
-         ideology,
-         leadership) %>%
+  bind_rows(sponsorshipanalysis_h, sponsorshipanalysis_s) %>%
+  select(ID, chamber, party, ideology, leadership) %>%
   rename(gid = ID)
 
 members_stats$party %<>% recode("Democrat" = "D", "Republican" = "R")
 members_stats$gid %<>% as.character()
 
 # Add stats to frame by GovTrack ID
-members <- members %>%
-  left_join(members_stats, by = c("gid", "party", "chamber"))
+members %<>% left_join(members_stats, by = c("gid", "party", "chamber"))

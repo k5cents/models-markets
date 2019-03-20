@@ -1,7 +1,7 @@
-# Kiernan Nicholls
-# Based on Cook Partisan Voting Index
-# 538 on their partisan quantification: http://53eig.ht/1rtnTwh
+### Kiernan Nicholls
+### Based on Cook Partisan Voting Index
 
+# Separate lean value and replace state name with state abbreviation
 lean_states <- partisan_lean_STATES %>%
   separate(col = pvi_538,
            into = c("party", "lean"),
@@ -10,6 +10,7 @@ lean_states <- partisan_lean_STATES %>%
   rename(race = state) %>%
   mutate(race = paste(state.abb, "S1", sep = "-"))
 
+# Seperate lean value and pad district number for race code
 lean_district <- partisan_lean_DISTRICTS %>%
   separate(col = pvi_538,
            into = c("party", "lean"),
@@ -23,6 +24,7 @@ lean_district <- partisan_lean_DISTRICTS %>%
         state, race,
         sep = "-")
 
+# Turn single number into negative-positive spectrum
 race_lean <-
   bind_rows(lean_states, lean_district) %>%
   mutate(lean = if_else(condition = party == "D",

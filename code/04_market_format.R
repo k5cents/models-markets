@@ -1,8 +1,8 @@
-# Kiernan Nicholls
-# Format market data from PredictIt
+### Kiernan Nicholls
+### Format market data from PredictIt
 
 # Rename market data input
-markets <- DailyMarketData %>%
+markets <- DailyMarketData_formatted %>%
   rename(mid      = MarketId,
          symbol   = MarketSymbol,
          party    = ContractName,
@@ -32,6 +32,7 @@ markets <- markets %>% separate(col = symbol,
                                 extra = "drop",
                                 fill = "left")
 
+# Recode the original contract strings for race variables
 markets$race %<>% str_replace("SENATE", "S1")
 markets$race %<>% str_replace("SEN",    "S1")
 markets$race %<>% str_replace("SE",     "S1")
@@ -53,7 +54,6 @@ markets %<>% filter(mid != "3455", # paul ryan
 
 # Look into list of members and take party from candidates with a matching name
 first4 <- function(v) str_sub(tolower(v), 1, 4)
-
 for (i in 1:nrow(markets)) {
   if (is.na(markets$party[i])) {
     markets$party[i] <-

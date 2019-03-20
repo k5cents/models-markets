@@ -1,5 +1,5 @@
-# Kiernan Nicholls
-# Format election results
+### Kiernan Nicholls
+### Format election results
 
 results <- forecast_results_2018 %>%
   filter(branch  != "Governor",

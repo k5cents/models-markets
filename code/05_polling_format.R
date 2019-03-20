@@ -1,6 +1,5 @@
-# Kiernan Nicholls
-# Format polling data as provided by 538
-library(lubridate)
+### Kiernan Nicholls
+### Format polling data as provided by 538
 
 # A key for pollster and sponsor IDs
 polling_key <-
@@ -61,6 +60,7 @@ polling$district[polling$chamber == "senate"] %<>%
   str_pad(width = 2, pad = "S") %>%
   recode("S0" = "S1")
 
+# Replace state names with state abbreviations for race code
 polling <- polling %>%
   left_join(y = tibble(state = state.name, abb = state.abb),
             by = "state") %>%

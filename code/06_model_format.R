@@ -1,5 +1,5 @@
-# Kiernan Nicholls
-# Format forecast model data from FiveThirtyEight
+### Kiernan Nicholls
+### Format forecast model data from FiveThirtyEight
 
 # Format district for race variable
 model_district <- house_district_forecast %>%
@@ -35,10 +35,6 @@ model_combined <-
 # Recode identifying variable for clarification
 model_combined$chamber %<>% recode("1" = "house",
                                    "2" = "senate")
-
-# Change to numeric senate seat codes. The S2/98 are SPECIAL elections.
-# model_combined$race %<>% str_replace_all("S1", "99")
-# model_combined$race %<>% str_replace_all("S2", "98")
 
 # Only special elections are for senate.
 model_combined$special[is.na(model_combined$special)] <- FALSE

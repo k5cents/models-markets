@@ -1,5 +1,5 @@
-# Kiernan Nicholls
-# Check predictions against election results
+### Kiernan Nicholls
+### Check predictions against election results
 
 ## We only need probability for one candidate in each race
 ## Some markets only have data on candidate from 1 party

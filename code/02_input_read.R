@@ -1,6 +1,6 @@
 # Kiernan Nicholls
 # Quickly read written data from 01_input_scrape
-library(readr)
+library(tidyverse)
 
 DailyMarketData <- read_csv(file = "./input/DailyMarketData.csv",
                             locale = locale(tz = "EST"),
@@ -64,9 +64,7 @@ house_polls <-
 
 legislators_current <-
   read_csv(file = "./input/legislators_current.csv",
-           col_types = cols(
-             gender = col_factor(),
-             party = col_factor()))
+           col_types = cols(govtrack_id = col_character()))
 
 Market_ME02 <- read_csv(file = "./input/Market_ME02.csv",
                         col_types = cols(
@@ -103,18 +101,8 @@ senate_seat_forecast <-
            col_types = cols(
              model = col_factor(levels = c("lite", "classic", "deluxe"))))
 
-sponsorshipanalysis_h <-
-  read_csv(file = "./input/sponsorshipanalysis_h.csv",
-           col_types = cols(
-             ID = col_character(),
-             party = col_factor(),
-             description = col_factor(),
-             chamber = col_factor()))
+sponsorshipanalysis_h <- read_csv(file = "./input/sponsorshipanalysis_h.csv",
+                                  col_types = cols(ID = col_character()))
 
-sponsorshipanalysis_s <-
-  read_csv("./input/sponsorshipanalysis_s.csv",
-           col_types = cols(
-             ID = col_character(),
-             party = col_factor(),
-             description = col_factor(),
-             chamber = col_factor()))
+sponsorshipanalysis_s <- read_csv(file = "./input/sponsorshipanalysis_s.csv",
+                                  col_types = cols(ID = col_character()))

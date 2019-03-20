@@ -2,14 +2,14 @@
 # Format forecast model data from FiveThirtyEight
 
 # Format district for race variable
-model_district2 <- model_district %>%
+model_district <- house_district_forecast %>%
   mutate(district = str_pad(string = district,
                             width = 2,
                             side = "left",
                             pad = "0"))
 
 # Format class for race variable
-model_seat2 <- model_seat %>%
+model_seat <- senate_seat_forecast %>%
   rename(district = class) %>%
   mutate(district = str_pad(string = district,
                             width = 2,
@@ -17,7 +17,7 @@ model_seat2 <- model_seat %>%
                             pad = "S"))
 
 model_combined <-
-  bind_rows(model_district2, model_seat2, .id = "chamber") %>%
+  bind_rows(model_district, model_seat, .id = "chamber") %>%
   # Create race variable for relational join
   unite(col = race,
         state, district,

@@ -69,6 +69,7 @@ messy <-
             y   = model2,
             by  = c("date", "race")) %>%
   filter(date  >= "2018-08-01",
-         date  <= "2018-11-05") %>%
-  rename(model  = prob,
-         market = close)
+         date  <= "2018-11-05")
+
+
+

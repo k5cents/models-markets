@@ -14,16 +14,6 @@ DailyMarketData_formatted <-
              ContractSymbol = col_character(),
              Date = col_date(format = "")))
 
-Market_ME02_formatted <-
-  read_csv(file = "./input/Market_ME02_formatted.csv",
-           col_types = cols(
-             ContractID = col_character(),
-             Date = col_date(format = "%m/%d/%Y")))
-
-Market_NY27_formatted <-
-  read_csv(file = "./input/Contract_NY27_formatted.csv",
-           col_types = cols(ContractID = col_character()))
-
 forecast_results_2018 <-
   read_csv(file = "./input/forecast_results_2018.csv",
            locale = locale(tz = "EST"),

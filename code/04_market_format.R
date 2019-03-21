@@ -17,8 +17,8 @@ markets <- DailyMarketData_formatted %>%
 
 # Recode party variables
 markets$party %<>% recode("Democratic or DFL" = "D",
-                         "Democratic"        = "D",
-                         "Republican"        = "R")
+                          "Democratic"        = "D",
+                          "Republican"        = "R")
 
 # Remove year information from symbol strings
 markets$symbol %<>% str_remove(".2018")
@@ -61,8 +61,38 @@ for (i in 1:nrow(markets)) {
     }
 }
 
+# Fix some incorrect party values resulting from name confusion
 markets$party[markets$race == "CO-05"] <- "R" # Lamborn (R) not Lamb (D)
 markets$party[markets$race == "MN-02"] <- "R" # Lewis (R) not Lewis (D)
 markets$party[markets$race == "WI-S1"] <- "D" # Balderson (R) Baldwin (D)
 
-markets %<>% select(-name)
+# Add in ME-02 and NY-27 which were left out of initial data
+
+ny_27 <-
+  read_csv(file = "./input/Contract_NY27_formatted.csv",
+           col_types = cols(ContractID = col_character())) %>%
+  mutate(mid = "4729",
+         race = "NY-27",
+         party = "R") %>%
+  select(-Average)
+
+me_02 <-
+  read_csv(file = "./input/Market_ME02_formatted.csv",
+           col_types = cols(ContractID = col_character())) %>%
+  mutate(mid = "4945",
+         race = "ME-02") %>%
+  rename(party = LongName)
+
+markets_extra <-
+  bind_rows(ny_27, me_02) %>%
+  rename(vol = Volume) %>%
+  select(Date, mid, race, party, Open, Low, High, Close, vol)
+
+names(markets_extra) <- tolower(names(markets_extra))
+markets_extra$party[str_which(markets_extra$party, "GOP")] <- "R"
+markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"
+
+# Bind with ME-02 and NY-27
+markets %<>%
+  select(-name) %>%
+  bind_rows(markets_extra)

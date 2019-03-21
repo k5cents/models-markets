@@ -46,7 +46,7 @@ model2 <- model %>%
   select(-party)
 
 # Join with models
-df <-
+tidy <-
   left_join(x   = markets3,
             y   = model2,
             by  = c("date", "race")) %>%
@@ -63,3 +63,12 @@ df <-
   select(date, race, method, prob, winner, correct) %>%
   arrange(date, race) %>%
   distinct()
+
+messy <-
+  left_join(x   = markets3,
+            y   = model2,
+            by  = c("date", "race")) %>%
+  filter(date  >= "2018-08-01",
+         date  <= "2018-11-05") %>%
+  rename(model  = prob,
+         market = close)

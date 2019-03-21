@@ -61,6 +61,8 @@ for (i in 1:nrow(markets)) {
     }
 }
 
-markets$party[markets$race == "CO-05"] <- "R" # name confusion
+markets$party[markets$race == "CO-05"] <- "R" # Lamborn (R) not Lamb (D)
+markets$party[markets$race == "MN-02"] <- "R" # Lewis (R) not Lewis (D)
+markets$party[markets$race == "WI-S1"] <- "R" # Balderson (R) Baldwin (D)
 
 markets %<>% select(-name)

@@ -1,3 +1,6 @@
+### Kiernan Nicholls
+### Format and supplement market data
+
 markets <- DailyMarketData_formatted %>%
   rename(mid      = MarketId,
          name     = MarketName,
@@ -56,22 +59,20 @@ markets %<>% filter(mid != "3455", # Paul Ryan
                     mid != "3539") # Shea-Porter
 
 # Divide the data based on market question syntax
-# Some market questions provided name, others party
-no_party <- markets %>%
+# Market questions provided name or party, never both
+markets_with_name <- markets %>%
   filter(is.na(party)) %>%
   select(-party)
 
-# Take the members list, get the party, add back with those with party
-markets <- members %>%
-  select(name, party) %>%
-  right_join(no_party, by = "name") %>%
-  select(date, mid, everything()) %>%
-  bind_rows(markets %>% filter(!is.na(party)))
+markets_with_party <- markets %>%
+  filter(is.na(name)) %>%
+  select(-name)
 
-# Fix some incorrect party values resulting from name confusion
-markets$party[markets$race == "CO-05"] <- "R" # Lamborn (R) not Lamb (D)
-markets$party[markets$race == "MN-02"] <- "R" # Lewis (R) not Lewis (D)
-markets$party[markets$race == "WI-S1"] <- "D" # Balderson (R) Baldwin (D)
+# Join with members key to add party, then back with rest of market
+markets <- markets_with_name %>%
+  left_join(members, by = c("name", "race")) %>%
+  select(date, mid, race, party, open, low, high, close, vol) %>%
+  bind_rows(markets_with_party)
 
 # Add in ME-02 and NY-27 which were left out of initial data
 ny_27 <-
@@ -100,6 +101,5 @@ markets_extra$party[str_which(markets_extra$party, "GOP")] <- "R"
 markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"
 
 # Bind with ME-02 and NY-27
-markets %<>%
-  select(-name) %>%
-  bind_rows(markets_extra)
+markets %<>%  bind_rows(markets_extra)
+

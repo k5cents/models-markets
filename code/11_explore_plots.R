@@ -2,14 +2,14 @@
 # Generate exploratory visuals
 
 color_model <- "#ED713A" # 538 brand color
-color_market <- colortools::triadic(color_model, plot = FALSE)[3] # compliment
+color_market <- colortools::triadic("#ED713A", plot = FALSE)[3] # compliment
+color_blue <- "#234099"
 
 # Distribution of original probabilities by method
 plot_races_hist <-
   # Join market onto model keep all model races
   left_join(x = model,
-            y = markets,
-            by = c("date", "race", "party")) %>%
+            y = markets) %>%
   # Show only 1 candidate per race
   filter(date == "2018-11-05", party == "D") %>%
   select(date, close, prob) %>%
@@ -78,3 +78,93 @@ plot_cum_markets <- markets %>%
   geom_vline(xintercept = as.Date("2018-08-01"), size = 0.5) +
   geom_vline(xintercept = as.Date("2018-11-04"), size = 0.5)
 
+# Races by Model on X and Market on Y
+cartesian_races <- messy %>%
+  filter(date == "2018-11-05") %>%
+  ggplot(aes(x  = model,
+             y  = market)) +
+  geom_hline(yintercept = 0.5) +
+  geom_vline(xintercept = 0.5) +
+  geom_abline(slope = 1,
+              intercept = 0) +
+  geom_label(aes(label = race)) +
+  labs(title = "Midterm Races by Democrats Chance of Winning",
+       subtitle = "Day Before Election, 2018-11-05",
+       x = "FiveThirtyEight Model",
+       y = "PredictIt Market")
+
+# Weird NJ-02 Market Error
+weird_nj_02 <- markets %>%
+  filter(race == "NJ-02",
+         date > "2018-11-01") %>%
+  ggplot(aes(date, close)) +
+  geom_line(aes(color = party))
+
+props <- messy %>%
+  # add binary DEM prediction
+  mutate(market_guess = if_else(market > 0.5, TRUE, FALSE),
+         model_guess  = if_else(model > 0.5, TRUE, FALSE)) %>%
+  # add in election results
+  left_join(results, by = "race") %>% select(-category) %>%
+  # add binary DEM prediction
+  mutate(market_hit = (market_guess == winner),
+         model_hit = (model_guess == winner)) %>%
+  mutate(week = lubridate::week(date),
+         month = lubridate::month(date))
+
+prop_month_bars <- props %>%
+  group_by(month) %>%
+  summarise(market_prop = mean(market_hit, na.rm = TRUE),
+            model_prop = mean(model_hit, na.rm = TRUE)) %>%
+  gather(model_prop, market_prop,
+         key = method,
+         value = prop) %>%
+  ggplot(aes(x = month,
+             y = prop,
+             fill = method)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c(color_market,
+                                color_model)) +
+  labs(title = "Proportion of Correct Predictions by Week",
+       subtitle = "PredictIt Markets and FiveThirtyEight Model",
+       y = "Proportion",
+       x = "Month of Year") +
+  coord_cartesian(ylim = c(0.70, 0.90))
+
+prop_week_line <- props %>%
+  group_by(week) %>%
+  summarise(market_prop = mean(market_hit, na.rm = TRUE),
+            model_prop = mean(model_hit, na.rm = TRUE)) %>%
+  gather(model_prop, market_prop,
+         key = method,
+         value = prop) %>%
+  ggplot(aes(x = week,
+             y = prop,
+             color = method)) +
+  geom_line(size = 3) +
+  scale_color_manual(values = c(color_market,
+                               color_model)) +
+  labs(title = "Proportion of Correct Predictions by Week",
+       subtitle = "PredictIt Markets and FiveThirtyEight Model",
+       y = "Proportion",
+       x = "Week of Year") +
+  coord_cartesian(ylim = c(0.75, 0.95))
+
+prop_day_line <- props %>%
+  group_by(date) %>%
+  summarise(market_prop = mean(market_hit, na.rm = TRUE),
+            model_prop = mean(model_hit, na.rm = TRUE)) %>%
+  gather(model_prop, market_prop,
+         key = method,
+         value = prop) %>%
+  ggplot(aes(x = date,
+             y = prop,
+             color = method)) +
+  geom_line(size = 3) +
+  scale_color_manual(values = c(color_market,
+                                color_model)) +
+  labs(title = "Proportion of Correct Predictions by Week",
+       subtitle = "PredictIt Markets and FiveThirtyEight Model",
+       y = "Proportion",
+       x = "Day of Year") +
+  coord_cartesian(ylim = c(0.75, 0.95))

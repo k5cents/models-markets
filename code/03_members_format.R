@@ -2,9 +2,11 @@
 ### Format members of current congress
 
 members <- legislators_current %>%
+  unite(first_name, last_name,
+        col = name,
+        sep = " ") %>%
   rename(chamber = type,
-         name = last_name,
-         gid = govtrack_id) %>%
+         gid     = govtrack_id) %>%
   select(name,
          gid,
          birthday,
@@ -18,6 +20,9 @@ members <- legislators_current %>%
 
 # Recode, Encode, and Pad
 members$name %<>% iconv(to = "ASCII//TRANSLIT")
+members$name %<>% str_replace_all("Robert Menendez", "Bob Menendez")
+members$name %<>% str_replace_all("Robert Casey",    "Bob Casey")
+members$name %<>% str_replace_all("Bernard Sanders", "Bernie Sanders")
 members$chamber %<>% recode("rep" = "house", "sen" = "senate")
 members$district %<>%  str_pad(width = 2, pad = "0")
 members$senate_class %<>% str_pad(width = 2, pad = "S")

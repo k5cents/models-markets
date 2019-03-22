@@ -1,9 +1,6 @@
-### Kiernan Nicholls
-### Format market data from PredictIt
-
-# Rename market data input
 markets <- DailyMarketData_formatted %>%
   rename(mid      = MarketId,
+         name     = MarketName,
          symbol   = MarketSymbol,
          party    = ContractName,
          open     = OpenPrice,
@@ -13,7 +10,11 @@ markets <- DailyMarketData_formatted %>%
          vol      = Volume,
          date     = Date) %>%
   select(date, everything()) %>%
-  select(-ContractSymbol, -MarketName)
+  select(-ContractSymbol)
+
+# Get candidate names from full market question
+markets$name[str_which(markets$name, "Which party will")] <- NA
+markets$name %<>% word(start = 2, end = 3)
 
 # Recode party variables
 markets$party %<>% recode("Democratic or DFL" = "D",
@@ -25,12 +26,13 @@ markets$symbol %<>% str_remove(".2018")
 markets$symbol %<>% str_remove(".18")
 
 # Divide the market symbol into the name and race code
-markets <- markets %>% separate(col = symbol,
-                                into = c("name", "race"),
-                                sep = "\\.",
-                                remove = TRUE,
-                                extra = "drop",
-                                fill = "left")
+markets %<>%
+  separate(col = symbol,
+           into = c("symbol", "race"),
+           sep = "\\.",
+           extra = "drop",
+           fill = "left") %>%
+  select(-symbol)
 
 # Recode the original contract strings for race variables
 markets$race %<>% str_replace("SENATE", "S1")
@@ -48,18 +50,23 @@ markets$race <- paste(str_sub(markets$race, 1, 2), # state abbreviation
                       sep = "-",                   # put hyphen in middle
                       str_sub(markets$race, 3, 4)) # market number)
 
-markets %<>% filter(mid != "3455", # paul ryan
-                    mid != "3507", # jeff flake
-                    mid != "3539") # shea-porter
+# Remove markets incorrectly included
+markets %<>% filter(mid != "3455", # Paul Ryan
+                    mid != "3507", # Jeff Flake
+                    mid != "3539") # Shea-Porter
 
-# Look into list of members and take party from candidates with a matching name
-first4 <- function(v) str_sub(tolower(v), 1, 4)
-for (i in 1:nrow(markets)) {
-  if (is.na(markets$party[i])) {
-    markets$party[i] <-
-      members$party[first4(members$name) == first4(markets$name)[i]][1]
-    }
-}
+# Divide the data based on market question syntax
+# Some market questions provided name, others party
+no_party <- markets %>%
+  filter(is.na(party)) %>%
+  select(-party)
+
+# Take the members list, get the party, add back with those with party
+markets <- members %>%
+  select(name, party) %>%
+  right_join(no_party, by = "name") %>%
+  select(date, mid, everything()) %>%
+  bind_rows(markets %>% filter(!is.na(party)))
 
 # Fix some incorrect party values resulting from name confusion
 markets$party[markets$race == "CO-05"] <- "R" # Lamborn (R) not Lamb (D)
@@ -67,7 +74,6 @@ markets$party[markets$race == "MN-02"] <- "R" # Lewis (R) not Lewis (D)
 markets$party[markets$race == "WI-S1"] <- "D" # Balderson (R) Baldwin (D)
 
 # Add in ME-02 and NY-27 which were left out of initial data
-
 ny_27 <-
   read_csv(file = "./input/Contract_NY27_formatted.csv",
            col_types = cols(ContractID = col_character())) %>%
@@ -81,7 +87,8 @@ me_02 <-
            col_types = cols(ContractID = col_character())) %>%
   mutate(mid = "4945",
          race = "ME-02") %>%
-  rename(party = LongName)
+  rename(party = LongName) %>%
+ filter(Date != "2018-10-10")
 
 markets_extra <-
   bind_rows(ny_27, me_02) %>%

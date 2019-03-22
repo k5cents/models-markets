@@ -64,12 +64,14 @@ tidy <-
   arrange(date, race) %>%
   distinct()
 
+# Keep market and model data in seperate columns
 messy <-
   left_join(x   = markets3,
             y   = model2,
             by  = c("date", "race")) %>%
   filter(date  >= "2018-08-01",
-         date  <= "2018-11-05")
-
+         date  <= "2018-11-05") %>%
+  rename(model  = prob,
+         market = close)
 
 

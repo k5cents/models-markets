@@ -31,14 +31,10 @@ read_github  <- function(user, repo, branch, folder, file, ...) {
     read_csv(...)
 }
 
-# read input data ---------------------------------------------------------
+# read market data from https://www.predictit.org/ ------------------------
 
-## Prediction Market data courtesy of    https://www.predictit.org/
-## Forecast Model data courtesy of       https://fivethirtyeight.com/
-## Congress Member data courtsey of      https://theunitedstates.io/
-
-# Market Data sent by will.jennings@predictit.org
-# Detailed market history provided to partnered academic researchers
+## Market Data sent by will.jennings@predictit.org
+## Detailed market history provided to partnered academic researchers
 DailyMarketData <-
   readLines(con = file("./input/DailyMarketData.csv",
                         encoding = "UTF-16LE")) %>%
@@ -64,8 +60,10 @@ Contract_NY27 <-
            col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y")))
 
-# Current members of the 115th
-# Archived: 2018-10-22 at 18:11
+# read member data from https://theunitedstates.io/ -----------------------
+
+## Current members of the 115th
+## Archived: 2018-10-22 at 18:11
 legislators_current <-
   read_archive(date = "2018-10-22 18:11:18",
                site = "https://theunitedstates.io",
@@ -73,9 +71,28 @@ legislators_current <-
                file = "legislators-current.csv",
                col_types = cols(govtrack_id = col_character()))
 
-# District level 538 House model history
-# Updated:  2018-11-06 at 01:56
-# Archived: 2018-11-06 at 12:06
+# The ideology and leadership scores of the 115th
+# Calculated with cosponsorship analysis
+# Archived 2019-01-21 17:13:08
+sponsorshipanalysis_h <-
+  read_archive(date = "2019-01-21 17:13:08",
+               site = "https://www.govtrack.us",
+               folder = "data/us/115/stats",
+               file = "sponsorshipanalysis_h.txt",
+               col_types = cols(ID = col_character()))
+
+sponsorshipanalysis_s <-
+  read_archive(date = "2019-01-21 17:13:08",
+               site = "https://www.govtrack.us",
+               folder = "data/us/115/stats",
+               file = "sponsorshipanalysis_s.txt",
+               col_types = cols(ID = col_character()))
+
+# read model and polling data from https://fivethirtyeight ----------------
+
+## District level 538 House model history
+## Updated:  2018-11-06 at 01:56
+## Archived: 2018-11-06 at 12:06
 house_district_forecast <-
   read_archive(date   = "2018-11-06 12:06:23",
                site   = "https://projects.fivethirtyeight.com",
@@ -200,20 +217,3 @@ generic_ballot_polls <-
                  start_date = col_date("%m/%d/%y"),
                  end_date = col_date("%m/%d/%y"),
                  created_at = col_datetime("%m/%d/%y %H:%M")))
-
-# The ideology and leadership scores of the 115th
-# Calculated with cosponsorship analysis
-# Archived 2019-01-21 17:13:08
-sponsorshipanalysis_h <-
-  read_archive(date = "2019-01-21 17:13:08",
-               site = "https://www.govtrack.us",
-               folder = "data/us/115/stats",
-               file = "sponsorshipanalysis_h.txt",
-               col_types = cols(ID = col_character()))
-
-sponsorshipanalysis_s <-
-  read_archive(date = "2019-01-21 17:13:08",
-               site = "https://www.govtrack.us",
-               folder = "data/us/115/stats",
-               file = "sponsorshipanalysis_s.txt",
-               col_types = cols(ID = col_character()))

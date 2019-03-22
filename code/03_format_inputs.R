@@ -59,17 +59,16 @@ members <- members %<>%
 
 # Format member stats for join
 members_stats <-
-  bind_rows(sponsorshipanalysis_h, sponsorshipanalysis_s) %>%
+  bind_rows(sponsorshipanalysis_h, sponsorshipanalysis_s,
+            .id = "chamber") %>%
   select(ID, chamber, party, ideology, leadership) %>%
   rename(gid = ID)
-
+members_stats$chamber %<>% recode("1" = "house", "2" = "senate")
 members_stats$party %<>% recode("Democrat" = "D", "Republican" = "R")
 members_stats$gid %<>% as.character()
 
 # Add stats to frame by GovTrack ID
 members %<>% left_join(members_stats, by = c("gid", "party", "chamber"))
-
-
 
 # format markets history ------------------------------------------------------
 
@@ -78,7 +77,7 @@ members %<>% left_join(members_stats, by = c("gid", "party", "chamber"))
 ## DESC:      history of contract prices for midterm election markets
 ## USE:       operationalize probabalistic forecasts from prediction markets
 
-markets <- DailyMarketData_formatted %>%
+markets <- DailyMarketData %>%
   rename(mid      = MarketId,
          name     = MarketName,
          symbol   = MarketSymbol,
@@ -152,21 +151,18 @@ markets <- markets_with_name %>%
   bind_rows(markets_with_party)
 
 # Add in ME-02 and NY-27 which were left out of initial data
-ny_27 <-
-  read_csv(file = "./input/Contract_NY27_formatted.csv",
-           col_types = cols(ContractID = col_character())) %>%
+ny_27 <- Contract_NY27 %>%
+  slice(6:154) %>%
   mutate(mid = "4729",
          race = "NY-27",
          party = "R") %>%
   select(-Average)
 
-me_02 <-
-  read_csv(file = "./input/Market_ME02_formatted.csv",
-           col_types = cols(ContractID = col_character())) %>%
+me_02 <- Market_ME02 %>%
+  slice(2:176) %>%
   mutate(mid = "4945",
          race = "ME-02") %>%
-  rename(party = LongName) %>%
-  filter(Date != "2018-10-10")
+  rename(party = LongName)
 
 markets_extra <-
   bind_rows(ny_27, me_02) %>%
@@ -179,9 +175,6 @@ markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"
 
 # Bind with ME-02 and NY-27
 markets %<>%  bind_rows(markets_extra)
-
-
-
 
 # format polling data -----------------------------------------------------
 

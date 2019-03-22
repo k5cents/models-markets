@@ -4,8 +4,6 @@
 ## We only need probability for one candidate in each race
 ## Some markets only have data on candidate from 1 party
 
-markets2 <- markets %>% filter(date >= "2018-08-01")
-
 # Take the complimentary probability if only GOP data
 # Find race codes for markets with data on only one candidate
 single_party_markets <- markets2 %>%
@@ -32,7 +30,7 @@ original_dem <- markets2 %>%
          party == "D")
 
 # Combined both back together
-markets3 <-
+markets2 <-
   bind_rows(original_dem, invert_gop) %>%
   select(date, race, close) %>%
   arrange(date, race)
@@ -45,33 +43,18 @@ model2 <- model %>%
   filter(party == "D") %>%
   select(-party)
 
-# Join with models
-tidy <-
-  left_join(x   = markets3,
-            y   = model2,
-            by  = c("date", "race")) %>%
-  filter(date  >= "2018-08-01",
-         date  <= "2018-11-05") %>%
-  rename(model  = prob,
-         market = close) %>%
-  gather(key    = method,
-         value  = prob,
-         model, market) %>%
-  mutate(pick = if_else(prob > 0.50, TRUE, FALSE)) %>%
-  left_join(results, by = "race") %>%
-  mutate(correct = if_else(pick == winner, TRUE, FALSE)) %>%
-  select(date, race, method, prob, winner, correct) %>%
-  arrange(date, race) %>%
-  distinct()
-
+# Join democratic predictions from both markets and models for comparison
 # Keep market and model data in seperate columns
-messy <-
-  left_join(x   = markets3,
-            y   = model2,
-            by  = c("date", "race")) %>%
+messy <- markets2 %>%
+  left_join(model2) %>%
   filter(date  >= "2018-08-01",
          date  <= "2018-11-05") %>%
   rename(model  = prob,
          market = close)
 
+# Make the data tidy with each prediction as an observation
+tidy <- messy %>%
+  gather(key    = method,
+         value  = prob,
+         model, market)
 

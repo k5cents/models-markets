@@ -233,13 +233,13 @@ For each observation, there are 12 variables recorded:
 Below is a random sample of observations from the combined House
 district and Senate seat congressional model data sets.
 
-| Date       | State |  District| Candidate          | Party | Incumbent | Model   |  Probability|  Vote Share|
-|:-----------|:------|---------:|:-------------------|:------|:----------|:--------|------------:|-----------:|
-| 2018-09-01 | NJ    |         3| Andy Kim           | D     | FALSE     | classic |        0.430|       48.10|
-| 2018-09-05 | SC    |         6| Bryan Pugh         | GRE   | FALSE     | classic |        0.000|        2.93|
-| 2018-10-02 | NJ    |        11| Others             | NA    | FALSE     | deluxe  |        0.000|        3.38|
-| 2018-10-15 | TX    |         6| Jana Lynne Sanchez | D     | FALSE     | classic |        0.065|       43.45|
-| 2018-11-05 | LA    |         4| Mark Halverson     | I     | FALSE     | deluxe  |        0.000|        2.76|
+| Date       | State |  District| Candidate              | Party | Incumbent | Model   |  Probability|  Vote Share|
+|:-----------|:------|---------:|:-----------------------|:------|:----------|:--------|------------:|-----------:|
+| 2018-08-08 | ME    |         2| Jared Golden           | D     | FALSE     | classic |        0.411|       47.56|
+| 2018-08-27 | TX    |        16| Ben Mendoza            | IND   | FALSE     | lite    |        0.000|        3.49|
+| 2018-09-12 | NM    |         1| Janice E. Arnold-Jones | R     | FALSE     | deluxe  |        0.006|       37.01|
+| 2018-09-13 | CA    |        51| Juan M. Hidalgo Jr.    | R     | FALSE     | lite    |        0.000|       19.90|
+| 2018-10-21 | MO    |         3| Katy Geppert           | D     | FALSE     | deluxe  |        0.000|       31.04|
 
 ### PredictIt Markets Data
 
@@ -285,13 +285,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market             | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
-|:-----|:-------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
-| 3739 | MI11.2018          | DEM.MI11.2018 | 2018-04-30 |  0.68|  0.68|  0.68|   0.68|       0|
-| 3857 | FEIN.AZSENATE.2018 | NA            | 2018-06-01 |  0.79|  0.79|  0.80|   0.80|      46|
-| 4104 | NJ11.2018          | DEM.NJ11.2018 | 2018-08-16 |  0.80|  0.80|  0.80|   0.80|       0|
-| 4257 | IL12.2018          | DEM.IL12.2018 | 2018-10-12 |  0.37|  0.37|  0.37|   0.37|       0|
-| 4256 | MI08.2018          | GOP.MI08.2018 | 2018-10-24 |  0.55|  0.53|  0.59|   0.59|     393|
+| ID   | Market               | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
+|:-----|:---------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
+| 3513 | HURD.TX23.2018       | NA            | 2017-11-02 |  0.41|  0.39|  0.41|   0.39|       3|
+| 3863 | TX05.2018            | GOP.TX05.2018 | 2018-05-15 |  0.92|  0.92|  0.92|   0.92|       0|
+| 2918 | WARREN.MASENATE.2018 | NA            | 2018-06-12 |  0.94|  0.94|  0.94|   0.94|       0|
+| 3497 | HEIN.NMSENATE.2018   | NA            | 2018-06-26 |  0.93|  0.93|  0.95|   0.95|      64|
+| 4105 | NY09.2018            | GOP.NY09.2018 | 2018-07-12 |  0.07|  0.07|  0.07|   0.07|       0|
 
 Data Wrangling
 --------------
@@ -325,7 +325,7 @@ single Republican incumbent’s re-election probability; for such markets,
 the price (probability) can be simply inverted.
 
 Below is the data frame of historical predictions along with the
-election results. There are 17869 observations of 7 variables:
+election results. There are observations of 1 variables:
 
 1.  Date
 2.  Race
@@ -335,13 +335,13 @@ election results. There are 17869 observations of 7 variables:
 6.  Whether the Democratic candidate’s ultimately won the election
 7.  Whether that prediction is correct
 
-| Date       | Race  | Method |  Prediction| Democrat Predicted | Democrat Won | Prediction Correct |
-|:-----------|:------|:-------|-----------:|:-------------------|:-------------|:-------------------|
-| 2018-08-19 | PA-99 | model  |      0.9422| TRUE               | TRUE         | TRUE               |
-| 2018-09-03 | TX-21 | model  |      0.1512| FALSE              | FALSE        | TRUE               |
-| 2018-09-25 | NJ-11 | model  |      0.7599| TRUE               | TRUE         | TRUE               |
-| 2018-10-05 | WA-08 | market |      0.6300| TRUE               | TRUE         | TRUE               |
-| 2018-10-23 | CO-05 | market |      0.0500| FALSE              | FALSE        | TRUE               |
+| Date       | Race  | Predictive Method |  Prob. of Dem. Victory|
+|:-----------|:------|:------------------|----------------------:|
+| 2018-08-05 | VA-02 | market            |                 0.7000|
+| 2018-09-06 | FL-S1 | model             |                 0.5567|
+| 2018-09-11 | CO-05 | market            |                 0.0500|
+| 2018-09-12 | NJ-S1 | market            |                 0.7700|
+| 2018-10-06 | NJ-11 | model             |                 0.7589|
 
 Data Exploration
 ----------------

@@ -21,6 +21,14 @@ opts_chunk$set(
 )
 ```
 
+```{r read, echo=FALSE}
+source("./code/01_scrape_inputs.R")
+source("./code/02_format_inputs.R")
+source("./code/03_compare_methods.R")
+source("./code/04_explore_visually.R")
+source("./code/05_analyze_statistically.R")
+```
+
 The forecast model has become a staple of political punditry. Popularized by the
 data journalism site [FiveThirtyEight][01], the forecast model is a statistical
 tool used to incorporate a number of quantitative inputs and output a
@@ -181,13 +189,11 @@ capabilities.
 
 ### FiveThirtyEight Model Data
 
-```{r model_read}
-model_district <- read_csv("./input/model_district.csv")
-model_seat <- read_csv("./input/model_seat.csv") %>% rename(district = class)
-model_combined <- bind_rows(model_district, model_seat)
-```
-
 ```{r model_stats}
+model_combined <- senate_seat_forecast %>% 
+  rename("district" = "class") %>% 
+  bind_rows(house_district_forecast)
+
 avg_daily <- model_combined %>% 
   group_by(forecastdate) %>% 
   summarise(n = n()) %>% 
@@ -236,7 +242,7 @@ Below is a random sample of observations from the combined House district and
 Senate seat congressional model data sets.
 
 ```{r model_data, echo=FALSE, message=FALSE}
-model_combined %>%
+model_combined %>% 
   select(-special, -p10_voteshare, -p90_voteshare) %>% 
   sample_n(5) %>%
   arrange(forecastdate) %>% 
@@ -255,14 +261,6 @@ model_combined %>%
 ```
 
 ### PredictIt Markets Data
-
-```{r market_read}
-markets_data <- read_csv(file = "./input/markets_data.csv",
-                         na = c("n/a", "NA"),
-                         col_types = cols(MarketId = col_character(),
-                                          ContractName = col_character(),
-                                          ContractSymbol = col_character()))
-```
 
 Each Congressional race is predicted with it's own market where traders buy and
 sell shares of the opposing outcomes. Instead of producing a single prediction
@@ -300,7 +298,7 @@ a single contract from a single market. There are 44,711 observations covering
 Below is a random sample of observations from the PredictIt trading markets.
 
 ```{r market_data, echo=FALSE, message=FALSE}
-markets_data %>% 
+DailyMarketData %>% 
   select(-MarketName, 
          -ContractName) %>% 
   sample_n(5) %>%
@@ -320,10 +318,6 @@ markets_data %>%
 ```
 
 ## Data Wrangling
-
-```{r read_final}
-df <- read_csv("./output/df.csv")
-```
 
 The above data sets were both formatted to contain three keys variables: `date`,
 `race`, and `party`. Together, these three variables create a relational key
@@ -362,18 +356,15 @@ results. There are `r nrow(df)` observations of `r length(df)` variables:
 1. Whether that prediction is correct
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
-df %>%
+tidy %>%
   sample_n(5) %>%
   arrange(date) %>% 
   kable(format = "markdown",
         digits = 4,
         col.names = c("Date", 
                       "Race",
-                      "Method",
-                      "Prediction",
-                      "Democrat Predicted",
-                      "Democrat Won",
-                      "Prediction Correct"),
+                      "Predictive Method",
+                      "Prob. of Dem. Victory"),
         caption = "29,400 observations of 7 variables")
 ```
 
@@ -399,13 +390,12 @@ each method) increase exponentially over time. Theoretically, more input data
 would improve predictive accuracy.
 
 ```{r plots, echo=FALSE, message=FALSE, warning=FALSE}
-model <- read_csv("./output/model.csv")
-markets <- read_csv("./output/markets.csv")
-polling_data <- read_csv("./output/polling_data.csv")
-source("./code/09_explore_plots.R")
 plot_races_hist
+
 plot_cum_markets
+
 plot_cum_polls
+
 plot_cum_dollars
 ```
 

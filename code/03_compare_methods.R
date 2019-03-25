@@ -6,7 +6,7 @@
 
 # Take the complimentary probability if only GOP data
 # Find race codes for markets with data on only one candidate
-single_party_markets <- markets2 %>%
+single_party_markets <- markets %>%
   group_by(date, race) %>%
   summarise(n = n()) %>%
   filter(n == 1) %>%
@@ -18,14 +18,14 @@ single_party_markets <- markets2 %>%
 # Invert the GOP prices for markets with only GOP candidates
 invert <- function(x) 1 - x
 
-invert_gop <- markets2 %>%
+invert_gop <- markets %>%
   filter(race %in% single_party_markets,
          party == "R") %>%
   mutate(close = invert(close),
          party = "D")
 
 # Take all but the only GOP markets
-original_dem <- markets2 %>%
+original_dem <- markets %>%
   filter(!race %in% invert_gop$race,
          party == "D")
 
@@ -58,3 +58,15 @@ tidy <- messy %>%
          value  = prob,
          model, market)
 
+hits <- messy %>%
+  # add binary DEM prediction
+  mutate(market_guess = if_else(market > 0.5, TRUE, FALSE),
+         model_guess  = if_else(model  > 0.5, TRUE, FALSE)) %>%
+  # add in election results
+  left_join(results, by = "race") %>%
+  select(-category) %>%
+  # add binary DEM prediction
+  mutate(market_hit = (market_guess == winner),
+         model_hit = (model_guess == winner)) %>%
+  mutate(week = lubridate::week(date),
+         month = lubridate::month(date))

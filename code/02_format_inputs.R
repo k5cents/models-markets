@@ -312,8 +312,9 @@ model_combined[, 10:12] <- model_combined[, 10:12] * 0.01
 
 # Recode incumbent Independent senators for relational joins with Markets
 # Both caucus with Democrats and were endoresed by Democratic party
-model_combined$party[model_combined$name == "Bernard Sanders"] <- "D"
-model_combined$party[model_combined$name == "Angus King"]      <- "D"
+model_combined$party[model_combined$name == "Bernard Sanders"]   <- "D"
+model_combined$party[model_combined$name == "Angus S. King Jr."] <- "D"
+model_combined %<>% filter(name != "Zak Ringelstein")
 
 # Seperate model data by model format
 # According to 538, the "classic" model can be used as a default

@@ -2,8 +2,8 @@
 ### Analyze the comparison between markets and models
 
 hits <-
-  left_join(x   = markets3,
-            y   = model2,
+  left_join(x   = markets,
+            y   = model,
             by  = c("date", "race")) %>%
   filter(date  >= "2018-08-01",
          date  <= "2018-11-05") %>%

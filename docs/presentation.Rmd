@@ -11,7 +11,17 @@ library(tidyverse)
 library(rvest)
 library(magrittr)
 library(knitr)
-opts_chunk$set(echo = FALSE)
+opts_chunk$set(echo = FALSE,
+               warning = FALSE,
+               message = FALSE,
+               error = FALSE)
+```
+
+```{r source}
+source("./code/01_scrape_inputs.R")
+source("./code/02_format_inputs.R")
+source("./code/03_compare_methods.R")
+source("./code/04_explore_visually.R")
 ```
 
 ## Why predict elections?
@@ -93,7 +103,7 @@ congressional races:
 ## Model Outputs
 
 ```{r model_data, warning=FALSE, message=FALSE}
-read_csv("./input/house_district_forecast.csv") %>% 
+house_district_forecast %>% 
   select(forecastdate,
          state,
          district,
@@ -162,15 +172,23 @@ university, for educational purposes
 ## PredicIt Data
 
 ```{r market_data, warning=FALSE, message=FALSE}
-readLines(con = file("./input/DailyMarketData.csv",
-                       encoding = "UTF-16LE")) %>%
-  read_delim(delim = "|",
-             na = "n/a",
-             col_types = "ccccccccccc") %>% 
-    select(MarketSymbol, Date, ClosePrice, Volume) %>% 
+DailyMarketData %>% 
+  select(MarketSymbol, Date, ClosePrice, Volume) %>% 
   sample_n(10) %>%
   arrange(Date) %>% 
   kable(digits = 3,
         col.names = c("Ticker", "Date", "Price", "Volume"),
         caption = "10 of 44,711 observations with 6 of 11 variables")
 ```
+
+
+## Messy Data
+
+```{r}
+messy %>%
+  slice(1:10) %>% 
+  kable(digits = 3,
+        col.names = c("Date", "Race", "Market Price", "Model Probability"),
+        caption = "9,200 observations of 4 variables")
+```
+

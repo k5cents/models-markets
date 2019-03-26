@@ -56,7 +56,8 @@ messy <- markets2 %>%
 tidy <- messy %>%
   gather(key    = method,
          value  = prob,
-         model, market)
+         model, market) %>%
+  arrange(date, race, method)
 
 hits <- messy %>%
   # add binary DEM prediction

@@ -61,6 +61,8 @@ tidy <- messy %>%
   arrange(date, race, method)
 
 hits <- messy %>%
+  # remove uncalled race
+  filter(race != "NC-09") %>%
   # add binary DEM prediction
   mutate(market_guess = if_else(market > 0.5, TRUE, FALSE),
          model_guess  = if_else(model  > 0.5, TRUE, FALSE)) %>%

@@ -131,7 +131,7 @@ markets$race <- paste(str_sub(markets$race, 1, 2), # state abbreviation
 
 # Remove markets incorectly repeated
 # Some not running for re-election
-#
+
 markets %<>% filter(mid != "3455", # Paul Ryan
                     mid != "3507", # Jeff Flake
                     mid != "3539", # Shea-Porter
@@ -342,13 +342,12 @@ results <- forecast_results_2018 %>%
            into   = c("state", "district"),
            sep    = "-") %>%
   rename(winner   = Democrat_Won) %>%
-  mutate(winner   = if_else(uncalled, true  = NA, false = winner),
-         district = str_pad(district, width = 2,  pad   = "0")) %>%
-  unite(col = race,
-        state, district,
+  mutate(district = str_pad(district, width = 2,  pad   = "0")) %>%
+  unite(state, district,
+        col = race,
         sep = "-") %>%
-  select(race, winner, category)
-
+  select(race, winner, category) %>%
+  filter(race != "NC-09") # Harris fraud charges
 
 # format partisan lean index ----------------------------------------------
 

@@ -5,7 +5,6 @@
 ### Read in raw input data
 
 library(tidyverse)
-library(wayback)
 
 # read market data from https://www.predictit.org/ ------------------------
 
@@ -68,7 +67,7 @@ sponsorshipanalysis_s <-
         sep  = "/") %>%
   read_csv(col_types = cols(ID = col_character()))
 
-# read model and polling data from https://fivethirtyeight ----------------
+# read model and polling data from https://fivethirtyeight.com ------------
 
 ## District level 538 House model history
 ## Updated:  2018-11-06 at 01:56

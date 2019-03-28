@@ -431,4 +431,4 @@ plot_cum_dollars
 [23]: https://insideelections.com/ "inside"
 [24]: http://www.centerforpolitics.org/crystalball/ "sabatos"
 [25]: https://github.com/unitedstates/congress-legislators "legislators"
-[26]: https://theunitedstates.io/ "@unitedstates"
+[26]: https://theunitedstates.io/ "unitedstates proj"

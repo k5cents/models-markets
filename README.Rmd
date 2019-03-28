@@ -4,7 +4,6 @@ author: "Kiernan Nicholls"
 date: "Spring, 2018"
 output:
   md_document:
-    variant: markdown_github
     fig_width: 10
     df_print: kable
     toc: true
@@ -21,7 +20,7 @@ opts_chunk$set(
 )
 ```
 
-```{r read, cache=TRUE}
+```{r read}
 source("./code/01_scrape_inputs.R")
 ```
 
@@ -340,7 +339,7 @@ House race party variables are extracted from "DEM" and "GOP" in the
 `ContractSymbol` character string. Senate race party variables are obtained
 using the incumbent's name in the `MarketSymbol` character string and the
 [`/congress-legislators`][25] data set maintained by the 
-[@unitedstates project][26].
+[\@unitedstates project][26].
 
 Observations can then be gathered to make the single combined data frame
 "[tidy][19]" with each observation representing one prediction (on one date, for

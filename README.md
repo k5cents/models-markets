@@ -233,13 +233,78 @@ For each observation, there are 12 variables recorded:
 Below is a random sample of observations from the combined House
 district and Senate seat congressional model data sets.
 
-| Date       | State |  District| Candidate           | Party | Incumbent | Model   |  Probability|  Vote Share|
-|:-----------|:------|---------:|:--------------------|:------|:----------|:--------|------------:|-----------:|
-| 2018-08-05 | RI    |         2| Salvatore Caiozzo   | R     | FALSE     | deluxe  |        0.000|       31.50|
-| 2018-09-05 | MS    |         3| Michael Guest       | R     | FALSE     | lite    |        0.937|       55.95|
-| 2018-09-18 | GA    |        11| Flynn D. Broady Jr. | D     | FALSE     | classic |        0.000|       34.47|
-| 2018-09-19 | OR    |         2| Mark Roberts        | IPO   | FALSE     | classic |        0.000|        4.29|
-| 2018-10-23 | CT    |         1| Others              | NA    | FALSE     | deluxe  |        0.000|        1.64|
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">State</th>
+<th style="text-align: right;">District</th>
+<th style="text-align: left;">Candidate</th>
+<th style="text-align: left;">Party</th>
+<th style="text-align: left;">Incumbent</th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Probability</th>
+<th style="text-align: right;">Vote Share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2018-08-14</td>
+<td style="text-align: left;">GA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">Rob Woodall</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">deluxe</td>
+<td style="text-align: right;">0.790</td>
+<td style="text-align: right;">52.80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-09-27</td>
+<td style="text-align: left;">SC</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">William Timmons</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">deluxe</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">64.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018-10-07</td>
+<td style="text-align: left;">CO</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Jason Crow</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">lite</td>
+<td style="text-align: right;">0.842</td>
+<td style="text-align: right;">52.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-10-11</td>
+<td style="text-align: left;">WI</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Mike Gallagher</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">classic</td>
+<td style="text-align: right;">0.995</td>
+<td style="text-align: right;">61.27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018-10-28</td>
+<td style="text-align: left;">FL</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">Others</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">classic</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">3.04</td>
+</tr>
+</tbody>
+</table>
 
 ### PredictIt Markets Data
 
@@ -285,13 +350,78 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market          | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
-|:-----|:----------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
-| 3905 | NUNES.CA22.2018 | NA            | 2017-12-14 |  0.56|  0.56|  0.60|   0.60|      11|
-| 3737 | WA08.2018       | GOP.WA08.2018 | 2018-08-16 |  0.40|  0.39|  0.45|   0.39|      99|
-| 4843 | AZ02.2018       | GOP.AZ02.2018 | 2018-10-12 |  0.09|  0.09|  0.12|   0.12|     186|
-| 3532 | LEWI.MN02.2018  | NA            | 2018-11-06 |  0.25|  0.01|  0.29|   0.01|    4415|
-| 4991 | MI07.2018       | DEM.MI07.2018 | 2018-11-07 |  0.10|  0.04|  0.10|   0.04|      79|
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Market</th>
+<th style="text-align: left;">Contract</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: right;">Open</th>
+<th style="text-align: right;">Low</th>
+<th style="text-align: right;">High</th>
+<th style="text-align: right;">Close</th>
+<th style="text-align: right;">Volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">3866</td>
+<td style="text-align: left;">VA06.2018</td>
+<td style="text-align: left;">GOP.VA06.2018</td>
+<td style="text-align: left;">2017-12-24</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3886</td>
+<td style="text-align: left;">VA02.2018</td>
+<td style="text-align: left;">GOP.VA02.2018</td>
+<td style="text-align: left;">2018-01-31</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3767</td>
+<td style="text-align: left;">NH01.2018</td>
+<td style="text-align: left;">DEM.NH01.2018</td>
+<td style="text-align: left;">2018-05-11</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3531</td>
+<td style="text-align: left;">CURB.FL26.2018</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2018-07-01</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4127</td>
+<td style="text-align: left;">NY01.2018</td>
+<td style="text-align: left;">DEM.NY01.2018</td>
+<td style="text-align: left;">2018-08-28</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
 
 Data Wrangling
 --------------
@@ -310,8 +440,8 @@ For market data, House race party variables are extracted from “DEM” and
 variables are obtained using the incumbent’s name in the `MarketSymbol`
 character string and the
 [`/congress-legislators`](https://github.com/unitedstates/congress-legislators "legislators")
-data set maintained by the \[@unitedstates
-project\][26](https://theunitedstates.io/ "@unitedstates").
+data set maintained by the [@unitedstates
+project](https://theunitedstates.io/ "@unitedstates").
 
 Observations can then be gathered to make the single combined data frame
 “[tidy](http://vita.had.co.nz/papers/tidy-data.html "Tidy data")” with
@@ -335,13 +465,48 @@ election results. There are observations of 1 variables:
 6.  Whether the Democratic candidate’s ultimately won the election
 7.  Whether that prediction is correct
 
-| Date       | Race  | Predictive Method |  Prob. of Dem. Victory|
-|:-----------|:------|:------------------|----------------------:|
-| 2018-08-07 | MN-S1 | market            |                 0.8100|
-| 2018-08-10 | FL-S1 | market            |                 0.5100|
-| 2018-09-08 | NV-S1 | market            |                 0.6300|
-| 2018-09-21 | VA-10 | model             |                 0.7821|
-| 2018-10-13 | KS-03 | model             |                 0.5410|
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Race</th>
+<th style="text-align: left;">Predictive Method</th>
+<th style="text-align: right;">Prob. of Dem. Victory</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2018-09-05</td>
+<td style="text-align: left;">VA-02</td>
+<td style="text-align: left;">model</td>
+<td style="text-align: right;">0.2151</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-09-05</td>
+<td style="text-align: left;">NV-04</td>
+<td style="text-align: left;">model</td>
+<td style="text-align: right;">0.8600</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018-09-27</td>
+<td style="text-align: left;">NY-19</td>
+<td style="text-align: left;">market</td>
+<td style="text-align: right;">0.5600</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-09-30</td>
+<td style="text-align: left;">NC-09</td>
+<td style="text-align: left;">market</td>
+<td style="text-align: right;">0.5100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018-11-01</td>
+<td style="text-align: left;">NJ-S1</td>
+<td style="text-align: left;">model</td>
+<td style="text-align: right;">0.9075</td>
+</tr>
+</tbody>
+</table>
 
 Data Exploration
 ----------------
@@ -365,4 +530,4 @@ the respective methods. Both polls and dollars traded (the two primary
 inputs for each method) increase exponentially over time. Theoretically,
 more input data would improve predictive accuracy.
 
-![](README_files/figure-markdown_github/plots-1.png)![](README_files/figure-markdown_github/plots-2.png)![](README_files/figure-markdown_github/plots-3.png)![](README_files/figure-markdown_github/plots-4.png)
+![](README_files/figure-markdown_strict/plots-1.png)![](README_files/figure-markdown_strict/plots-2.png)![](README_files/figure-markdown_strict/plots-3.png)![](README_files/figure-markdown_strict/plots-4.png)

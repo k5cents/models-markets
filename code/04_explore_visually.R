@@ -29,7 +29,8 @@ plot_races_hist <-
                      labels = scales::percent) +
   labs(title = "Distribution of Race Probabilities by Predictive Method",
        x = "Democratic Win Probability",
-       y = "Number of Races")
+       y = "Number of Races") +
+  theme(legend.position = "none")
 
 
 # Number of polls conducted over time
@@ -109,21 +110,28 @@ prop_month_bars <- hits %>%
   summarise(market_prop = mean(market_hit, na.rm = TRUE),
             model_prop = mean(model_hit, na.rm = TRUE)) %>%
   gather(model_prop, market_prop, key = method, value = prop) %>%
+  mutate(method = recode(method,
+                         "model_prop" = "Model",
+                         "market_prop" = "Market")) %>%
   ggplot(aes(x = month, y = prop, fill = method)) +
-  geom_bar(stat = "identity", position = "dodge") +
+  geom_col(position = "dodge") +
   scale_fill_manual(values = c(color_market, color_model)) +
   labs(title = "Proportion of Correct Predictions by Week",
        subtitle = "PredictIt Markets and FiveThirtyEight Model",
        y = "Proportion",
        x = "Month of Year") +
   coord_cartesian(ylim = c(0.50, 1.0)) +
-  scale_y_continuous(labels = scales::percent)
+  scale_y_continuous(labels = scales::percent) +
+  scale_x_continuous(minor_breaks = 0)
 
 prop_week_line <- hits %>%
   group_by(week) %>%
   summarise(market_prop = mean(market_hit, na.rm = TRUE),
             model_prop = mean(model_hit, na.rm = TRUE)) %>%
   gather(model_prop, market_prop, key = method, value = prop) %>%
+  mutate(method = recode(method,
+                         "model_prop" = "Model",
+                         "market_prop" = "Market")) %>%
   ggplot(aes(x = week, y = prop, color = method)) +
   geom_line(size = 3) +
   coord_cartesian(ylim = c(0.75, 0.95)) +
@@ -139,6 +147,9 @@ prop_day_line <- hits %>%
   summarise(market_prop = mean(market_hit, na.rm = TRUE),
             model_prop = mean(model_hit, na.rm = TRUE)) %>%
   gather(model_prop, market_prop, key = method, value = prop) %>%
+  mutate(method = recode(method,
+                         "model_prop" = "Model",
+                         "market_prop" = "Market")) %>%
   ggplot(aes(x = date, y = prop, color = method)) +
   geom_line(size = 2) +
   coord_cartesian(ylim = c(0.75, 0.95)) +

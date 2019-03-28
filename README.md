@@ -233,13 +233,13 @@ For each observation, there are 12 variables recorded:
 Below is a random sample of observations from the combined House
 district and Senate seat congressional model data sets.
 
-| Date       | State |  District| Candidate              | Party | Incumbent | Model   |  Probability|  Vote Share|
-|:-----------|:------|---------:|:-----------------------|:------|:----------|:--------|------------:|-----------:|
-| 2018-08-08 | ME    |         2| Jared Golden           | D     | FALSE     | classic |        0.411|       47.56|
-| 2018-08-27 | TX    |        16| Ben Mendoza            | IND   | FALSE     | lite    |        0.000|        3.49|
-| 2018-09-12 | NM    |         1| Janice E. Arnold-Jones | R     | FALSE     | deluxe  |        0.006|       37.01|
-| 2018-09-13 | CA    |        51| Juan M. Hidalgo Jr.    | R     | FALSE     | lite    |        0.000|       19.90|
-| 2018-10-21 | MO    |         3| Katy Geppert           | D     | FALSE     | deluxe  |        0.000|       31.04|
+| Date       | State |  District| Candidate           | Party | Incumbent | Model   |  Probability|  Vote Share|
+|:-----------|:------|---------:|:--------------------|:------|:----------|:--------|------------:|-----------:|
+| 2018-08-05 | RI    |         2| Salvatore Caiozzo   | R     | FALSE     | deluxe  |        0.000|       31.50|
+| 2018-09-05 | MS    |         3| Michael Guest       | R     | FALSE     | lite    |        0.937|       55.95|
+| 2018-09-18 | GA    |        11| Flynn D. Broady Jr. | D     | FALSE     | classic |        0.000|       34.47|
+| 2018-09-19 | OR    |         2| Mark Roberts        | IPO   | FALSE     | classic |        0.000|        4.29|
+| 2018-10-23 | CT    |         1| Others              | NA    | FALSE     | deluxe  |        0.000|        1.64|
 
 ### PredictIt Markets Data
 
@@ -285,13 +285,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market               | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
-|:-----|:---------------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
-| 3513 | HURD.TX23.2018       | NA            | 2017-11-02 |  0.41|  0.39|  0.41|   0.39|       3|
-| 3863 | TX05.2018            | GOP.TX05.2018 | 2018-05-15 |  0.92|  0.92|  0.92|   0.92|       0|
-| 2918 | WARREN.MASENATE.2018 | NA            | 2018-06-12 |  0.94|  0.94|  0.94|   0.94|       0|
-| 3497 | HEIN.NMSENATE.2018   | NA            | 2018-06-26 |  0.93|  0.93|  0.95|   0.95|      64|
-| 4105 | NY09.2018            | GOP.NY09.2018 | 2018-07-12 |  0.07|  0.07|  0.07|   0.07|       0|
+| ID   | Market          | Contract      | Date       |  Open|   Low|  High|  Close|  Volume|
+|:-----|:----------------|:--------------|:-----------|-----:|-----:|-----:|------:|-------:|
+| 3905 | NUNES.CA22.2018 | NA            | 2017-12-14 |  0.56|  0.56|  0.60|   0.60|      11|
+| 3737 | WA08.2018       | GOP.WA08.2018 | 2018-08-16 |  0.40|  0.39|  0.45|   0.39|      99|
+| 4843 | AZ02.2018       | GOP.AZ02.2018 | 2018-10-12 |  0.09|  0.09|  0.12|   0.12|     186|
+| 3532 | LEWI.MN02.2018  | NA            | 2018-11-06 |  0.25|  0.01|  0.29|   0.01|    4415|
+| 4991 | MI07.2018       | DEM.MI07.2018 | 2018-11-07 |  0.10|  0.04|  0.10|   0.04|      79|
 
 Data Wrangling
 --------------
@@ -337,11 +337,11 @@ election results. There are observations of 1 variables:
 
 | Date       | Race  | Predictive Method |  Prob. of Dem. Victory|
 |:-----------|:------|:------------------|----------------------:|
-| 2018-08-05 | VA-02 | market            |                 0.7000|
-| 2018-09-06 | FL-S1 | model             |                 0.5567|
-| 2018-09-11 | CO-05 | market            |                 0.0500|
-| 2018-09-12 | NJ-S1 | market            |                 0.7700|
-| 2018-10-06 | NJ-11 | model             |                 0.7589|
+| 2018-08-07 | MN-S1 | market            |                 0.8100|
+| 2018-08-10 | FL-S1 | market            |                 0.5100|
+| 2018-09-08 | NV-S1 | market            |                 0.6300|
+| 2018-09-21 | VA-10 | model             |                 0.7821|
+| 2018-10-13 | KS-03 | model             |                 0.5410|
 
 Data Exploration
 ----------------

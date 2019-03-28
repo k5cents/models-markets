@@ -275,8 +275,8 @@ Historic indicators of \emph{greater} uncertainty:
 \protect\hypertarget{model-outputs}{}
 
 \begin{longtable}[]{@{}llrllrr@{}}
-\caption{10 of 299,760 observations with 7 of 12
-variables}\tabularnewline
+\caption{Model Data (299,760 observations with 7 of 12
+variables)}\tabularnewline
 \toprule
 Date & State & District & Party & Incumbent & Prob &
 Share\tabularnewline
@@ -400,27 +400,27 @@ purposes
 \begin{frame}{PredicIt Data}
 \protect\hypertarget{predicit-data}{}
 
-\begin{longtable}[]{@{}llrr@{}}
-\caption{10 of 44,711 observations with 6 of 11
-variables}\tabularnewline
+\begin{longtable}[]{@{}lllrr@{}}
+\caption{Market Data (44,711 observations with 6 of 11
+variables)}\tabularnewline
 \toprule
-Ticker & Date & Price & Volume\tabularnewline
+ID & Ticker & Date & Price & Volume\tabularnewline
 \midrule
 \endfirsthead
 \toprule
-Ticker & Date & Price & Volume\tabularnewline
+ID & Ticker & Date & Price & Volume\tabularnewline
 \midrule
 \endhead
-CRUZ.TXSENATE.2018 & 2017-03-31 & 0.70 & 1166\tabularnewline
-TNSEN18 & 2017-10-18 & 0.88 & 968\tabularnewline
-STAB.MISENATE.2018 & 2017-12-23 & 0.80 & 0\tabularnewline
-WARREN.MASENATE.2018 & 2018-03-10 & 0.91 & 3\tabularnewline
-MN03.2018 & 2018-04-22 & 0.26 & 9\tabularnewline
-SPEC.MSSEN.18 & 2018-05-13 & 0.80 & 0\tabularnewline
-NY19.2018 & 2018-05-31 & 0.45 & 0\tabularnewline
-SPEC.MSSEN.18 & 2018-07-01 & 0.88 & 50\tabularnewline
-BRAT.VA07.2018 & 2018-09-01 & 0.57 & 0\tabularnewline
-ISSA.CA49.2018 & 2018-10-26 & 0.01 & 558\tabularnewline
+3484 & MCCA.MOSENATE.2018 & 2017-09-20 & 0.47 & 0\tabularnewline
+2940 & SANDERS.VTSENATE.2018 & 2017-11-06 & 0.86 & 0\tabularnewline
+3532 & LEWI.MN02.2018 & 2018-06-08 & 0.40 & 0\tabularnewline
+3608 & HELL.NVSENATE.2018 & 2018-07-17 & 0.33 & 101\tabularnewline
+4232 & CASE.PASENATE.2018 & 2018-07-18 & 0.89 & 0\tabularnewline
+3767 & NH01.2018 & 2018-08-06 & 0.82 & 0\tabularnewline
+3736 & PA15.2018 & 2018-08-24 & 0.95 & 26\tabularnewline
+4258 & NJ07.2018 & 2018-09-03 & 0.41 & 2\tabularnewline
+2918 & WARREN.MASENATE.2018 & 2018-10-23 & 0.96 & 1354\tabularnewline
+4304 & WI01.2018 & 2018-11-07 & 0.99 & 1019\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -430,7 +430,8 @@ ISSA.CA49.2018 & 2018-10-26 & 0.01 & 558\tabularnewline
 \protect\hypertarget{messy-data}{}
 
 \begin{longtable}[]{@{}llrr@{}}
-\caption{9,200 observations of 4 variables}\tabularnewline
+\caption{Messy Combined (9,200 observations of 4
+variables)}\tabularnewline
 \toprule
 Date & Race & Market Price & Model Probability\tabularnewline
 \midrule
@@ -446,11 +447,75 @@ Date & Race & Market Price & Model Probability\tabularnewline
 2018-08-01 & CA-25 & 0.61 & 0.745\tabularnewline
 2018-08-01 & CA-39 & 0.61 & 0.377\tabularnewline
 2018-08-01 & CA-48 & 0.72 & 0.666\tabularnewline
-2018-08-01 & CA-49 & 0.98 & 0.795\tabularnewline
-2018-08-01 & CA-49 & 0.77 & 0.795\tabularnewline
+2018-08-01 & CA-49 & 0.74 & 0.795\tabularnewline
 2018-08-01 & CA-S1 & 0.94 & 1.000\tabularnewline
+2018-08-01 & CO-05 & 0.06 & 0.027\tabularnewline
 \bottomrule
 \end{longtable}
+
+\end{frame}
+
+\begin{frame}{Tidy Data}
+\protect\hypertarget{tidy-data}{}
+
+\begin{longtable}[]{@{}lllr@{}}
+\caption{Tidy Combined (18,400 observations of 4
+variables)}\tabularnewline
+\toprule
+Date & Race & Predictive Method & Probability\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Date & Race & Predictive Method & Probability\tabularnewline
+\midrule
+\endhead
+2018-08-01 & AZ-S1 & market & 0.660\tabularnewline
+2018-08-01 & AZ-S1 & model & 0.738\tabularnewline
+2018-08-01 & CA-10 & market & 0.580\tabularnewline
+2018-08-01 & CA-10 & model & 0.705\tabularnewline
+2018-08-01 & CA-12 & market & 0.910\tabularnewline
+2018-08-01 & CA-12 & model & 1.000\tabularnewline
+2018-08-01 & CA-22 & market & 0.300\tabularnewline
+2018-08-01 & CA-22 & model & 0.049\tabularnewline
+2018-08-01 & CA-25 & market & 0.610\tabularnewline
+2018-08-01 & CA-25 & model & 0.745\tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{frame}
+
+\begin{frame}{Race Distributions}
+\protect\hypertarget{race-distributions}{}
+
+\includegraphics{presentation_files/figure-beamer/plot_races_hist-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Method Similarities}
+\protect\hypertarget{method-similarities}{}
+
+\includegraphics{presentation_files/figure-beamer/plot_cartesian_races-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Market Manipulation?}
+\protect\hypertarget{market-manipulation}{}
+
+\includegraphics{presentation_files/figure-beamer/plot_nj_02-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Method Accuracy}
+\protect\hypertarget{method-accuracy}{}
+
+\includegraphics{presentation_files/figure-beamer/prop_day_line-1.pdf}
+
+\end{frame}
+
+\begin{frame}{Method Accuracy}
+\protect\hypertarget{method-accuracy-1}{}
+
+\includegraphics{presentation_files/figure-beamer/prop_month_bars-1.pdf}
 
 \end{frame}
 

@@ -21,12 +21,20 @@ opts_chunk$set(
 )
 ```
 
-```{r read, echo=FALSE}
+```{r read, cache=TRUE}
 source("./code/01_scrape_inputs.R")
+```
+
+```{r format}
 source("./code/02_format_inputs.R")
+```
+
+```{r compare}
 source("./code/03_compare_methods.R")
+```
+
+```{r viz}
 source("./code/04_explore_visually.R")
-source("./code/05_analyze_statistically.R")
 ```
 
 The forecast model has become a staple of political punditry. Popularized by the

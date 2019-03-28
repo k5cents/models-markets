@@ -2,7 +2,10 @@
 title: "Markets and Models"
 author: "Kiernan Nicholls"
 date: "Spring, 2019"
-output: beamer_presentation
+output: 
+  beamer_presentation: 
+    fig_caption: yes
+    keep_tex: yes
 df_print: kable
 ---
 
@@ -17,10 +20,19 @@ opts_chunk$set(echo = FALSE,
                error = FALSE)
 ```
 
-```{r source}
+```{r read, cache=TRUE}
 source("./code/01_scrape_inputs.R")
+```
+
+```{r format}
 source("./code/02_format_inputs.R")
+```
+
+```{r compare}
 source("./code/03_compare_methods.R")
+```
+
+```{r}
 source("./code/04_explore_visually.R")
 ```
 
@@ -122,7 +134,7 @@ house_district_forecast %>%
                       "Incumbent",
                       "Prob",
                       "Share"),
-        caption = "10 of 299,760 observations with 7 of 12 variables")
+        caption = "Model Data (299,760 observations with 7 of 12 variables)")
 ```
 
 ## Prediction Markets
@@ -173,12 +185,12 @@ university, for educational purposes
 
 ```{r market_data, warning=FALSE, message=FALSE}
 DailyMarketData %>% 
-  select(MarketSymbol, Date, ClosePrice, Volume) %>% 
+  select(MarketId, MarketSymbol, Date, ClosePrice, Volume) %>% 
   sample_n(10) %>%
   arrange(Date) %>% 
   kable(digits = 3,
-        col.names = c("Ticker", "Date", "Price", "Volume"),
-        caption = "10 of 44,711 observations with 6 of 11 variables")
+        col.names = c("ID", "Ticker", "Date", "Price", "Volume"),
+        caption = "Market Data (44,711 observations with 6 of 11 variables)")
 ```
 
 
@@ -189,6 +201,56 @@ messy %>%
   slice(1:10) %>% 
   kable(digits = 3,
         col.names = c("Date", "Race", "Market Price", "Model Probability"),
-        caption = "9,200 observations of 4 variables")
+        caption = "Messy Combined (9,200 observations of 4 variables)")
 ```
 
+## Tidy Data
+
+```{r}
+tidy %>%
+  slice(1:10) %>% 
+  kable(digits = 3,
+        col.names = c("Date", "Race", "Predictive Method", "Probability"),
+        caption = "Tidy Combined (18,400 observations of 4 variables)")
+```
+
+## Race Distributions
+
+```{r plot_races_hist}
+plot_races_hist + 
+  theme_minimal() + 
+  ggtitle("", subtitle = "") +
+  theme(legend.position = "none")
+```
+
+## Method Similarities
+
+```{r plot_cartesian_races}
+plot_cartesian_races + 
+  theme_minimal() + 
+  ggtitle("", subtitle = "")
+```
+
+## Market Manipulation?
+
+```{r plot_nj_02}
+plot_nj_02 + 
+  theme_minimal() + 
+  ggtitle("", subtitle = "")
+```
+
+## Method Accuracy
+
+```{r prop_day_line}
+prop_day_line + 
+  theme_minimal() + 
+  ggtitle("", subtitle = "")
+```
+
+## Method Accuracy
+
+```{r prop_month_bars}
+prop_month_bars + 
+  theme_minimal() + 
+  ggtitle("", subtitle = "")
+```

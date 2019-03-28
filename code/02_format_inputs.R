@@ -129,10 +129,16 @@ markets$race <- paste(str_sub(markets$race, 1, 2), # state abbreviation
                       sep = "-",                   # put hyphen in middle
                       str_sub(markets$race, 3, 4)) # market number)
 
-# Remove markets incorrectly included
+# Remove markets incorectly repeated
+# Some not running for re-election
+#
 markets %<>% filter(mid != "3455", # Paul Ryan
                     mid != "3507", # Jeff Flake
-                    mid != "3539") # Shea-Porter
+                    mid != "3539", # Shea-Porter
+                    mid != "3521", # Darrell Issa
+                    mid != "3522", # Repeat of 4825
+                    mid != "4177", # Repeat of 4232
+                    mid != "4824") # Repeat of 4776
 
 # Divide the data based on market question syntax
 # Market questions provided name or party, never both
@@ -159,7 +165,7 @@ ny_27 <- Contract_NY27 %>%
   select(-Average)
 
 me_02 <- Market_ME02 %>%
-  slice(2:176) %>%
+  filter(Date != "2018-10-10") %>%
   mutate(mid = "4945",
          race = "ME-02") %>%
   rename(party = LongName)

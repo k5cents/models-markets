@@ -20,7 +20,7 @@ opts_chunk$set(echo = FALSE,
                error = FALSE)
 ```
 
-```{r read, cache=TRUE}
+```{r read}
 source("./code/01_scrape_inputs.R")
 ```
 

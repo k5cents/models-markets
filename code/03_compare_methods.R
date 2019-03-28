@@ -45,8 +45,9 @@ model2 <- model %>%
 
 # Join democratic predictions from both markets and models for comparison
 # Keep market and model data in seperate columns
-messy <- markets2 %>%
-  left_join(model2) %>%
+messy <-
+  left_join(markets2, model2,
+            by  = c("date", "race")) %>%
   filter(date  >= "2018-08-01",
          date  <= "2018-11-05") %>%
   rename(model  = prob,
@@ -54,9 +55,9 @@ messy <- markets2 %>%
 
 # Make the data tidy with each prediction as an observation
 tidy <- messy %>%
-  gather(key    = method,
-         value  = prob,
-         model, market) %>%
+  gather(model, market,
+         key = method,
+         value = prob) %>%
   arrange(date, race, method)
 
 hits <- messy %>%

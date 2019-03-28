@@ -1,17 +1,22 @@
 ### Kiernan Nicholls
 ### Analyze the comparison between markets and models
 
-hits <-
-  left_join(x   = markets,
-            y   = model,
-            by  = c("date", "race")) %>%
-  filter(date  >= "2018-08-01",
-         date  <= "2018-11-05") %>%
-  rename(model_guess  = prob,
-         market_guess = close) %>%
-  mutate(model_guess  = if_else(model_guess > 0.5, TRUE, FALSE),
-         market_guess = if_else(market_guess > 0.5, TRUE, FALSE)) %>%
-  left_join(results, by = "race") %>%
-  mutate(model = (model_guess == winner),
-         market = (market_guess == winner)) %>%
-  select(date, race, model, market)
+t.test(x = hits$market_hit,
+       y = hits$model_hit,
+       paired = TRUE)
+
+h8  <- hits %>% filter(month(date)  < 9)
+h9  <- hits %>% filter(month(date) == 9)
+h10 <- hits %>% filter(month(date)  > 9)
+
+t.test(x = h8$market_hit,
+       y = h8$model_hit,
+       paired = TRUE)
+
+t.test(x = h9$market_hit,
+       y = h9$model_hit,
+       paired = TRUE)
+
+t.test(x = h10$market_hit,
+       y = h10$model_hit,
+       paired = TRUE)

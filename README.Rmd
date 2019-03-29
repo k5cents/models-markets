@@ -32,7 +32,7 @@ source("./code/02_format_inputs.R")
 source("./code/03_compare_methods.R")
 ```
 
-```{r viz}
+```{r plot}
 source("./code/04_explore_visually.R")
 ```
 
@@ -47,41 +47,19 @@ risk aversion to overcome the implicit bias of self-interested traders on a
 binary options exchange.
 
 How do these two predictive methods fare in their ability to prediction
-elections? I propose a null hypothesis of no difference in accuracy between
-forecasting models and prediction markets in their ability to predict 2018
-congressional midterm elections.
+elections? I propose a null hypothesis of no difference between the proportion
+of accurate predictions made by forecasting models and prediction markets in the
+2018 congressional midterm elections.
 
-I will be using public model data from the proprietary model written by the
-journalists at FiveThirtyEight and market data from the PredictIt exchange run
-by the Victoria University of Wellington, New Zealand.
+For model data, I will be using the public data from the proprietary model
+written by the journalists at FiveThirtyEight. For market data, I will be
+working with Victoria University of Wellington, New Zealand to analyze data from
+their PredictIt exchange.
 
-## Predictive Methods
+## Forecasting Models
 
-Billions of dollars and millions of individual lives depend on the outcome of
-our elections. It's human nature to attempt to predict the outcome of these
-elections. These predictive methods also allow campaign operatives to adjust
-their tactics in response to changing voter sentiment. There are a number of
-methods historically used to predict elections, each incorporating different
-types of inputs and producing different types of predictions.
-
-### Polling and Aggrigation
-
-Opinion polling is the most common form of election predicting. 
-By [randomly sampling][05] the overall population of potential voters, pollsters
-can ask a thousand Americans their voting intentions and determine the likely
-division of votes in the actual election. Sampling and systemic errors prevent
-this statistical tool from perfectly predicting the election. By aggregating a
-bunch of polls and averaging result, sites like [RealClearPolitics][06] take
-advantage of the [law of large numbers][07] to better calculate the true opinion
-of the overall population.
-
-### Forecasting Models
-
-Polling aggregation plays a fundamental role in even the most complex
-forecasting models. However, these statistical models can be written to
-incorporate even more types of quantitative data. As Nate Silver,
-FiveThirtyEight's founder and the primary author of their model, explains in
-their [methedological article][08]:
+As Nate Silver, FiveThirtyEight's founder and the primary author of their model,
+explains in their [methedological article][08]:
 
 > (Forecasting models) take lots of polls, perform various types of adjustments
 to them, and then blend them with other kinds of empirically useful indicators
@@ -89,16 +67,19 @@ to them, and then blend them with other kinds of empirically useful indicators
 account for the uncertainty in the forecast and simulate the election thousands
 of times.
 
-I will be using the FiveThirtyEight model's forecasting data. In 2016,
-FiveThirtyEight's prediction was closest to reality. They are also one of the
-few mainstream forecasters to continue their work into the 2018 midterm
-elections. Furthermore, they make the top-line output of their model free to the
-public.
+I will be using the FiveThirtyEight model data to represent the best
+capabilities of statistical election forecasting. FiveThirtyEight has a track
+record of accuracy over the last decade, including the 2016 Presidential
+election, where they gave President Trump a 30% chance of winning (compard to 1%
+from some competitors). Furthermore, they make the top-line output of their
+model free to the public.
 
 The goal of these mathematical forecasting models, [according to Silver][21], is
 "not to divine some magic formula that miraculously predicts every election.
 Instead, it’s to make sense of publicly available information in a rigorous and
 disciplined way."
+
+### Model Inputs
 
 FiveThirtyEight's 2018 House and Senate models incorporate four types of
 quantitative data:
@@ -129,8 +110,9 @@ FiveThirtyEight uses these inputs to generate three models. The "Lite" model
 only uses polling and CANTOR; "Classic" adds in the fundamental data; and
 "Deluxe" further incorporates the less quantitative expert forecasts.
 
-In describing the process of their 2014 Senate Model, Silver explained how the
-above inputs are incorporated in producing a probabilistic output:
+In [describing][26] the process of their 2014 Senate Model, Silver described the
+general process by which the above inputs are incorporated in producing a
+probabilistic output:
 
 > Most election models (including [FiveThirtyEight's]) work in something like
 the following way: First, they calculate the most likely outcome in a particular
@@ -138,10 +120,8 @@ state (“The Republican wins by 1 point”) and then they determine the degree 
 uncertainty around that estimate. Most models do this by means of a normal
 distribution or something similar to it.
 
-FiveThirtyEight has historically considered six factors in determining the
-degree of uncertainty around their estimated division of the eventual vote. In
-an analysis of past elections, it has been proven that the degree of uncertainty
-is _greater_ when:
+In an analysis of past elections, it has been proven that the degree of
+uncertainty is _greater_ when:
 
 1. The election is further away
 1. There are fewer polls
@@ -153,48 +133,13 @@ is _greater_ when:
 With these quantitative factors in mind, the model calculates the probability
 distribution in each candidate's share of the vote.
 
-The model then runs uses these predicted shares to run a 
-[Monte Carlo simulation][10]. In each iteration of the simulation, a share of
-the vote for each candidate in a race is drawn from the above probability
-distributions. A winner is determined and the simulation runs again. The
-percentage of simulated elections won is analogous to the probability of victory
-on election day.
+The model then runs uses these predicted shares to run a Monte Carlo simulation.
+In each iteration of the simulation, a share of the vote for each candidate in a
+race is drawn from the above probability distributions. A winner is determined
+and the simulation runs again. The percentage of simulated elections won is
+analogous to the probability of victory on election day.
 
-### Prediction Markets
-
-As summarized [on Wikipedia][18]:
-
-> Prediction markets (also known as predictive markets, information markets,
-decision markets, idea futures, event derivatives, or virtual markets) are
-exchange-traded markets created for the purpose of trading the outcome of
-events. The market prices can indicate what the crowd thinks the probability of
-the event is. A prediction market contract trades between 0 and 100%... The main
-purposes of prediction markets are eliciting aggregating beliefs over an unknown
-future outcome. Traders with different beliefs trade on contracts whose payoffs
-are related to the unknown future outcome and the market prices of the contracts
-are considered as the aggregated belief.
-
-By utilizing the economic forces of risk aversion and self-interest, prediction
-markets aim to overcome the implicit biases of the traders. Traders continually
-buy and sell contracts that pay out at $1 based on the outcome of the election.
-
-If a trader believes a candidate has a 75% chance of winning an election, the
-economics dictate he should be willing to buy a given number of contracts at a
-price less than $0.75 each. Should events unfold to increase or decrease this
-probability, the trader can sell these shares for more or less than he
-originally paid; this updates the market equilibrium price to reflect current
-probabilities.
-
-## Prediction Data
-
-I will use historical prediction data to compare the strengths, weaknesses, and
-overall accuracy of the two predictive methods of interest. Both the markets on
-PredictIt and the model from FiveThirtyEight produced daily probabilistic
-predictions for a number of Congressional elections. We can compare these
-predictions with the eventual election results to assess their predictive
-capabilities.
-
-### FiveThirtyEight Model Data
+### Model Output
 
 ```{r model_stats}
 model_combined <- senate_seat_forecast %>% 
@@ -267,7 +212,36 @@ model_combined %>%
         caption = "299,760 observations of 7 variables")
 ```
 
-### PredictIt Markets Data
+## Prediction Markets
+
+As summarized [on Wikipedia][18]:
+
+> Prediction markets (also known as predictive markets, information markets,
+decision markets, idea futures, event derivatives, or virtual markets) are
+exchange-traded markets created for the purpose of trading the outcome of
+events. The market prices can indicate what the crowd thinks the probability of
+the event is. A prediction market contract trades between 0 and 100%... The main
+purposes of prediction markets are eliciting aggregating beliefs over an unknown
+future outcome. Traders with different beliefs trade on contracts whose payoffs
+are related to the unknown future outcome and the market prices of the contracts
+are considered as the aggregated belief.
+
+### Market Inputs
+
+_icomplete_
+
+By utilizing the economic forces of risk aversion and self-interest, prediction
+markets aim to overcome the implicit biases of the traders. Traders continually
+buy and sell contracts that pay out at $1 based on the outcome of the election.
+
+If a trader believes a candidate has a 75% chance of winning an election, the
+economics dictate he should be willing to buy a given number of contracts at a
+price less than $0.75 each. Should events unfold to increase or decrease this
+probability, the trader can sell these shares for more or less than he
+originally paid; this updates the market equilibrium price to reflect current
+probabilities.
+
+### Market Output
 
 Each Congressional race is predicted with it's own market where traders buy and
 sell shares of the opposing outcomes. Instead of producing a single prediction
@@ -330,36 +304,31 @@ The above data sets were both formatted to contain three keys variables: `date`,
 `race`, and `party`. Together, these three variables create a relational key
 that can be used to join the two data sets for comparison.
 
-For model data, the `race` variable is created by combining the `state` and
-`district` variables. For market data, the `race` code is extracted from the
-`MarketSymbol` variable or candidate name.
+For model data, the new `race` variable is created by combining the old `state` and
+`district` variables. For market data, the new `race` code is extracted from the
+old `MarketSymbol`.
 
-For market data, House race party variables are extracted from "DEM" and "GOP"
-in the `ContractSymbol` character string. Senate race party variables are
-obtained using the incumbent's name in the `MarketSymbol` character string and
-the [`/congress-legislators`][25] data set maintained by the @unitedstates 
-project.
+For market data, House race party variables are extracted from the
+`ContractSymbol` character string. Senate race party variables are obtained
+using the incumbent's name in the `MarketSymbol` character string and the
+[`/congress-legislators`][25] data set maintained by the @unitedstates project.
 
 Observations can then be gathered to make the single combined data frame
-"[tidy][19]" with each observation representing one prediction (on one date, for
-one party, with one predictive method). The resulting data set has 29,602
-observations with nine variables.
+[tidy][19], with each observation representing one prediction (on one date, for
+one party, with one predictive method).
 
-Redundant observations are removed by selecting only democratic party 
-probabilities. Some markets are comprised of yes/no contracts for a single
+Redundant complimentary predictions are removed by selecting only democratic
+party probabilities. Some markets are comprised of yes/no contracts for a single
 Republican incumbent's re-election probability; for such markets, the price
 (probability) can be simply inverted.
 
 Below is the data frame of historical predictions along with the election
-results. There are `r nrow(df)` observations of `r length(df)` variables:
+results. There are `r nrow(tidy)` observations of `r length(tidy)` variables:
 
-1. Date
-1. Race
+1. Prediction Date
+1. Race Code
 1. Predictive Method
-1. The Democratic candidate's probability of winning
-1. Whether the Democratic candidate's probability is greater than 0.50
-1. Whether the Democratic candidate's ultimately won the election
-1. Whether that prediction is correct
+1. Democratic candidate's probability of winning
 
 ```{r joined_probs, echo=FALSE, message=FALSE}
 tidy %>%
@@ -390,28 +359,29 @@ tidy %>%
 
 ![accuracy by month](plots/plot_prop_month.png)
 
-[01]: https://fivethirtyeight.com/ "538 home page"
-[02]: https://web.archive.org/web/20161107220421/https://projects.fivethirtyeight.com/2016-election-forecast/ "538 2016"
-[03]: https://web.archive.org/web/20161108001708/https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html "NYT Upshot 2016"
-[04]: https://web.archive.org/web/20161107013120/http://elections.huffingtonpost.com/2016/forecast/president "HuffPo 2016"
-[05]: https://en.wikipedia.org/wiki/Sampling_(statistics) "Sandom sampling wiki"
-[06]: https://www.realclearpolitics.com/ "RCP home page"
-[07]: https://en.wikipedia.org/wiki/Law_of_large_numbers "Law large nums wiki"
-[08]: https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/ "538 model 2018"
-[09]: https://projects.fivethirtyeight.com/pollster-ratings/ "538 poll ratings"
-[10]: https://en.wikipedia.org/wiki/Monte_Carlo_method "Monte carlo sim wiki"
-[11]: https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv "Sen nat model"
-[12]: https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv "Sen seat model"
-[13]: https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv "House nat model"
-[14]: https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv "House dis model"
-[15]: https://www.predictit.org/support/faq "PredictIt FAQ"
-[16]: https://www.predictit.org/research "PredictIt research"
-[17]: https://www.predictit.org/api/marketdata/all/ "PredictIt API"
-[18]: https://en.wikipedia.org/wiki/Prediction_market "Prediction markets wiki"
-[19]: http://vita.had.co.nz/papers/tidy-data.html "Tidy data"
-[20]: https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/edit?usp=sharing "scandals data"
-[21]: https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/ "538 model 2014"
-[22]: https://cookpolitical.com/ "cook"
-[23]: https://insideelections.com/ "inside"
-[24]: http://www.centerforpolitics.org/crystalball/ "sabatos"
-[25]: https://github.com/unitedstates/congress-legislators "legislators"
+[01]: https://fivethirtyeight.com/
+[02]: https://projects.fivethirtyeight.com/2016-election-forecast/
+[03]: https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html
+[04]: http://elections.huffingtonpost.com/2016/forecast/president
+[05]: https://en.wikipedia.org/wiki/Sampling_(statistics)
+[06]: https://www.realclearpolitics.com/
+[07]: https://en.wikipedia.org/wiki/Law_of_large_numbers
+[08]: https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/
+[09]: https://projects.fivethirtyeight.com/pollster-ratings/
+[10]: https://en.wikipedia.org/wiki/Monte_Carlo_method
+[11]: https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv
+[12]: https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv
+[13]: https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv
+[14]: https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv
+[15]: https://www.predictit.org/support/faq
+[16]: https://www.predictit.org/research
+[17]: https://www.predictit.org/api/marketdata/all/
+[18]: https://en.wikipedia.org/wiki/Prediction_market
+[19]: http://vita.had.co.nz/papers/tidy-data.html
+[20]: https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/edit?usp=sharing 
+[21]: https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/
+[22]: https://cookpolitical.com/
+[23]: https://insideelections.com/
+[24]: http://www.centerforpolitics.org/crystalball/
+[25]: https://github.com/unitedstates/congress-legislators
+[26]: http://53eig.ht/1u2pSbD

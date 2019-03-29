@@ -1,19 +1,17 @@
--   [Predictive Methods](#predictive-methods)
-    -   [Polling and Aggrigation](#polling-and-aggrigation)
-    -   [Forecasting Models](#forecasting-models)
-    -   [Prediction Markets](#prediction-markets)
--   [Prediction Data](#prediction-data)
-    -   [FiveThirtyEight Model Data](#fivethirtyeight-model-data)
-    -   [PredictIt Markets Data](#predictit-markets-data)
+-   [Forecasting Models](#forecasting-models)
+    -   [Model Inputs](#model-inputs)
+    -   [Model Output](#model-output)
+-   [Prediction Markets](#prediction-markets)
+    -   [Market Inputs](#market-inputs)
+    -   [Market Output](#market-output)
 -   [Data Wrangling](#data-wrangling)
 -   [Data Exploration](#data-exploration)
 
 The forecast model has become a staple of political punditry.
 Popularized by the data journalism site
-[FiveThirtyEight](https://fivethirtyeight.com/ "538 home page"), the
-forecast model is a statistical tool used to incorporate a number of
-quantitative inputs and output a *probabilistic* view of all possible
-outcomes.
+[FiveThirtyEight](https://fivethirtyeight.com/), the forecast model is a
+statistical tool used to incorporate a number of quantitative inputs and
+output a *probabilistic* view of all possible outcomes.
 
 Markets can be used as alternative method of generating similarly
 probabilistic views of outcomes. Markets utilize the economic forces of
@@ -21,48 +19,21 @@ price discovery and risk aversion to overcome the implicit bias of
 self-interested traders on a binary options exchange.
 
 How do these two predictive methods fare in their ability to prediction
-elections? I propose a null hypothesis of no difference in accuracy
-between forecasting models and prediction markets in their ability to
-predict 2018 congressional midterm elections.
+elections? I propose a null hypothesis of no difference between the
+proportion of accurate predictions made by forecasting models and
+prediction markets in the 2018 congressional midterm elections.
 
-I will be using public model data from the proprietary model written by
-the journalists at FiveThirtyEight and market data from the PredictIt
-exchange run by the Victoria University of Wellington, New Zealand.
+For model data, I will be using the public data from the proprietary
+model written by the journalists at FiveThirtyEight. For market data, I
+will be working with Victoria University of Wellington, New Zealand to
+analyze data from their PredictIt exchange.
 
-Predictive Methods
+Forecasting Models
 ------------------
 
-Billions of dollars and millions of individual lives depend on the
-outcome of our elections. It’s human nature to attempt to predict the
-outcome of these elections. These predictive methods also allow campaign
-operatives to adjust their tactics in response to changing voter
-sentiment. There are a number of methods historically used to predict
-elections, each incorporating different types of inputs and producing
-different types of predictions.
-
-### Polling and Aggrigation
-
-Opinion polling is the most common form of election predicting. By
-[randomly
-sampling](https://en.wikipedia.org/wiki/Sampling_(statistics) "Sandom sampling wiki")
-the overall population of potential voters, pollsters can ask a thousand
-Americans their voting intentions and determine the likely division of
-votes in the actual election. Sampling and systemic errors prevent this
-statistical tool from perfectly predicting the election. By aggregating
-a bunch of polls and averaging result, sites like
-[RealClearPolitics](https://www.realclearpolitics.com/ "RCP home page")
-take advantage of the [law of large
-numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers "Law large nums wiki")
-to better calculate the true opinion of the overall population.
-
-### Forecasting Models
-
-Polling aggregation plays a fundamental role in even the most complex
-forecasting models. However, these statistical models can be written to
-incorporate even more types of quantitative data. As Nate Silver,
-FiveThirtyEight’s founder and the primary author of their model,
-explains in their [methedological
-article](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/ "538 model 2018"):
+As Nate Silver, FiveThirtyEight’s founder and the primary author of
+their model, explains in their [methedological
+article](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/):
 
 > (Forecasting models) take lots of polls, perform various types of
 > adjustments to them, and then blend them with other kinds of
@@ -71,23 +42,26 @@ article](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-
 > uncertainty in the forecast and simulate the election thousands of
 > times.
 
-I will be using the FiveThirtyEight model’s forecasting data. In 2016,
-FiveThirtyEight’s prediction was closest to reality. They are also one
-of the few mainstream forecasters to continue their work into the 2018
-midterm elections. Furthermore, they make the top-line output of their
-model free to the public.
+I will be using the FiveThirtyEight model data to represent the best
+capabilities of statistical election forecasting. FiveThirtyEight has a
+track record of accuracy over the last decade, including the 2016
+Presidential election, where they gave President Trump a 30% chance of
+winning (compard to 1% from some competitors). Furthermore, they make
+the top-line output of their model free to the public.
 
 The goal of these mathematical forecasting models, [according to
-Silver](https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/ "538 model 2014"),
+Silver](https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/),
 is “not to divine some magic formula that miraculously predicts every
 election. Instead, it’s to make sense of publicly available information
 in a rigorous and disciplined way.”
+
+### Model Inputs
 
 FiveThirtyEight’s 2018 House and Senate models incorporate four types of
 quantitative data:
 
 1.  **Polling:** District level polling. [FiveThirtyEight rates
-    pollsters](https://projects.fivethirtyeight.com/pollster-ratings/ "538 poll ratings")
+    pollsters](https://projects.fivethirtyeight.com/pollster-ratings/)
     to adjust their findings. The results are further adjusted three
     times:
     1.  The likely voter adjustment ensures a more accurate sampling
@@ -108,22 +82,20 @@ quantitative data:
     -   Fundraising
     -   Incumbent voting
     -   Challenger experience
-    -   [Scandals](https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/edit?usp=sharing "scandals data")
+    -   [Scandals](https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/edit?usp=sharing)
 4.  **Expert forecasts:** Ratings published by the historically accurate
-    experts at the [Cook Political
-    Report](https://cookpolitical.com/ "cook"), [Inside
-    Elections](https://insideelections.com/ "inside"), and [Sabato’s
-    Crystal
-    Ball](http://www.centerforpolitics.org/crystalball/ "sabatos").
+    experts at the [Cook Political Report](https://cookpolitical.com/),
+    [Inside Elections](https://insideelections.com/), and [Sabato’s
+    Crystal Ball](http://www.centerforpolitics.org/crystalball/).
 
 FiveThirtyEight uses these inputs to generate three models. The “Lite”
 model only uses polling and CANTOR; “Classic” adds in the fundamental
 data; and “Deluxe” further incorporates the less quantitative expert
 forecasts.
 
-In describing the process of their 2014 Senate Model, Silver explained
-how the above inputs are incorporated in producing a probabilistic
-output:
+In [describing](http://53eig.ht/1u2pSbD) the process of their 2014
+Senate Model, Silver described the general process by which the above
+inputs are incorporated in producing a probabilistic output:
 
 > Most election models (including \[FiveThirtyEight’s\]) work in
 > something like the following way: First, they calculate the most
@@ -132,10 +104,8 @@ output:
 > estimate. Most models do this by means of a normal distribution or
 > something similar to it.
 
-FiveThirtyEight has historically considered six factors in determining
-the degree of uncertainty around their estimated division of the
-eventual vote. In an analysis of past elections, it has been proven that
-the degree of uncertainty is *greater* when:
+In an analysis of past elections, it has been proven that the degree of
+uncertainty is *greater* when:
 
 1.  The election is further away
 2.  There are fewer polls
@@ -147,61 +117,22 @@ the degree of uncertainty is *greater* when:
 With these quantitative factors in mind, the model calculates the
 probability distribution in each candidate’s share of the vote.
 
-The model then runs uses these predicted shares to run a [Monte Carlo
-simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method "Monte carlo sim wiki").
-In each iteration of the simulation, a share of the vote for each
-candidate in a race is drawn from the above probability distributions. A
-winner is determined and the simulation runs again. The percentage of
-simulated elections won is analogous to the probability of victory on
-election day.
+The model then runs uses these predicted shares to run a Monte Carlo
+simulation. In each iteration of the simulation, a share of the vote for
+each candidate in a race is drawn from the above probability
+distributions. A winner is determined and the simulation runs again. The
+percentage of simulated elections won is analogous to the probability of
+victory on election day.
 
-### Prediction Markets
-
-As summarized [on
-Wikipedia](https://en.wikipedia.org/wiki/Prediction_market "Prediction markets wiki"):
-
-> Prediction markets (also known as predictive markets, information
-> markets, decision markets, idea futures, event derivatives, or virtual
-> markets) are exchange-traded markets created for the purpose of
-> trading the outcome of events. The market prices can indicate what the
-> crowd thinks the probability of the event is. A prediction market
-> contract trades between 0 and 100%… The main purposes of prediction
-> markets are eliciting aggregating beliefs over an unknown future
-> outcome. Traders with different beliefs trade on contracts whose
-> payoffs are related to the unknown future outcome and the market
-> prices of the contracts are considered as the aggregated belief.
-
-By utilizing the economic forces of risk aversion and self-interest,
-prediction markets aim to overcome the implicit biases of the traders.
-Traders continually buy and sell contracts that pay out at $1 based on
-the outcome of the election.
-
-If a trader believes a candidate has a 75% chance of winning an
-election, the economics dictate he should be willing to buy a given
-number of contracts at a price less than $0.75 each. Should events
-unfold to increase or decrease this probability, the trader can sell
-these shares for more or less than he originally paid; this updates the
-market equilibrium price to reflect current probabilities.
-
-Prediction Data
----------------
-
-I will use historical prediction data to compare the strengths,
-weaknesses, and overall accuracy of the two predictive methods of
-interest. Both the markets on PredictIt and the model from
-FiveThirtyEight produced daily probabilistic predictions for a number of
-Congressional elections. We can compare these predictions with the
-eventual election results to assess their predictive capabilities.
-
-### FiveThirtyEight Model Data
+### Model Output
 
 The team at FiveThirtyEight makes public a portion of their model’s
 output as four separate `.csv` files on their website:
 
-1.  [`/congress-model-2018/senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv "Sen nat model")
-2.  [`/congress-model-2018/house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv "House nat model")
-3.  [`/congress-model-2018/senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv "Sen seat model")
-4.  [`/congress-model-2018/house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv "House dis model")
+1.  [`/congress-model-2018/senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
+2.  [`/congress-model-2018/house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
+3.  [`/congress-model-2018/senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
+4.  [`/congress-model-2018/house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
 
 The two national forecasts provide the FiveThirtyEight calculations for
 each party’s probability of winning a majority in their respective
@@ -249,72 +180,104 @@ district and Senate seat congressional model data sets.
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2018-08-12</td>
-<td style="text-align: left;">NY</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">Naomi Levin</td>
+<td style="text-align: left;">2018-08-14</td>
+<td style="text-align: left;">PA</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">John Chrin</td>
 <td style="text-align: left;">R</td>
 <td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">lite</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">18.99</td>
+<td style="text-align: left;">classic</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">45.43</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2018-09-23</td>
-<td style="text-align: left;">NM</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">Gary Johnson</td>
-<td style="text-align: left;">L</td>
+<td style="text-align: left;">2018-08-20</td>
+<td style="text-align: left;">MD</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">David Griggs</td>
+<td style="text-align: left;">LIB</td>
 <td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">deluxe</td>
-<td style="text-align: right;">0.001</td>
-<td style="text-align: right;">16.63</td>
+<td style="text-align: left;">classic</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">3.45</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2018-09-26</td>
-<td style="text-align: left;">WA</td>
+<td style="text-align: left;">2018-09-05</td>
+<td style="text-align: left;">MT</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">Suzan DelBene</td>
+<td style="text-align: left;">Matt Rosendale</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">classic</td>
+<td style="text-align: right;">0.112</td>
+<td style="text-align: right;">44.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-09-29</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: left;">Karen Bass</td>
 <td style="text-align: left;">D</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: left;">lite</td>
-<td style="text-align: right;">0.998</td>
-<td style="text-align: right;">68.34</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2018-10-29</td>
-<td style="text-align: left;">MI</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Justin Amash</td>
-<td style="text-align: left;">R</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">lite</td>
-<td style="text-align: right;">0.801</td>
-<td style="text-align: right;">53.05</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">90.16</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2018-11-05</td>
-<td style="text-align: left;">VT</td>
+<td style="text-align: left;">2018-11-02</td>
+<td style="text-align: left;">KS</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">Lawrence Zupan</td>
-<td style="text-align: left;">R</td>
+<td style="text-align: left;">Alan LaPolice</td>
+<td style="text-align: left;">D</td>
 <td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">deluxe</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">26.51</td>
+<td style="text-align: left;">lite</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">40.08</td>
 </tr>
 </tbody>
 </table>
 
-### PredictIt Markets Data
+Prediction Markets
+------------------
+
+As summarized [on
+Wikipedia](https://en.wikipedia.org/wiki/Prediction_market):
+
+> Prediction markets (also known as predictive markets, information
+> markets, decision markets, idea futures, event derivatives, or virtual
+> markets) are exchange-traded markets created for the purpose of
+> trading the outcome of events. The market prices can indicate what the
+> crowd thinks the probability of the event is. A prediction market
+> contract trades between 0 and 100%… The main purposes of prediction
+> markets are eliciting aggregating beliefs over an unknown future
+> outcome. Traders with different beliefs trade on contracts whose
+> payoffs are related to the unknown future outcome and the market
+> prices of the contracts are considered as the aggregated belief.
+
+### Market Inputs
+
+*icomplete*
+
+By utilizing the economic forces of risk aversion and self-interest,
+prediction markets aim to overcome the implicit biases of the traders.
+Traders continually buy and sell contracts that pay out at $1 based on
+the outcome of the election.
+
+If a trader believes a candidate has a 75% chance of winning an
+election, the economics dictate he should be willing to buy a given
+number of contracts at a price less than $0.75 each. Should events
+unfold to increase or decrease this probability, the trader can sell
+these shares for more or less than he originally paid; this updates the
+market equilibrium price to reflect current probabilities.
+
+### Market Output
 
 Each Congressional race is predicted with it’s own market where traders
 buy and sell shares of the opposing outcomes. Instead of producing a
 single prediction every day, the market equilibrium price is continually
 adjusting to take into account the views of the traders. The history of
 this price is provided to researchers. As [PredictIt
-outlines](https://www.predictit.org/research "PredictIt research") in
-their data agreement:
+outlines](https://www.predictit.org/research) in their data agreement:
 
 > In order to take full advantage of the research opportunities
 > presented by prediction markets like PredictIt, we make our data
@@ -325,10 +288,10 @@ their data agreement:
 > computer science and game theory.
 
 I scraped [the PredictIt
-API](https://www.predictit.org/api/marketdata/all/ "PredictIt API")
-before the election and used the data to find all market ID’s related to
-2018 Congressional elections. PredictIt then provided the relevant
-market data as a single `.csv` file.
+API](https://www.predictit.org/api/marketdata/all/) before the election
+and used the data to find all market ID’s related to 2018 Congressional
+elections. PredictIt then provided the relevant market data as a single
+`.csv` file.
 
 Each observation represents one day’s opening, closing, low, and high
 price for a single contract from a single market. There are 44,711
@@ -366,59 +329,59 @@ markets.
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">3513</td>
-<td style="text-align: left;">HURD.TX23.2018</td>
+<td style="text-align: left;">2999</td>
+<td style="text-align: left;">NELSON.FLSENATE.2018</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">2017-08-16</td>
-<td style="text-align: right;">0.40</td>
-<td style="text-align: right;">0.40</td>
-<td style="text-align: right;">0.40</td>
-<td style="text-align: right;">0.40</td>
+<td style="text-align: left;">2017-06-11</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">0.75</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2940</td>
-<td style="text-align: left;">SANDERS.VTSENATE.2018</td>
+<td style="text-align: left;">3883</td>
+<td style="text-align: left;">TX29.2018</td>
+<td style="text-align: left;">DEM.TX29.2018</td>
+<td style="text-align: left;">2018-04-03</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4231</td>
+<td style="text-align: left;">FISC.NESENATE.2018</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">2018-05-02</td>
-<td style="text-align: right;">0.89</td>
-<td style="text-align: right;">0.89</td>
-<td style="text-align: right;">0.89</td>
-<td style="text-align: right;">0.89</td>
+<td style="text-align: left;">2018-06-13</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">0.94</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">3520</td>
-<td style="text-align: left;">KNIG.CA25.2018</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">2018-11-02</td>
-<td style="text-align: right;">0.51</td>
-<td style="text-align: right;">0.46</td>
-<td style="text-align: right;">0.51</td>
-<td style="text-align: right;">0.46</td>
-<td style="text-align: right;">521</td>
-</tr>
 <tr class="even">
-<td style="text-align: left;">3521</td>
-<td style="text-align: left;">ISSA.CA49.2018</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">2018-11-05</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">109</td>
+<td style="text-align: left;">3737</td>
+<td style="text-align: left;">WA08.2018</td>
+<td style="text-align: left;">DEM.WA08.2018</td>
+<td style="text-align: left;">2018-08-31</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">16</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">4993</td>
-<td style="text-align: left;">UT04.2018</td>
-<td style="text-align: left;">DEM.UT04.2018</td>
-<td style="text-align: left;">2018-11-22</td>
-<td style="text-align: right;">0.99</td>
-<td style="text-align: right;">0.99</td>
-<td style="text-align: right;">0.99</td>
-<td style="text-align: right;">0.99</td>
-<td style="text-align: right;">1760</td>
+<td style="text-align: left;">4271</td>
+<td style="text-align: left;">PA17.2018</td>
+<td style="text-align: left;">DEM.PA17.2018</td>
+<td style="text-align: left;">2018-09-01</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
@@ -431,38 +394,34 @@ The above data sets were both formatted to contain three keys variables:
 relational key that can be used to join the two data sets for
 comparison.
 
-For model data, the `race` variable is created by combining the `state`
-and `district` variables. For market data, the `race` code is extracted
-from the `MarketSymbol` variable or candidate name.
+For model data, the new `race` variable is created by combining the old
+`state` and `district` variables. For market data, the new `race` code
+is extracted from the old `MarketSymbol`.
 
-For market data, House race party variables are extracted from “DEM” and
-“GOP” in the `ContractSymbol` character string. Senate race party
-variables are obtained using the incumbent’s name in the `MarketSymbol`
-character string and the
-[`/congress-legislators`](https://github.com/unitedstates/congress-legislators "legislators")
+For market data, House race party variables are extracted from the
+`ContractSymbol` character string. Senate race party variables are
+obtained using the incumbent’s name in the `MarketSymbol` character
+string and the
+[`/congress-legislators`](https://github.com/unitedstates/congress-legislators)
 data set maintained by the @unitedstates project.
 
 Observations can then be gathered to make the single combined data frame
-“[tidy](http://vita.had.co.nz/papers/tidy-data.html "Tidy data")” with
-each observation representing one prediction (on one date, for one
-party, with one predictive method). The resulting data set has 29,602
-observations with nine variables.
+[tidy](http://vita.had.co.nz/papers/tidy-data.html), with each
+observation representing one prediction (on one date, for one party,
+with one predictive method).
 
-Redundant observations are removed by selecting only democratic party
-probabilities. Some markets are comprised of yes/no contracts for a
-single Republican incumbent’s re-election probability; for such markets,
-the price (probability) can be simply inverted.
+Redundant complimentary predictions are removed by selecting only
+democratic party probabilities. Some markets are comprised of yes/no
+contracts for a single Republican incumbent’s re-election probability;
+for such markets, the price (probability) can be simply inverted.
 
 Below is the data frame of historical predictions along with the
-election results. There are observations of 1 variables:
+election results. There are 17306 observations of 4 variables:
 
-1.  Date
-2.  Race
+1.  Prediction Date
+2.  Race Code
 3.  Predictive Method
-4.  The Democratic candidate’s probability of winning
-5.  Whether the Democratic candidate’s probability is greater than 0.50
-6.  Whether the Democratic candidate’s ultimately won the election
-7.  Whether that prediction is correct
+4.  Democratic candidate’s probability of winning
 
 <table>
 <thead>
@@ -475,34 +434,34 @@ election results. There are observations of 1 variables:
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2018-08-20</td>
-<td style="text-align: left;">MO-S1</td>
-<td style="text-align: left;">market</td>
-<td style="text-align: right;">0.4400</td>
+<td style="text-align: left;">2018-08-21</td>
+<td style="text-align: left;">NJ-11</td>
+<td style="text-align: left;">model</td>
+<td style="text-align: right;">0.7071</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2018-08-26</td>
-<td style="text-align: left;">NJ-03</td>
-<td style="text-align: left;">model</td>
-<td style="text-align: right;">0.3947</td>
+<td style="text-align: left;">2018-08-23</td>
+<td style="text-align: left;">IL-13</td>
+<td style="text-align: left;">market</td>
+<td style="text-align: right;">0.2400</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2018-09-11</td>
-<td style="text-align: left;">IL-06</td>
+<td style="text-align: left;">2018-08-25</td>
+<td style="text-align: left;">TX-21</td>
 <td style="text-align: left;">model</td>
-<td style="text-align: right;">0.3350</td>
+<td style="text-align: right;">0.1322</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2018-10-24</td>
-<td style="text-align: left;">WA-08</td>
-<td style="text-align: left;">model</td>
-<td style="text-align: right;">0.5004</td>
+<td style="text-align: left;">2018-09-29</td>
+<td style="text-align: left;">CA-10</td>
+<td style="text-align: left;">market</td>
+<td style="text-align: right;">0.6100</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2018-11-03</td>
-<td style="text-align: left;">MI-S1</td>
-<td style="text-align: left;">market</td>
-<td style="text-align: right;">0.8300</td>
+<td style="text-align: left;">2018-10-18</td>
+<td style="text-align: left;">IL-13</td>
+<td style="text-align: left;">model</td>
+<td style="text-align: right;">0.2951</td>
 </tr>
 </tbody>
 </table>

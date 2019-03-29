@@ -63,7 +63,7 @@ ggsave(plot = plot_cum_polls,
 plot_cum_dollars <- markets %>%
   filter(date >= "2018-01-01", date <= "2018-11-05") %>%
   group_by(date) %>%
-  mutate(traded = close * vol) %>%
+  mutate(traded = close * volume) %>%
   summarise(sum = sum(traded, na.rm = TRUE)) %>%
   mutate(cumsum = cumsum(sum)) %>%
   ggplot(mapping = aes(x = date, y = cumsum)) +

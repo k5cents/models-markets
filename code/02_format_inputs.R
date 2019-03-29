@@ -86,7 +86,7 @@ markets <- DailyMarketData %>%
          close    = ClosePrice,
          high     = HighPrice,
          low      = LowPrice,
-         vol      = Volume,
+         volume   = Volume,
          date     = Date) %>%
   select(date, everything()) %>%
   select(-ContractSymbol)
@@ -153,7 +153,7 @@ markets_with_party <- markets %>%
 # Join with members key to add party, then back with rest of market
 markets <- markets_with_name %>%
   inner_join(members, by = c("name", "race")) %>%
-  select(date, mid, race, party, open, low, high, close, vol) %>%
+  select(date, mid, race, party, open, low, high, close, volume) %>%
   bind_rows(markets_with_party)
 
 # Add in ME-02 and NY-27 which were left out of initial data
@@ -167,15 +167,13 @@ ny_27 <- Contract_NY27 %>%
 
 me_02 <- Market_ME02 %>%
   rename_all(tolower) %>%
+  rename(party = longname)
   filter(date != "2018-10-10") %>%
   mutate(mid = "4945",
          race = "ME-02") %>%
-  rename(party = longname)
-
 markets_extra <-
   bind_rows(ny_27, me_02) %>%
-  rename(vol = volume) %>%
-  select(date, mid, race, party, open, low, high, close, vol)
+  select(date, mid, race, party, open, low, high, close, volume)
 
 markets_extra$party[str_which(markets_extra$party, "GOP")] <- "R"
 markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"

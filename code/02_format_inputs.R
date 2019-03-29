@@ -19,42 +19,36 @@ members <- legislators_current %>%
   unite(first_name, last_name,
         col = name,
         sep = " ") %>%
-  rename(chamber = type,
-         gid     = govtrack_id) %>%
-  select(name,
-         gid,
-         birthday,
-         state,
-         district,
-         senate_class,
-         party,
-         gender,
-         chamber) %>%
+  rename(gid     = govtrack_id,
+         chamber = type,
+         class   = senate_class,
+         birth   = birthday) %>%
+  select(name, gid, birth, state, district, class, party, gender, chamber) %>%
   arrange(chamber)
 
 # Recode, Encode, and Pad
-members$name %<>% iconv(to = "ASCII//TRANSLIT")
-members$name %<>% str_replace_all("Robert Menendez", "Bob Menendez")
-members$name %<>% str_replace_all("Robert Casey",    "Bob Casey")
-members$name %<>% str_replace_all("Bernard Sanders", "Bernie Sanders")
-members$chamber %<>% recode("rep" = "house", "sen" = "senate")
-members$district %<>%  str_pad(width = 2, pad = "0")
-members$senate_class %<>% str_pad(width = 2, pad = "S")
-members$party %<>% recode("Democrat"    = "D",
-                          "Independent" = "D",
-                          "Republican"  = "R")
+members$name     %<>% iconv(to = "ASCII//TRANSLIT")
+members$name     %<>% str_replace_all("Robert Menendez", "Bob Menendez")
+members$name     %<>% str_replace_all("Robert Casey",    "Bob Casey")
+members$name     %<>% str_replace_all("Bernard Sanders", "Bernie Sanders")
+members$chamber  %<>% recode("rep" = "house", "sen" = "senate")
+members$district %<>% str_pad(width = 2, pad = "0")
+members$class    %<>% str_pad(width = 2, pad = "S")
+members$party    %<>% recode("Democrat"    = "D",
+                             "Independent" = "D",
+                             "Republican"  = "R")
 
 members$district <- if_else(condition = is.na(members$district),
-                            true = members$senate_class,
+                            true = members$class,
                             false = members$district)
 
 # Create district code as relational key
-members <- members %<>%
+members %<>%
   unite(col = race,
         state, district,
         sep = "-",
         remove = TRUE) %>%
-  select(-senate_class) %>%
+  select(-class) %>%
   arrange(name)
 
 # Format member stats for join
@@ -158,7 +152,7 @@ markets <- markets_with_name %>%
 
 # Add in ME-02 and NY-27 which were left out of initial data
 ny_27 <- Contract_NY27 %>%
-  rename_all(tolower)
+  rename_all(tolower) %>%
   slice(6:154) %>%
   mutate(mid = "4729",
          race = "NY-27",
@@ -167,10 +161,11 @@ ny_27 <- Contract_NY27 %>%
 
 me_02 <- Market_ME02 %>%
   rename_all(tolower) %>%
-  rename(party = longname)
+  rename(party = longname) %>%
   filter(date != "2018-10-10") %>%
   mutate(mid = "4945",
-         race = "ME-02") %>%
+         race = "ME-02")
+
 markets_extra <-
   bind_rows(ny_27, me_02) %>%
   select(date, mid, race, party, open, low, high, close, volume)

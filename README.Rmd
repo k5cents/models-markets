@@ -21,7 +21,7 @@ opts_chunk$set(
 ```
 
 ```{r read}
-source("./code/01_scrape_inputs.R")
+source("./code/01_read_inputs.R")
 ```
 
 ```{r format}
@@ -334,12 +334,11 @@ For model data, the `race` variable is created by combining the `state` and
 `district` variables. For market data, the `race` code is extracted from the
 `MarketSymbol` variable or candidate name.
 
-For market data,
-House race party variables are extracted from "DEM" and "GOP" in the
-`ContractSymbol` character string. Senate race party variables are obtained
-using the incumbent's name in the `MarketSymbol` character string and the
-[`/congress-legislators`][25] data set maintained by the 
-[\@unitedstates project][26].
+For market data, House race party variables are extracted from "DEM" and "GOP"
+in the `ContractSymbol` character string. Senate race party variables are
+obtained using the incumbent's name in the `MarketSymbol` character string and
+the [`/congress-legislators`][25] data set maintained by the @unitedstates 
+project.
 
 Observations can then be gathered to make the single combined data frame
 "[tidy][19]" with each observation representing one prediction (on one date, for
@@ -377,13 +376,19 @@ tidy %>%
 
 ## Data Exploration
 
-![probabiliy historgram][plots/plot_races_hist.png]
-![cumulative markets][plots/plot_cum_markets.png]
-![cumulative polls][plots/plot_cum_polls.png]
-![cumulative dollars][plots/plot_cum_dollars.png]
-![races by cartesian points][plots/plot_cart_points.png]
-![accuracy by day][plots/plot_prop_day.png]
-![accuracy by month][plots/plot_prop_month.png]
+![probabiliy](plots/plot_races_hist.png)
+
+![cumulative markets](plots/plot_cum_markets.png)
+
+![cumulative polls](plots/plot_cum_polls.png)
+
+![cumulative dollars](plots/plot_cum_dollars.png)
+
+![races by cartesian points](plots/plot_cart_points.png)
+
+![accuracy by day](plots/plot_prop_day.png)
+
+![accuracy by month](plots/plot_prop_month.png)
 
 [01]: https://fivethirtyeight.com/ "538 home page"
 [02]: https://web.archive.org/web/20161107220421/https://projects.fivethirtyeight.com/2016-election-forecast/ "538 2016"
@@ -410,4 +415,3 @@ tidy %>%
 [23]: https://insideelections.com/ "inside"
 [24]: http://www.centerforpolitics.org/crystalball/ "sabatos"
 [25]: https://github.com/unitedstates/congress-legislators "legislators"
-[26]: https://theunitedstates.io/ "unitedstates proj"

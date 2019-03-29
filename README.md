@@ -249,59 +249,59 @@ district and Senate seat congressional model data sets.
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2018-08-30</td>
-<td style="text-align: left;">UT</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">Mitt Romney</td>
+<td style="text-align: left;">2018-08-12</td>
+<td style="text-align: left;">NY</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">Naomi Levin</td>
 <td style="text-align: left;">R</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">lite</td>
-<td style="text-align: right;">0.998</td>
-<td style="text-align: right;">61.94</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">18.99</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2018-09-09</td>
-<td style="text-align: left;">FL</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: left;">Carlos Curbelo</td>
-<td style="text-align: left;">R</td>
-<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">2018-09-23</td>
+<td style="text-align: left;">NM</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Gary Johnson</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">deluxe</td>
-<td style="text-align: right;">0.607</td>
-<td style="text-align: right;">51.09</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">16.63</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2018-10-08</td>
+<td style="text-align: left;">2018-09-26</td>
+<td style="text-align: left;">WA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Suzan DelBene</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">lite</td>
+<td style="text-align: right;">0.998</td>
+<td style="text-align: right;">68.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-10-29</td>
 <td style="text-align: left;">MI</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">Travis Wines</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Justin Amash</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">lite</td>
+<td style="text-align: right;">0.801</td>
+<td style="text-align: right;">53.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018-11-05</td>
+<td style="text-align: left;">VT</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Lawrence Zupan</td>
 <td style="text-align: left;">R</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">deluxe</td>
 <td style="text-align: right;">0.000</td>
-<td style="text-align: right;">33.11</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2018-10-14</td>
-<td style="text-align: left;">OH</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: left;">Tim Ryan</td>
-<td style="text-align: left;">D</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">lite</td>
-<td style="text-align: right;">0.999</td>
-<td style="text-align: right;">68.72</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2018-10-18</td>
-<td style="text-align: left;">CA</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: left;">Nanette Diaz Barragán</td>
-<td style="text-align: left;">D</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">classic</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">72.64</td>
+<td style="text-align: right;">26.51</td>
 </tr>
 </tbody>
 </table>
@@ -366,59 +366,59 @@ markets.
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">3513</td>
+<td style="text-align: left;">HURD.TX23.2018</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2017-08-16</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2940</td>
+<td style="text-align: left;">SANDERS.VTSENATE.2018</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2018-05-02</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3520</td>
+<td style="text-align: left;">KNIG.CA25.2018</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2018-11-02</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">521</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">3521</td>
 <td style="text-align: left;">ISSA.CA49.2018</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">2017-10-19</td>
-<td style="text-align: right;">0.35</td>
-<td style="text-align: right;">0.35</td>
-<td style="text-align: right;">0.35</td>
-<td style="text-align: right;">0.35</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">3739</td>
-<td style="text-align: left;">MI11.2018</td>
-<td style="text-align: left;">GOP.MI11.2018</td>
-<td style="text-align: left;">2018-06-03</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">2018-11-05</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">109</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">3886</td>
-<td style="text-align: left;">VA02.2018</td>
-<td style="text-align: left;">DEM.VA02.2018</td>
-<td style="text-align: left;">2018-06-26</td>
-<td style="text-align: right;">0.41</td>
-<td style="text-align: right;">0.41</td>
-<td style="text-align: right;">0.41</td>
-<td style="text-align: right;">0.41</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">3496</td>
-<td style="text-align: left;">MENE.NJSENATE.2018</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">2018-07-12</td>
-<td style="text-align: right;">0.83</td>
-<td style="text-align: right;">0.83</td>
-<td style="text-align: right;">0.88</td>
-<td style="text-align: right;">0.84</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3863</td>
-<td style="text-align: left;">TX05.2018</td>
-<td style="text-align: left;">DEM.TX05.2018</td>
-<td style="text-align: left;">2018-08-07</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">4993</td>
+<td style="text-align: left;">UT04.2018</td>
+<td style="text-align: left;">DEM.UT04.2018</td>
+<td style="text-align: left;">2018-11-22</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">1760</td>
 </tr>
 </tbody>
 </table>
@@ -440,8 +440,7 @@ For market data, House race party variables are extracted from “DEM” and
 variables are obtained using the incumbent’s name in the `MarketSymbol`
 character string and the
 [`/congress-legislators`](https://github.com/unitedstates/congress-legislators "legislators")
-data set maintained by the [@unitedstates
-project](https://theunitedstates.io/ "unitedstates proj").
+data set maintained by the @unitedstates project.
 
 Observations can then be gathered to make the single combined data frame
 “[tidy](http://vita.had.co.nz/papers/tidy-data.html "Tidy data")” with
@@ -476,34 +475,34 @@ election results. There are observations of 1 variables:
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2018-09-07</td>
-<td style="text-align: left;">MN-01</td>
-<td style="text-align: left;">model</td>
-<td style="text-align: right;">0.3514</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2018-09-12</td>
-<td style="text-align: left;">MI-08</td>
-<td style="text-align: left;">model</td>
-<td style="text-align: right;">0.4654</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2018-09-28</td>
-<td style="text-align: left;">IL-12</td>
-<td style="text-align: left;">model</td>
-<td style="text-align: right;">0.4181</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2018-10-16</td>
-<td style="text-align: left;">IL-06</td>
+<td style="text-align: left;">2018-08-20</td>
+<td style="text-align: left;">MO-S1</td>
 <td style="text-align: left;">market</td>
-<td style="text-align: right;">0.5800</td>
+<td style="text-align: right;">0.4400</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-08-26</td>
+<td style="text-align: left;">NJ-03</td>
+<td style="text-align: left;">model</td>
+<td style="text-align: right;">0.3947</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2018-10-21</td>
-<td style="text-align: left;">MN-08</td>
+<td style="text-align: left;">2018-09-11</td>
+<td style="text-align: left;">IL-06</td>
 <td style="text-align: left;">model</td>
-<td style="text-align: right;">0.2047</td>
+<td style="text-align: right;">0.3350</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2018-10-24</td>
+<td style="text-align: left;">WA-08</td>
+<td style="text-align: left;">model</td>
+<td style="text-align: right;">0.5004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018-11-03</td>
+<td style="text-align: left;">MI-S1</td>
+<td style="text-align: left;">market</td>
+<td style="text-align: right;">0.8300</td>
 </tr>
 </tbody>
 </table>
@@ -511,23 +510,16 @@ election results. There are observations of 1 variables:
 Data Exploration
 ----------------
 
-The FiveThirtyEight model generates daily probabilities for every
-election in both chambers. On PredictIt.org, some markets were open for
-trading as early as January *2017* and the rest were added over time.
-Furthermore, the traders on PredictIt are not interested in betting on
-every election, as the vast majority have little risk (only 111 races
-were traded on prediction markets by election day).
+![probabiliy](plots/plot_races_hist.png)
 
-Below are histograms of the Democratic candidates’ probabilities the day
-before the election, split by the predictive method used. The model,
-which includes every race, gives the vast majority of candidates a less
-than 10% or greater than 90% chance of winning their respective
-elections. The markets, which only exist for the most contentious and
-popular races, are more uniform it their distribution of probabilities.
+![cumulative markets](plots/plot_cum_markets.png)
 
-Also below are plots showing the increase in input data over time for
-the respective methods. Both polls and dollars traded (the two primary
-inputs for each method) increase exponentially over time. Theoretically,
-more input data would improve predictive accuracy.
+![cumulative polls](plots/plot_cum_polls.png)
 
-![](README_files/figure-markdown_strict/plots-1.png)![](README_files/figure-markdown_strict/plots-2.png)![](README_files/figure-markdown_strict/plots-3.png)![](README_files/figure-markdown_strict/plots-4.png)
+![cumulative dollars](plots/plot_cum_dollars.png)
+
+![races by cartesian points](plots/plot_cart_points.png)
+
+![accuracy by day](plots/plot_prop_day.png)
+
+![accuracy by month](plots/plot_prop_month.png)

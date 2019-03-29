@@ -68,7 +68,7 @@ members_stats$party %<>% recode("Democrat" = "D", "Republican" = "R")
 members_stats$gid %<>% as.character()
 
 # Add stats to frame by GovTrack ID
-members %<>% left_join(members_stats, by = c("gid", "party", "chamber"))
+members %<>% inner_join(members_stats, by = c("gid", "party", "chamber"))
 
 # format markets history ------------------------------------------------------
 
@@ -152,7 +152,7 @@ markets_with_party <- markets %>%
 
 # Join with members key to add party, then back with rest of market
 markets <- markets_with_name %>%
-  left_join(members, by = c("name", "race")) %>%
+  inner_join(members, by = c("name", "race")) %>%
   select(date, mid, race, party, open, low, high, close, vol) %>%
   bind_rows(markets_with_party)
 
@@ -250,7 +250,7 @@ polling$district[polling$chamber == "senate"] %<>%
 
 # Replace state names with state abbreviations for race code
 polling <- polling %>%
-  left_join(y = tibble(state = state.name, abb = state.abb),
+  inner_join(y = tibble(state = state.name, abb = state.abb),
             by = "state") %>%
   select(-state) %>%
   rename(state = abb) %>%

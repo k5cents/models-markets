@@ -9,7 +9,8 @@ color_market <- colortools::triadic("#ED713A", plot = FALSE)[3] # compliment
 # Distribution of original probabilities by method
 plot_races_hist <-
   # Join market onto model keep all model races
-  left_join(x = model, y = markets, by = c("date", "race", "party")) %>%
+  full_join(x = model, y = markets, by = c("date", "race", "party"),
+            ) %>%
   # Show only 1 candidate per race
   filter(date == "2018-11-05") %>%
   select(date, race, close, prob) %>%

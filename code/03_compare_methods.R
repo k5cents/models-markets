@@ -46,7 +46,7 @@ model2 <- model %>%
 # Join democratic predictions from both markets and models for comparison
 # Keep market and model data in seperate columns
 messy <-
-  left_join(markets2, model2,
+  inner_join(markets2, model2,
             by  = c("date", "race")) %>%
   filter(date  >= "2018-08-01",
          date  <= "2018-11-05") %>%
@@ -67,7 +67,7 @@ hits <- messy %>%
   mutate(market_guess = if_else(market > 0.5, TRUE, FALSE),
          model_guess  = if_else(model  > 0.5, TRUE, FALSE)) %>%
   # add in election results
-  left_join(results, by = "race") %>%
+  inner_join(results, by = "race") %>%
   select(-category) %>%
   # add binary DEM prediction
   mutate(market_hit = (market_guess == winner),

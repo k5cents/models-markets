@@ -11,7 +11,7 @@ library(tidyverse)
 ## Market Data sent by will.jennings@predictit.org
 ## Detailed market history provided to partnered academic researchers
 DailyMarketData <-
-  readLines(con = file("./input/DailyMarketData.csv",
+  readLines(con = file("./data/DailyMarketData.csv",
                        encoding = "UTF-16LE")) %>%
   read_delim(delim = "|",
              na = "n/a",
@@ -22,12 +22,12 @@ DailyMarketData <-
                Date = col_date(format = "")))
 
 Market_ME02 <-
-  read_csv(file = "./input/Market_ME02.csv",
+  read_csv(file = "./data/Market_ME02.csv",
            col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y")))
 
 Contract_NY27 <-
-  read_csv("./input/Contract_NY27.csv",
+  read_csv("./data/Contract_NY27.csv",
            na = c("n/a", "NA"),
            skip = 157, # this file was a mess
            col_types = cols(ContractID = col_character(),

@@ -377,34 +377,13 @@ tidy %>%
 
 ## Data Exploration
 
-The FiveThirtyEight model generates daily probabilities for every election in
-both chambers. On PredictIt.org, some markets were open for trading as early as
-January _2017_ and the rest were added over time. Furthermore, the traders on
-PredictIt are not interested in betting on every election, as the vast majority
-have little risk (only 111 races were traded on prediction markets by election
-day).
-
-Below are histograms of the Democratic candidates' probabilities the day before
-the election, split by the predictive method used. The model, which includes
-every race, gives the vast majority of candidates a less than 10% or greater
-than 90% chance of winning their respective elections. The markets, which only
-exist for the most contentious and popular races, are more uniform it their
-distribution of probabilities.
-
-Also below are plots showing the increase in input data over time for the
-respective methods. Both polls and dollars traded (the two primary inputs for
-each method) increase exponentially over time. Theoretically, more input data
-would improve predictive accuracy.
-
-```{r plots, echo=FALSE, message=FALSE, warning=FALSE}
-plot_races_hist
-
-plot_cum_markets
-
-plot_cum_polls
-
-plot_cum_dollars
-```
+![probabiliy historgram][plots/plot_races_hist.png]
+![cumulative markets][plots/plot_cum_markets.png]
+![cumulative polls][plots/plot_cum_polls.png]
+![cumulative dollars][plots/plot_cum_dollars.png]
+![races by cartesian points][plots/plot_cart_points.png]
+![accuracy by day][plots/plot_prop_day.png]
+![accuracy by month][plots/plot_prop_month.png]
 
 [01]: https://fivethirtyeight.com/ "538 home page"
 [02]: https://web.archive.org/web/20161107220421/https://projects.fivethirtyeight.com/2016-election-forecast/ "538 2016"

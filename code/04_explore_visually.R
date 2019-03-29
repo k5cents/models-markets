@@ -33,6 +33,11 @@ plot_races_hist <-
        y = "Number of Races") +
   theme(legend.position = "none")
 
+ggsave(plot = plot_races_hist,
+       filename = "./plots/plot_races_hist.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
 
 # Number of polls conducted over time
 plot_cum_polls <- polling %>%
@@ -47,6 +52,12 @@ plot_cum_polls <- polling %>%
   labs(title = "Cumulative Number of Congressional Polls",
        x = "Date",
        y = "Polls to Date")
+
+ggsave(plot = plot_cum_polls,
+       filename = "./plots/plot_cum_polls.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
 
 # Number of dollars traded over time
 plot_cum_dollars <- markets %>%
@@ -64,6 +75,12 @@ plot_cum_dollars <- markets %>%
        x = "Date",
        y = "Dollars Traded to Date")
 
+ggsave(plot = plot_cum_dollars,
+       filename = "./plots/plot_cum_dollars.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
+
 # Number of markets opened over time
 plot_cum_markets <- markets %>%
   filter(date > "2018-01-01", date < "2018-11-05") %>%
@@ -76,6 +93,12 @@ plot_cum_markets <- markets %>%
   labs(title = "Cumulative Number of Election Markets",
        x = "Date",
        y = "Markets to Date")
+
+ggsave(plot = plot_cum_markets,
+       filename = "./plots/plot_cum_markets.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
 
 # Races by Model on X and Market on Y
 plot_cart_labels <- messy %>%
@@ -91,6 +114,12 @@ plot_cart_labels <- messy %>%
        subtitle = "Day Before Election, 2018-11-05",
        x = "FiveThirtyEight Model",
        y = "PredictIt Market")
+
+ggsave(plot = plot_cart_labels,
+       filename = "./plots/plot_cart_labels.png",
+       dpi = "retina",
+       height = 10,
+       width = 10)
 
 plot_cart_points <- messy %>%
   mutate(party = "D") %>%
@@ -111,8 +140,13 @@ plot_cart_points <- messy %>%
   labs(title = "Midterm Races by Democrat's Chance of Winning",
        subtitle = "November 5th, Night Before Election Day",
        x = "FiveThirtyEight Model Probability",
-       y = "PredictIt Market Price") +
-  theme_minimal()
+       y = "PredictIt Market Price")
+
+ggsave(plot = plot_cart_points,
+       filename = "./plots/plot_cart_points.png",
+       dpi = "retina",
+       height = 10,
+       width = 10)
 
 # Weird NJ-02 Market Error
 plot_nj_02 <- markets %>%
@@ -127,7 +161,13 @@ plot_nj_02 <- markets %>%
        x = "Date",
        y = "Closing Price")
 
-prop_month_bars <- hits %>%
+ggsave(plot = plot_nj_02,
+       filename = "./plots/plot_nj_02.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
+
+plot_prop_month <- hits %>%
   filter(date < "2018-11-01") %>%
   group_by(month) %>%
   summarise(market_prop = mean(market_hit, na.rm = TRUE),
@@ -147,7 +187,13 @@ prop_month_bars <- hits %>%
   scale_y_continuous(labels = scales::percent) +
   scale_x_continuous(minor_breaks = 0)
 
-prop_week_line <- hits %>%
+ggsave(plot = plot_prop_month,
+       filename = "./plots/plot_prop_month.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
+
+plot_prop_week <- hits %>%
   group_by(week) %>%
   summarise(market_prop = mean(market_hit, na.rm = TRUE),
             model_prop = mean(model_hit, na.rm = TRUE)) %>%
@@ -165,7 +211,13 @@ prop_week_line <- hits %>%
        y = "Proportion",
        x = "Week of Year")
 
-prop_day_line <- hits %>%
+ggsave(plot = plot_prop_week,
+       filename = "./plots/plot_prop_week.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
+
+plot_prop_day <- hits %>%
   group_by(date) %>%
   summarise(market_prop = mean(market_hit, na.rm = TRUE),
             model_prop = mean(model_hit, na.rm = TRUE)) %>%
@@ -182,3 +234,9 @@ prop_day_line <- hits %>%
        subtitle = "PredictIt Markets and FiveThirtyEight Model",
        y = "Proportion",
        x = "Day of Year")
+
+ggsave(plot = plot_prop_day,
+       filename = "./plots/plot_prop_day.png",
+       dpi = "retina",
+       height = 5.625,
+       width = 10)

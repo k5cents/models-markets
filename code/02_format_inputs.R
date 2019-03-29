@@ -158,24 +158,25 @@ markets <- markets_with_name %>%
 
 # Add in ME-02 and NY-27 which were left out of initial data
 ny_27 <- Contract_NY27 %>%
+  rename_all(tolower)
   slice(6:154) %>%
   mutate(mid = "4729",
          race = "NY-27",
          party = "R") %>%
-  select(-Average)
+  select(-average)
 
 me_02 <- Market_ME02 %>%
-  filter(Date != "2018-10-10") %>%
+  rename_all(tolower) %>%
+  filter(date != "2018-10-10") %>%
   mutate(mid = "4945",
          race = "ME-02") %>%
-  rename(party = LongName)
+  rename(party = longname)
 
 markets_extra <-
   bind_rows(ny_27, me_02) %>%
-  rename(vol = Volume) %>%
-  select(Date, mid, race, party, Open, Low, High, Close, vol)
+  rename(vol = volume) %>%
+  select(date, mid, race, party, open, low, high, close, vol)
 
-names(markets_extra) <- tolower(names(markets_extra))
 markets_extra$party[str_which(markets_extra$party, "GOP")] <- "R"
 markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"
 

@@ -77,19 +77,41 @@ plot_cum_markets <- markets %>%
        y = "Markets to Date")
 
 # Races by Model on X and Market on Y
-plot_cartesian_races <- messy %>%
+plot_cart_labels <- messy %>%
   filter(date == "2018-11-05") %>%
   ggplot(aes(x  = model, y  = market)) +
-  geom_label(aes(label = race)) +
   geom_hline(yintercept = 0.5) +
   geom_vline(xintercept = 0.5) +
   geom_abline(slope = 1, intercept = 0) +
+  geom_label(aes(label = race)) +
   scale_y_continuous(labels = scales::percent) +
   scale_x_continuous(labels = scales::percent) +
   labs(title = "Midterm Races by Democrats Chance of Winning",
        subtitle = "Day Before Election, 2018-11-05",
        x = "FiveThirtyEight Model",
        y = "PredictIt Market")
+
+plot_cart_points <- messy %>%
+  mutate(party = "D") %>%
+  filter(date == "2018-11-05") %>%
+  left_join(model, by = c("date", "race", "party")) %>%
+  ggplot(aes(x  = model, y  = market)) +
+  geom_hline(yintercept = 0.5) +
+  geom_vline(xintercept = 0.5) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_label(aes(x = 0.25, y = 0.75, label = "Market Predicts Win")) +
+  geom_label(aes(x = 0.75, y = 0.25, label = "Model Predicts Win")) +
+  geom_label(aes(x = 0.25, y = 0.25, label = "Both Predict Loss")) +
+  geom_label(aes(x = 0.75, y = 0.75, label = "Both Predict Win")) +
+  geom_point(aes(color = incumbent, shape = chamber), size = 4) +
+  scale_y_continuous(labels = scales::dollar) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_color_manual(values = c(color_model, color_blue)) +
+  labs(title = "Midterm Races by Democrat's Chance of Winning",
+       subtitle = "November 5th, Night Before Election Day",
+       x = "FiveThirtyEight Model Probability",
+       y = "PredictIt Market Price") +
+  theme_minimal()
 
 # Weird NJ-02 Market Error
 plot_nj_02 <- markets %>%

@@ -29,7 +29,7 @@ Market_ME02 <-
 Contract_NY27 <-
   read_csv("./data/Contract_NY27.csv",
            na = c("n/a", "NA"),
-           skip = 157, # this file was a mess
+           skip = 156, # this file was a mess
            col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y")))
 

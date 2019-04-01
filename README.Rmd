@@ -311,7 +311,7 @@ old `MarketSymbol`.
 For market data, House race party variables are extracted from the
 `ContractSymbol` character string. Senate race party variables are obtained
 using the incumbent's name in the `MarketSymbol` character string and the
-[`/congress-legislators`][25] data set maintained by the @unitedstates project.
+[`/congress-legislators`][25] data set maintained by the unitedstates project.
 
 Observations can then be gathered to make the single combined data frame
 [tidy][19], with each observation representing one prediction (on one date, for
@@ -378,7 +378,7 @@ tidy %>%
 [17]: https://www.predictit.org/api/marketdata/all/
 [18]: https://en.wikipedia.org/wiki/Prediction_market
 [19]: http://vita.had.co.nz/papers/tidy-data.html
-[20]: https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/edit?usp=sharing 
+[20]: https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/ 
 [21]: https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/
 [22]: https://cookpolitical.com/
 [23]: https://insideelections.com/

@@ -58,7 +58,9 @@ members_stats <-
   select(ID, chamber, party, ideology, leadership) %>%
   rename(gid = ID)
 members_stats$chamber %<>% recode("1" = "house", "2" = "senate")
-members_stats$party %<>% recode("Democrat" = "D", "Republican" = "R")
+members_stats$party %<>% recode("Democrat"    = "D",
+                                "Independent" = "D",
+                                "Republican"  = "R")
 members_stats$gid %<>% as.character()
 
 # Add stats to frame by GovTrack ID

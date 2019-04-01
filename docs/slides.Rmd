@@ -33,7 +33,7 @@ source("./code/03_compare_methods.R")
 ```
 
 ```{r}
-source("./code/04_explore_visually.R")
+source("./code/04_explore_viz.R")
 ```
 
 ## Why predict elections?

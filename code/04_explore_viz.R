@@ -1,10 +1,12 @@
 # Kiernan Nicholls
 # Generate exploratory visuals
 
-color_blue   <- "#345995"
-color_red    <- "#FB3640"
+library(colortools)
+
+color_blue   <- "#royalblue3"
+color_red    <- "#red3"
 color_model  <- "#ED713A" # 538 brand color
-color_market <- colortools::triadic("#ED713A", plot = FALSE)[3] # compliment
+color_market <- triadic("#ED713A", plot = FALSE)[3] # compliment
 
 # Distribution of original probabilities by method
 plot_races_hist <-
@@ -102,23 +104,28 @@ ggsave(plot = plot_cum_markets,
 
 # Races by Model on X and Market on Y
 plot_cart_labels <- messy %>%
+  mutate(party = "D") %>%
   filter(date == "2018-11-05") %>%
+  left_join(model, by = c("date", "race", "party")) %>%
   ggplot(aes(x  = model, y  = market)) +
   geom_hline(yintercept = 0.5) +
   geom_vline(xintercept = 0.5) +
   geom_abline(slope = 1, intercept = 0) +
-  geom_label(aes(label = race)) +
-  scale_y_continuous(labels = scales::percent) +
+  geom_label(aes(fill = incumbent, label = race)) +
+  scale_y_continuous(labels = scales::dollar) +
   scale_x_continuous(labels = scales::percent) +
-  labs(title = "Midterm Races by Democrats Chance of Winning",
-       subtitle = "Day Before Election, 2018-11-05",
-       x = "FiveThirtyEight Model",
-       y = "PredictIt Market")
+  scale_fill_manual(values = c("springgreen3", "darkgrey")) +
+  labs(title = "Midterm Races by Democrat's Chance of Winning",
+       subtitle = "November 5th, Night Before Election Day",
+       x = "Model Probability",
+       y = "Market Price",
+       shape = "Chamber",
+       color = "Incumbency")
 
 ggsave(plot = plot_cart_labels,
        filename = "./plots/plot_cart_labels.png",
        dpi = "retina",
-       height = 10,
+       height = 9,
        width = 10)
 
 plot_cart_points <- messy %>%
@@ -136,16 +143,18 @@ plot_cart_points <- messy %>%
   geom_point(aes(color = incumbent, shape = chamber), size = 4) +
   scale_y_continuous(labels = scales::dollar) +
   scale_x_continuous(labels = scales::percent) +
-  scale_color_manual(values = c(color_model, color_blue)) +
+  scale_color_manual(values = c("forestgreen", "grey20")) +
   labs(title = "Midterm Races by Democrat's Chance of Winning",
        subtitle = "November 5th, Night Before Election Day",
-       x = "FiveThirtyEight Model Probability",
-       y = "PredictIt Market Price")
+       x = "Model Probability",
+       y = "Market Price",
+       shape = "Chamber",
+       color = "Incumbency")
 
 ggsave(plot = plot_cart_points,
        filename = "./plots/plot_cart_points.png",
        dpi = "retina",
-       height = 10,
+       height = 9,
        width = 10)
 
 # Weird NJ-02 Market Error

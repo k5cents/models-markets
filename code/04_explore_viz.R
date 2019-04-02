@@ -3,8 +3,8 @@
 
 library(colortools)
 
-color_blue   <- "#royalblue3"
-color_red    <- "#red3"
+color_blue   <- "royalblue3"
+color_red    <- "red3"
 color_model  <- "#ED713A" # 538 brand color
 color_market <- triadic("#ED713A", plot = FALSE)[3] # compliment
 

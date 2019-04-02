@@ -1,9 +1,9 @@
 ---
 title: "README"
 author: "Kiernan Nicholls"
-date: "Spring, 2018"
+date: "`r Sys.Date()`"
 output:
-  md_document:
+  github_document:
     fig_width: 10
     df_print: kable
     toc: true
@@ -33,7 +33,7 @@ source("./code/03_compare_methods.R")
 ```
 
 ```{r plot}
-source("./code/04_explore_visually.R")
+source("./code/04_explore_viz.R")
 ```
 
 The forecast model has become a staple of political punditry. Popularized by the
@@ -70,7 +70,7 @@ of times.
 I will be using the FiveThirtyEight model data to represent the best
 capabilities of statistical election forecasting. FiveThirtyEight has a track
 record of accuracy over the last decade, including the 2016 Presidential
-election, where they gave President Trump a 30% chance of winning (compard to 1%
+election, where they gave President Trump a 30% chance of winning (compared to 1%
 from some competitors). Furthermore, they make the top-line output of their
 model free to the public.
 
@@ -216,34 +216,42 @@ model_combined %>%
 
 As summarized [on Wikipedia][18]:
 
-> Prediction markets (also known as predictive markets, information markets,
-decision markets, idea futures, event derivatives, or virtual markets) are
-exchange-traded markets created for the purpose of trading the outcome of
-events. The market prices can indicate what the crowd thinks the probability of
-the event is. A prediction market contract trades between 0 and 100%... The main
-purposes of prediction markets are eliciting aggregating beliefs over an unknown
-future outcome. Traders with different beliefs trade on contracts whose payoffs
-are related to the unknown future outcome and the market prices of the contracts
-are considered as the aggregated belief.
+> Prediction markets are exchange-traded markets created for the purpose of
+trading the outcome of events. The market prices can indicate what the crowd
+thinks the probability of the event is. A prediction market contract trades
+between 0 and 100%… The main purposes of prediction markets are eliciting
+aggregating beliefs over an unknown future outcome. Traders with different
+beliefs trade on contracts whose payoffs are related to the unknown future
+outcome and the market prices of the contracts are considered as the aggregated
+belief.
+
+I will be using the market history of the PredictIt exchange run by Victoria
+University of Wellington, New Zealand. PredictIt is one of the few prediction
+markets permitted to operate domestically due to the academic value of the
+markets. PredictIt partners with academic researchers to provide market history
+free of charge.
 
 ### Market Inputs
 
-_icomplete_
+The fundamental input to a prediction market is a bet between two traders. These
+bets are made in the form of binary futures contracts that execute for a fixed
+price based on the outcome of some future event. Contracts tied to a correct
+prediction pay out, paid for by the incorrect contract. PredictIt runs a
+continuous double-auction exchange where traders buy and sell shares of futures
+contracts.
 
-By utilizing the economic forces of risk aversion and self-interest, prediction
-markets aim to overcome the implicit biases of the traders. Traders continually
-buy and sell contracts that pay out at $1 based on the outcome of the election.
-
-If a trader believes a candidate has a 75% chance of winning an election, the
-economics dictate he should be willing to buy a given number of contracts at a
-price less than $0.75 each. Should events unfold to increase or decrease this
-probability, the trader can sell these shares for more or less than he
-originally paid; this updates the market equilibrium price to reflect current
-probabilities.
+Traders on PredictIt place bets using real money, ensuring the proper incentives
+for traders to overcome bias and make bets in line with their individual
+estimates of probability and their level of risk aversion. The greater the
+volume of money traded on a market, the better forces of price discovery can
+determine equilibrium. Betting on elections is illegal, but PredictIt and a
+handful of other markets are allowed to operate under a letter of No-Action by
+the Commodity Futures Trading Commission. The CFTC did cap the maximum bet to
+$850, potentially hindering true price discovery.
 
 ### Market Output
 
-Each Congressional race is predicted with it's own market where traders buy and
+Each Congressional race is predicted with it's own market, where traders buy and
 sell shares of the opposing outcomes. Instead of producing a single prediction
 every day, the market equilibrium price is continually adjusting to take into
 account the views of the traders. The history of this price is provided to
@@ -300,27 +308,21 @@ DailyMarketData %>%
 
 ## Data Wrangling
 
-The above data sets were both formatted to contain three keys variables: `date`,
-`race`, and `party`. Together, these three variables create a relational key
-that can be used to join the two data sets for comparison.
+The above data sets were both formatted to contain two key variables: `date` and
+`race`. Together, these variables create a relational key that can be used to
+join the two data sets for comparison.
 
 For model data, the new `race` variable is created by combining the old `state` and
 `district` variables. For market data, the new `race` code is extracted from the
 old `MarketSymbol`.
 
-For market data, House race party variables are extracted from the
-`ContractSymbol` character string. Senate race party variables are obtained
-using the incumbent's name in the `MarketSymbol` character string and the
-[`/congress-legislators`][25] data set maintained by the unitedstates project.
-
 Observations can then be gathered to make the single combined data frame
-[tidy][19], with each observation representing one prediction (on one date, for
-one party, with one predictive method).
+[tidy][19], with each observation representing _one_ prediction (on one date, for
+one party, from one predictive method).
 
 Redundant complimentary predictions are removed by selecting only democratic
-party probabilities. Some markets are comprised of yes/no contracts for a single
-Republican incumbent's re-election probability; for such markets, the price
-(probability) can be simply inverted.
+party probabilities. For markets comprised of yes/no contracts on a single
+Republican incumbent's re-election probability, the price can be inverted.
 
 Below is the data frame of historical predictions along with the election
 results. There are `r nrow(tidy)` observations of `r length(tidy)` variables:
@@ -330,16 +332,29 @@ results. There are `r nrow(tidy)` observations of `r length(tidy)` variables:
 1. Predictive Method
 1. Democratic candidate's probability of winning
 
-```{r joined_probs, echo=FALSE, message=FALSE}
+```{r tidy_joined, echo=TRUE, eval=FALSE}
+inner_join(x    = markets2, 
+           y    = model2, 
+           by   = c("date", "race")) %>%
+  filter(date   > "2018-07-31",
+         date   < "2018-11-06") %>%
+  rename(model  = prob,
+         market = close) %>% 
+  gather(key    = method,
+         value  = prob,
+         model, market) %>%
+  arrange(date, race, method)
+```
+
+```{r tidy_data, echo=FALSE, message=FALSE}
 tidy %>%
-  sample_n(5) %>%
-  arrange(date) %>% 
+  slice(1:10) %>% 
   kable(format = "markdown",
         digits = 4,
         col.names = c("Date", 
                       "Race",
                       "Predictive Method",
-                      "Prob. of Dem. Victory"),
+                      "Dem Probability"),
         caption = "29,400 observations of 7 variables")
 ```
 

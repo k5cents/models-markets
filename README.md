@@ -1,23 +1,10 @@
 *predictr*
 ================
 
-  - [Overview](#overview)
-  - [Reproduce](#reproduce)
-      - [Docker and Packrat](#docker-and-packrat)
-  - [Forecasting Models](#forecasting-models)
-      - [Model Inputs](#model-inputs)
-      - [Model Output](#model-output)
-  - [Prediction Markets](#prediction-markets)
-      - [Market Inputs](#market-inputs)
-      - [Market Output](#market-output)
-  - [Wrangling](#wrangling)
-  - [Exploration](#exploration)
-  - [Findings](#findings)
-
 ## Overview
 
-The forecast model has become a staple of political punditry.
-Popularized by the data journalism site
+The forecast model has become a staple of political punditry in recent
+years. Popularized by the data journalism site
 [FiveThirtyEight](https://fivethirtyeight.com/), the forecast model is a
 statistical tool used to incorporate a number of quantitative inputs and
 output a *probabilistic* view of all possible outcomes.
@@ -25,54 +12,54 @@ output a *probabilistic* view of all possible outcomes.
 Prediction markets can be used as alternative method of generating
 similarly probabilistic views of election outcomes. Markets utilize the
 economic forces of price discovery and risk aversion to overcome the
-implicit bias of self-interested traders on a binary options exchange.
+ideological bias of self-interested traders on a binary options
+exchange.
 
-How do these two predictive methods fare in their ability to prediction
-elections? I propose a null hypothesis of no difference between the
-proportion of accurate predictions made by forecasting models and
-prediction markets in the 2018 congressional midterm elections.
+Can prediction markets ever predict elections better than the
+forecasting modles? If so, under what conditions?
 
-For model data, the public data from the proprietary model written by
-the data journalists at FiveThirtyEight. For market data, Victoria
-University of Wellington, New Zealand provided the detailed price
-history on their [PredictIt exchange](https://www.predictit.org/).
-
-![data logos](plots/predictr.png)
+I propose a null hypothesis of no difference between the proportion of
+accurate predictions made by forecasting models and prediction markets
+in the 2018 congressional midterm elections.
 
 ## Reproduce
 
-All public input data has been archived on the [internet
+All public input data has been saved on the [internet
 archive](https://archive.org/) and can be accessed through their wayback
 machine.
 
 Data reading, wrangling, combining, and visualizing is done primarily
-using `R` packages from the [`tidyverse`](https://github.com/tidyverse/)
-collection. The following packages should allow you to run the project
-from start to finish:
+using R packages from the [`tidyverse`](https://github.com/tidyverse/)
+collection. Installing those packages should contain all functions
+needed to run the project.
 
 ``` r
-library(tidyverse) # for data
-library(lubridate) # for dates
-library(magrittr)  # for pipes
+library(tidyverse)
 ```
 
-The `R` scripts in the [`/code`](/code) folder can be run in sequantial
+The R scripts in the [`/code`](/code) folder can be run in sequential
 order to reproduce the project findings.
 
-1.  Scrape archived data with the `readr` package and
+1.  Scrape archived data with the `readr` package in
     [`01_read_inputs.R`](code/01_read_inputs.R)
-2.  Format data with the `dplyr` package and
+2.  Format data with the `dplyr` package in
     [`02_format_inputs.R`](code/02_format_inputs.R)
-3.  Compare predictive methods with the `tidyr` package and
+3.  Compare predictive methods with the `tidyr` package in
     [`03_compare_methods.R`](code/03_compare_methods.R)
-4.  Create visualizations with the `ggplot2` package and
+4.  Create visualizations with the `ggplot2` package in
     [`04_explore_viz.R`](code/04_explore_viz.R)
-5.  Run statistical tests with the `stats` package and
+5.  Run statistical tests with the `stats` package in
     [`05_analyze_stat.R`](code/05_analyze_stat.R)
 
-### Docker and Packrat
+<!-- end list -->
 
-*todo*
+``` r
+source("code/01_read_inputs.R")
+source("code/02_format_inputs.R")
+source("code/03_compare_methods.R")
+source("code/04_explore_viz.R")
+source("code/05_analyze_stat.R")
+```
 
 ## Forecasting Models
 
@@ -89,9 +76,7 @@ article](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-
 
 I will be using the FiveThirtyEight model data to represent the best
 capabilities of statistical election forecasting. FiveThirtyEight has a
-track record of accuracy over the last decade, including the 2016
-Presidential election, where they gave President Trump a 30% chance of
-winning (compared to 1% from some competitors). Furthermore, they make
+track record of accuracy over the last decade. Furthermore, they make
 the top-line output of their model free to the public.
 
 The goal of these mathematical forecasting models, [according to
@@ -107,16 +92,9 @@ quantitative data:
 
 1.  **Polling:** District level polling. [FiveThirtyEight rates
     pollsters](https://projects.fivethirtyeight.com/pollster-ratings/)
-    to adjust their findings. The results are further adjusted three
-    times:
-    1.  The likely voter adjustment ensures a more accurate sampling
-        frame.
-    2.  The conservative timeline adjustment to favor recency.
-    3.  The house effects adjustment corrects for persistent statistical
-        biases.
-2.  **CANTOR:** A proprietary k-nearest neighbors algorithm to identify
-    similar congressional districts (based on demographic, geographic
-    and political factors) to infers results for polling-sparce
+    to adjust their findings.
+2.  **CANTOR:** A proprietary algorithm to identify similar
+    congressional districts to infer results for polling-sparce
     districts.
 3.  **Fundamentals:** Non-polling factors that historically help in
     predicting congressional races:
@@ -126,28 +104,27 @@ quantitative data:
       - Generic ballot
       - Fundraising
       - Incumbent voting
-      - Challenger experience
+      - Challenger
+        experience
       - [Scandals](https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/)
 4.  **Expert forecasts:** Ratings published by the historically accurate
     experts at the [Cook Political Report](https://cookpolitical.com/),
     [Inside Elections](https://insideelections.com/), and [Sabato’s
     Crystal Ball](http://www.centerforpolitics.org/crystalball/).
 
-FiveThirtyEight uses these inputs to generate three models. The “Lite”
-model only uses polling and CANTOR; “Classic” adds in the fundamental
-data; and “Deluxe” further incorporates the less quantitative expert
+FiveThirtyEight uses these inputs to generate three models: (1) “lite”
+model only uses polling and CANTOR; “classic” adds in the fundamental
+data; and “deluxe” further incorporates the less quantitative expert
 forecasts.
 
 In [describing](http://53eig.ht/1u2pSbD) the process of their 2014
 Senate Model, Silver described the general process by which the above
 inputs are incorporated in producing a probabilistic output:
 
-> Most election models (including \[FiveThirtyEight’s\]) work in
-> something like the following way: First, they calculate the most
-> likely outcome in a particular state (“The Republican wins by 1
-> point”) and then they determine the degree of uncertainty around
-> that estimate. Most models do this by means of a normal distribution
-> or something similar to it.
+> First, (forecasting models) calculate the most likely outcome in a
+> particular state (“The Republican wins by 1 point”) and then they
+> determine the degree of uncertainty around that estimate. Most models
+> do this by means of a normal distribution or something similar to it.
 
 In an analysis of past elections, it has been proven that the degree of
 uncertainty is *greater* when:
@@ -155,42 +132,40 @@ uncertainty is *greater* when:
 1.  The election is further away
 2.  There are fewer polls
 3.  The polls disagree more with one another
-4.  The polling average disagrees more with the state fundamentals
-5.  There are more undecideds or third-party voters in the polls
+4.  The polling average disagrees more with the fundamentals
+5.  There are more undecideds or third-party voters
 6.  The race is more lopsided
 
 With these quantitative factors in mind, the model calculates the
 probability distribution in each candidate’s share of the vote.
 
-The model then runs uses these predicted shares to run a Monte Carlo
-simulation. In each iteration of the simulation, a share of the vote for
-each candidate in a race is drawn from the above probability
-distributions. A winner is determined and the simulation runs again. The
-percentage of simulated elections won is analogous to the probability of
-victory on election day.
+The model then uses these calculations in a Monte Carlo simulation. In
+each iteration of the simulation, a share of the vote for each candidate
+in a race is drawn from the above probability distributions. A winner is
+determined and the simulation runs again. The percentage of simulated
+elections won is analogous to the probability of victory on election
+day.
 
 ### Model Output
 
-The team at FiveThirtyEight makes public a portion of their model’s
-output as four separate `.csv` files on their website:
+FiveThirtyEight makes a portion of their model’s output public as four
+separate `.csv`
+    files:
 
-1.  [`/congress-model-2018/senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
-2.  [`/congress-model-2018/house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
-3.  [`/congress-model-2018/senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
-4.  [`/congress-model-2018/house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
+1.  [`senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
+2.  [`house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
+3.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
+4.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
 
-The two national forecasts provide the FiveThirtyEight calculations for
-each party’s probability of winning a majority in their respective
-chambers on any given day (e.g., “Today, he Democratic party has an 85%
-chance of winning control of the House of Representatives with a simple
-majority of seats”).
+The two national forecast files contain FiveThirtyEight’s daily
+calculations for each party’s probability of winning a majority in their
+respective chambers. The Senate seat and House district level forecasts
+will be used in this project. Each observation represents one
+candidate’s probability of victory on one day.
 
-The Senate seat and House district level forecasts will be used in this
-project. Each observation represents one day’s probability of victory
-for one candidate. There are 28353 observations in the Senate seat level
-file and 299760 for the House district level. Both data sets can be
-easily combined; together, there are an average of 3348 unique daily
-predictions from 2018-08-01 to 2018-11-06.
+There are 28353 observations in the Senate seat level file and 299760
+for the House district level. Together, there are an average of 3348
+unique daily predictions spanning from 2018-08-01 to 2018-11-06.
 
 For each observation, there are 12 variables recorded:
 
@@ -207,15 +182,16 @@ For each observation, there are 12 variables recorded:
 11. Maximum share of the vote
 
 Below is a random sample of observations from the combined House
-district and Senate seat congressional model data sets.
+district and Senate seat congressional model data
+sets.
 
-| Date       | State | District | Candidate      | Party | Incumbent | Model   | Probability | Vote Share |
-| :--------- | :---- | -------: | :------------- | :---- | :-------- | :------ | ----------: | ---------: |
-| 2018-08-02 | WA    |        2 | Brian Luke     | L     | FALSE     | lite    |       0.001 |      23.09 |
-| 2018-08-09 | MD    |        5 | Others         | NA    | FALSE     | lite    |       0.000 |       3.62 |
-| 2018-08-27 | IN    |        7 | André Carson   | D     | TRUE      | classic |       1.000 |      68.01 |
-| 2018-09-06 | FL    |       13 | George Buck    | R     | FALSE     | lite    |       0.018 |      37.75 |
-| 2018-09-22 | FL    |       26 | Carlos Curbelo | R     | TRUE      | deluxe  |       0.600 |      50.87 |
+| Date       | State | District | Party | Incumbent | Probability | Vote Share |
+| :--------- | :---- | :------- | :---- | :-------- | ----------: | ---------: |
+| 2018-08-15 | CA    | 38       | R     | FALSE     |       0.000 |      28.96 |
+| 2018-08-30 | CA    | 47       | D     | TRUE      |       1.000 |      71.37 |
+| 2018-09-17 | NE    | 1        | R     | TRUE      |       0.966 |      55.51 |
+| 2018-09-30 | ME    | 2        | NA    | FALSE     |       0.000 |       3.24 |
+| 2018-10-06 | CA    | 43       | R     | FALSE     |       0.000 |      20.83 |
 
 ## Prediction Markets
 
@@ -241,29 +217,26 @@ researchers to provide market history free of charge.
 
 The fundamental input to a prediction market is a bet between two
 traders. These bets are made in the form of binary futures contracts
-that execute for a fixed price based on the outcome of some future
-event. Contracts tied to a correct prediction pay out, paid for by the
-incorrect contract. PredictIt runs a continuous double-auction exchange
-where traders buy and sell shares of futures contracts.
+that sell for a fixed price based on the outcome of some future event.
+PredictIt runs a continuous double-auction exchange where traders buy
+and sell shares of futures contracts. As a trader’s perception of
+probability changes, he can sell shares he owns and the market
+equilibrium price updates accordingly.
 
-Traders on PredictIt place bets using real money, ensuring the proper
-incentives for traders to overcome bias and make bets in line with their
-individual estimates of probability and their level of risk aversion.
-The greater the volume of money traded on a market, the better forces of
-price discovery can determine equilibrium. Betting on elections is
-illegal, but PredictIt and a handful of other markets are allowed to
-operate under a letter of No-Action by the Commodity Futures Trading
-Commission. The CFTC did cap the maximum bet to $850, potentially
-hindering true price discovery.
-
-### Market Output
+Traders on PredictIt place bets using real money. The greater the volume
+of money traded on a market, the better the forces of price discovery
+can determine equilibrium.
 
 Each Congressional race is predicted with it’s own market, where traders
 buy and sell shares of the opposing outcomes. Instead of producing a
 single prediction every day, the market equilibrium price is continually
-adjusting to take into account the views of the traders. The history of
-this price is provided to researchers. As [PredictIt
-outlines](https://www.predictit.org/research) in their data agreement:
+adjusting to take into account the views of the traders.
+
+### Market Output
+
+The history of this price is provided to researchers. As [PredictIt
+outlines](https://www.predictit.org/research) in their data use
+agreement:
 
 > In order to take full advantage of the research opportunities
 > presented by prediction markets like PredictIt, we make our data
@@ -273,14 +246,13 @@ outlines](https://www.predictit.org/research) in their data agreement:
 > fields of study as diverse as microeconomics, political behavior,
 > computer science and game theory.
 
-I scraped [the PredictIt
-API](https://www.predictit.org/api/marketdata/all/) before the election
-and used the data to find all market ID’s related to 2018 Congressional
-elections. PredictIt then provided the relevant market data as a single
-`.csv` file.
+[The PredictIt API](https://www.predictit.org/api/marketdata/all/) was
+scraped before the election to find all market ID’s related to 2018
+Congressional elections. PredictIt then provided the price history in
+the [`data/DailyMarketData.csv`](data/DailyMarketData.csv) file.
 
 Each observation represents one day’s opening, closing, low, and high
-price for a single contract from a single market. There are 44,711
+price for a single contract from a single market. There are 44711
 observations covering 145 contracts across 118 markets. For each
 observation there are 11 variables:
 
@@ -299,23 +271,23 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market               | Contract           | Date       | Open |  Low | High | Close | Volume |
-| :--- | :------------------- | :----------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 2999 | NELSON.FLSENATE.2018 | NA                 | 2017-06-16 | 0.75 | 0.75 | 0.75 |  0.75 |      1 |
-| 3532 | LEWI.MN02.2018       | NA                 | 2017-08-10 | 0.51 | 0.42 | 0.51 |  0.42 |      8 |
-| 3883 | TX29.2018            | GOP.TX29.2018      | 2018-05-03 | 0.05 | 0.05 | 0.05 |  0.05 |      0 |
-| 3949 | PARTY.MNSEN.18       | GOP.PARTY.MNSEN.18 | 2018-06-21 | 0.15 | 0.15 | 0.15 |  0.15 |      0 |
-| 4105 | NY09.2018            | DEM.NY09.2018      | 2018-07-30 | 0.98 | 0.98 | 0.98 |  0.98 |      0 |
+| ID   | Market                | Date       | Open |  Low | High | Close | Volume |
+| :--- | :-------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 2940 | SANDERS.VTSENATE.2018 | 2017-06-11 | 0.85 | 0.85 | 0.85 |  0.85 |      0 |
+| 4253 | PA06.2018             | 2018-04-06 | 0.94 | 0.94 | 0.94 |  0.94 |      0 |
+| 4127 | NY01.2018             | 2018-06-19 | 0.59 | 0.59 | 0.59 |  0.59 |      0 |
+| 4281 | CT05.2018             | 2018-07-05 | 0.97 | 0.97 | 0.97 |  0.97 |      0 |
+| 3513 | HURD.TX23.2018        | 2018-09-23 | 0.70 | 0.54 | 0.70 |  0.54 |     51 |
 
 ## Wrangling
 
-The above data sets were both formatted to contain two key variables:
-`date` and `race`. Together, these variables create a relational key
-that can be used to join the two data sets for comparison.
+The above data sets were both formatted to contain two variables: `date`
+and `race`. Together, these variables create a relational key that can
+be used to join the two data sets for comparison.
 
 For model data, the new `race` variable is created by combining the old
 `state` and `district` variables. For market data, the new `race` code
-is extracted from the old `MarketSymbol`.
+is extracted from the old `MarketSymbol` variable.
 
 Observations can then be gathered to make the single combined data frame
 [tidy](http://vita.had.co.nz/papers/tidy-data.html), with each
@@ -325,10 +297,10 @@ from one predictive method).
 Redundant complimentary predictions are removed by selecting only
 democratic party probabilities. For markets comprised of yes/no
 contracts on a single Republican incumbent’s re-election probability,
-the price can be inverted.
+the price can be inverted to reflect the Democrat’s probability.
 
-Below is the data frame of historical predictions along with the
-election results. There are 17694 observations of 4 variables:
+Below is a sample of the tidy data frame with historical predictions.
+There are 17694 observations of 4 variables:
 
 1.  Prediction date
 2.  Election code

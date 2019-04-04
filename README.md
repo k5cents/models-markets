@@ -1,7 +1,7 @@
-README
+*predictr*
 ================
 Kiernan Nicholls
-2019-04-01
+2019-04-04
 
 The forecast model has become a staple of political punditry.
 Popularized by the data journalism site
@@ -162,13 +162,13 @@ Below is a random sample of observations from the combined House
 district and Senate seat congressional model data
 sets.
 
-| Date       | State | District | Candidate       | Party | Incumbent | Model   | Probability | Vote Share |
-| :--------- | :---- | -------: | :-------------- | :---- | :-------- | :------ | ----------: | ---------: |
-| 2018-08-06 | MD    |        1 | Tony Campbell   | R     | FALSE     | classic |       0.000 |      28.41 |
-| 2018-08-11 | PA    |       11 | Lloyd Smucker   | R     | TRUE      | classic |       0.934 |      56.19 |
-| 2018-08-27 | ME    |        1 | Mark Holbrook   | R     | FALSE     | deluxe  |       0.002 |      35.30 |
-| 2018-09-09 | MD    |        4 | Anthony Brown   | D     | TRUE      | lite    |       1.000 |      82.16 |
-| 2018-10-28 | CA    |       32 | Joshua M. Scott | R     | FALSE     | lite    |       0.000 |      23.68 |
+| Date       | State | District | Candidate         | Party | Incumbent | Model   | Probability | Vote Share |
+| :--------- | :---- | -------: | :---------------- | :---- | :-------- | :------ | ----------: | ---------: |
+| 2018-08-13 | MI    |        8 | Mike Bishop       | R     | TRUE      | deluxe  |       0.546 |      48.86 |
+| 2018-08-19 | LA    |        4 | Mark Halverson    | I     | FALSE     | lite    |       0.000 |       2.76 |
+| 2018-09-08 | MA    |        3 | Lori Trahan       | D     | FALSE     | classic |       0.999 |      63.57 |
+| 2018-10-23 | FL    |        2 | Neal Dunn         | R     | TRUE      | lite    |       0.999 |      69.86 |
+| 2018-10-26 | GA    |        7 | Carolyn Bourdeaux | D     | FALSE     | lite    |       0.058 |      44.16 |
 
 ## Prediction Markets
 
@@ -254,11 +254,11 @@ markets.
 
 | ID   | Market             | Contract      | Date       | Open |  Low | High | Close | Volume |
 | :--- | :----------------- | :------------ | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 3886 | VA02.2018          | DEM.VA02.2018 | 2018-01-01 | 0.21 | 0.21 | 0.21 |  0.21 |      0 |
-| 3772 | TNSEN18            | DEM.TNSEN18   | 2018-02-21 | 0.35 | 0.33 | 0.35 |  0.33 |     30 |
-| 3481 | TEST.MTSENATE.2018 | NA            | 2018-06-10 | 0.64 | 0.63 | 0.67 |  0.67 |    170 |
-| 3886 | VA02.2018          | GOP.VA02.2018 | 2018-06-23 | 0.59 | 0.59 | 0.59 |  0.59 |      0 |
-| 4830 | IA03.2018          | GOP.IA03.2018 | 2018-09-13 | 0.47 | 0.47 | 0.47 |  0.47 |      0 |
+| 3480 | HEIT.NDSENATE.2018 | NA            | 2017-10-09 | 0.55 | 0.54 | 0.58 |  0.54 |    103 |
+| 3455 | RYAN.WI01.2018     | NA            | 2018-05-25 | 0.01 | 0.01 | 0.02 |  0.02 |     12 |
+| 3738 | FL27.2018          | GOP.FL27.2018 | 2018-07-01 | 0.12 | 0.12 | 0.12 |  0.12 |      0 |
+| 4830 | IA03.2018          | GOP.IA03.2018 | 2018-09-08 | 0.50 | 0.50 | 0.50 |  0.50 |      0 |
+| 3530 | COFF.CO06.2018     | NA            | 2018-09-21 | 0.19 | 0.19 | 0.23 |  0.19 |    103 |
 
 ## Data Wrangling
 

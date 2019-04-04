@@ -135,11 +135,23 @@ plot_cart_points <- messy %>%
   ggplot(aes(x  = model, y  = market)) +
   geom_hline(yintercept = 0.5) +
   geom_vline(xintercept = 0.5) +
+  geom_label(mapping = aes(x = 0.25, y = 0.75, label = "Market Predicts Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.75, y = 0.25, label = "Model Predicts Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.25, y = 0.25, label = "Both Predict Loss"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.75, y = 0.75, label = "Both Predict Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
   geom_abline(slope = 1, intercept = 0) +
-  geom_label(aes(x = 0.25, y = 0.75, label = "Market Predicts Win")) +
-  geom_label(aes(x = 0.75, y = 0.25, label = "Model Predicts Win")) +
-  geom_label(aes(x = 0.25, y = 0.25, label = "Both Predict Loss")) +
-  geom_label(aes(x = 0.75, y = 0.75, label = "Both Predict Win")) +
   geom_point(aes(color = incumbent, shape = chamber), size = 4) +
   scale_y_continuous(labels = scales::dollar) +
   scale_x_continuous(labels = scales::percent) +

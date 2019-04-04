@@ -1,7 +1,20 @@
 *predictr*
 ================
-Kiernan Nicholls
-2019-04-04
+
+  - [Overview](#overview)
+  - [Reproduce](#reproduce)
+      - [Docker and Packrat](#docker-and-packrat)
+  - [Forecasting Models](#forecasting-models)
+      - [Model Inputs](#model-inputs)
+      - [Model Output](#model-output)
+  - [Prediction Markets](#prediction-markets)
+      - [Market Inputs](#market-inputs)
+      - [Market Output](#market-output)
+  - [Wrangling](#wrangling)
+  - [Exploration](#exploration)
+  - [Findings](#findings)
+
+## Overview
 
 The forecast model has become a staple of political punditry.
 Popularized by the data journalism site
@@ -9,20 +22,57 @@ Popularized by the data journalism site
 statistical tool used to incorporate a number of quantitative inputs and
 output a *probabilistic* view of all possible outcomes.
 
-Markets can be used as alternative method of generating similarly
-probabilistic views of outcomes. Markets utilize the economic forces of
-price discovery and risk aversion to overcome the implicit bias of
-self-interested traders on a binary options exchange.
+Prediction markets can be used as alternative method of generating
+similarly probabilistic views of election outcomes. Markets utilize the
+economic forces of price discovery and risk aversion to overcome the
+implicit bias of self-interested traders on a binary options exchange.
 
 How do these two predictive methods fare in their ability to prediction
 elections? I propose a null hypothesis of no difference between the
 proportion of accurate predictions made by forecasting models and
 prediction markets in the 2018 congressional midterm elections.
 
-For model data, I will be using the public data from the proprietary
-model written by the journalists at FiveThirtyEight. For market data, I
-will be working with Victoria University of Wellington, New Zealand to
-analyze data from their PredictIt exchange.
+For model data, the public data from the proprietary model written by
+the data journalists at FiveThirtyEight. For market data, Victoria
+University of Wellington, New Zealand provided the detailed price
+history on their [PredictIt exchange](https://www.predictit.org/).
+
+![data logos](plots/predictr.png)
+
+## Reproduce
+
+All public input data has been archived on the [internet
+archive](https://archive.org/) and can be accessed through their wayback
+machine.
+
+Data reading, wrangling, combining, and visualizing is done primarily
+using `R` packages from the [`tidyverse`](https://github.com/tidyverse/)
+collection. The following packages should allow you to run the project
+from start to finish:
+
+``` r
+library(tidyverse) # for data
+library(lubridate) # for dates
+library(magrittr)  # for pipes
+```
+
+The `R` scripts in the [`/code`](/code) folder can be run in sequantial
+order to reproduce the project findings.
+
+1.  Scrape archived data with the `readr` package and
+    [`01_read_inputs.R`](code/01_read_inputs.R)
+2.  Format data with the `dplyr` package and
+    [`02_format_inputs.R`](code/02_format_inputs.R)
+3.  Compare predictive methods with the `tidyr` package and
+    [`03_compare_methods.R`](code/03_compare_methods.R)
+4.  Create visualizations with the `ggplot2` package and
+    [`04_explore_viz.R`](code/04_explore_viz.R)
+5.  Run statistical tests with the `stats` package and
+    [`05_analyze_stat.R`](code/05_analyze_stat.R)
+
+### Docker and Packrat
+
+*todo*
 
 ## Forecasting Models
 
@@ -76,8 +126,7 @@ quantitative data:
       - Generic ballot
       - Fundraising
       - Incumbent voting
-      - Challenger
-        experience
+      - Challenger experience
       - [Scandals](https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/)
 4.  **Expert forecasts:** Ratings published by the historically accurate
     experts at the [Cook Political Report](https://cookpolitical.com/),
@@ -123,8 +172,7 @@ victory on election day.
 ### Model Output
 
 The team at FiveThirtyEight makes public a portion of their model’s
-output as four separate `.csv` files on their
-    website:
+output as four separate `.csv` files on their website:
 
 1.  [`/congress-model-2018/senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
 2.  [`/congress-model-2018/house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
@@ -159,16 +207,15 @@ For each observation, there are 12 variables recorded:
 11. Maximum share of the vote
 
 Below is a random sample of observations from the combined House
-district and Senate seat congressional model data
-sets.
+district and Senate seat congressional model data sets.
 
-| Date       | State | District | Candidate         | Party | Incumbent | Model   | Probability | Vote Share |
-| :--------- | :---- | -------: | :---------------- | :---- | :-------- | :------ | ----------: | ---------: |
-| 2018-08-13 | MI    |        8 | Mike Bishop       | R     | TRUE      | deluxe  |       0.546 |      48.86 |
-| 2018-08-19 | LA    |        4 | Mark Halverson    | I     | FALSE     | lite    |       0.000 |       2.76 |
-| 2018-09-08 | MA    |        3 | Lori Trahan       | D     | FALSE     | classic |       0.999 |      63.57 |
-| 2018-10-23 | FL    |        2 | Neal Dunn         | R     | TRUE      | lite    |       0.999 |      69.86 |
-| 2018-10-26 | GA    |        7 | Carolyn Bourdeaux | D     | FALSE     | lite    |       0.058 |      44.16 |
+| Date       | State | District | Candidate     | Party | Incumbent | Model   | Probability | Vote Share |
+| :--------- | :---- | -------: | :------------ | :---- | :-------- | :------ | ----------: | ---------: |
+| 2018-08-08 | NY    |        3 | Thomas Suozzi | D     | TRUE      | classic |       0.992 |      60.98 |
+| 2018-08-10 | NY    |       17 | Nita Lowey    | D     | TRUE      | classic |       0.999 |      80.78 |
+| 2018-08-15 | MD    |        2 | Others        | NA    | FALSE     | classic |       0.000 |       3.54 |
+| 2018-08-21 | MI    |       10 | Paul Mitchell | R     | TRUE      | classic |       0.998 |      62.17 |
+| 2018-09-07 | MD    |        4 | Anthony Brown | D     | TRUE      | deluxe  |       1.000 |      77.76 |
 
 ## Prediction Markets
 
@@ -252,15 +299,15 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market             | Contract      | Date       | Open |  Low | High | Close | Volume |
-| :--- | :----------------- | :------------ | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 3480 | HEIT.NDSENATE.2018 | NA            | 2017-10-09 | 0.55 | 0.54 | 0.58 |  0.54 |    103 |
-| 3455 | RYAN.WI01.2018     | NA            | 2018-05-25 | 0.01 | 0.01 | 0.02 |  0.02 |     12 |
-| 3738 | FL27.2018          | GOP.FL27.2018 | 2018-07-01 | 0.12 | 0.12 | 0.12 |  0.12 |      0 |
-| 4830 | IA03.2018          | GOP.IA03.2018 | 2018-09-08 | 0.50 | 0.50 | 0.50 |  0.50 |      0 |
-| 3530 | COFF.CO06.2018     | NA            | 2018-09-21 | 0.19 | 0.19 | 0.23 |  0.19 |    103 |
+| ID   | Market         | Contract      | Date       | Open |  Low | High | Close | Volume |
+| :--- | :------------- | :------------ | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 3520 | KNIG.CA25.2018 | NA            | 2017-09-25 | 0.39 | 0.39 | 0.39 |  0.39 |      0 |
+| 3772 | TNSEN18        | GOP.TNSEN18   | 2017-12-04 | 0.79 | 0.79 | 0.83 |  0.83 |    111 |
+| 3739 | MI11.2018      | DEM.MI11.2018 | 2018-03-05 | 0.64 | 0.64 | 0.64 |  0.64 |      1 |
+| 4039 | CA49.2018      | GOP.CA49.2018 | 2018-03-07 | 0.25 | 0.25 | 0.25 |  0.25 |      0 |
+| 4447 | NV04.2018      | GOP.NV04.2018 | 2018-09-30 | 0.10 | 0.10 | 0.20 |  0.20 |      1 |
 
-## Data Wrangling
+## Wrangling
 
 The above data sets were both formatted to contain two key variables:
 `date` and `race`. Together, these variables create a relational key
@@ -283,10 +330,10 @@ the price can be inverted.
 Below is the data frame of historical predictions along with the
 election results. There are 17694 observations of 4 variables:
 
-1.  Prediction Date
-2.  Race Code
-3.  Predictive Method
-4.  Democratic candidate’s probability of winning
+1.  Prediction date
+2.  Election code
+3.  Predictive method
+4.  **Win probability**
 
 <!-- end list -->
 
@@ -304,20 +351,20 @@ inner_join(x    = markets2,
   arrange(date, race, method)
 ```
 
-| Date       | Race  | Predictive Method | Dem Probability |
-| :--------- | :---- | :---------------- | --------------: |
-| 2018-08-01 | AZ-S1 | market            |          0.6600 |
-| 2018-08-01 | AZ-S1 | model             |          0.7380 |
-| 2018-08-01 | CA-12 | market            |          0.9100 |
-| 2018-08-01 | CA-12 | model             |          1.0000 |
-| 2018-08-01 | CA-22 | market            |          0.3000 |
-| 2018-08-01 | CA-22 | model             |          0.0493 |
-| 2018-08-01 | CA-25 | market            |          0.6100 |
-| 2018-08-01 | CA-25 | model             |          0.7453 |
-| 2018-08-01 | CA-39 | market            |          0.6100 |
-| 2018-08-01 | CA-39 | model             |          0.3768 |
+| Date       | Race  | Method | Probability |
+| :--------- | :---- | :----- | ----------: |
+| 2018-08-01 | AZ-S1 | market |      0.6600 |
+| 2018-08-01 | AZ-S1 | model  |      0.7380 |
+| 2018-08-01 | CA-12 | market |      0.9100 |
+| 2018-08-01 | CA-12 | model  |      1.0000 |
+| 2018-08-01 | CA-22 | market |      0.3000 |
+| 2018-08-01 | CA-22 | model  |      0.0493 |
+| 2018-08-01 | CA-25 | market |      0.6100 |
+| 2018-08-01 | CA-25 | model  |      0.7453 |
+| 2018-08-01 | CA-39 | market |      0.6100 |
+| 2018-08-01 | CA-39 | model  |      0.3768 |
 
-## Data Exploration
+## Exploration
 
 ![probabiliy](plots/plot_races_hist.png)
 
@@ -332,3 +379,7 @@ inner_join(x    = markets2,
 ![accuracy by day](plots/plot_prop_day.png)
 
 ![accuracy by month](plots/plot_prop_month.png)
+
+## Findings
+
+*todo*

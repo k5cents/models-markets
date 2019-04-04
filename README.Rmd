@@ -1,11 +1,7 @@
 ---
 title: "_predictr_"
-author: "Kiernan Nicholls"
-date: "`r Sys.Date()`"
 output:
   github_document:
-    fig_width: 10
-    df_print: kable
     toc: true
 ---
 
@@ -36,25 +32,57 @@ source("./code/03_compare_methods.R")
 source("./code/04_explore_viz.R")
 ```
 
+## Overview
+
 The forecast model has become a staple of political punditry. Popularized by the
 data journalism site [FiveThirtyEight][01], the forecast model is a statistical
 tool used to incorporate a number of quantitative inputs and output a
 _probabilistic_ view of all possible outcomes.
 
-Markets can be used as alternative method of generating similarly probabilistic
-views of outcomes. Markets utilize the economic forces of price discovery and
-risk aversion to overcome the implicit bias of self-interested traders on a
-binary options exchange.
+Prediction markets can be used as alternative method of generating similarly
+probabilistic views of election outcomes. Markets utilize the economic forces of
+price discovery and risk aversion to overcome the implicit bias of
+self-interested traders on a binary options exchange.
 
 How do these two predictive methods fare in their ability to prediction
 elections? I propose a null hypothesis of no difference between the proportion
 of accurate predictions made by forecasting models and prediction markets in the
 2018 congressional midterm elections.
 
-For model data, I will be using the public data from the proprietary model
-written by the journalists at FiveThirtyEight. For market data, I will be
-working with Victoria University of Wellington, New Zealand to analyze data from
-their PredictIt exchange.
+For model data, the public data from the proprietary model written by the data
+journalists at FiveThirtyEight. For market data, Victoria University of
+Wellington, New Zealand provided the detailed price history on their 
+[PredictIt exchange][27].
+
+![data logos](plots/predictr.png)
+
+## Reproduce
+
+All public input data has been archived on the [internet archive][28] and can be
+accessed through their wayback machine.
+
+Data reading, wrangling, combining, and visualizing is done primarily using `R`
+packages from the [`tidyverse`][29] collection. The following packages should
+allow you to run the project from start to finish:
+
+```{r echo=TRUE, eval=FALSE}
+library(tidyverse) # for data
+library(lubridate) # for dates
+library(magrittr)  # for pipes
+```
+
+The `R` scripts in the [`/code`](/code) folder can be run in sequantial order to
+reproduce the project findings.
+
+1. Scrape archived data with the `readr` package and [`01_read_inputs.R`](code/01_read_inputs.R)
+1. Format data with the `dplyr` package and [`02_format_inputs.R`](code/02_format_inputs.R)
+1. Compare predictive methods with the `tidyr` package and [`03_compare_methods.R`](code/03_compare_methods.R)
+1. Create visualizations with the `ggplot2` package and [`04_explore_viz.R`](code/04_explore_viz.R)
+1. Run statistical tests with the `stats` package and [`05_analyze_stat.R`](code/05_analyze_stat.R)
+
+### Docker and Packrat
+
+_todo_
 
 ## Forecasting Models
 
@@ -306,7 +334,7 @@ DailyMarketData %>%
         caption = "44,711 observations of 6 variables")
 ```
 
-## Data Wrangling
+## Wrangling
 
 The above data sets were both formatted to contain two key variables: `date` and
 `race`. Together, these variables create a relational key that can be used to
@@ -327,10 +355,10 @@ Republican incumbent's re-election probability, the price can be inverted.
 Below is the data frame of historical predictions along with the election
 results. There are `r nrow(tidy)` observations of `r length(tidy)` variables:
 
-1. Prediction Date
-1. Race Code
-1. Predictive Method
-1. Democratic candidate's probability of winning
+1. Prediction date
+1. Election code
+1. Predictive method
+1. **Win probability**
 
 ```{r tidy_joined, echo=TRUE, eval=FALSE}
 inner_join(x    = markets2, 
@@ -353,12 +381,12 @@ tidy %>%
         digits = 4,
         col.names = c("Date", 
                       "Race",
-                      "Predictive Method",
-                      "Dem Probability"),
+                      "Method",
+                      "Probability"),
         caption = "29,400 observations of 7 variables")
 ```
 
-## Data Exploration
+## Exploration
 
 ![probabiliy](plots/plot_races_hist.png)
 
@@ -373,6 +401,10 @@ tidy %>%
 ![accuracy by day](plots/plot_prop_day.png)
 
 ![accuracy by month](plots/plot_prop_month.png)
+
+## Findings
+
+_todo_
 
 [01]: https://fivethirtyeight.com/
 [02]: https://projects.fivethirtyeight.com/2016-election-forecast/
@@ -400,3 +432,6 @@ tidy %>%
 [24]: http://www.centerforpolitics.org/crystalball/
 [25]: https://github.com/unitedstates/congress-legislators
 [26]: http://53eig.ht/1u2pSbD
+[27]: https://www.predictit.org/
+[28]: https://archive.org/
+[29]: https://github.com/tidyverse/

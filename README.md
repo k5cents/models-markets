@@ -209,13 +209,13 @@ For each observation, there are 12 variables recorded:
 Below is a random sample of observations from the combined House
 district and Senate seat congressional model data sets.
 
-| Date       | State | District | Candidate     | Party | Incumbent | Model   | Probability | Vote Share |
-| :--------- | :---- | -------: | :------------ | :---- | :-------- | :------ | ----------: | ---------: |
-| 2018-08-08 | NY    |        3 | Thomas Suozzi | D     | TRUE      | classic |       0.992 |      60.98 |
-| 2018-08-10 | NY    |       17 | Nita Lowey    | D     | TRUE      | classic |       0.999 |      80.78 |
-| 2018-08-15 | MD    |        2 | Others        | NA    | FALSE     | classic |       0.000 |       3.54 |
-| 2018-08-21 | MI    |       10 | Paul Mitchell | R     | TRUE      | classic |       0.998 |      62.17 |
-| 2018-09-07 | MD    |        4 | Anthony Brown | D     | TRUE      | deluxe  |       1.000 |      77.76 |
+| Date       | State | District | Candidate      | Party | Incumbent | Model   | Probability | Vote Share |
+| :--------- | :---- | -------: | :------------- | :---- | :-------- | :------ | ----------: | ---------: |
+| 2018-08-02 | WA    |        2 | Brian Luke     | L     | FALSE     | lite    |       0.001 |      23.09 |
+| 2018-08-09 | MD    |        5 | Others         | NA    | FALSE     | lite    |       0.000 |       3.62 |
+| 2018-08-27 | IN    |        7 | André Carson   | D     | TRUE      | classic |       1.000 |      68.01 |
+| 2018-09-06 | FL    |       13 | George Buck    | R     | FALSE     | lite    |       0.018 |      37.75 |
+| 2018-09-22 | FL    |       26 | Carlos Curbelo | R     | TRUE      | deluxe  |       0.600 |      50.87 |
 
 ## Prediction Markets
 
@@ -299,13 +299,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market         | Contract      | Date       | Open |  Low | High | Close | Volume |
-| :--- | :------------- | :------------ | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 3520 | KNIG.CA25.2018 | NA            | 2017-09-25 | 0.39 | 0.39 | 0.39 |  0.39 |      0 |
-| 3772 | TNSEN18        | GOP.TNSEN18   | 2017-12-04 | 0.79 | 0.79 | 0.83 |  0.83 |    111 |
-| 3739 | MI11.2018      | DEM.MI11.2018 | 2018-03-05 | 0.64 | 0.64 | 0.64 |  0.64 |      1 |
-| 4039 | CA49.2018      | GOP.CA49.2018 | 2018-03-07 | 0.25 | 0.25 | 0.25 |  0.25 |      0 |
-| 4447 | NV04.2018      | GOP.NV04.2018 | 2018-09-30 | 0.10 | 0.10 | 0.20 |  0.20 |      1 |
+| ID   | Market               | Contract           | Date       | Open |  Low | High | Close | Volume |
+| :--- | :------------------- | :----------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 2999 | NELSON.FLSENATE.2018 | NA                 | 2017-06-16 | 0.75 | 0.75 | 0.75 |  0.75 |      1 |
+| 3532 | LEWI.MN02.2018       | NA                 | 2017-08-10 | 0.51 | 0.42 | 0.51 |  0.42 |      8 |
+| 3883 | TX29.2018            | GOP.TX29.2018      | 2018-05-03 | 0.05 | 0.05 | 0.05 |  0.05 |      0 |
+| 3949 | PARTY.MNSEN.18       | GOP.PARTY.MNSEN.18 | 2018-06-21 | 0.15 | 0.15 | 0.15 |  0.15 |      0 |
+| 4105 | NY09.2018            | DEM.NY09.2018      | 2018-07-30 | 0.98 | 0.98 | 0.98 |  0.98 |      0 |
 
 ## Wrangling
 

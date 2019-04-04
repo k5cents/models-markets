@@ -1,6 +1,18 @@
 *predictr*
 ================
 
+  - [Overview](#overview)
+  - [Reproduce](#reproduce)
+  - [Forecasting Models](#forecasting-models)
+      - [Model Inputs](#model-inputs)
+      - [Model Output](#model-output)
+  - [Prediction Markets](#prediction-markets)
+      - [Market Inputs](#market-inputs)
+      - [Market Output](#market-output)
+  - [Wrangling](#wrangling)
+  - [Exploration](#exploration)
+  - [Findings](#findings)
+
 ## Overview
 
 The forecast model has become a staple of political punditry in recent
@@ -104,8 +116,7 @@ quantitative data:
       - Generic ballot
       - Fundraising
       - Incumbent voting
-      - Challenger
-        experience
+      - Challenger experience
       - [Scandals](https://docs.google.com/spreadsheets/d/1ksBLxRR3GCZd33IvhkcNqqBd5K8HwlWC7YuAkVmS1lg/)
 4.  **Expert forecasts:** Ratings published by the historically accurate
     experts at the [Cook Political Report](https://cookpolitical.com/),
@@ -149,8 +160,7 @@ day.
 ### Model Output
 
 FiveThirtyEight makes a portion of their model’s output public as four
-separate `.csv`
-    files:
+separate `.csv` files:
 
 1.  [`senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
 2.  [`house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
@@ -182,16 +192,15 @@ For each observation, there are 12 variables recorded:
 11. Maximum share of the vote
 
 Below is a random sample of observations from the combined House
-district and Senate seat congressional model data
-sets.
+district and Senate seat congressional model data sets.
 
 | Date       | State | District | Party | Incumbent | Probability | Vote Share |
 | :--------- | :---- | :------- | :---- | :-------- | ----------: | ---------: |
-| 2018-08-15 | CA    | 38       | R     | FALSE     |       0.000 |      28.96 |
-| 2018-08-30 | CA    | 47       | D     | TRUE      |       1.000 |      71.37 |
-| 2018-09-17 | NE    | 1        | R     | TRUE      |       0.966 |      55.51 |
-| 2018-09-30 | ME    | 2        | NA    | FALSE     |       0.000 |       3.24 |
-| 2018-10-06 | CA    | 43       | R     | FALSE     |       0.000 |      20.83 |
+| 2018-08-10 | IA    | 4        | R     | TRUE      |        0.91 |      53.86 |
+| 2018-08-28 | MD    | 4        | LIB   | FALSE     |        0.00 |       3.48 |
+| 2018-09-02 | SC    | 4        | D     | FALSE     |        0.00 |      31.23 |
+| 2018-09-17 | AL    | 4        | D     | FALSE     |        0.00 |      22.65 |
+| 2018-10-26 | CA    | 7        | R     | FALSE     |        0.03 |      41.66 |
 
 ## Prediction Markets
 
@@ -271,13 +280,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market                | Date       | Open |  Low | High | Close | Volume |
-| :--- | :-------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 2940 | SANDERS.VTSENATE.2018 | 2017-06-11 | 0.85 | 0.85 | 0.85 |  0.85 |      0 |
-| 4253 | PA06.2018             | 2018-04-06 | 0.94 | 0.94 | 0.94 |  0.94 |      0 |
-| 4127 | NY01.2018             | 2018-06-19 | 0.59 | 0.59 | 0.59 |  0.59 |      0 |
-| 4281 | CT05.2018             | 2018-07-05 | 0.97 | 0.97 | 0.97 |  0.97 |      0 |
-| 3513 | HURD.TX23.2018        | 2018-09-23 | 0.70 | 0.54 | 0.70 |  0.54 |     51 |
+| ID   | Market                 | Date       | Open |  Low | High | Close | Volume |
+| :--- | :--------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 3862 | NJ02.2018              | 2018-04-18 | 0.81 | 0.81 | 0.81 |  0.81 |      0 |
+| 3949 | PARTY.MNSEN.18         | 2018-06-09 | 0.85 | 0.85 | 0.85 |  0.85 |      0 |
+| 2918 | WARREN.MASENATE.2018   | 2018-08-13 | 0.89 | 0.89 | 0.90 |  0.90 |     40 |
+| 2998 | DONNELLY.INSENATE.2018 | 2018-10-01 | 0.53 | 0.53 | 0.57 |  0.57 |    222 |
+| 3866 | VA06.2018              | 2018-10-06 | 0.93 | 0.93 | 0.93 |  0.93 |      0 |
 
 ## Wrangling
 

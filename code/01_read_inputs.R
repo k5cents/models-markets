@@ -12,7 +12,7 @@ library(tidyverse)
 ## Detailed market history provided to partnered academic researchers
 DailyMarketData <-
   readLines(con = file("./data/DailyMarketData.csv",
-                       encoding = "UTF-16LE")) %>%
+                        encoding = "UTF-16LE")) %>%
   read_delim(delim = "|",
              na = "n/a",
              col_types = cols(
@@ -67,7 +67,7 @@ sponsorshipanalysis_s <-
         sep  = "/") %>%
   read_csv(col_types = cols(ID = col_character()))
 
-# read model and polling data from https://fivethirtyeight.com ------------
+# read model, polling, and results data from https://fivethirtyeig --------
 
 ## District level 538 House model history
 ## Updated:  2018-11-06 at 01:56
@@ -103,7 +103,7 @@ senate_seat_forecast <-
         path = "congress-model-2018",
         file = "senate_seat_forecast.csv",
         sep  = "/") %>%
-  read_csv()
+  read_csv(col_types = cols())
 
 # National level 538 Senate model history
 # Updated:  2018-11-06 at 11:06
@@ -115,14 +115,17 @@ senate_national_forecast <-
         path = "congress-model-2018",
         file = "senate_national_forecast.csv",
         sep  = "/") %>%
-  read_csv()
+  read_csv(col_types = cols())
 
 # Midterm election results via ABC and 538
 # Used in https://53eig.ht/2PiFb0f
-# Published 2018-12-04 17:56
+# Published: 2018-12-04 at 17:56
+# Archived:  2018-04-04 at 16:08
 
 forecast_results_2018 <-
-  str_c("https://raw.githubusercontent.com",
+  str_c(arch = "https://web.archive.org/web",
+        date = "2019-04-04",
+        site = "https://raw.githubusercontent.com",
         user = "fivethirtyeight",
         repo = "data",
         bran = "master",
@@ -145,20 +148,25 @@ forecast_results_2018 <-
                                      "Safe R"))))
 
 # Average difference between how a district votes and the country
-# First introduced in http://53eig.ht/1rtnTwh
-# Last updated 2018-11-19 16:13
+# Updated:  2018-11-19 at 16:13
+# Archived: 2018-04-04 at 16:05
+
 partisan_lean_DISTRICTS <-
-  str_c("https://raw.githubusercontent.com",
+  str_c(arch = "https://web.archive.org/web",
+        date = "2019-04-04",
+        site = "https://raw.githubusercontent.com",
         user = "fivethirtyeight",
         repo = "data",
         bran = "master",
         path = "partisan-lean",
-        file = "fivethirtyeight_partisan_lean_DISTRICTS.csv",
+          file = "fivethirtyeight_partisan_lean_DISTRICTS.csv",
         sep = "/") %>%
   read_csv(col_types = cols())
 
 partisan_lean_STATES <-
-  str_c("https://raw.githubusercontent.com",
+  str_c(arch = "https://web.archive.org/web",
+        date = "2019-04-04",
+        site = "https://raw.githubusercontent.com",
         user = "fivethirtyeight",
         repo = "data",
         bran = "master",
@@ -168,7 +176,7 @@ partisan_lean_STATES <-
   read_csv(col_types = cols())
 
 # Polls incorperated in the 538 models
-# Archived 2019-01-29 21:45:47
+# Archived 2019-01-29 at 21:45
 senate_polls <-
   str_c(arch = "http://web.archive.org/web",
         date = "2019-01-29",

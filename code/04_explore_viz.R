@@ -1,12 +1,10 @@
 # Kiernan Nicholls
 # Generate exploratory visuals
 
-library(colortools)
-
-color_blue   <- "royalblue3"
-color_red    <- "red3"
 color_model  <- "#ED713A" # 538 brand color
-color_market <- triadic("#ED713A", plot = FALSE)[3] # compliment
+color_market <- "#07A0BB" # PredictIt brand color
+color_blue   <- "royalblue3" # Democratic
+color_red    <- "red3" # Republican
 
 # Distribution of original probabilities by method
 plot_races_hist <-

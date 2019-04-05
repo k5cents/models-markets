@@ -1,22 +1,20 @@
 ### Kiernan Nicholls
 ### Analyze the comparison between markets and models
 
-t.test(x = hits$market_hit,
-       y = hits$model_hit,
-       paired = TRUE)
+hits <- messy %>%
+        filter(race != "NC-09") %>%
+        mutate(market_guess = if_else(market > 0.5, TRUE, FALSE),
+               model_guess  = if_else(model  > 0.5, TRUE, FALSE)) %>%
+        inner_join(results, by = "race") %>%
+        select(-category) %>%
+        mutate(market_hit = (market_guess == winner),
+               model_hit = (model_guess == winner)) %>%
+        mutate(week = lubridate::week(date),
+               month = lubridate::month(date))
 
-h8  <- hits %>% filter(month(date)  < 9)
-h9  <- hits %>% filter(month(date) == 9)
-h10 <- hits %>% filter(month(date)  > 9)
+both_hit <- hits %>%
+        filter(model_hit & market_hit) %>%
+        select(date, race, market, model)
 
-t.test(x = h8$market_hit,
-       y = h8$model_hit,
-       paired = TRUE)
-
-t.test(x = h9$market_hit,
-       y = h9$model_hit,
-       paired = TRUE)
-
-t.test(x = h10$market_hit,
-       y = h10$model_hit,
-       paired = TRUE)
+both_miss <- hits %>%
+        filter(!race %in% both_hit$race)

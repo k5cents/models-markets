@@ -59,18 +59,3 @@ tidy <- messy %>%
          key = method,
          value = prob) %>%
   arrange(date, race, method)
-
-hits <- messy %>%
-  # remove uncalled race
-  filter(race != "NC-09") %>%
-  # add binary DEM prediction
-  mutate(market_guess = if_else(market > 0.5, TRUE, FALSE),
-         model_guess  = if_else(model  > 0.5, TRUE, FALSE)) %>%
-  # add in election results
-  inner_join(results, by = "race") %>%
-  select(-category) %>%
-  # add binary DEM prediction
-  mutate(market_hit = (market_guess == winner),
-         model_hit = (model_guess == winner)) %>%
-  mutate(week = lubridate::week(date),
-         month = lubridate::month(date))

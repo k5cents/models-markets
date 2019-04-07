@@ -8,6 +8,7 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(knitr)
+library(pander)
 opts_chunk$set(
   warning = FALSE,
   message = FALSE,
@@ -375,13 +376,38 @@ tidy %>%
 
 ## Findings
 
+Ultimately, a probabalistic view of an election makes a prediction about the
+winner. Whether it's a 99% probability or 51%, a winner is predicted. This is
+a unfortunately reductive view of forecasting, but will be useful to test their
+predictive capabilites.
+
+An anlysis asks if the prediction matches the eventual winner.
+
 ```{r}
-tidy %>% 
+hits <- tidy %>% 
   mutate(pred = (prob > 0.5)) %>%
   inner_join(results, by = "race") %>%
-  mutate(hit = (pred == winner)) %$% 
-  t.test(hit ~ method, alternative = "greater") %>% 
-  print()
+  mutate(hit = (pred == winner)) %>% 
+  select(date, race, method, pred, winner, hit)
+
+hits %>%
+  slice(1:10) %>% 
+  kable(format = "markdown",
+        col.names = c("Date", 
+                      "Race",
+                      "Method",
+                      "Predicted",
+                      "Winner",
+                      "Correct"),
+        caption = "17,500 observations of 6 variables")
+```
+
+A Welch Two Sample t-test is then performed. The null hypothesis holds that the
+difference in proportion of the hits and misses will be zero. The alternative
+hypothesis holds that the market will produce a greater proportion of hits.
+
+```{r echo=TRUE}
+hits %$% t.test(hit ~ method, alternative = "greater") %>% pander()
 ```
 
 [01]: https://fivethirtyeight.com/

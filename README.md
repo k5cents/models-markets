@@ -196,11 +196,11 @@ district and Senate seat congressional model data sets.
 
 | Date       | State | District | Party | Incumbent | Probability | Vote Share |
 | :--------- | :---- | :------- | :---- | :-------- | ----------: | ---------: |
-| 2018-08-07 | MT    | 1        | R     | FALSE     |       0.097 |      43.92 |
-| 2018-08-14 | NC    | 9        | D     | FALSE     |       0.598 |      49.09 |
-| 2018-09-18 | IN    | 1        | D     | TRUE      |       1.000 |      69.17 |
-| 2018-09-28 | WI    | 4        | R     | FALSE     |       0.000 |      14.93 |
-| 2018-11-04 | MS    | 4        | R     | TRUE      |       0.981 |      58.87 |
+| 2018-08-02 | SC    | 4        | R     | FALSE     |       1.000 |      64.87 |
+| 2018-08-03 | MN    | 2        | R     | TRUE      |       0.618 |      51.67 |
+| 2018-08-07 | SC    | 5        | R     | TRUE      |       0.984 |      57.38 |
+| 2018-08-10 | OR    | 2        | IPO   | FALSE     |       0.000 |       4.29 |
+| 2018-10-01 | WI    | 2        | D     | TRUE      |       1.000 |     100.00 |
 
 ## Prediction Markets
 
@@ -280,13 +280,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market               | Date       | Open |  Low | High | Close | Volume |
-| :--- | :------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 3522 | DENH.CA10.2018       | 2017-08-29 | 0.38 | 0.38 | 0.38 |  0.38 |      0 |
-| 2918 | WARREN.MASENATE.2018 | 2018-06-11 | 0.94 | 0.94 | 0.94 |  0.94 |      0 |
-| 3739 | MI11.2018            | 2018-07-06 | 0.45 | 0.45 | 0.45 |  0.45 |      0 |
-| 3522 | DENH.CA10.2018       | 2018-09-14 | 0.32 | 0.32 | 0.32 |  0.32 |      0 |
-| 4281 | CT05.2018            | 2018-10-04 | 0.92 | 0.92 | 0.92 |  0.92 |      0 |
+| ID   | Market             | Date       | Open |  Low | High | Close | Volume |
+| :--- | :----------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 3520 | KNIG.CA25.2018     | 2017-08-27 | 0.49 | 0.49 | 0.49 |  0.49 |      0 |
+| 3489 | STAB.MISENATE.2018 | 2018-02-21 | 0.84 | 0.84 | 0.84 |  0.84 |      0 |
+| 3481 | TEST.MTSENATE.2018 | 2018-03-13 | 0.72 | 0.69 | 0.72 |  0.72 |     35 |
+| 4177 | PASEN18            | 2018-04-13 | 0.15 | 0.15 | 0.15 |  0.15 |      0 |
+| 4255 | MN03.2018          | 2018-04-28 | 0.63 | 0.63 | 0.63 |  0.63 |      0 |
 
 ## Wrangling
 
@@ -357,14 +357,41 @@ inner_join(x    = markets2,
 
 ## Findings
 
-    ## 
-    ##  Welch Two Sample t-test
-    ## 
-    ## data:  hit by method
-    ## t = 4.1209, df = 17433, p-value = 1.895e-05
-    ## alternative hypothesis: true difference in means is greater than 0
-    ## 95 percent confidence interval:
-    ##  0.01338999        Inf
-    ## sample estimates:
-    ## mean in group market  mean in group model 
-    ##            0.8603429            0.8380571
+Ultimately, a probabalistic view of an election makes a prediction about
+the winner. Whether it’s a 99% probability or 51%, a winner is
+predicted. This is a unfortunately reductive view of forecasting, but
+will be useful to test their predictive capabilites.
+
+An anlysis asks if the prediction matches the eventual winner.
+
+| Date       | Race  | Method | Predicted | Winner | Correct |
+| :--------- | :---- | :----- | :-------- | :----- | :------ |
+| 2018-08-01 | AZ-S1 | market | TRUE      | TRUE   | TRUE    |
+| 2018-08-01 | AZ-S1 | model  | TRUE      | TRUE   | TRUE    |
+| 2018-08-01 | CA-12 | market | TRUE      | TRUE   | TRUE    |
+| 2018-08-01 | CA-12 | model  | TRUE      | TRUE   | TRUE    |
+| 2018-08-01 | CA-22 | market | FALSE     | FALSE  | TRUE    |
+| 2018-08-01 | CA-22 | model  | FALSE     | FALSE  | TRUE    |
+| 2018-08-01 | CA-25 | market | TRUE      | TRUE   | TRUE    |
+| 2018-08-01 | CA-25 | model  | TRUE      | TRUE   | TRUE    |
+| 2018-08-01 | CA-39 | market | TRUE      | TRUE   | TRUE    |
+| 2018-08-01 | CA-39 | model  | FALSE     | TRUE   | FALSE   |
+
+A Welch Two Sample t-test is then performed. The null hypothesis holds
+that the difference in proportion of the hits and misses will be zero.
+The alternative hypothesis holds that the market will produce a greater
+proportion of hits.
+
+``` r
+hits %$% t.test(hit ~ method, alternative = "greater") %>% pander()
+```
+
+| Test statistic |  df   |      P value       | Alternative hypothesis |
+| :------------: | :---: | :----------------: | :--------------------: |
+|     4.121      | 17433 | 1.895e-05 \* \* \* |        greater         |
+
+Welch Two Sample t-test: `hit` by `method` (continued below)
+
+| mean in group market | mean in group model |
+| :------------------: | :-----------------: |
+|        0.8603        |       0.8381        |

@@ -1,5 +1,10 @@
 ### Kiernan Nicholls
+### American University
+### Spring, 2019
+### Predictr: markets vs models
 ### Check predictions against election results
+
+library(tidyverse)
 
 ## We only need probability for one candidate in each race
 ## Some markets only have data on candidate from 1 party
@@ -59,3 +64,18 @@ tidy <- messy %>%
          key = method,
          value = prob) %>%
   arrange(date, race, method)
+
+# Add in results to determine binary hits/misses
+
+hits <- tidy %>%
+  mutate(pred = prob > 0.5) %>%
+  inner_join(results, by = "race") %>%
+  mutate(hit = pred == winner) %>%
+  select(date, race, method, prob, pred, winner, hit)
+
+# Run a welch two sample t-test
+
+hits %$%
+  t.test(hit ~ method, alternative = "greater") %>%
+  use_series(p.value) %>%
+  is_less_than(0.05)

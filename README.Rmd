@@ -11,8 +11,8 @@ library(knitr)
 opts_chunk$set(
   warning = FALSE,
   message = FALSE,
-  error   = FALSE,
-  echo    = FALSE
+  error = FALSE,
+  echo = FALSE
 )
 ```
 
@@ -44,26 +44,27 @@ Data reading, wrangling, combining, and visualizing is done primarily using R
 packages from the [`tidyverse`][29] collection. Installing those packages should
 contain all functions needed to run the project.
 
-```{r install, echo=TRUE}
+```{r install, echo=TRUE, eval=FALSE}
+install.packages("tidyverse")
 library(tidyverse)
+library(lubridate)
+library(magrittr)
 ```
 
 The R scripts in the [`/code`](/code) folder can be run in sequential order to
 reproduce the project findings.
 
-1. Scrape archived data with the `readr` package in [`01_read_inputs.R`](code/01_read_inputs.R)
-1. Format data with the `dplyr` package in [`02_format_inputs.R`](code/02_format_inputs.R)
-1. Compare predictive methods with the `tidyr` package in [`03_compare_methods.R`](code/03_compare_methods.R)
-1. Create visualizations with the `ggplot2` package in [`04_explore_viz.R`](code/04_explore_viz.R)
-1. Run statistical tests with the `stats` package in [`05_analyze_stat.R`](code/05_analyze_stat.R)
+1. Scrape data using `readr` in [`01_read_inputs.R`](code/01_read_inputs.R)
+1. Format using `dplyr` in [`02_format_inputs.R`](code/02_format_inputs.R)
+1. Analyze using `stats` in [`03_compare_methods.R`](code/03_compare_methods.R)
+1. Visualize using `ggplot2` in [`04_explore_viz.R`](code/04_explore_viz.R)
 
 
 ```{r source, echo=TRUE}
 source("code/01_read_inputs.R")
 source("code/02_format_inputs.R")
 source("code/03_compare_methods.R")
-source("code/04_explore_viz.R")
-source("code/05_analyze_stat.R")
+source("code/04_explore_visually.R")
 ```
 
 ## Forecasting Models
@@ -366,12 +367,6 @@ tidy %>%
 
 ![probabiliy](plots/plot_races_hist.png)
 
-![cumulative markets](plots/plot_cum_markets.png)
-
-![cumulative polls](plots/plot_cum_polls.png)
-
-![cumulative dollars](plots/plot_cum_dollars.png)
-
 ![races by cartesian points](plots/plot_cart_points.png)
 
 ![accuracy by day](plots/plot_prop_day.png)
@@ -380,7 +375,14 @@ tidy %>%
 
 ## Findings
 
-_todo_
+```{r}
+tidy %>% 
+  mutate(pred = (prob > 0.5)) %>%
+  inner_join(results, by = "race") %>%
+  mutate(hit = (pred == winner)) %$% 
+  t.test(hit ~ method, alternative = "greater") %>% 
+  print()
+```
 
 [01]: https://fivethirtyeight.com/
 [02]: https://projects.fivethirtyeight.com/2016-election-forecast/

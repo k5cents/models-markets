@@ -46,22 +46,23 @@ collection. Installing those packages should contain all functions
 needed to run the project.
 
 ``` r
+install.packages("tidyverse")
 library(tidyverse)
+library(lubridate)
+library(magrittr)
 ```
 
 The R scripts in the [`/code`](/code) folder can be run in sequential
 order to reproduce the project findings.
 
-1.  Scrape archived data with the `readr` package in
+1.  Scrape data using `readr` in
     [`01_read_inputs.R`](code/01_read_inputs.R)
-2.  Format data with the `dplyr` package in
+2.  Format using `dplyr` in
     [`02_format_inputs.R`](code/02_format_inputs.R)
-3.  Compare predictive methods with the `tidyr` package in
+3.  Analyze using `stats` in
     [`03_compare_methods.R`](code/03_compare_methods.R)
-4.  Create visualizations with the `ggplot2` package in
+4.  Visualize using `ggplot2` in
     [`04_explore_viz.R`](code/04_explore_viz.R)
-5.  Run statistical tests with the `stats` package in
-    [`05_analyze_stat.R`](code/05_analyze_stat.R)
 
 <!-- end list -->
 
@@ -69,8 +70,7 @@ order to reproduce the project findings.
 source("code/01_read_inputs.R")
 source("code/02_format_inputs.R")
 source("code/03_compare_methods.R")
-source("code/04_explore_viz.R")
-source("code/05_analyze_stat.R")
+source("code/04_explore_visually.R")
 ```
 
 ## Forecasting Models
@@ -196,11 +196,11 @@ district and Senate seat congressional model data sets.
 
 | Date       | State | District | Party | Incumbent | Probability | Vote Share |
 | :--------- | :---- | :------- | :---- | :-------- | ----------: | ---------: |
-| 2018-08-10 | IA    | 4        | R     | TRUE      |        0.91 |      53.86 |
-| 2018-08-28 | MD    | 4        | LIB   | FALSE     |        0.00 |       3.48 |
-| 2018-09-02 | SC    | 4        | D     | FALSE     |        0.00 |      31.23 |
-| 2018-09-17 | AL    | 4        | D     | FALSE     |        0.00 |      22.65 |
-| 2018-10-26 | CA    | 7        | R     | FALSE     |        0.03 |      41.66 |
+| 2018-08-07 | MT    | 1        | R     | FALSE     |       0.097 |      43.92 |
+| 2018-08-14 | NC    | 9        | D     | FALSE     |       0.598 |      49.09 |
+| 2018-09-18 | IN    | 1        | D     | TRUE      |       1.000 |      69.17 |
+| 2018-09-28 | WI    | 4        | R     | FALSE     |       0.000 |      14.93 |
+| 2018-11-04 | MS    | 4        | R     | TRUE      |       0.981 |      58.87 |
 
 ## Prediction Markets
 
@@ -280,13 +280,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market                 | Date       | Open |  Low | High | Close | Volume |
-| :--- | :--------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 3862 | NJ02.2018              | 2018-04-18 | 0.81 | 0.81 | 0.81 |  0.81 |      0 |
-| 3949 | PARTY.MNSEN.18         | 2018-06-09 | 0.85 | 0.85 | 0.85 |  0.85 |      0 |
-| 2918 | WARREN.MASENATE.2018   | 2018-08-13 | 0.89 | 0.89 | 0.90 |  0.90 |     40 |
-| 2998 | DONNELLY.INSENATE.2018 | 2018-10-01 | 0.53 | 0.53 | 0.57 |  0.57 |    222 |
-| 3866 | VA06.2018              | 2018-10-06 | 0.93 | 0.93 | 0.93 |  0.93 |      0 |
+| ID   | Market               | Date       | Open |  Low | High | Close | Volume |
+| :--- | :------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 3522 | DENH.CA10.2018       | 2017-08-29 | 0.38 | 0.38 | 0.38 |  0.38 |      0 |
+| 2918 | WARREN.MASENATE.2018 | 2018-06-11 | 0.94 | 0.94 | 0.94 |  0.94 |      0 |
+| 3739 | MI11.2018            | 2018-07-06 | 0.45 | 0.45 | 0.45 |  0.45 |      0 |
+| 3522 | DENH.CA10.2018       | 2018-09-14 | 0.32 | 0.32 | 0.32 |  0.32 |      0 |
+| 4281 | CT05.2018            | 2018-10-04 | 0.92 | 0.92 | 0.92 |  0.92 |      0 |
 
 ## Wrangling
 
@@ -349,12 +349,6 @@ inner_join(x    = markets2,
 
 ![probabiliy](plots/plot_races_hist.png)
 
-![cumulative markets](plots/plot_cum_markets.png)
-
-![cumulative polls](plots/plot_cum_polls.png)
-
-![cumulative dollars](plots/plot_cum_dollars.png)
-
 ![races by cartesian points](plots/plot_cart_points.png)
 
 ![accuracy by day](plots/plot_prop_day.png)
@@ -363,4 +357,14 @@ inner_join(x    = markets2,
 
 ## Findings
 
-*todo*
+    ## 
+    ##  Welch Two Sample t-test
+    ## 
+    ## data:  hit by method
+    ## t = 4.1209, df = 17433, p-value = 1.895e-05
+    ## alternative hypothesis: true difference in means is greater than 0
+    ## 95 percent confidence interval:
+    ##  0.01338999        Inf
+    ## sample estimates:
+    ## mean in group market  mean in group model 
+    ##            0.8603429            0.8380571

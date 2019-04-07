@@ -342,7 +342,7 @@ results <- forecast_results_2018 %>%
   unite(state, district,
         col = race,
         sep = "-") %>%
-  select(race, winner, category) %>%
+  select(race, winner) %>%
   filter(race != "NC-09") # Harris fraud charges
 
 # format partisan lean index ----------------------------------------------

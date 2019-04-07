@@ -79,7 +79,7 @@ house_district_forecast <-
         path = "congress-model-2018",
         file = "house_district_forecast.csv",
         sep  = "/") %>%
-  read_csv()
+  read_csv(col_types = cols())
 
 # National level 538 House model history
 # Updated:  2018-11-06 at 01:56
@@ -91,7 +91,7 @@ house_national_forecast <-
         path = "congress-model-2018",
         file = "house_national_forecast.csv",
         sep  = "/") %>%
-  read_csv()
+  read_csv(col_types = cols())
 
 # Seat level 538 Senate model history
 # Updated:  2018-11-06 at 11:06

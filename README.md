@@ -17,9 +17,9 @@
 
 The forecast model has become a staple of political punditry in recent
 years. Popularized by the data journalism site
-[FiveThirtyEight](https://fivethirtyeight.com/), the forecast model is a
-statistical tool used to incorporate a number of quantitative inputs and
-output a *probabilistic* view of all possible outcomes.
+[FiveThirtyEight](https://fivethirtyeight.com/), the forecasting model
+is a statistical tool used to incorporate a number of quantitative
+inputs and output a *probabilistic* view of all possible outcomes.
 
 Prediction markets can be used as alternative method of generating
 similarly probabilistic views of election outcomes. Markets utilize the
@@ -27,8 +27,8 @@ economic forces of price discovery and risk aversion to overcome the
 ideological bias of self-interested traders on a binary options
 exchange.
 
-Can prediction markets ever predict elections better than the
-forecasting modles? If so, under what conditions?
+Can markets help us predict elections better than the models? If so,
+under what conditions?
 
 I propose a null hypothesis of no difference between the proportion of
 accurate predictions made by forecasting models and prediction markets
@@ -40,7 +40,7 @@ All public input data has been saved on the [internet
 archive](https://archive.org/) and can be accessed through their wayback
 machine.
 
-Data reading, wrangling, combining, and visualizing is done primarily
+Data reading, wrangling, combining, and visualization is done primarily
 using R packages from the [`tidyverse`](https://github.com/tidyverse/)
 collection. Installing those packages should contain all functions
 needed to run the project.
@@ -57,12 +57,12 @@ order to reproduce the project findings.
 
 1.  Scrape data using `readr` in
     [`01_read_inputs.R`](code/01_read_inputs.R)
-2.  Format using `dplyr` in
+2.  Format with `dplyr` in
     [`02_format_inputs.R`](code/02_format_inputs.R)
-3.  Analyze using `stats` in
+3.  Analyze with `stats` in
     [`03_compare_methods.R`](code/03_compare_methods.R)
-4.  Visualize using `ggplot2` in
-    [`04_explore_viz.R`](code/04_explore_viz.R)
+4.  Visualize with `ggplot2` in
+    [`04_explore_visually.R`](code/04_explore_viz.R)
 
 <!-- end list -->
 
@@ -75,8 +75,7 @@ source("code/04_explore_visually.R")
 
 ## Forecasting Models
 
-As Nate Silver, FiveThirtyEight’s founder and the primary author of
-their model, explains in their [methedological
+As FiveThirtyEight’s founder explains in their [methedological
 article](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/):
 
 > (Forecasting models) take lots of polls, perform various types of
@@ -91,16 +90,15 @@ capabilities of statistical election forecasting. FiveThirtyEight has a
 track record of accuracy over the last decade. Furthermore, they make
 the top-line output of their model free to the public.
 
-The goal of these mathematical forecasting models, [according to
+The goal of these mathematical forecasting models is, [according to
 Silver](https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/),
-is “not to divine some magic formula that miraculously predicts every
+“not to divine some magic formula that miraculously predicts every
 election. Instead, it’s to make sense of publicly available information
 in a rigorous and disciplined way.”
 
 ### Model Inputs
 
-FiveThirtyEight’s 2018 House and Senate models incorporate four types of
-quantitative data:
+FiveThirtyEight’s 2018 model incorporates four types of data:
 
 1.  **Polling:** District level polling. [FiveThirtyEight rates
     pollsters](https://projects.fivethirtyeight.com/pollster-ratings/)
@@ -123,10 +121,9 @@ quantitative data:
     [Inside Elections](https://insideelections.com/), and [Sabato’s
     Crystal Ball](http://www.centerforpolitics.org/crystalball/).
 
-FiveThirtyEight uses these inputs to generate three models: (1) “lite”
-model only uses polling and CANTOR; “classic” adds in the fundamental
-data; and “deluxe” further incorporates the less quantitative expert
-forecasts.
+FiveThirtyEight uses these inputs to generate three models. Their
+“classic” model incorporates polling, CANTOR, and fundamentals and is
+considered the default model.
 
 In [describing](http://53eig.ht/1u2pSbD) the process of their 2014
 Senate Model, Silver described the general process by which the above
@@ -140,27 +137,27 @@ inputs are incorporated in producing a probabilistic output:
 In an analysis of past elections, it has been proven that the degree of
 uncertainty is *greater* when:
 
-1.  The election is further away
-2.  There are fewer polls
-3.  The polls disagree more with one another
-4.  The polling average disagrees more with the fundamentals
+1.  There are fewer polls
+2.  The race is more lopsided
+3.  The election is further away
+4.  The polls disagree more with one another
 5.  There are more undecideds or third-party voters
-6.  The race is more lopsided
+6.  The polling average disagrees more with the fundamentals
 
 With these quantitative factors in mind, the model calculates the
 probability distribution in each candidate’s share of the vote.
 
-The model then uses these calculations in a Monte Carlo simulation. In
-each iteration of the simulation, a share of the vote for each candidate
-in a race is drawn from the above probability distributions. A winner is
-determined and the simulation runs again. The percentage of simulated
-elections won is analogous to the probability of victory on election
-day.
+The model then uses these calculations to run a Monte Carlo simulation.
+In each iteration of the simulation, a share of the vote for each
+candidate in a race is drawn from the above probability distributions. A
+winner is determined and the simulation runs again. The percentage of
+simulated elections won is analogous to the probability of victory on
+election night.
 
 ### Model Output
 
 FiveThirtyEight makes a portion of their model’s output public as four
-separate `.csv` files:
+files:
 
 1.  [`senate_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv)
 2.  [`house_national_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_national_forecast.csv)
@@ -169,13 +166,16 @@ separate `.csv` files:
 
 The two national forecast files contain FiveThirtyEight’s daily
 calculations for each party’s probability of winning a majority in their
-respective chambers. The Senate seat and House district level forecasts
-will be used in this project. Each observation represents one
-candidate’s probability of victory on one day.
+respective chambers.
+
+The Senate seat and House district level forecasts will be used in this
+project. Each observation represents one candidate’s probability of
+victory on one day.
 
 There are 28353 observations in the Senate seat level file and 299760
-for the House district level. Together, there are an average of 3348
-unique daily predictions spanning from 2018-08-01 to 2018-11-06.
+for the House. Together, there are an average of 3348 unique daily
+predictions spanning from `rmin(model_combined$forecastdate)` to
+2018-11-06.
 
 For each observation, there are 12 variables recorded:
 
@@ -196,11 +196,11 @@ district and Senate seat congressional model data sets.
 
 | Date       | State | District | Party | Incumbent | Probability | Vote Share |
 | :--------- | :---- | :------- | :---- | :-------- | ----------: | ---------: |
-| 2018-08-02 | SC    | 4        | R     | FALSE     |       1.000 |      64.87 |
-| 2018-08-03 | MN    | 2        | R     | TRUE      |       0.618 |      51.67 |
-| 2018-08-07 | SC    | 5        | R     | TRUE      |       0.984 |      57.38 |
-| 2018-08-10 | OR    | 2        | IPO   | FALSE     |       0.000 |       4.29 |
-| 2018-10-01 | WI    | 2        | D     | TRUE      |       1.000 |     100.00 |
+| 2018-08-30 | WI    | 1        | R     | FALSE     |       0.080 |      44.75 |
+| 2018-09-14 | AR    | 2        | LIB   | FALSE     |       0.000 |       2.87 |
+| 2018-10-03 | KY    | 3        | LIB   | FALSE     |       0.000 |       2.92 |
+| 2018-10-13 | FL    | 9        | D     | TRUE      |       0.982 |      58.83 |
+| 2018-10-26 | NV    | 2        | R     | TRUE      |       0.952 |      57.78 |
 
 ## Prediction Markets
 
@@ -218,34 +218,29 @@ Wikipedia](https://en.wikipedia.org/wiki/Prediction_market):
 
 I will be using the market history of the PredictIt exchange run by
 Victoria University of Wellington, New Zealand. PredictIt is one of the
-few prediction markets permitted to operate domestically due to the
-academic value of the markets. PredictIt partners with academic
-researchers to provide market history free of charge.
+few prediction markets permitted to operate domestically. PredictIt
+partners with academic researchers to provide market history free of
+charge.
 
 ### Market Inputs
 
 The fundamental input to a prediction market is a bet between two
 traders. These bets are made in the form of binary futures contracts
-that sell for a fixed price based on the outcome of some future event.
+that expire for a fixed price based on the outcome of some future event.
 PredictIt runs a continuous double-auction exchange where traders buy
 and sell shares of futures contracts. As a trader’s perception of
-probability changes, he can sell shares he owns and the market
-equilibrium price updates accordingly.
+probabilities changes, they can sell owned shares, causing the market
+equilibrium price to update accordingly.
 
 Traders on PredictIt place bets using real money. The greater the volume
 of money traded on a market, the better the forces of price discovery
 can determine equilibrium.
 
-Each Congressional race is predicted with it’s own market, where traders
-buy and sell shares of the opposing outcomes. Instead of producing a
-single prediction every day, the market equilibrium price is continually
-adjusting to take into account the views of the traders.
-
 ### Market Output
 
-The history of this price is provided to researchers. As [PredictIt
-outlines](https://www.predictit.org/research) in their data use
-agreement:
+The history of this market price is provided to researchers. As
+[PredictIt outlines](https://www.predictit.org/research) in their data
+use agreement:
 
 > In order to take full advantage of the research opportunities
 > presented by prediction markets like PredictIt, we make our data
@@ -280,13 +275,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market             | Date       | Open |  Low | High | Close | Volume |
-| :--- | :----------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 3520 | KNIG.CA25.2018     | 2017-08-27 | 0.49 | 0.49 | 0.49 |  0.49 |      0 |
-| 3489 | STAB.MISENATE.2018 | 2018-02-21 | 0.84 | 0.84 | 0.84 |  0.84 |      0 |
-| 3481 | TEST.MTSENATE.2018 | 2018-03-13 | 0.72 | 0.69 | 0.72 |  0.72 |     35 |
-| 4177 | PASEN18            | 2018-04-13 | 0.15 | 0.15 | 0.15 |  0.15 |      0 |
-| 4255 | MN03.2018          | 2018-04-28 | 0.63 | 0.63 | 0.63 |  0.63 |      0 |
+| ID   | Market                | Date       | Open |  Low | High | Close | Volume |
+| :--- | :-------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 2940 | SANDERS.VTSENATE.2018 | 2017-04-24 | 0.82 | 0.82 | 0.82 |  0.82 |    300 |
+| 4177 | PASEN18               | 2018-03-17 | 0.15 | 0.15 | 0.15 |  0.15 |      0 |
+| 3522 | DENH.CA10.2018        | 2018-05-04 | 0.31 | 0.31 | 0.31 |  0.31 |      0 |
+| 4281 | CT05.2018             | 2018-05-20 | 0.16 | 0.16 | 0.16 |  0.16 |      0 |
+| 4016 | PA09.2018             | 2018-07-25 | 0.90 | 0.90 | 0.90 |  0.90 |      0 |
 
 ## Wrangling
 
@@ -357,12 +352,12 @@ inner_join(x    = markets2,
 
 ## Findings
 
-Ultimately, a probabalistic view of an election makes a prediction about
+Ultimately, a probabilistic view of an election makes a prediction about
 the winner. Whether it’s a 99% probability or 51%, a winner is
 predicted. This is a unfortunately reductive view of forecasting, but
-will be useful to test their predictive capabilites.
+will be useful to test their predictive capabilities.
 
-An anlysis asks if the prediction matches the eventual winner.
+An analysis asks if the prediction matches the eventual winner.
 
 | Date       | Race  | Method | Predicted | Winner | Correct |
 | :--------- | :---- | :----- | :-------- | :----- | :------ |

@@ -20,7 +20,7 @@ opts_chunk$set(
 ## Overview
 
 The forecast model has become a staple of political punditry in recent years.
-Popularized by the data journalism site [FiveThirtyEight][01], the forecast
+Popularized by the data journalism site [FiveThirtyEight][01], the forecasting
 model is a statistical tool used to incorporate a number of quantitative inputs
 and output a _probabilistic_ view of all possible outcomes.
 
@@ -29,8 +29,8 @@ probabilistic views of election outcomes. Markets utilize the economic forces of
 price discovery and risk aversion to overcome the ideological bias of
 self-interested traders on a binary options exchange.
 
-Can prediction markets ever predict elections better than the forecasting
-modles? If so, under what conditions?
+Can markets help us predict elections better than the models? If so, under what
+conditions?
 
 I propose a null hypothesis of no difference between the proportion of accurate
 predictions made by forecasting models and prediction markets in the 2018
@@ -41,7 +41,7 @@ congressional midterm elections.
 All public input data has been saved on the [internet archive][28] and can be
 accessed through their wayback machine.
 
-Data reading, wrangling, combining, and visualizing is done primarily using R
+Data reading, wrangling, combining, and visualization is done primarily using R
 packages from the [`tidyverse`][29] collection. Installing those packages should
 contain all functions needed to run the project.
 
@@ -56,9 +56,9 @@ The R scripts in the [`/code`](/code) folder can be run in sequential order to
 reproduce the project findings.
 
 1. Scrape data using `readr` in [`01_read_inputs.R`](code/01_read_inputs.R)
-1. Format using `dplyr` in [`02_format_inputs.R`](code/02_format_inputs.R)
-1. Analyze using `stats` in [`03_compare_methods.R`](code/03_compare_methods.R)
-1. Visualize using `ggplot2` in [`04_explore_viz.R`](code/04_explore_viz.R)
+1. Format with `dplyr` in [`02_format_inputs.R`](code/02_format_inputs.R)
+1. Analyze with `stats` in [`03_compare_methods.R`](code/03_compare_methods.R)
+1. Visualize with `ggplot2` in [`04_explore_visually.R`](code/04_explore_viz.R)
 
 
 ```{r source, echo=TRUE}
@@ -70,8 +70,7 @@ source("code/04_explore_visually.R")
 
 ## Forecasting Models
 
-As Nate Silver, FiveThirtyEight's founder and the primary author of their model,
-explains in their [methedological article][08]:
+As FiveThirtyEight's founder explains in their [methedological article][08]:
 
 > (Forecasting models) take lots of polls, perform various types of adjustments
 to them, and then blend them with other kinds of empirically useful indicators
@@ -84,15 +83,14 @@ capabilities of statistical election forecasting. FiveThirtyEight has a track
 record of accuracy over the last decade. Furthermore, they make the top-line
 output of their model free to the public.
 
-The goal of these mathematical forecasting models, [according to Silver][21], is
+The goal of these mathematical forecasting models is, [according to Silver][21],
 "not to divine some magic formula that miraculously predicts every election.
 Instead, it’s to make sense of publicly available information in a rigorous and
 disciplined way."
 
 ### Model Inputs
 
-FiveThirtyEight's 2018 House and Senate models incorporate four types of
-quantitative data:
+FiveThirtyEight's 2018 model incorporates four types of data:
 
 1. **Polling:** District level polling. [FiveThirtyEight rates pollsters][09] to
 adjust their findings.
@@ -112,9 +110,9 @@ congressional races:
 at the [Cook Political Report][22], [Inside Elections][23], and 
 [Sabato’s Crystal Ball][24].
 
-FiveThirtyEight uses these inputs to generate three models: (1) "lite" model
-only uses polling and CANTOR; "classic" adds in the fundamental data; and
-"deluxe" further incorporates the less quantitative expert forecasts.
+FiveThirtyEight uses these inputs to generate three models. Their "classic"
+model incorporates polling, CANTOR, and fundamentals and is considered the
+default model.
 
 In [describing][26] the process of their 2014 Senate Model, Silver described the
 general process by which the above inputs are incorporated in producing a
@@ -128,21 +126,21 @@ distribution or something similar to it.
 In an analysis of past elections, it has been proven that the degree of
 uncertainty is _greater_ when:
 
-1. The election is further away
 1. There are fewer polls
-1. The polls disagree more with one another
-1. The polling average disagrees more with the fundamentals
-1. There are more undecideds or third-party voters
 1. The race is more lopsided
+1. The election is further away
+1. The polls disagree more with one another
+1. There are more undecideds or third-party voters
+1. The polling average disagrees more with the fundamentals
 
 With these quantitative factors in mind, the model calculates the probability
 distribution in each candidate's share of the vote.
 
-The model then uses these calculations in a Monte Carlo simulation. In each
+The model then uses these calculations to run a Monte Carlo simulation. In each
 iteration of the simulation, a share of the vote for each candidate in a race is
 drawn from the above probability distributions. A winner is determined and the
 simulation runs again. The percentage of simulated elections won is analogous to
-the probability of victory on election day.
+the probability of victory on election night.
 
 ### Model Output
 
@@ -160,8 +158,7 @@ avg_daily <- model_combined %>%
   round()
 ```
 
-FiveThirtyEight makes a portion of their model's output public as four separate
-`.csv` files:
+FiveThirtyEight makes a portion of their model's output public as four files:
 
 1. [`senate_national_forecast.csv`][11]
 1. [`house_national_forecast.csv`][13]
@@ -169,15 +166,15 @@ FiveThirtyEight makes a portion of their model's output public as four separate
 1. [`house_district_forecast.csv`][14]
 
 The two national forecast files contain FiveThirtyEight's daily calculations for
-each party's probability of winning a majority in their respective chambers. The
-Senate seat and House district level forecasts will be used in this project.
+each party's probability of winning a majority in their respective chambers.
+
+The Senate seat and House district level forecasts will be used in this project.
 Each observation represents one candidate's probability of victory on one day.
 
 There are `r nrow(model_seat)` observations in the Senate seat level file and 
-`r nrow(model_district)` for the House district level. Together, there are an
-average of `r avg_daily` unique daily predictions spanning from 
-`r min(model_combined$forecastdate)` to
-`r max(model_combined$forecastdate)`.
+`r nrow(model_district)` for the House. Together, there are an average of 
+`r avg_daily` unique daily predictions spanning from 
+`rmin(model_combined$forecastdate)` to `r max(model_combined$forecastdate)`.
 
 For each observation, there are `r length(model_combined)` variables recorded:
 
@@ -233,31 +230,25 @@ belief.
 
 I will be using the market history of the PredictIt exchange run by Victoria
 University of Wellington, New Zealand. PredictIt is one of the few prediction
-markets permitted to operate domestically due to the academic value of the
-markets. PredictIt partners with academic researchers to provide market history
-free of charge.
+markets permitted to operate domestically. PredictIt partners with academic
+researchers to provide market history free of charge.
 
 ### Market Inputs
 
 The fundamental input to a prediction market is a bet between two traders. These
-bets are made in the form of binary futures contracts that sell for a fixed
+bets are made in the form of binary futures contracts that expire for a fixed
 price based on the outcome of some future event. PredictIt runs a continuous
 double-auction exchange where traders buy and sell shares of futures contracts.
-As a trader's perception of probability changes, he can sell shares he owns and
-the market equilibrium price updates accordingly.
+As a trader's perception of probabilities changes, they can sell owned shares,
+causing the market equilibrium price to update accordingly.
 
 Traders on PredictIt place bets using real money. The greater the volume of
 money traded on a market, the better the forces of price discovery can determine
 equilibrium.
 
-Each Congressional race is predicted with it's own market, where traders buy and
-sell shares of the opposing outcomes. Instead of producing a single prediction
-every day, the market equilibrium price is continually adjusting to take into
-account the views of the traders.
-
 ### Market Output
 
-The history of this price is provided to researchers. 
+The history of this market price is provided to researchers. 
 As [PredictIt outlines][16] in their data use agreement:
 
 > In order to take full advantage of the research opportunities presented by
@@ -376,12 +367,12 @@ tidy %>%
 
 ## Findings
 
-Ultimately, a probabalistic view of an election makes a prediction about the
+Ultimately, a probabilistic view of an election makes a prediction about the
 winner. Whether it's a 99% probability or 51%, a winner is predicted. This is
 a unfortunately reductive view of forecasting, but will be useful to test their
-predictive capabilites.
+predictive capabilities.
 
-An anlysis asks if the prediction matches the eventual winner.
+An analysis asks if the prediction matches the eventual winner.
 
 ```{r}
 hits <- tidy %>% 

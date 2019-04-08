@@ -174,8 +174,7 @@ victory on one day.
 
 There are 28353 observations in the Senate seat level file and 299760
 for the House. Together, there are an average of 3348 unique daily
-predictions spanning from `rmin(model_combined$forecastdate)` to
-2018-11-06.
+predictions spanning from 2018-08-01 to 2018-11-06.
 
 For each observation, there are 12 variables recorded:
 
@@ -196,11 +195,11 @@ district and Senate seat congressional model data sets.
 
 | Date       | State | District | Party | Incumbent | Probability | Vote Share |
 | :--------- | :---- | :------- | :---- | :-------- | ----------: | ---------: |
-| 2018-08-30 | WI    | 1        | R     | FALSE     |       0.080 |      44.75 |
-| 2018-09-14 | AR    | 2        | LIB   | FALSE     |       0.000 |       2.87 |
-| 2018-10-03 | KY    | 3        | LIB   | FALSE     |       0.000 |       2.92 |
-| 2018-10-13 | FL    | 9        | D     | TRUE      |       0.982 |      58.83 |
-| 2018-10-26 | NV    | 2        | R     | TRUE      |       0.952 |      57.78 |
+| 2018-09-13 | NV    | 1        | D     | TRUE      |       1.000 |      71.64 |
+| 2018-10-04 | NY    | 1        | D     | TRUE      |       1.000 |      66.57 |
+| 2018-10-09 | TX    | 13       | R     | TRUE      |       1.000 |      79.84 |
+| 2018-10-14 | CA    | 1        | D     | FALSE     |       0.014 |      40.18 |
+| 2018-10-22 | MO    | 8        | D     | FALSE     |       0.000 |      23.42 |
 
 ## Prediction Markets
 
@@ -275,13 +274,13 @@ observation there are 11 variables:
 Below is a random sample of observations from the PredictIt trading
 markets.
 
-| ID   | Market                | Date       | Open |  Low | High | Close | Volume |
-| :--- | :-------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
-| 2940 | SANDERS.VTSENATE.2018 | 2017-04-24 | 0.82 | 0.82 | 0.82 |  0.82 |    300 |
-| 4177 | PASEN18               | 2018-03-17 | 0.15 | 0.15 | 0.15 |  0.15 |      0 |
-| 3522 | DENH.CA10.2018        | 2018-05-04 | 0.31 | 0.31 | 0.31 |  0.31 |      0 |
-| 4281 | CT05.2018             | 2018-05-20 | 0.16 | 0.16 | 0.16 |  0.16 |      0 |
-| 4016 | PA09.2018             | 2018-07-25 | 0.90 | 0.90 | 0.90 |  0.90 |      0 |
+| ID   | Market                 | Date       | Open |  Low | High | Close | Volume |
+| :--- | :--------------------- | :--------- | ---: | ---: | ---: | ----: | -----: |
+| 3531 | CURB.FL26.2018         | 2017-11-11 | 0.33 | 0.33 | 0.34 |  0.34 |     23 |
+| 2941 | MANCHIN.WVSENATE.2018  | 2017-11-25 | 0.65 | 0.65 | 0.65 |  0.65 |      0 |
+| 4106 | SC04.2018              | 2018-05-05 | 0.88 | 0.88 | 0.88 |  0.88 |      0 |
+| 4016 | PA09.2018              | 2018-07-28 | 0.90 | 0.90 | 0.90 |  0.90 |      0 |
+| 2998 | DONNELLY.INSENATE.2018 | 2018-10-27 | 0.45 | 0.42 | 0.50 |  0.48 |   3774 |
 
 ## Wrangling
 

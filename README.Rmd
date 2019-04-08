@@ -174,7 +174,7 @@ Each observation represents one candidate's probability of victory on one day.
 There are `r nrow(model_seat)` observations in the Senate seat level file and 
 `r nrow(model_district)` for the House. Together, there are an average of 
 `r avg_daily` unique daily predictions spanning from 
-`rmin(model_combined$forecastdate)` to `r max(model_combined$forecastdate)`.
+`r min(model_combined$forecastdate)` to `r max(model_combined$forecastdate)`.
 
 For each observation, there are `r length(model_combined)` variables recorded:
 

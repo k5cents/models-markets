@@ -79,3 +79,17 @@ hits %$%
   t.test(hit ~ method, alternative = "greater") %>%
   use_series(p.value) %>%
   is_less_than(0.05)
+
+# Run a 2-sample test for equality of proportions?
+
+hits %>%
+  select(date, race, method, hit) %>%
+  spread(key = method,
+         value = hit) %>%
+  select(market, model) %>%
+  summarise(sum1 = sum(market),
+            sum2 = sum(model)) %>%
+  extract(1, ) %>%
+  as_vector() %>%
+  prop.test(n = rep(nrow(hits)/2, 2))
+

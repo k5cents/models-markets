@@ -86,8 +86,7 @@ hits %>%
   select(date, race, method, hit) %>%
   spread(key = method,
          value = hit) %>%
-  summarise(market = sum(market),
-            model = sum(model)) %>%
-  as_vector() %>%
+  select(market, model) %>%
+  colSums() %>%
   prop.test(n = nrow(hits)/2 %>% rep(2))
 

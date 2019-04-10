@@ -170,7 +170,7 @@ plot_cart_points <- messy %>%
 ggsave(plot = plot_cart_points,
        filename = "plots/plot_cart_points.png",
        dpi = "retina",
-       height = 9,
+       height = 5.625,
        width = 10)
 
 # Weird NJ-02 Market Error

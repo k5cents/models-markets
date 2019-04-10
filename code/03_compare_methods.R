@@ -73,7 +73,7 @@ hits <- tidy %>%
   mutate(hit = pred == winner) %>%
   select(date, race, method, prob, pred, winner, hit)
 
-# Run a welch two sample t-test
+# Run a welch two sample t-test?
 
 hits %$%
   t.test(hit ~ method, alternative = "greater") %>%
@@ -86,10 +86,8 @@ hits %>%
   select(date, race, method, hit) %>%
   spread(key = method,
          value = hit) %>%
-  select(market, model) %>%
-  summarise(sum1 = sum(market),
-            sum2 = sum(model)) %>%
-  extract(1, ) %>%
+  summarise(market = sum(market),
+            model = sum(model)) %>%
   as_vector() %>%
-  prop.test(n = rep(nrow(hits)/2, 2))
+  prop.test(n = nrow(hits)/2 %>% rep(2))
 

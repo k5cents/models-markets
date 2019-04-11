@@ -118,7 +118,8 @@ house_district_forecast %>%
   filter(party == "D" | party == "R") %>% 
   slice(1:10) %>%
   arrange(forecastdate) %>% 
-  kable(digits = 2,
+  kable(format = "latex",
+        digits = 2,
         col.names = c("Date",
                       "State",
                       "District",
@@ -176,7 +177,8 @@ DailyMarketData %>%
   select(MarketId, MarketSymbol, Date, ClosePrice, Volume) %>% 
   sample_n(10) %>%
   arrange(Date) %>% 
-  kable(digits = 3,
+  kable(format = "latex",
+        digits = 3,
         col.names = c("ID", "Ticker", "Date", "Price", "Volume"),
         caption = "Market Data (44,711 observations with 6 of 11 variables)")
 ```
@@ -186,7 +188,8 @@ DailyMarketData %>%
 ```{r}
 messy %>%
   slice(1:10) %>% 
-  kable(digits = 3,
+  kable(format = "latex",
+        digits = 3,
         col.names = c("Date", "Race", "Market Price", "Model Probability"),
         caption = "Messy Combined (9,200 observations of 4 variables)")
 ```
@@ -196,7 +199,8 @@ messy %>%
 ```{r}
 tidy %>%
   slice(1:10) %>% 
-  kable(digits = 3,
+  kable(format = "latex",
+        digits = 3,
         col.names = c("Date", "Race", "Predictive Method", "Probability"),
         caption = "Tidy Combined (18,400 observations of 4 variables)")
 ```

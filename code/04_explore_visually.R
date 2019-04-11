@@ -155,7 +155,7 @@ plot_cart_points <- messy %>%
              label.size = 0,
              fill = "#ebebeb",
              size = 6) +
-  geom_abline(slope = 1, intercept = 0) +
+  geom_abline(slope = 1, intercept = 0, lty = 2) +
   geom_point(aes(color = winner, shape = chamber), size = 4) +
   scale_y_continuous(labels = scales::dollar) +
   scale_x_continuous(labels = scales::percent) +

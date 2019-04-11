@@ -73,9 +73,20 @@ hits <- tidy %>%
   mutate(hit = pred == winner) %>%
   select(date, race, method, prob, pred, winner, hit)
 
-# Run a welch two sample t-test
+# Run a welch two sample t-test?
 
 hits %$%
   t.test(hit ~ method, alternative = "greater") %>%
   use_series(p.value) %>%
   is_less_than(0.05)
+
+# Run a 2-sample test for equality of proportions?
+
+hits %>%
+  select(date, race, method, hit) %>%
+  spread(key = method,
+         value = hit) %>%
+  select(market, model) %>%
+  colSums() %>%
+  prop.test(n = nrow(hits)/2 %>% rep(2))
+

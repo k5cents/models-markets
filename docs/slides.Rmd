@@ -4,7 +4,7 @@ author: "Kiernan Nicholls"
 date: "Spring, 2019"
 output: 
   beamer_presentation: 
-    fig_caption: yes
+    fig_caption: no
     keep_tex: yes
 df_print: kable
 ---
@@ -20,20 +20,11 @@ opts_chunk$set(echo = FALSE,
                error = FALSE)
 ```
 
-```{r read}
-source("./code/01_scrape_inputs.R")
-```
-
-```{r format}
-source("./code/02_format_inputs.R")
-```
-
-```{r compare}
-source("./code/03_compare_methods.R")
-```
-
-```{r}
-source("./code/04_explore_viz.R")
+```{r source}
+source("code/01_read_inputs.R")
+source("code/02_format_inputs.R")
+source("code/03_compare_methods.R")
+source("code/04_explore_visually.R")
 ```
 
 ## Why predict elections?
@@ -84,7 +75,11 @@ the forecast and simulate the election thousands of times.
 
 ## Forecasting Models
 
-> Most election models (including [FiveThirtyEight’s]) work in something like the following way: First, they calculate the most likely outcome in a particular state (“The Republican wins by 1 point”) and then they determine the degree of uncertainty around that estimate. Most models do this by means of a normal distribution or something similar to it.
+> Most election models work in something like the following way: First, they
+calculate the most likely outcome in a particular state (“The Republican wins by
+1 point”) and then they determine the degree of uncertainty around that
+estimate. Most models do this by means of a normal distribution or something
+similar to it.
 
 Historic indicators of _greater_ uncertainty:
 
@@ -95,22 +90,19 @@ Historic indicators of _greater_ uncertainty:
 1. There are more undecideds or third-party voters in the polls
 1. The race is more lopsided
 
-
 ## Model Inputs
 
-1. **Polling:** District level polling. FiveThirtyEight rates pollsters to
-adjust their findings. Further adjusted for  recency and other factors.
-1. **CANTOR:** A proprietary k-nearest neighbors algorithm to identify similar
-congressional districts to infers results for polling-sparce districts.
-1. **Fundamentals:** Non-polling factors that historically help in predicting
-congressional races:
+1. **Polling:** District level polling, weighted for historical accuracy.
+1. **CANTOR:** A proprietary algorithm to identify similar districts to infers
+results for polling-sparce districts.
+1. **Expert forecasts:** Ratings published by the historically accurate experts.
+1. **Fundamentals:** Non-polling factors, historically useful factors:
     * Incumbency
     * Partisanship
     * Previous margin
     * Generic ballot
     * Fundraising
     * Scandals
-1. **Expert forecasts:** Ratings published by the historically accurate experts.
 
 ## Model Outputs
 
@@ -177,10 +169,6 @@ university, for educational purposes
 * How many tweets will @realDonaldTrump post from noon Mar. 22 to noon Mar. 29?
 * Will Theresa May be prime minister of the United Kingdom on 6/30?
 
-## 
-
-![Democratic Primary Market](2020_dem_primary.png)
-
 ## PredicIt Data
 
 ```{r market_data, warning=FALSE, message=FALSE}
@@ -192,7 +180,6 @@ DailyMarketData %>%
         col.names = c("ID", "Ticker", "Date", "Price", "Volume"),
         caption = "Market Data (44,711 observations with 6 of 11 variables)")
 ```
-
 
 ## Messy Data
 
@@ -216,41 +203,20 @@ tidy %>%
 
 ## Race Distributions
 
-```{r plot_races_hist}
-plot_races_hist + 
-  theme_minimal() + 
-  ggtitle("", subtitle = "") +
-  theme(legend.position = "none")
-```
+![hist](../plots/plot_races_hist.png)
 
 ## Method Similarities
 
-```{r plot_cartesian_races}
-plot_cartesian_races + 
-  theme_minimal() + 
-  ggtitle("", subtitle = "")
-```
+![points](../plots/plot_cart_points.png)
 
 ## Market Manipulation?
 
-```{r plot_nj_02}
-plot_nj_02 + 
-  theme_minimal() + 
-  ggtitle("", subtitle = "")
-```
+![nj02](../plots/plot_nj_02.png)
 
 ## Method Accuracy
 
-```{r prop_day_line}
-prop_day_line + 
-  theme_minimal() + 
-  ggtitle("", subtitle = "")
-```
+![accuracy lines](../plots/plot_prop_day.png)
 
 ## Method Accuracy
 
-```{r prop_month_bars}
-prop_month_bars + 
-  theme_minimal() + 
-  ggtitle("", subtitle = "")
-```
+![accuracy bars](../plots/plot_prop_month.png)

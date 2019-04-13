@@ -76,9 +76,8 @@ hits <- tidy %>%
 # Run a welch two sample t-test?
 
 hits %$%
-  t.test(hit ~ method, alternative = "greater") %>%
-  use_series(p.value) %>%
-  is_less_than(0.05)
+  t.test(formula = hit ~ method,
+         alternative = "greater")
 
 # Run a 2-sample test for equality of proportions?
 
@@ -90,3 +89,8 @@ hits %>%
   colSums() %>%
   prop.test(n = nrow(hits)/2 %>% rep(2))
 
+hits %>%
+  group_by(method, pred, winner) %>%
+  summarise(n = n(),
+            prob = mean(prob)) %>%
+  arrange(pred, winner)

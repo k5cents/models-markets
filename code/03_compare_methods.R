@@ -90,7 +90,7 @@ hits %>%
   prop.test(n = nrow(hits)/2 %>% rep(2))
 
 hits %>%
-  group_by(method, pred, winner) %>%
-  summarise(n = n(),
-            prob = mean(prob)) %>%
+  group_by(pred, winner, method) %>%
+  summarise(prob = mean(prob),
+            n = n()) %>%
   arrange(pred, winner)

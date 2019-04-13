@@ -11,9 +11,8 @@ library(tidyverse)
 ## Market Data sent by will.jennings@predictit.org
 ## Detailed market history provided to partnered academic researchers
 DailyMarketData <-
-  readLines(con = file("./data/DailyMarketData.csv",
-                        encoding = "UTF-16LE")) %>%
-  read_delim(delim = "|",
+  read_delim("data/DailyMarketData.csv",
+             delim = "|",
              na = "n/a",
              col_types = cols(
                MarketId = col_character(),

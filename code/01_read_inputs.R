@@ -5,14 +5,15 @@
 ### Read in raw input data
 
 library(tidyverse)
+library(here)
 
 # read market data from https://www.predictit.org/ ------------------------
 
 ## Market Data sent by will.jennings@predictit.org
 ## Detailed market history provided to partnered academic researchers
 DailyMarketData <-
-  read_delim("data/DailyMarketData.csv",
-             delim = "|",
+  here("data", "DailyMarketData.csv") %>%
+  read_delim(delim = "|",
              na = "n/a",
              col_types = cols(
                MarketId = col_character(),
@@ -21,13 +22,13 @@ DailyMarketData <-
                Date = col_date(format = "")))
 
 Market_ME02 <-
-  read_csv(file = "./data/Market_ME02.csv",
-           col_types = cols(ContractID = col_character(),
+  here("data", "Market_ME02.csv") %>%
+  read_csv(col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y")))
 
 Contract_NY27 <-
-  read_csv("./data/Contract_NY27.csv",
-           na = c("n/a", "NA"),
+  here("data" , "Contract_NY27.csv") %>%
+  read_csv(na = c("n/a", "NA"),
            skip = 156, # this file was a mess
            col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y")))

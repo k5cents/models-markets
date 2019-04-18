@@ -38,7 +38,7 @@ plot_races_hist <-
   theme(legend.position = "none")
 
 ggsave(plot = plot_races_hist,
-       filename = "plots/plot_races_hist.png",
+       filename = here("plots", "plot_races_hist.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -58,7 +58,7 @@ plot_cum_polls <- polling %>%
        y = "Polls to Date")
 
 ggsave(plot = plot_cum_polls,
-       filename = "plots/plot_cum_polls.png",
+       filename = here("plots", "plot_cum_polls.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -80,7 +80,7 @@ plot_cum_dollars <- markets %>%
        y = "Dollars Traded to Date")
 
 ggsave(plot = plot_cum_dollars,
-       filename = "plots/plot_cum_dollars.png",
+       filename = here("plots", "plot_cum_dollars.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -99,7 +99,7 @@ plot_cum_markets <- markets %>%
        y = "Markets to Date")
 
 ggsave(plot = plot_cum_markets,
-       filename = "plots/plot_cum_markets.png",
+       filename = here("plots", "plot_cum_markets.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -126,7 +126,7 @@ plot_cart_labels <- messy %>%
        color = "Incumbency")
 
 ggsave(plot = plot_cart_labels,
-       filename = "plots/plot_cart_labels.png",
+       filename = here("plots", "plot_cart_labels.png"),
        dpi = "retina",
        height = 9,
        width = 10)
@@ -168,7 +168,7 @@ plot_cart_points <- messy %>%
        color = "Democrat Won")
 
 ggsave(plot = plot_cart_points,
-       filename = "plots/plot_cart_points.png",
+       filename = here("plots", "plot_cart_points.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -187,7 +187,7 @@ plot_nj_02 <- markets %>%
        y = "Closing Price")
 
 ggsave(plot = plot_nj_02,
-       filename = "plots/plot_nj_02.png",
+       filename = here("plots", "plot_nj_02.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -207,7 +207,7 @@ plot_prop_month <- hits %>%
        x = "Month of Year")
 
 ggsave(plot = plot_prop_month,
-       filename = "plots/plot_prop_month.png",
+       filename = here("plots", "plot_prop_month.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -227,7 +227,7 @@ plot_prop_week <- hits %>%
        x = "Week of Year")
 
 ggsave(plot = plot_prop_week,
-       filename = "plots/plot_prop_week.png",
+       filename = here("plots", "plot_prop_week.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -246,7 +246,7 @@ plot_prop_day <- hits %>%
        x = "Day of Year")
 
 ggsave(plot = plot_prop_day,
-       filename = "plots/plot_prop_day.png",
+       filename = here("plots", "plot_prop_day.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)

@@ -5,6 +5,7 @@
 ### Generate exploratory visuals
 
 library(ggplot2)
+library(here)
 
 color_model  <- "#ED713A" # 538 brand color
 color_market <- "#07A0BB" # PredictIt brand color

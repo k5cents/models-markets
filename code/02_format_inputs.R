@@ -127,7 +127,6 @@ markets$race <- paste(str_sub(markets$race, 1, 2), # state abbreviation
 
 # Remove markets incorectly repeated
 # Some not running for re-election
-
 markets %<>% filter(mid != "3455", # Paul Ryan
                     mid != "3507", # Jeff Flake
                     mid != "3539", # Shea-Porter

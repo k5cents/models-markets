@@ -16,8 +16,7 @@ single_party_markets <- markets %>%
   summarise(n = n()) %>%
   filter(n == 1) %>%
   ungroup() %>%
-  select(race) %>%
-  as_vector() %>%
+  pull(race) %>%
   unique()
 
 # Invert the GOP prices for markets with only GOP candidates

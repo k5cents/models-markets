@@ -27,7 +27,6 @@ plot_races_hist <-
   ggplot(mapping = aes(x = prob, fill = method)) +
   geom_histogram(binwidth = 0.10) +
   facet_wrap(~method, scales = "free_y", drop = TRUE) +
-  theme(legend.position = "bottom") +
   scale_fill_manual(values = c(color_model, color_market)) +
   theme(legend.position = "none") +
   scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.2),
@@ -39,7 +38,7 @@ plot_races_hist <-
   theme(legend.position = "none")
 
 ggsave(plot = plot_races_hist,
-       filename = here("plots", "plot_races_hist.png"),
+       filename = here::here("plots", "plot_races_hist.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -59,7 +58,7 @@ plot_cum_polls <- polling %>%
        y = "Polls to Date")
 
 ggsave(plot = plot_cum_polls,
-       filename = here("plots", "plot_cum_polls.png"),
+       filename = here::here("plots", "plot_cum_polls.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -81,7 +80,7 @@ plot_cum_dollars <- markets %>%
        y = "Dollars Traded to Date")
 
 ggsave(plot = plot_cum_dollars,
-       filename = here("plots", "plot_cum_dollars.png"),
+       filename = here::here("plots", "plot_cum_dollars.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -100,7 +99,7 @@ plot_cum_markets <- markets %>%
        y = "Markets to Date")
 
 ggsave(plot = plot_cum_markets,
-       filename = here("plots", "plot_cum_markets.png"),
+       filename = here::here("plots", "plot_cum_markets.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -127,7 +126,7 @@ plot_cart_labels <- messy %>%
        color = "Incumbency")
 
 ggsave(plot = plot_cart_labels,
-       filename = here("plots", "plot_cart_labels.png"),
+       filename = here::here("plots", "plot_cart_labels.png"),
        dpi = "retina",
        height = 9,
        width = 10)
@@ -169,7 +168,7 @@ plot_cart_points <- messy %>%
        color = "Democrat Won")
 
 ggsave(plot = plot_cart_points,
-       filename = here("plots", "plot_cart_points.png"),
+       filename = here::here("plots", "plot_cart_points.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -188,7 +187,7 @@ plot_nj_02 <- markets %>%
        y = "Closing Price")
 
 ggsave(plot = plot_nj_02,
-       filename = here("plots", "plot_nj_02.png"),
+       filename = here::here("plots", "plot_nj_02.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -208,7 +207,7 @@ plot_prop_month <- hits %>%
        x = "Month of Year")
 
 ggsave(plot = plot_prop_month,
-       filename = here("plots", "plot_prop_month.png"),
+       filename = here::here("plots", "plot_prop_month.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -228,7 +227,7 @@ plot_prop_week <- hits %>%
        x = "Week of Year")
 
 ggsave(plot = plot_prop_week,
-       filename = here("plots", "plot_prop_week.png"),
+       filename = here::here("plots", "plot_prop_week.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)
@@ -247,7 +246,33 @@ plot_prop_day <- hits %>%
        x = "Day of Year")
 
 ggsave(plot = plot_prop_day,
-       filename = here("plots", "plot_prop_day.png"),
+       filename = here::here("plots", "plot_prop_day.png"),
+       dpi = "retina",
+       height = 5.625,
+       width = 10)
+
+plot_calibration_point <- hits %>%
+  mutate(bin = prob %>% round(digits = 1)) %>%
+  group_by(method, bin) %>%
+  summarise(prop = mean(winner), n = n()) %>%
+  ggplot(mapping = aes(bin, prop)) +
+  geom_abline(intercept = 0, slope = 1, lty = 2)  +
+  geom_point(mapping = aes(color = method, size = n), alpha = 0.75) +
+  scale_x_continuous(breaks = seq(0, 1, 0.1), minor_breaks = 0,
+                     labels = scales::percent) +
+  scale_y_continuous(breaks = seq(0, 1, 0.1), minor_breaks = 0,
+                     labels = scales::percent) +
+  scale_color_manual(values = c(color_market, color_model), guide = FALSE) +
+  scale_size(range = c(2, 12)) +
+  theme(legend.position = "bottom", legend.key = element_blank()) +
+  labs(title = "Expected Probabilities and Actual Proportions of Democratic Victory",
+       subtitle = "Expected probabilities binned by rounding to the nearest 10%",
+       y = "Proportion of Actual Democratic Victory",
+       x = "Predicted Probability of Democratic Victory",
+       size = "Number of Predictions")
+
+ggsave(plot = plot_calibration_point,
+       filename = here::here("plots", "plot_calibration_point.png"),
        dpi = "retina",
        height = 5.625,
        width = 10)

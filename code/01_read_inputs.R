@@ -60,10 +60,10 @@ sponsorshipanalysis_s <-
 ## District level 538 House model history
 ## Updated:  2018-11-06 at 01:56
 ## Archived: 2018-11-06 at 12:06
-
 house_district_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06", as = "parsed")
+  read_memento(timestamp = "2018-11-06") %>%
+  read_csv()
 
 
 # National level 538 House model history
@@ -71,21 +71,24 @@ house_district_forecast <-
 # Archived: 2018-11-06 at 12:06
 house_national_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06", as = "parsed")
+  read_memento(timestamp = "2018-11-06") %>%
+  read_csv()
 
 # Seat level 538 Senate model history
 # Updated:  2018-11-06 at 11:06
 # Archived: 2018-11-06 at 21:00
 senate_seat_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06", as = "parsed")
+  read_memento(timestamp = "2018-11-06") %>%
+  read_csv()
 
 # National level 538 Senate model history
 # Updated:  2018-11-06 at 11:06
 # Archived: 2018-11-06 at 21:00
 senate_national_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06", as = "parsed")
+  read_memento(timestamp = "2018-11-06") %>%
+  read_csv()
 
 # Midterm election results via ABC and 538
 # Used in https://53eig.ht/2PiFb0f
@@ -141,7 +144,7 @@ senate_polls <-
 house_polls <-
   "https://projects.fivethirtyeight.com/polls-page/house_polls.csv" %>%
   read_memento(timestamp = "2019-01-29") %>%
-  read_csv( col_types = cols(
+  read_csv(col_types = cols(
     question_id = col_character(),
     poll_id     = col_character(),
     pollster_id = col_character(),
@@ -153,7 +156,7 @@ house_polls <-
 generic_ballot_polls <-
   "https://projects.fivethirtyeight.com/polls-page/generic_ballot_polls.csv" %>%
   read_memento(timestamp = "2019-01-29") %>%
-  read_csv( col_types = cols(
+  read_csv(col_types = cols(
     question_id = col_character(),
     poll_id     = col_character(),
     pollster_id = col_character(),

@@ -1,13 +1,18 @@
+### Kiernan Nicholls
+### American University
+### Spring, 2019
+### Predictr: markets vs models
+### Read in raw input data
+
 library(wayback)
 library(tidyverse)
-library(here)
 
 # read market data from https://www.predictit.org/ ------------------------
 
 ## Market Data sent by will.jennings@predictit.org
-## Detailed market history provided to partnered academic researchers
+## Detailed price history provided to academic researchers
 DailyMarketData <-
-  here("data", "DailyMarketData.csv") %>%
+  here::here("data", "DailyMarketData.csv") %>%
   read_delim(delim = "|",
              na = "n/a",
              col_types = cols(
@@ -17,12 +22,12 @@ DailyMarketData <-
                Date = col_date(format = "")))
 
 Market_ME02 <-
-  here("data", "Market_ME02.csv") %>%
+  here::here("data", "Market_ME02.csv") %>%
   read_csv(col_types = cols(ContractID = col_character(),
                             Date = col_date(format = "%m/%d/%Y")))
 
 Contract_NY27 <-
-  here("data" , "Contract_NY27.csv") %>%
+  here::here("data" , "Contract_NY27.csv") %>%
   read_csv(na = c("n/a", "NA"),
            skip = 156, # this file was a mess
            col_types = cols(ContractID = col_character(),

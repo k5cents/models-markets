@@ -39,7 +39,7 @@ Contract_NY27 <-
 ## Archived: 2018-10-22 at 18:11
 legislators_current <-
   "https://theunitedstates.io/congress-legislators/legislators-current.csv" %>%
-  read_memento(timestamp = "2018-10-22") %>%
+  read_memento(timestamp = "2018-10-22", as = "raw") %>%
   read_csv(col_types = cols(govtrack_id = col_character()))
 
 # The ideology and leadership scores of the 115th
@@ -47,12 +47,12 @@ legislators_current <-
 # Archived 2019-01-21 17:13:08
 sponsorshipanalysis_h <-
   "https://www.govtrack.us/data/analysis/by-congress/115/sponsorshipanalysis_h.txt" %>%
-  read_memento(timestamp = "2019-03-23") %>%
+  read_memento(timestamp = "2019-03-23", as = "raw") %>%
   read_csv(col_types = cols(ID = col_character()))
 
 sponsorshipanalysis_s <-
   "https://www.govtrack.us/data/analysis/by-congress/115/sponsorshipanalysis_s.txt" %>%
-  read_memento(timestamp = "2019-03-23") %>%
+  read_memento(timestamp = "2019-03-23", as = "raw") %>%
   read_csv(col_types = cols(ID = col_character()))
 
 # read model, polling, and results data from https://fivethirtyeig --------
@@ -62,7 +62,7 @@ sponsorshipanalysis_s <-
 ## Archived: 2018-11-06 at 12:06
 house_district_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
   read_csv()
 
 
@@ -71,7 +71,7 @@ house_district_forecast <-
 # Archived: 2018-11-06 at 12:06
 house_national_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
   read_csv()
 
 # Seat level 538 Senate model history
@@ -79,7 +79,7 @@ house_national_forecast <-
 # Archived: 2018-11-06 at 21:00
 senate_seat_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
   read_csv()
 
 # National level 538 Senate model history
@@ -87,17 +87,16 @@ senate_seat_forecast <-
 # Archived: 2018-11-06 at 21:00
 senate_national_forecast <-
   "https://projects.fivethirtyeight.com/congress-model-2018/senate_national_forecast.csv" %>%
-  read_memento(timestamp = "2018-11-06") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
   read_csv()
 
 # Midterm election results via ABC and 538
 # Used in https://53eig.ht/2PiFb0f
 # Published: 2018-12-04 at 17:56
 # Archived:  2018-04-04 at 16:08
-
 forecast_results_2018 <-
   "https://raw.githubusercontent.com/fivethirtyeight/data/master/forecast-review/forecast_results_2018.csv" %>%
-  read_memento(timestamp = "2019-04-04") %>%
+  read_memento(timestamp = "2019-04-04", as = "raw") %>%
   read_csv(col_types  = cols(
     Democrat_Won = col_logical(),
     Republican_Won = col_logical(),
@@ -116,22 +115,21 @@ forecast_results_2018 <-
 # Average difference between how a district votes and the country
 # Updated:  2018-11-19 at 16:13
 # Archived: 2018-04-04 at 16:05
-
 partisan_lean_DISTRICTS <-
   "https://raw.githubusercontent.com/fivethirtyeight/data/master/partisan-lean/fivethirtyeight_partisan_lean_DISTRICTS.csv" %>%
-  read_memento(timestamp = "2019-04-04") %>%
+  read_memento(timestamp = "2019-04-04", as = "raw") %>%
   read_csv()
 
 partisan_lean_STATES <-
   "https://raw.githubusercontent.com/fivethirtyeight/data/master/partisan-lean/fivethirtyeight_partisan_lean_STATES.csv" %>%
-  read_memento(timestamp = "2019-04-04") %>%
+  read_memento(timestamp = "2019-04-04", as = "raw") %>%
   read_csv()
 
 # Polls incorperated in the 538 models
 # Archived 2019-01-29 at 21:45
 senate_polls <-
   "https://projects.fivethirtyeight.com/polls-page/senate_polls.csv" %>%
-  read_memento(timestamp = "2019-01-29") %>%
+  read_memento(timestamp = "2019-01-29", as = "raw") %>%
   read_csv(col_types = cols(
     question_id = col_character(),
     poll_id     = col_character(),
@@ -143,7 +141,7 @@ senate_polls <-
 
 house_polls <-
   "https://projects.fivethirtyeight.com/polls-page/house_polls.csv" %>%
-  read_memento(timestamp = "2019-01-29") %>%
+  read_memento(timestamp = "2019-01-29", as = "raw") %>%
   read_csv(col_types = cols(
     question_id = col_character(),
     poll_id     = col_character(),
@@ -155,7 +153,7 @@ house_polls <-
 
 generic_ballot_polls <-
   "https://projects.fivethirtyeight.com/polls-page/generic_ballot_polls.csv" %>%
-  read_memento(timestamp = "2019-01-29") %>%
+  read_memento(timestamp = "2019-01-29", as = "raw") %>%
   read_csv(col_types = cols(
     question_id = col_character(),
     poll_id     = col_character(),

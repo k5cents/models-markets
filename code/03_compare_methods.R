@@ -93,3 +93,24 @@ hits %>%
   summarise(prob = mean(prob),
             n = n()) %>%
   arrange(pred, winner)
+
+hits %>%
+  mutate(brier_score = (winner - prob)^2) %$%
+  t.test(brier_score ~ method)
+
+brier_test <- verification::brier(obs = hits$winner, pred = hits$prob)
+
+hits_model  <- hits %>% filter(method == "model")
+hits_market <- hits %>% filter(method == "market")
+
+brier_model <- brier(
+  obs = hits_model$winner,
+  pred = hits_model$prob,
+  baseline = rep(0.5, nrow(hits_model)),
+  bins = TRUE)
+
+brier_market <- brier(
+  obs = hits_market$winner,
+  pred = hits_market$prob,
+  baseline = rep(0.5, nrow(hits_market)),
+  bins = TRUE)

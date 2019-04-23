@@ -96,20 +96,18 @@ hits %>%
 
 hits %>%
   mutate(brier_score = (winner - prob)^2) %$%
-  t.test(brier_score ~ method)
-
-brier_test <- verification::brier(obs = hits$winner, pred = hits$prob)
+  t.test(formula = brier_score ~ method)
 
 hits_model  <- hits %>% filter(method == "model")
 hits_market <- hits %>% filter(method == "market")
 
-brier_model <- brier(
+brier_model <- verification::brier(
   obs = hits_model$winner,
   pred = hits_model$prob,
   baseline = rep(0.5, nrow(hits_model)),
   bins = TRUE)
 
-brier_market <- brier(
+brier_market <- verification::brier(
   obs = hits_market$winner,
   pred = hits_market$prob,
   baseline = rep(0.5, nrow(hits_market)),

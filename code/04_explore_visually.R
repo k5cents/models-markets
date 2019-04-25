@@ -5,7 +5,6 @@
 ### Generate exploratory visuals
 
 library(ggplot2)
-library(here)
 
 color_model  <- "#ED713A" # 538 brand color
 color_market <- "#07A0BB" # PredictIt brand color
@@ -15,8 +14,7 @@ color_red    <- "red3" # Republican
 # Distribution of original probabilities by method
 plot_races_hist <-
   # Join market onto model keep all model races
-  full_join(x = model, y = markets, by = c("date", "race", "party"),
-            ) %>%
+  full_join(x = model, y = markets, by = c("date", "race", "party")) %>%
   # Show only 1 candidate per race
   filter(date == "2018-11-05") %>%
   select(date, race, close, prob) %>%

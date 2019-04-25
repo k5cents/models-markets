@@ -4,6 +4,7 @@
 ### Predictr: markets vs models
 ### Read in raw input data
 
+# devtools::install_github("hrbrmstr/wayback")
 library(wayback)
 library(tidyverse)
 

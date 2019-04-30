@@ -10,12 +10,12 @@ output:
     toc_depth: 2
     toc_float: yes
     df_print: paged
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo    = TRUE, 
-  cache   = TRUE,
   message = FALSE,
   warning = FALSE,
   error   = FALSE,

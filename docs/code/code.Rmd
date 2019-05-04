@@ -2,14 +2,7 @@
 title: "Predictr Code"
 author: "Kiernan Nicholls"
 date: "Spring, 2019"
-output:
-  html_document: 
-    fig_width: 10
-    toc: yes
-    toc_depth: 2
-    toc_float: yes
-    df_print: paged
-    highlight: tango
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}

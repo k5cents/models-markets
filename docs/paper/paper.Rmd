@@ -1,0 +1,22 @@
+---
+title: "Models and Markets"
+author: "Kiernan Nicholls"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Abstract
+
+## Introduction
+
+## Literature
+
+## Data
+
+## Analysis
+
+## Code

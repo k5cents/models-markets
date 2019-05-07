@@ -1,0 +1,884 @@
+---
+title: "Markets and Models"
+subtitle: "Comparing 2018 Midterm Predictions"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+author: Kiernan Nicholls
+bibliography: code.bib
+output: 
+  pdf_document:
+    keep_tex: true
+    toc: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(
+  echo    = TRUE, 
+  message = FALSE,
+  warning = FALSE,
+  error   = FALSE,
+  max.print = 10)
+```
+
+## Overview
+
+The forecast model has become a staple of political punditry in recent years.
+Popularized by the data journalism site [FiveThirtyEight][01], the forecasting
+model is a statistical tool used to incorporate a number of quantitative inputs
+to generate a _probabilistic_ view of all possible outcomes.
+
+Prediction markets can be used as alternative method of generating similarly
+probabilistic views of election outcomes. Markets utilize the economic forces of
+price discovery and risk aversion to overcome the ideological bias of
+self-interested traders on a binary options exchange.
+
+Can markets help us predict elections better than the models? If so, under what
+conditions?
+
+I propose a null hypothesis of no difference between the proportion of accurate
+predictions made by forecasting models and prediction markets in the 2018
+congressional midterm elections.
+
+[01]: https://fivethirtyeight.com/
+
+## Reproduce
+
+All data used in this project is freely available for academic research. An
+archived version of all public information has been created on the free Internet
+Archive. 
+
+Additionally, the source code for this summary, a [more detailed academic
+manuscript][07], and [all analysis][08] is hosted on a [public GitHub repository][02],
+which can be cloned to reproduce findings exactly. All software needed to
+produce the same results is free and open source.
+
+[02]: https://github.com/kiernann/predictr
+[07]: https://github.com/kiernann/predictr/blob/master/docs/paper/paper.pdf
+[08]: https://github.com/kiernann/predictr/tree/master/code
+
+### Packages
+
+All data sets is collected, formatted, combined, and analyzed using the
+statistical computing language R [@base] and a handful of specialized packages,
+mostly from the [tidyverse][03] ecosystem.
+
+[03]: https://www.tidyverse.org/
+
+```{r install_packages, eval=FALSE}
+library(devtools) # for package managment
+install_cran("here") # for local storage
+install_cran("tidyverse") # for data manipulation
+install_cran("verification") # for forecast analysis
+install_github("hrbrmstr/wayback") # for internet archives
+```
+
+```{r attach_packages}
+library(readr)     # reading data
+library(dplyr)     # wrangling data
+library(tidyr)     # tidying data
+library(knitr)     # pritning tables
+library(tibble)    # rectangle data
+library(pander)    # printing tests
+library(stringr)   # character strings
+library(wayback)   # reading archives
+library(ggplot2)   # plotting data
+library(magrittr)  # piping data
+library(lubridate) # dates strings
+```
+
+### Read Data
+
+Reading data is handles by the `readr` [@readr] and `wayback` [@wayback]
+packages. Data public on the Internet has been archived for posterity and stored
+as "mementos" accessible by the [Wayback Machine][04]. Data is read as a raw
+file and formatted by `read_delim()`.
+
+[04]: https://archive.org/web/
+
+#### Read Markets
+
+Market data is courtesy of PredictIt.org, an exchange owned and operated by the
+Victoria University of Wellington, New Zealand. The past 90 days of all market
+data can be scraped, but more in depth data is provided to partnered academic
+researchers. The data for this project can be found in the `/data` directory of
+the GitHub repository.
+
+```{r read_market}
+DailyMarketData <-
+  here::here("data", "DailyMarketData.csv") %>%
+  read_delim(delim = "|",
+             na = "n/a",
+             col_types = cols(
+               MarketId = col_character(),
+               ContractName = col_character(),
+               ContractSymbol = col_character(),
+               Date = col_date(format = "")))
+
+Market_ME02 <-
+  here::here("data", "Market_ME02.csv") %>%
+  read_csv(col_types = cols(ContractID = col_character(),
+                            Date = col_date(format = "%m/%d/%Y")))
+
+Contract_NY27 <-
+  here::here("data" , "Contract_NY27.csv") %>%
+  read_csv(na = c("n/a", "NA"),
+           skip = 156,
+           col_types = cols(ContractID = col_character(),
+                            Date = col_date(format = "%m/%d/%Y")))
+```
+
+```{r print_market_raw, echo=FALSE}
+DailyMarketData %>% 
+  sample_n(10) %>%
+  select(MarketSymbol, 
+         ContractSymbol, 
+         Date, 
+         OpenPrice, 
+         ClosePrice, 
+         Volume) %>% 
+  arrange(Date) %>% 
+  kable(digits = 3,
+        caption = "Input Market Data (Sample)")
+```
+
+#### Read Members
+
+Market data lacks all the data needed to join it with model data, namely party
+association for members of the Senate. This data can be found in the 
+[the \\@unitedstates project's][05] legislators data set [@legislators_current].
+
+[05]: https://theunitedstates.io/
+
+```{r read_members}
+## Current members of the 115th
+## Archived: 2018-10-22 at 18:11
+  legislators_current <-
+  "https://theunitedstates.io/congress-legislators/legislators-current.csv" %>%
+  read_memento(timestamp = "2018-10-22", as = "raw") %>%
+  read_csv(col_types = cols(govtrack_id = col_character()))
+
+# The ideology and leadership scores of the 115th
+# Calculated with cosponsorship analysis
+# Archived 2019-01-21 17:13:08
+sponsorshipanalysis_h <-
+  str_c("https://www.govtrack.us/",
+        "data/analysis/by-congress/115/sponsorshipanalysis_h.txt") %>%
+  read_memento(timestamp = "2019-03-23", as = "raw") %>%
+  read_csv(col_types = cols(ID = col_character()))
+
+sponsorshipanalysis_s <-
+  str_c("https://www.govtrack.us/",
+        "data/analysis/by-congress/115/sponsorshipanalysis_s.txt") %>%
+  read_memento(timestamp = "2019-03-23", as = "raw") %>%
+  read_csv(col_types = cols(ID = col_character()))
+```
+
+```{r print_members_raw, echo=FALSE}
+legislators_current %>% 
+  sample_n(10) %>%
+  select(last_name,
+         birthday,
+         gender,
+         type,
+         state,
+         district,
+         party) %>% 
+  arrange(last_name) %>% 
+  kable(digits = 3,
+        caption = "Input Member Data (Sample)")
+```
+
+#### Read Models
+
+While the FiveThirtyEight model proprietary, they release top level output data
+free to the public as two separate files, one for the House
+[@house_district_forecast] and one for the Senate [@senate_seat_forecast].
+
+```{r read_models}
+## District level 538 House model history
+## Updated:  2018-11-06 at 01:56
+## Archived: 2018-11-06 at 12:06
+house_district_forecast <-
+  str_c(site = "https://projects.fivethirtyeight.com/",
+        file = "congress-model-2018/house_district_forecast.csv") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
+  read_csv()
+
+# Seat level 538 Senate model history
+# Updated:  2018-11-06 at 11:06
+# Archived: 2018-11-06 at 21:00
+senate_seat_forecast <-
+  str_c(site = "https://projects.fivethirtyeight.com/",
+        file = "congress-model-2018/senate_seat_forecast.csv") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
+  read_csv()
+```
+
+```{r print_models_raw, echo=FALSE}
+house_district_forecast %>% 
+  sample_n(10) %>%
+  select(forecastdate, 
+         state, 
+         district, 
+         party, 
+         incumbent, 
+         win_probability,
+         voteshare) %>% 
+  arrange(forecastdate) %>% 
+  kable(digits = 3,
+        caption = "Input House Model Data (Sample)")
+```
+
+#### Read Results
+
+Results come courtesy of FiveThirtyEight and the Decision Desk at their parent
+company, ABC News. Used in the article 
+[_How FiveThirtyEight’s 2018 Midterm Forecasts Did_][06] 
+[@forecast_results_2018]
+
+[06]: https://53eig.ht/2PiFb0f
+
+```{r read_results}
+# Midterm election results via ABC and 538
+# Used in https://53eig.ht/2PiFb0f
+# Published: 2018-12-04 at 17:56
+# Archived:  2018-04-04 at 16:08
+forecast_results_2018 <-
+  str_c(site = "https://raw.githubusercontent.com/",
+        fold = "fivethirtyeight/data/master/forecast-review/",
+        file = "forecast_results_2018.csv") %>%
+  read_memento(timestamp = "2019-04-04", as = "raw") %>%
+  read_csv(col_types  = cols(
+    Democrat_Won = col_logical(),
+    Republican_Won = col_logical(),
+    uncalled = col_logical(),
+    forecastdate = col_date(format = "%m/%d/%y"),
+    category = col_factor(ordered = TRUE,
+                          levels = c("Solid D",
+                                     "Likely D",
+                                     "Lean D",
+                                     "Tossup (Tilt D)",
+                                     "Tossup (Tilt R)",
+                                     "Lean R",
+                                     "Likely R",
+                                     "Safe R"))))
+```
+
+```{r print_results_raw, echo=FALSE}
+forecast_results_2018 %>% 
+  sample_n(10) %>%
+  select(branch, 
+         race, 
+         version, 
+         Democrat_WinProbability, 
+         category,
+         Democrat_Won) %>% 
+  arrange(race) %>% 
+  kable(digits = 3,
+        caption = "Input Results Data (Sample)")
+```
+
+### Format Data
+
+The objective of formatting is to create the neccesary variables needed to
+perform the relational join for method comparison.
+
+Formatting is done using `dplyr` [dplyr] and `tidyr` [@tidyr]. Character values
+are formatted with `stringr` [@stringr] and `lubridate` [@lubridate] for dates.
+
+The `race` variable comes from the state abbreviation and race number (e.g.,
+VT-01, AZ-S1, MO-S2). 
+
+Together with `date`, these two variables can be used
+to match daily predictions together for comparison.
+
+We will also need a `party` variable to filter out redundant observations.
+
+#### Format Members
+
+```{r format_members}
+members <- legislators_current %>%
+  unite(first_name, last_name,
+        col = name,
+        sep = " ") %>%
+  rename(gid     = govtrack_id,
+         chamber = type,
+         class   = senate_class,
+         birth   = birthday) %>%
+  select(name, gid, birth, state, district, class, party, gender, chamber) %>%
+  arrange(chamber)
+
+members$name     %<>% iconv(to = "ASCII//TRANSLIT")
+members$name     %<>% str_replace_all("Robert Menendez", "Bob Menendez")
+members$name     %<>% str_replace_all("Robert Casey",    "Bob Casey")
+members$name     %<>% str_replace_all("Bernard Sanders", "Bernie Sanders")
+members$chamber  %<>% recode("rep" = "house", "sen" = "senate")
+members$district %<>% str_pad(width = 2, pad = "0")
+members$class    %<>% str_pad(width = 2, pad = "S")
+members$party    %<>% recode("Democrat"    = "D",
+                             "Independent" = "D",
+                             "Republican"  = "R")
+
+members$district <- if_else(condition = is.na(members$district),
+                            true = members$class,
+                            false = members$district)
+
+# Create district code as relational key
+members %<>%
+  unite(col = race,
+        state, district,
+        sep = "-",
+        remove = TRUE) %>%
+  select(-class) %>%
+  arrange(name)
+
+# Format member stats for join
+members_stats <-
+  bind_rows(sponsorshipanalysis_h, sponsorshipanalysis_s,
+            .id = "chamber") %>%
+  select(ID, chamber, party, ideology, leadership) %>%
+  rename(gid = ID)
+members_stats$chamber %<>% recode("1" = "house", "2" = "senate")
+members_stats$party %<>% recode("Democrat"    = "D",
+                                "Independent" = "D",
+                                "Republican"  = "R")
+members_stats$gid %<>% as.character()
+# Add stats to frame by GovTrack ID
+members %<>% inner_join(members_stats, by = c("gid", "party", "chamber"))
+```
+
+```{r print_members_form, echo=FALSE}
+members %>% 
+  sample_n(10) %>%
+  arrange(name) %>% 
+  kable(digits = 3,
+        caption = "Formatted Member Data (Sample)")
+```
+
+#### Format Markets
+
+For market data, `race` comes from the the MarketID, which other contains the
+candidate name of code itself.
+
+```{r foromat_markets}
+markets <- DailyMarketData %>%
+  rename(mid      = MarketId,
+         name     = MarketName,
+         symbol   = MarketSymbol,
+         party    = ContractName,
+         open     = OpenPrice,
+         close    = ClosePrice,
+         high     = HighPrice,
+         low      = LowPrice,
+         volume   = Volume,
+         date     = Date) %>%
+  select(date, everything()) %>%
+  select(-ContractSymbol)
+
+# Get candidate names from full market question
+markets$name[str_which(markets$name, "Which party will")] <- NA
+markets$name %<>% word(start = 2, end = 3)
+
+# Recode party variables
+markets$party %<>% recode("Democratic or DFL" = "D",
+                          "Democratic"        = "D",
+                          "Republican"        = "R")
+
+# Remove year information from symbol strings
+markets$symbol %<>% str_remove(".2018")
+markets$symbol %<>% str_remove(".18")
+
+# Divide the market symbol into the name and race code
+markets %<>%
+  separate(col = symbol,
+           into = c("symbol", "race"),
+           sep = "\\.",
+           extra = "drop",
+           fill = "left") %>%
+  select(-symbol)
+
+# Recode the original contract strings for race variables
+markets$race %<>% str_replace("SENATE", "S1")
+markets$race %<>% str_replace("SEN",    "S1")
+markets$race %<>% str_replace("SE",     "S1")
+markets$race %<>% str_replace("AL",     "01")   # at large
+markets$race %<>% str_replace("OH12G",  "OH12") # not sure
+markets$race %<>% str_replace("MN99",   "MNS2") # special election
+markets$race[markets$name == "SPEC"] <- "MSS2"  # special election
+markets$race[markets$mid  == "3857"] <- "CAS1"  # market name mustyped
+markets$name[markets$name == "PARTY"] <- NA     # no name
+markets$name[markets$name == "SPEC"]  <- NA     # no name
+
+markets$race <- paste(str_sub(markets$race, 1, 2), # state abbreviation
+                      sep = "-",                   # put hyphen in middle
+                      str_sub(markets$race, 3, 4)) # market number)
+
+# Remove markets incorectly repeated
+# Some not running for re-election
+markets %<>% filter(mid != "3455", # Paul Ryan
+                    mid != "3507", # Jeff Flake
+                    mid != "3539", # Shea-Porter
+                    mid != "3521", # Darrell Issa
+                    mid != "3522", # Repeat of 4825
+                    mid != "4177", # Repeat of 4232
+                    mid != "4824") # Repeat of 4776
+
+# Divide the data based on market question syntax
+# Market questions provided name or party, never both
+markets_with_name <- markets %>%
+  filter(is.na(party)) %>%
+  select(-party)
+
+markets_with_party <- markets %>%
+  filter(is.na(name)) %>%
+  select(-name)
+
+# Join with members key to add party, then back with rest of market
+markets <- markets_with_name %>%
+  inner_join(members, by = c("name", "race")) %>%
+  select(date, mid, race, party, open, low, high, close, volume) %>%
+  bind_rows(markets_with_party)
+
+# Add in ME-02 and NY-27 which were left out of initial data
+ny_27 <- Contract_NY27 %>%
+  rename_all(tolower) %>%
+  slice(6:154) %>%
+  mutate(mid = "4729",
+         race = "NY-27",
+         party = "R") %>%
+  select(-average)
+
+me_02 <- Market_ME02 %>%
+  rename_all(tolower) %>%
+  rename(party = longname) %>%
+  filter(date != "2018-10-10") %>%
+  mutate(mid = "4945",
+         race = "ME-02")
+
+markets_extra <-
+  bind_rows(ny_27, me_02) %>%
+  select(date, mid, race, party, open, low, high, close, volume)
+
+markets_extra$party[str_which(markets_extra$party, "GOP")] <- "R"
+markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"
+
+# Bind with ME-02 and NY-27
+markets %<>%  bind_rows(markets_extra)
+```
+
+```{r print_markets_form, echo=FALSE}
+markets %>% 
+  sample_n(10) %>%
+  arrange(date) %>% 
+  kable(digits = 3,
+        caption = "Formatted Market Data (Sample)")
+```
+
+#### Format Models
+
+```{r format_model}
+# Format district for race variable
+model_district <- house_district_forecast %>%
+  mutate(district = str_pad(string = district,
+                            width = 2,
+                            side = "left",
+                            pad = "0"))
+
+# Format class for race variable
+model_seat <- senate_seat_forecast %>%
+  rename(district = class) %>%
+  mutate(district = str_pad(string = district,
+                            width = 2,
+                            side = "left",
+                            pad = "S"))
+
+model_combined <-
+  bind_rows(model_district, model_seat, .id = "chamber") %>%
+  # Create race variable for relational join
+  unite(col = race,
+        state, district,
+        sep = "-",
+        remove = TRUE) %>%
+  rename(name = candidate,
+         date = forecastdate,
+         prob = win_probability,
+         min_share = p10_voteshare,
+         max_share = p90_voteshare) %>%
+  filter(name != "Others") %>%
+  select(date, race, name, party, chamber, everything()) %>%
+  arrange(date, name)
+
+# Recode identifying variable for clarification
+model_combined$chamber %<>% recode("1" = "house",
+                                   "2" = "senate")
+
+# Only special elections are for senate.
+model_combined$special[is.na(model_combined$special)] <- FALSE
+
+# Convert percent vote share values to decimal
+model_combined[, 10:12] <- model_combined[, 10:12] * 0.01
+
+# Recode incumbent Independent senators for relational joins with Markets
+# Both caucus with Democrats and were endoresed by Democratic party
+model_combined$party[model_combined$name == "Bernard Sanders"]   <- "D"
+model_combined$party[model_combined$name == "Angus S. King Jr."] <- "D"
+model_combined %<>% filter(name != "Zak Ringelstein")
+
+# Seperate model data by model format
+# According to 538, the "classic" model can be used as a default
+model <- model_combined %>% 
+  filter(model == "classic") %>% 
+  select(-model)
+```
+
+```{r print_models_form, echo=FALSE}
+model %>% 
+  sample_n(10) %>%
+  select(-name, -min_share, -max_share) %>% 
+  arrange(date) %>% 
+  kable(digits = 3,
+        caption = "Formatted Model Data (Sample)")
+```
+
+#### Format Results
+
+```{r format_results}
+results <- forecast_results_2018 %>%
+  filter(branch  != "Governor",
+         version == "classic") %>%
+  separate(col    = race,
+           into   = c("state", "district"),
+           sep    = "-") %>%
+  rename(winner   = Democrat_Won) %>%
+  mutate(district = str_pad(district, width = 2,  pad   = "0")) %>%
+  unite(state, district,
+        col = race,
+        sep = "-") %>%
+  select(race, winner) %>%
+  filter(race != "NC-09") # Harris fraud charges
+```
+
+### Combine Data
+
+Not all races contain predictions for each party's probability. I will be using
+only Democratic (or Independent) data. For the races with only Republican
+predictions, the probability can simply be inverted.
+
+```{r join_messy}
+# Take the complimentary probability if only GOP data
+# Find race codes for markets with data on only one candidate
+single_party_markets <- markets %>%
+  group_by(date, race) %>%
+  summarise(n = n()) %>%
+  filter(n == 1) %>%
+  ungroup() %>%
+  pull(race) %>%
+  unique()
+
+# Invert the GOP prices for markets with only GOP candidates
+invert_gop <- markets %>%
+  filter(race %in% single_party_markets,
+         party == "R") %>%
+  mutate(close = 1 - close,
+         party = "D")
+
+# Take all but the only GOP markets
+original_dem <- markets %>%
+  filter(!race %in% invert_gop$race,
+         party == "D")
+
+# Combined both back together
+markets2 <-
+  bind_rows(original_dem, invert_gop) %>%
+  select(date, race, close) %>%
+  arrange(date, race)
+
+# Create model data with only dem party info
+model2 <- model %>%
+  group_by(date, race, party) %>%
+  summarise(prob = sum(prob)) %>%
+  ungroup() %>%
+  filter(party == "D") %>%
+  select(-party)
+
+# Join democratic predictions from both markets and models for comparison
+# Keep market and model data in seperate columns
+messy <-
+  inner_join(markets2, model2, by  = c("date", "race")) %>%
+  filter(date  >= "2018-08-01",
+         date  <= "2018-11-05") %>%
+  rename(model  = prob,
+         market = close)
+```
+
+```{r print_messy, echo=FALSE}
+messy %>% 
+  head(10) %>%
+  kable(digits = 3,
+        caption = "Messy Joined Data (Head)")
+```
+
+```{r join_hits}
+# Make tidy, with a row for each prediction
+# Add in results to determine binary hits/misses
+hits <- messy %>%
+  gather(model, market,
+         key = method,
+         value = prob) %>%
+  mutate(pred = prob > 0.5) %>%
+  inner_join(results, by = "race") %>%
+  mutate(hit = pred == winner) %>%
+  select(date, race, method, prob, pred, winner, hit)
+```
+
+```{r print_tidy, echo=FALSE}
+hits %>% 
+  head(10) %>%
+  kable(digits = 3,
+        caption = "Tidy Joined Data (Head)")
+```
+
+## Results
+
+Once predictions are combined, tidy-ed, and compared with election results, the 
+predictive ability of each method can be assessed.
+
+A test for equal proportion using the `stats` package shows a
+statistically significant difference (Table 10) [@stats].
+
+A test of forecast skill using the `verification` package shows
+no statistical difference in Brier Scores (Table 12) [@verification].
+
+```{r prop_test}
+# Run a 2-sample test for equality of proportions
+hits %>%
+  select(date, race, method, hit) %>%
+  spread(key = method,
+         value = hit) %>%
+  select(market, model) %>%
+  colSums() %>%
+  prop.test(n = nrow(hits)/2 %>% rep(2)) %>% 
+  pander()
+
+hits %>%
+  group_by(pred, winner, method) %>%
+  summarise(prob = mean(prob)) %>%
+  arrange(pred, winner) %>% 
+  spread(method, prob) %>% 
+  kable(digits = 3,
+        caption = "Mean Probabilities by Prediction Accuracy")
+```
+
+```{r brier_test}
+hits %>%
+  mutate(brier_score = (winner - prob)^2) %$%
+  t.test(formula = brier_score ~ method) %>% 
+  pander()
+
+hits_model  <- hits %>% filter(method == "model")
+
+brier_model <- verification::brier(
+  obs = hits_model$winner,
+  pred = hits_model$prob) %>% 
+  unlist() %>% 
+  enframe() %>% 
+  slice(2:7)
+
+hits_market <- hits %>% filter(method == "market")
+
+brier_market <- verification::brier(
+  obs = hits_market$winner,
+  pred = hits_market$prob) %>% 
+  unlist() %>% 
+  enframe() %>% 
+  slice(2:7)
+```
+
+```{r}
+left_join(brier_market, brier_model, by = "name") %>% 
+  rename(market = value.x,
+         model = value.y) %>% 
+  kable(digits = 3,
+        caption = "Brier Test Comparison")
+```
+
+## Application
+
+The probabilities for the races can be visualized using the `shiny` package
+[@shiny].
+
+The application is hosted online at https://kiernan.shinyapps.io/predictr/
+
+## Visualize
+
+Exploratory visualizations are made using the `ggplot2` package [@ggplot2].
+
+```{r plot_colors, echo=FALSE}
+color_model  <- "#ED713A" # 538 brand color
+color_market <- "#07A0BB" # PredictIt brand color
+color_blue   <- "royalblue3" # Democratic
+color_red    <- "red3" # Republican
+```
+
+```{r plot_hists, echo=FALSE}
+  # Join market onto model keep all model races
+  full_join(x = model, y = markets, by = c("date", "race", "party")) %>%
+  # Show only 1 candidate per race
+  filter(date == "2018-11-05") %>%
+  select(date, race, close, prob) %>%
+  rename(markets = close, model = prob) %>%
+  gather(markets, model, key = method, value = prob) %>%
+  mutate(method = method %>% recode("model" = "Forecasting Model",
+                                    "markets" = "Prediction Markets")) %>%
+  ggplot(mapping = aes(x = prob, fill = method)) +
+  geom_histogram(binwidth = 0.10) +
+  facet_wrap(~method, scales = "free_y", drop = TRUE) +
+  scale_fill_manual(values = c(color_model, color_market)) +
+  theme(legend.position = "none") +
+  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.2),
+                     minor_breaks = 0,
+                     labels = scales::percent) +
+  labs(title = "Distribution of Race Probabilities by Predictive Method",
+       x = "Democratic Win Probability",
+       y = "Number of Races") +
+  theme(legend.position = "none")
+```
+
+```{r Plot_dollars, echo=FALSE}
+markets %>%
+  filter(date >= "2018-01-01", date <= "2018-11-05") %>%
+  group_by(date) %>%
+  mutate(traded = close * volume) %>%
+  summarise(sum = sum(traded, na.rm = TRUE)) %>%
+  mutate(cumsum = cumsum(sum)) %>%
+  ggplot(mapping = aes(x = date, y = cumsum)) +
+  geom_line(color = color_market, size = 2) +
+  geom_vline(xintercept = as.Date("2018-08-01"), size = 0.5) +
+  geom_vline(xintercept = as.Date("2018-11-05"), size = 0.5) +
+  scale_y_continuous(labels = scales::dollar) +
+  labs(title = "Cumulative Dollars Traded on Election Markets",
+       x = "Date",
+       y = "Dollars Traded to Date")
+```
+
+```{r plot_n_markets, echo=FALSE}
+markets %>% 
+  filter(date > "2018-01-01", date < "2018-11-05") %>%
+  group_by(date) %>%
+  summarise(count = n()) %>%
+  ggplot(mapping = aes(x = date, y = count)) +
+  geom_line(color = color_market, size = 2) +
+  geom_vline(xintercept = as_date("2018-08-01"), size = 0.5) +
+  geom_vline(xintercept = as_date("2018-11-05"), size = 0.5) +
+  labs(title = "Cumulative Number of Election Markets",
+       x = "Date",
+       y = "Markets to Date")
+```
+
+```{r plot_cart, echo=FALSE}
+messy %>% 
+  mutate(party = "D") %>%
+  filter(date == "2018-11-05") %>%
+  left_join(model, by = c("date", "race", "party")) %>%
+  inner_join(results, by = "race") %>%
+  ggplot(aes(x  = model, y  = market)) +
+  geom_hline(yintercept = 0.5) +
+  geom_vline(xintercept = 0.5) +
+  geom_label(mapping = aes(x = 0.25, y = 0.75, label = "Market Predicts Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.75, y = 0.25, label = "Model Predicts Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.25, y = 0.25, label = "Both Predict Loss"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.75, y = 0.75, label = "Both Predict Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_abline(slope = 1, intercept = 0, lty = 2) +
+  geom_point(aes(color = winner, shape = chamber), size = 4) +
+  scale_y_continuous(labels = scales::dollar) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_color_manual(values = c("red", "forestgreen")) +
+  labs(title = "Midterm Races by Democrat's Chance of Winning",
+       subtitle = "November 5th, Night Before Election Day",
+       x = "Model Probability",
+       y = "Market Price",
+       shape = "Chamber",
+       color = "Democrat Won")
+```
+
+```{r plot_nj02, echo=FALSE}
+markets %>%
+  filter(race == "NJ-02", date > "2018-10-25") %>%
+  ggplot(aes(x = date, y = close)) +
+  geom_hline(yintercept = 0.5) +
+  geom_line(aes(color = party), size = 2) +
+  scale_color_manual(values = c(color_blue, color_red)) +
+  scale_y_continuous(labels = scales::dollar) +
+  scale_x_date() +
+  labs(title = "Price History of New Jersey 2nd Betting Market",
+       x = "Date",
+       y = "Closing Price")
+```
+
+```{r plot_props, echo=FALSE}
+hits %>%
+  mutate(week = week(date)) %>%
+  group_by(week, method) %>%
+  summarise(prop = mean(hit, na.rm = TRUE)) %>%
+  ggplot(aes(x = week, y = prop, color = method)) +
+  geom_line(size = 3) +
+  coord_cartesian(ylim = c(0.75, 0.95)) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_manual(values = c(color_market, color_model)) +
+  labs(title = "Proportion of Correct Predictions by Week",
+       subtitle = "PredictIt Markets and FiveThirtyEight Model",
+       y = "Proportion",
+       x = "Week of Year")
+```
+
+```{r plot_calib, echo=FALSE}
+hits %>%
+  mutate(bin = prob %>% round(digits = 1)) %>%
+  group_by(method, bin) %>%
+  summarise(prop = mean(winner), n = n()) %>%
+  ggplot(mapping = aes(bin, prop)) +
+  geom_abline(intercept = 0, slope = 1, lty = 2)  +
+  geom_point(mapping = aes(color = method, size = n), alpha = 0.75) +
+  scale_x_continuous(breaks = seq(0, 1, 0.1), minor_breaks = 0,
+                     labels = scales::percent) +
+  scale_y_continuous(breaks = seq(0, 1, 0.1), minor_breaks = 0,
+                     labels = scales::percent) +
+  scale_color_manual(values = c(color_market, color_model), guide = FALSE) +
+  scale_size(range = c(2, 12)) +
+  theme(legend.position = "bottom", legend.key = element_blank()) +
+  labs(
+    title = "Forecast Calibration",
+    subtitle = "Expected probabilities binned to 10%",
+    y = "Proportion of Actual Democratic Victory",
+    x = "Predicted Probability of Democratic Victory",
+    size = "Number of Predictions")
+```
+
+```{r plot_brier, echo=FALSE}
+hits %>%
+  mutate(brier_score = (winner - prob)^2) %>% 
+  mutate(week = week(date)) %>%
+  group_by(week, method) %>%
+  summarise(mean = mean(brier_score, na.rm = TRUE)) %>%
+  ggplot(aes(x = week, y = mean)) +
+  geom_line(size = 2, aes(color = method)) +
+  scale_color_manual(values = c(color_market, color_model)) +
+  labs(title = "Proportion of Correct Predictions by Week",
+       subtitle = "PredictIt Markets and FiveThirtyEight Model",
+       y = "Proportion",
+       x = "Week of Year")
+```
+
+## Bibliography

@@ -1,22 +1,1225 @@
 ---
+output: 
+  pdf_document:
+    keep_tex: true
+    toc: true
+    fig_caption: true
+    template: template.tex
 title: "Models and Markets"
-author: "Kiernan Nicholls"
+subtitle: "Appraising Probabilistic Predictions of the 2018 Midterm Elections"
+author:
+- name: Kiernan Nicholls
+  affiliation: American University
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: pdf_document
+fontsize: 11pt
+spacing: double
+bibliography: paper.bib
+keywords: "Prediction markets, election forecasting, FiveThirtyEight, PredictIt"
+abstract: "Forecasting models and prediction markets are two methods of generating probabilistic predictions of upcoming elections. The efficient market hypothesis holds that fair markets should incorporate all information, including public models, in price discovery. This paper compares the market price on the _PredictIt_ exchange to the model probability released by the data journalist at _FiveThirtyEight_. Sample includes the last 90 days of 115 races in the 2018 midterm elections. In a test for equal proportion of accurate predictions, the markets outperformed the model to a statistically significant degree (market: 86.03%, model: 83.81%, p = 0.00004166). In a more comprehensive test of forecast skill, there was no statistical difference in Brier scores (market: 0.1084, model: 0.1091, p = 0.7346)."
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(tidyverse)
+opts_chunk$set(echo = FALSE,
+               message = FALSE,
+               warning = FALSE,
+               error = FALSE,
+               cache = TRUE,
+               cache.path = "/tmp/rmd_cache/")
 ```
 
-## Abstract
+```{r install_packages, eval=FALSE}
+library(devtools) # installing functions
+install_cran("here") # for local storage
+install_cran("tidyverse") # for data manipulation
+install_cran("verification") # for forecast analysis
+install_github("hrbrmstr/wayback") # for internet archives
+```
 
-## Introduction
+```{r attach_packages}
+library(readr)     # reading data
+library(dplyr)     # wrangling data
+library(tidyr)     # tidying data
+library(stringr)   # character strings
+library(wayback)   # reading archives
+library(ggplot2)   # plotting data
+library(magrittr)  # piping data
+library(lubridate) # dates strings
+```
 
-## Literature
+```{r read_members}
+## Current members of the 115th
+## Archived: 2018-10-22 at 18:11
+legislators_current <-
+  "https://theunitedstates.io/congress-legislators/legislators-current.csv" %>%
+  read_memento(timestamp = "2018-10-22", as = "raw") %>%
+  read_csv(col_types = cols(govtrack_id = col_character()))
 
-## Data
+# The ideology and leadership scores of the 115th
+# Calculated with cosponsorship analysis
+# Archived 2019-01-21 17:13:08
+sponsorshipanalysis_h <-
+  str_c("https://www.govtrack.us/",
+        "data/analysis/by-congress/115/sponsorshipanalysis_h.txt") %>%
+  read_memento(timestamp = "2019-03-23", as = "raw") %>%
+  read_csv(col_types = cols(ID = col_character()))
 
-## Analysis
+sponsorshipanalysis_s <-
+  str_c("https://www.govtrack.us/",
+        "data/analysis/by-congress/115/sponsorshipanalysis_s.txt") %>%
+  read_memento(timestamp = "2019-03-23", as = "raw") %>%
+  read_csv(col_types = cols(ID = col_character()))
+```
 
-## Code
+```{r read_market}
+DailyMarketData <-
+  here::here("data", "DailyMarketData.csv") %>%
+  read_delim(delim = "|",
+             na = "n/a",
+             col_types = cols(
+               MarketId = col_character(),
+               ContractName = col_character(),
+               ContractSymbol = col_character(),
+               Date = col_date(format = "")))
+
+Market_ME02 <-
+  here::here("data", "Market_ME02.csv") %>%
+  read_csv(col_types = cols(ContractID = col_character(),
+                            Date = col_date(format = "%m/%d/%Y")))
+
+Contract_NY27 <-
+  here::here("data" , "Contract_NY27.csv") %>%
+  read_csv(na = c("n/a", "NA"),
+           skip = 156,
+           col_types = cols(ContractID = col_character(),
+                            Date = col_date(format = "%m/%d/%Y")))
+```
+
+```{r read_models}
+## District level 538 House model history
+## Updated:  2018-11-06 at 01:56
+## Archived: 2018-11-06 at 12:06
+house_district_forecast <-
+  str_c(site = "https://projects.fivethirtyeight.com/",
+        file = "congress-model-2018/house_district_forecast.csv") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
+  read_csv()
+
+# Seat level 538 Senate model history
+# Updated:  2018-11-06 at 11:06
+# Archived: 2018-11-06 at 21:00
+senate_seat_forecast <-
+  str_c(site = "https://projects.fivethirtyeight.com/",
+        file = "congress-model-2018/senate_seat_forecast.csv") %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>%
+  read_csv()
+```
+
+```{r read_results}
+# Midterm election results via ABC and 538
+# Used in https://53eig.ht/2PiFb0f
+# Published: 2018-12-04 at 17:56
+# Archived:  2018-04-04 at 16:08
+forecast_results_2018 <-
+  str_c(site = "https://raw.githubusercontent.com/",
+        fold = "fivethirtyeight/data/master/forecast-review/",
+        file = "forecast_results_2018.csv") %>%
+  read_memento(timestamp = "2019-04-04", as = "raw") %>%
+  read_csv(col_types  = cols(
+    Democrat_Won = col_logical(),
+    Republican_Won = col_logical(),
+    uncalled = col_logical(),
+    forecastdate = col_date(format = "%m/%d/%y"),
+    category = col_factor(ordered = TRUE,
+                          levels = c("Solid D",
+                                     "Likely D",
+                                     "Lean D",
+                                     "Tossup (Tilt D)",
+                                     "Tossup (Tilt R)",
+                                     "Lean R",
+                                     "Likely R",
+                                     "Safe R"))))
+```
+
+```{r format_members}
+members <- legislators_current %>%
+  unite(first_name, last_name,
+        col = name,
+        sep = " ") %>%
+  rename(gid     = govtrack_id,
+         chamber = type,
+         class   = senate_class,
+         birth   = birthday) %>%
+  select(name, gid, birth, state, district, class, party, gender, chamber) %>%
+  arrange(chamber)
+
+members$name     %<>% iconv(to = "ASCII//TRANSLIT")
+members$name     %<>% str_replace_all("Robert Menendez", "Bob Menendez")
+members$name     %<>% str_replace_all("Robert Casey",    "Bob Casey")
+members$name     %<>% str_replace_all("Bernard Sanders", "Bernie Sanders")
+members$chamber  %<>% recode("rep" = "house", "sen" = "senate")
+members$district %<>% str_pad(width = 2, pad = "0")
+members$class    %<>% str_pad(width = 2, pad = "S")
+members$party    %<>% recode("Democrat"    = "D",
+                             "Independent" = "D",
+                             "Republican"  = "R")
+
+members$district <- if_else(condition = is.na(members$district),
+                            true = members$class,
+                            false = members$district)
+
+# Create district code as relational key
+members %<>%
+  unite(col = race,
+        state, district,
+        sep = "-",
+        remove = TRUE) %>%
+  select(-class) %>%
+  arrange(name)
+
+# Format member stats for join
+members_stats <-
+  bind_rows(sponsorshipanalysis_h, sponsorshipanalysis_s,
+            .id = "chamber") %>%
+  select(ID, chamber, party, ideology, leadership) %>%
+  rename(gid = ID)
+members_stats$chamber %<>% recode("1" = "house", "2" = "senate")
+members_stats$party %<>% recode("Democrat"    = "D",
+                                "Independent" = "D",
+                                "Republican"  = "R")
+members_stats$gid %<>% as.character()
+# Add stats to frame by GovTrack ID
+members %<>% inner_join(members_stats, by = c("gid", "party", "chamber"))
+```
+
+```{r format_markets}
+markets <- DailyMarketData %>%
+  rename(mid      = MarketId,
+         name     = MarketName,
+         symbol   = MarketSymbol,
+         party    = ContractName,
+         open     = OpenPrice,
+         close    = ClosePrice,
+         high     = HighPrice,
+         low      = LowPrice,
+         volume   = Volume,
+         date     = Date) %>%
+  select(date, everything()) %>%
+  select(-ContractSymbol)
+
+# Get candidate names from full market question
+markets$name[str_which(markets$name, "Which party will")] <- NA
+markets$name %<>% word(start = 2, end = 3)
+
+# Recode party variables
+markets$party %<>% recode("Democratic or DFL" = "D",
+                          "Democratic"        = "D",
+                          "Republican"        = "R")
+
+# Remove year information from symbol strings
+markets$symbol %<>% str_remove(".2018")
+markets$symbol %<>% str_remove(".18")
+
+# Divide the market symbol into the name and race code
+markets %<>%
+  separate(col = symbol,
+           into = c("symbol", "race"),
+           sep = "\\.",
+           extra = "drop",
+           fill = "left") %>%
+  select(-symbol)
+
+# Recode the original contract strings for race variables
+markets$race %<>% str_replace("SENATE", "S1")
+markets$race %<>% str_replace("SEN",    "S1")
+markets$race %<>% str_replace("SE",     "S1")
+markets$race %<>% str_replace("AL",     "01")   # at large
+markets$race %<>% str_replace("OH12G",  "OH12") # not sure
+markets$race %<>% str_replace("MN99",   "MNS2") # special election
+markets$race[markets$name == "SPEC"] <- "MSS2"  # special election
+markets$race[markets$mid  == "3857"] <- "CAS1"  # market name mustyped
+markets$name[markets$name == "PARTY"] <- NA     # no name
+markets$name[markets$name == "SPEC"]  <- NA     # no name
+
+markets$race <- paste(str_sub(markets$race, 1, 2), # state abbreviation
+                      sep = "-",                   # put hyphen in middle
+                      str_sub(markets$race, 3, 4)) # market number)
+
+# Remove markets incorectly repeated
+# Some not running for re-election
+markets %<>% filter(mid != "3455", # Paul Ryan
+                    mid != "3507", # Jeff Flake
+                    mid != "3539", # Shea-Porter
+                    mid != "3521", # Darrell Issa
+                    mid != "3522", # Repeat of 4825
+                    mid != "4177", # Repeat of 4232
+                    mid != "4824") # Repeat of 4776
+
+# Divide the data based on market question syntax
+# Market questions provided name or party, never both
+markets_with_name <- markets %>%
+  filter(is.na(party)) %>%
+  select(-party)
+
+markets_with_party <- markets %>%
+  filter(is.na(name)) %>%
+  select(-name)
+
+# Join with members key to add party, then back with rest of market
+markets <- markets_with_name %>%
+  inner_join(members, by = c("name", "race")) %>%
+  select(date, mid, race, party, open, low, high, close, volume) %>%
+  bind_rows(markets_with_party)
+
+# Add in ME-02 and NY-27 which were left out of initial data
+ny_27 <- Contract_NY27 %>%
+  rename_all(tolower) %>%
+  slice(6:154) %>%
+  mutate(mid = "4729",
+         race = "NY-27",
+         party = "R") %>%
+  select(-average)
+
+me_02 <- Market_ME02 %>%
+  rename_all(tolower) %>%
+  rename(party = longname) %>%
+  filter(date != "2018-10-10") %>%
+  mutate(mid = "4945",
+         race = "ME-02")
+
+markets_extra <-
+  bind_rows(ny_27, me_02) %>%
+  select(date, mid, race, party, open, low, high, close, volume)
+
+markets_extra$party[str_which(markets_extra$party, "GOP")] <- "R"
+markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"
+
+# Bind with ME-02 and NY-27
+markets %<>%  bind_rows(markets_extra)
+```
+
+```{r format_model}
+# Format district for race variable
+model_district <- house_district_forecast %>%
+  mutate(district = str_pad(string = district,
+                            width = 2,
+                            side = "left",
+                            pad = "0"))
+
+# Format class for race variable
+model_seat <- senate_seat_forecast %>%
+  rename(district = class) %>%
+  mutate(district = str_pad(string = district,
+                            width = 2,
+                            side = "left",
+                            pad = "S"))
+
+model_combined <-
+  bind_rows(model_district, model_seat, .id = "chamber") %>%
+  # Create race variable for relational join
+  unite(col = race,
+        state, district,
+        sep = "-",
+        remove = TRUE) %>%
+  rename(name = candidate,
+         date = forecastdate,
+         prob = win_probability,
+         min_share = p10_voteshare,
+         max_share = p90_voteshare) %>%
+  filter(name != "Others") %>%
+  select(date, race, name, party, chamber, everything()) %>%
+  arrange(date, name)
+
+# Recode identifying variable for clarification
+model_combined$chamber %<>% recode("1" = "house",
+                                   "2" = "senate")
+
+# Only special elections are for senate.
+model_combined$special[is.na(model_combined$special)] <- FALSE
+
+# Convert percent vote share values to decimal
+model_combined[, 10:12] <- model_combined[, 10:12] * 0.01
+
+# Recode incumbent Independent senators for relational joins with Markets
+# Both caucus with Democrats and were endoresed by Democratic party
+model_combined$party[model_combined$name == "Bernard Sanders"]   <- "D"
+model_combined$party[model_combined$name == "Angus S. King Jr."] <- "D"
+model_combined %<>% filter(name != "Zak Ringelstein")
+
+# Seperate model data by model format
+# According to 538, the "classic" model can be used as a default
+model <- model_combined %>% 
+  filter(model == "classic") %>% 
+  select(-model)
+
+model_lite <- model_combined %>% 
+  filter(model == "lite") %>% 
+  select(-model)
+
+model_deluxe <- model_combined %>% 
+  filter(model == "deluxe") %>% 
+  select(-model)
+```
+
+```{r format_results}
+results <- forecast_results_2018 %>%
+  filter(branch  != "Governor",
+         version == "classic") %>%
+  separate(col    = race,
+           into   = c("state", "district"),
+           sep    = "-") %>%
+  rename(winner   = Democrat_Won) %>%
+  mutate(district = str_pad(district, width = 2,  pad   = "0")) %>%
+  unite(state, district,
+        col = race,
+        sep = "-") %>%
+  select(race, winner) %>%
+  filter(race != "NC-09") # Harris fraud charges
+```
+
+```{r join_messy}
+# Take the complimentary probability if only GOP data
+# Find race codes for markets with data on only one candidate
+single_party_markets <- markets %>%
+  group_by(date, race) %>%
+  summarise(n = n()) %>%
+  filter(n == 1) %>%
+  ungroup() %>%
+  pull(race) %>%
+  unique()
+
+# Invert the GOP prices for markets with only GOP candidates
+invert <- function(x) 1 - x
+
+invert_gop <- markets %>%
+  filter(race %in% single_party_markets,
+         party == "R") %>%
+  mutate(close = invert(close),
+         party = "D")
+
+# Take all but the only GOP markets
+original_dem <- markets %>%
+  filter(!race %in% invert_gop$race,
+         party == "D")
+
+# Combined both back together
+markets2 <-
+  bind_rows(original_dem, invert_gop) %>%
+  select(date, race, close) %>%
+  arrange(date, race)
+
+# Create model data with only dem party info
+model2 <- model %>%
+  group_by(date, race, party) %>%
+  summarise(prob = sum(prob)) %>%
+  ungroup() %>%
+  filter(party == "D") %>%
+  select(-party)
+
+# Join democratic predictions from both markets and models for comparison
+# Keep market and model data in seperate columns
+messy <-
+  inner_join(markets2, model2,
+             by  = c("date", "race")) %>%
+  filter(date  >= "2018-08-01",
+         date  <= "2018-11-05") %>%
+  rename(model  = prob,
+         market = close)
+```
+
+```{r join_tidy}
+# Make the data tidy with each prediction as an observation
+tidy <- messy %>%
+  gather(model, market,
+         key = method,
+         value = prob) %>%
+  arrange(date, race, method)
+```
+
+```{r join_hits}
+# Add in results to determine binary hits/misses
+hits <- tidy %>%
+  mutate(pred = prob > 0.5) %>%
+  inner_join(results, by = "race") %>%
+  mutate(hit = pred == winner) %>%
+  select(date, race, method, prob, pred, winner, hit)
+```
+
+```{r run_brier}
+hits_model  <- hits %>% filter(method == "model")
+
+brier_model <- verification::brier(
+  obs = hits_model$winner,
+  pred = hits_model$prob,
+  baseline = rep(0.5, nrow(hits_model)),
+  bins = TRUE)
+
+hits_market <- hits %>% filter(method == "market")
+
+brier_market <- verification::brier(
+  obs = hits_market$winner,
+  pred = hits_market$prob,
+  baseline = rep(0.5, nrow(hits_market)),
+  bins = TRUE)
+```
+
+# Introduction
+
+In the wake of the 2016 Presidential election, pundits and voters alike were
+stunned by the seemingly impossible outcome. Dozens of respected prognosticators
+issued predictions that were, in hindsight, comically overconfident. Comedians,
+Presidents, and journalists alike seemed all but certain in a Clinton victory.
+Even the most quantitative efforts fell short. After the 2012 Presidential
+election, it seemed like “big data” was the solution to prediction. Nate
+Silver’s fledgling site _FiveThirtyEight_ made news by using a polling
+aggregation model to accurately predict the popular vote winner in all 51
+states. In 2016, such efforts proved inaccurate. The most egregious errors came
+from the likes of the Princeton Election Consortium and Huffington Post, who
+each gave Trump less than a 2% probability of victory. The least bullish of
+these incorrect odds was _FiveThirtyEight’s_, at a 29% for Trump. This number
+was so high that it provoked criticism from the Huffington Post’s Ryan Grim:
+
+> I get why Silver wants to hedge. It’s not easy to sit here and tell you that
+Clinton has a 98 percent chance of winning. Everything inside us screams out
+that life is too full of uncertainty, that being so sure is just a fantasy. But
+that’s what the numbers say. What is the point of all the data entry, all the
+math, all the modeling, if when the moment of truth comes we throw our hands up
+and say, hey, anything can happen. If that’s how we feel, let’s scrap the entire
+political forecasting industry. [@grim16wrong]
+
+This quotation is particularly thought provoking. Both Silver and Grim built
+election forecasting models using the same general set of inputs, but used those
+numbers to tell a different story about how the election was going to unfold.
+These models have a responsibility to accurately convey information and may very
+well influence the very event they are trying to predict. If these quantitative
+forecasting models could be wrong in 2016 (to various degrees), should we
+consider looking for alternative methods? There has been some focus in recent
+years on the prediction market (also known as information or decision markets)
+as one such tool to generate similarly probabilistic forecasts. Might these
+markets have a role to play in prediction elections? Can they outperform the
+forecasting model that has become such a widely used tool in recent years, and
+If so, under what conditions? To answer these questions, I will be comparing the
+market prices from the _PredictIt_ exchange against the _FiveThirtyEight_ model
+for the 2018 midterm elections.
+
+# Literature
+
+Prediction markets are a relatively new but fairly researched tool for assessing
+the likelihood of events. There are a numerous academic investigations into the
+quality of these predictions across a number of field. These studies have become
+more popular in the 21st century, as the advent of the internet makes the
+operation of large scale market exchanges significantly easier. As far as
+political predictions go, the vast majority of these studies compare prediction
+markets to opinion polling (simply aggregated at the most) for Presidential
+races. There is room in the literature to study the ability of prediction
+markets in congressional races against the more comparable probabilistic
+forecasting models.
+
+## Theory
+
+Kenneth Oliven and Thomas Rietz explored the economic forces of prediction
+markets in their paper _Suckers Are Born but Markets Are Made: Individual
+Rationality, Arbitrage, and Market Efficiency on an Electronic Futures Market_
+[-@oliven04suckers]. The paper looked at the individual economic incentives of
+traders betting on the 2004 presidential election on the Iowa Election Market.
+The paper specifically explores the way prediction markets fall short of the
+perfect efficiency claimed by the efficient market hypothesis. The theory is
+primarily based around two theories of rational traders: (1) the law of one
+price (LOOP) and (2) arbitrage-free pricing. Since the exchanges hold a single
+market related to a given election, the price of that election should be the
+sole reflection of available information. The authors argue that the IEM and
+other prediction markets are an ideal setting to explore whether or not traders
+conform to these theories.
+
+Traders on these markets are theoretically more informed than the population at
+large, but the paper finds that prediction markets are often populated by
+mistake-prone and biased traders “prone to behavioral anomalies predicted by
+behavioral finance” (336). The inefficiency from these errors are what make
+markets useful for individual traders. In a perfectly efficient market, it’s
+impossible to “beat” the market price which should already encompass all
+information. The authors conclude that “[a] fundamental property of markets is
+that marginal, not average, traders determine prices. Who marginal traders are
+and how they set prices determine whether markets are efficient.” (337). The
+traders who take the prices set by marginal traders are more mistake prone and
+less rational. On the IEM, the study found that not all traders need to be
+rational for the market to “generate efficient prices in spite of bias” (337).
+
+## Uncertainty
+
+Prediction markets and forecasting models are two predictive methods suited for
+comparison because both aim to produce a similarly probabilistic prediction.
+That is, both methods generate a prediction that expresses the given probability
+of an event occurring that allows observers to evaluate uncertainty in a
+quantifiable way. This value of uncertainty evaluation was explored by Ray Fair
+in his paper _Interpreting the Predictive Uncertainty of Elections_
+[-@fair09uncertainty]. Fair distinguishes between the kind of event uncertainty
+expressed by prediction markets and forecasting models and the sample-size
+uncertainty expressed by the margin of error around an opinion poll average.
+Fair presents a theory of uncertainty that “there are a number of possible
+‘conditions’ of nature that can exist on election day, of which one is drawn.
+The uncertainty is which  condition will be drawn” (612).
+
+Fair has us imagine $n$ possible conditions of  nature, where $1/n$ is the
+probability of each condition occurring. If in $p$ percent of  the n conditions
+a given candidate wins the election, then $p$ is the probability that said
+candidate will win on election day. Over the course of the election, every
+action affects the possible set of conditions that might occur. The challenge of
+uncertainty is determining what the probabilities are without knowing all
+possible conditions. The author identifies prediction markets as one tool to
+estimate that uncertainty by crowd-sourcing and aggregation of many estimated
+conditions and their likelihood. Forecasting models perform the same function by
+simulating many potential conditions and calculating p manually.
+
+Uncertainty is more frequently expressed using the standard error of a opinion
+poll. Fair contrasts these two fundamentally different types of uncertainty
+estimates by imagining an opinion poll being held the day before the election
+that polled every single eligible voter. The same size of this poll is so large
+that the standard error would be zero, but real uncertainty still exists. Voters
+change their mind, circumstances dictates who can make it to the polls, even
+weather affects the mood of voters and causes real uncertainty. Even if such a
+poll existed, the forecasting model and prediction market would likely produce
+probabilistic estimates less than 100% for the winner predicted by the poll.
+This difference in types of uncertainty means market predictions are best
+compared to a similarly probabilistic prediction, like those generated by the
+newest iterations of the forecasting model.
+
+## Legality
+
+One of the most important things to note about prediction markets is the
+questionable legality of their use. While gambling in general is not illegal
+under federal law, online gambling has been generally prohibited under the
+Unlawful Internet Gambling Enforcement Act of 2006. Additionally, political
+gambling in particular is even further regulated. In a paper titled _The Promise
+of Prediction Markets_, 22 researchers, including the likes of Kenneth Arrow and
+Philip Tetlock, encourage the United States government to relax regulation on
+prediction markets [-@arrow08promise]. The paper begins by citing growing
+evidence that such markets offer “lower prediction error than conventional
+forecasting methods.” The authors further explain that markets can be used to
+improve decision making in a number of fields, and that regulation is preventing
+these tools from being used to their full potential. While the Internet makes it
+easy enough to skirt such regulation by using prediction markets hosted
+offshore, the authors contend such lengths are prohibitive to their use by the
+general public.
+
+The authors conclude by proposing a set of regulatory reforms intended to safely
+promote the use of prediction markets so that the industry may better gauge
+their full capabilities. In the regards to specifically political gambling, one
+such proposal is the “no-action letter” issued by the Commodity Futures Trading
+Commission (CFTC) for institutions which strictly violate law but will not be
+prosecuted. At the time of writing, only the Iowa Election Market (IEM) at the
+The University of Iowa had received such a letter. As of 2019, both the IEM and
+the Victoria University of Wellington, New Zealand’s PredictIt exchange, operate
+under such letters of no-action. The authors urge the CTFC to establish more
+permanent and relaxed guidance so that markets can operate more freely without
+fear of unanticipated prosecution. This paper further urges Congress to support
+the study of prediction markets by giving the CFTC the necessary funding to
+regulate a growing industry. The legal status of prediction markets must be kept
+in mind when discussing their feasibility as an alternative tool to the
+unambiguously legal forecasting model. Furthermore, the necessary regulatory
+compromises do inhibit the free market forces theoretically needed for proper
+price discovery and prediction.
+
+## Manipulation
+
+One reason such reason regulation is ultimately necessary is the potential for
+market manipulation. This possibility is discussed by Iowa University
+researchers Joyce Berg and Thomas Rietz in their paper _Market Design,
+Manipulation, and Accuracy in Political Prediction Markets_ [-@berg14iem]. The
+paper analyzes two markets set up to predict the 2012 presidential election; the
+first has traders bet on the division of the popular vote, where the second
+predicted the overall winner of the popular vote. The authors note that the IEM
+vote-share prediction was closer to the actual election number than 74% of
+individual opinion polls. The paper discusses the possibility that deliberate
+manipulate might affect this accuracy and conclude with two market techniques to
+discourage manipulation. The paper uses the Securities and Exchange Act
+definition of price manipulation: "To effect, alone or with 1 or more other
+persons, a series of transactions... raising or depressing the price of (a)
+security, for the purpose of inducing the purchase or sale of such security by
+others.”
+
+Under the typical conditions, the intentions of the voters drive the actions of
+traders; that is, traders on the market look to place bets in line with their
+prediction of voter behavior. The authors explain that “The causal logic
+underlying prediction market manipulation goes the opposite direction: market
+prices drive voter actions, affecting them in predictable ways” (293). The
+authors evaluate the possibility that malicious traders might directly
+manipulate the price to affect voter behavior and profit off the outcome they
+directly influenced. The paper cites previous research which shows such
+manipulate is unlikely in the long term [@rhode06manip]. Account limits and
+linked unit portfolios are two features intended to mitigate the potential for
+manipulation. Together, these two features require “[a] manipulator who alters
+bid/ask queues must maintain these bids and asks against the profit motives of
+hundreds of other traders with hundreds of thousands of dollars” (296). They
+found little evidence that the IEM can be manipulated in the long run. This is
+good evidence to support the use of prediction markets as a tool in election
+forecasting.
+
+# Methodology
+
+To compared prediction markets against forecasting models, I will be using the
+historical probabilistic data from each. I theorize that the prediction markets
+will outperform the forecasting market early in the election cycle, when polling
+is sparse and the model must rely on less quantitative data with a greater
+degree of uncertainty. To test this theory, I will be assessing the daily
+prediction from both methods against the eventually winner of that race and
+calculating the proportion of correct predictions for each model. To understand
+how these two predictive methods might compare to one another, we first have to
+understand the basic conception of how each model produces probabilistic
+predictions; this similarity is key to comparing these two methods, as opposed
+to the vote share division of opinion polls or the typically binary prediction
+of pundits. Understanding the process behind each predictive method is key to
+understanding their comparative value and roles in predicting elections.
+
+## Predictive Tools
+
+Forecasting models are the natural evolution of opinion polling, the most basic
+form of election forecasting. Opinion polls as a predictive method date back
+hundreds of years and rely on equal probability sampling of a population to draw
+an unbiased sample that can be used to more easily determine the voting
+intentions of the overall population. These polls fail to perfectly predict the
+election due to both sampling and statistical errors. To overcome these
+shortcomings, prognosticators have taken to aggregating many polls and averaging
+them together. The Law of Large Numbers holds that the mean of repeated samples
+(polls) of the same population result in a new mean closer to the truth.
+Forecasting models take poll aggregation and various other quantitative inputs
+and simulate the election to produce a _probabilistic_ view of potential
+outcomes (i.e., “70% chance of winning” rather than “56% of the vote”).
+
+I will be using the _FiveThirtyEight_ forecasting model, as they have a proven
+record of accuracy and make their output data free to the public. The exact code
+of the _FiveThirtyEight_ model is proprietary, but we have a general idea of
+what data is used with what weight. From the public information we have, the
+model incorporates: (1) aggregate polls weighted for past accuracy and other
+effects, (2) an algorithm to impute polling for districts without any, and (3)
+historically useful “fundamental” factors: incumbency, fundraising, scandals,
+the generic ballot, past election margin, and challenger’s experience, etc.
+These inputs are used to generate a likely division of the vote in that race.
+Next, the model makes the important additional of incorporating uncertainty.
+This addition of uncertainty separates the model from other simpler poll
+aggregators and allows us to consider their results side by side with prediction
+markets.
+
+Uncertainty is estimated by evaluating a number of historically useful
+indicators in the creation of a probability distribution. _FiveThirtyEight_ has
+found that uncertainty is greater when: the election is further away in time,
+there are more undecided or third-party voters, there are fewer overall polls,
+those polls show a more lopsided race, the polls disagree with one another, and
+those polls disagree with the fundamental variables of the state. For each race
+being predicted, these factors are considered and a probability distribution is
+generated around the estimated division of the vote. The model relies on a Monte
+Carlo simulation to turn this distribution into an expression of probability.
+The model randomly draws a share of votes from the distribution (i.e., simulates
+an election). The percentage of drawn divisions with one candidate winning is
+analogous to that candidates probability of winning on election day. This
+process allows forecasting models to incorporate a range of historically useful
+data in the generation of probabilistic predictions.
+
+Prediction markets, on the other hand, generate similar predictions by having
+self-interested and risk-averse traders buy and sell futures contracts tied to
+the predefined set of outcomes to an event. Instead of relying on equal
+probability sampling of a population to draw an unbiased sample and determine a
+prediction, prediction markets rely on the self-interest of biased yet risk
+averse traders. Despite the political bias of each individual trader, market
+theory dictates that each should be willing to place bets that aim to net
+profit, regardless of political outcome. On these markets, traders buy and sell
+futures contracts tied to a specific event or point in the future. When a trader
+“buys” a share of a given market, they are really entering into a contract with
+another trader on the other side to pay the full price of the contract to the
+holder of the correct contract. The goal is to make a profit by buying shares of
+events you think are likely for the lowest possible price. To buy these shares,
+another trader needs to believe that the inverse of your prediction is true.
+
+For example, if I believe the Democrat is a strong favorite the win the election
+in a given district, I would be willing to buy shares tied to that outcome for
+any price less than my prior understanding. The efficient market hypothesis
+holds market prices reflect all available information. As a trader, I should
+consider public opinion polls, insider information, my expert analysis, or maybe
+just a gut feeling in my assessment of the election. If from all this
+information I determine that probability of the Democratic candidate winning to
+be 75%, it’s in my self interest to buy contracts for any price below \$0.75.
+Like any market, the price of the contracts are determined by supply and demand.
+Prediction markets determine the probability of events the same way the stock
+market predicts the future earnings of a company by supply and demand of the
+securities. If I’m right and the Democrat does win, each of the shares executes
+for \$1.00 and I get my \$0.75 back, plus the $0.25 from every wrong contract
+(minus an exchange fee). If more traders believe the probability is above the
+market price, they will look to buy those shares, increasing demand and the
+equilibrium price. This is the general process by which prediction markets
+aggregate many individual beliefs into a single agreed upon probability.
+    
+Since these two predictive tools both produce similar probabilistic predictions
+through different means, they can be compared side by side. Before comparing the
+data from each method, we must acknowledge the recursive relationship between
+them. It is the nature of prediction markets to contain auto-correlated feedback
+loops. The two methods do not produce their respective predictions independent
+of one another; traders can and do use the public forecasting model in their
+analysis. There is quite possibly a negligible relationship in the opposite
+direction, with voters finding the relatively unknown prediction markets and
+changing their assumptions accordingly, which would affect the polling and
+forecasting model. This relationship does not disqualify this study. We might
+rephrase the research question, instead asking if prediction markets improve or
+dilute the forecasting model prediction with additional crowd-sourced
+information. There is still value in exploring each method’s ability to predict
+future events from an overlapping source of inputs.
+
+## Predictive Data
+
+Now that we understand the source of each set of predictions, I will briefly
+describe the nature of the data that will be used to asses their respective
+predictive capabilities. All data used in this paper is freely available for
+academic research. An archive of all public information has been created on the
+free Internet Archive. Additionally, the source code for this paper and all
+analysis is hosted on a public GitHub repository, which can be cloned to
+reproduce findings exactly. All software needed to produce the same results is
+free and open source.
+
+All data sets is collected, formatted, combined, and analyzed using the
+statistical computing language R [@base] and a handful of specialized packages:
+`readr` [@readr] and `wayback` [@wayback] for data collection; `dplyr` [@dplyr]
+and `tidyr` [@tidyr] for data manipulation; `stringr` [@stringr] and `lubridate`
+[@lubridate] for character and date strings; `ggplot2` [@ggplot2] for
+visualization; and `verification` [@verification] for forecast analysis. See the
+appendix for all the R code used in this project, which can be run sequentially
+to reproduce my findings.
+
+## Markets Data
+
+Prediction market data comes courtesy of the PredictIt exchange, which is run by
+the University of New Zealand at Wellington with logistical support from
+Aristotle Inc. PredictIt provides historical market data to partnered academic
+researchers free of charge as part of their “no action” agreement with the
+Commodity Futures Trading Commission. PredictIt hosts markets for midterm races
+of interest. Each race is comprised of contracts tied to the outcome, either
+“Democrat/Republican” or “Yes/No” depending on whether the market question is
+phrased around a generic congressional election or the reelection of an
+incumbent. The public PredictIt API was scraped before the election to extract
+all market IDs related to the midterm elections. Those IDs were passed to the
+PredictIt contact, who returned a single file containing the price history of
+all markets. The market data set contains 45,037 rows with 11 variables (Table
+1). Each row represents a single day’s contract price history (opening, closing,
+low, and high price). The data spans from January 27th, 2017 to December 3rd,
+2018. I will be operationalizing the closing contract price as that day’s
+“final” prediction as to the candidate’s probability of victory.
+
+```{r market_data}
+DailyMarketData %>% 
+  sample_n(10) %>%
+  arrange(Date) %>% 
+  select(Date, 
+         MarketSymbol, 
+         ContractSymbol, 
+         Volume,
+         ClosePrice) %>% 
+  kable(caption = "Market Data Sample (Random)",
+        col.names = c(
+          "Date", 
+          "Market", 
+          "Contract",
+          "Volume",
+          "Price"),
+        digits = 3)
+```
+
+## Model Data
+
+Forecasting model data come courtesy of the data journalists at
+_FiveThirtyEight_, who were closest to reality in 2016, have a track record of
+success, and is one of the few forecasts to continue their work into the midterm
+elections. Again, _FiveThirtyEight’s_ exact model is proprietary, but they
+provide the top-level output to the public. The data comes in two separate
+files, one for the 435 House races and another for the 35 Senate elections that
+year. Combined, the two data sets contain 328,113 rows of 13 variables (Table
+2). Each row represents a single day’s predicted probability of a given
+candidate’s victory. The data set contains daily predictions from August 1st to
+election day on November 8th of 2018.
+
+```{r model_data}
+house_district_forecast %>% 
+  slice(1:10) %>% 
+  select(forecastdate, 
+         state, 
+         district, 
+         party, 
+         incumbent, 
+         voteshare, 
+         win_probability) %>% 
+  kable(caption = "House Model Data Sample (Head)",
+        col.names = c(
+          "Date", 
+          "State", 
+          "District", 
+          "Party", 
+          "Incumbent",
+          "Mean Share",
+          "Probability"),
+        digits = 3)
+```
+
+## Combined Data
+
+Each data set is combined by creating a common `race` key variable so that
+observations from the same day for the same race can be compared. With this key
+variable, a relational join is performed to put the prediction variables side by
+side. It's important to note that only predictions contained in both data sets
+are kept; while the model predicts all 470 races every day, betting markets only
+exists for races of interest. This means the races predicted by both data sets
+are significantly more uniformly distributed (Figure 1). This new distribution
+is a sample of total races, one with a much greater proportion of toss-up
+elections. It's a fair assumption to say
+
+```{r plot_dist, fig.cap="Proportion of Correct Predictions by Week", fig.height=4}
+full_join(x = model, y = markets, by = c("date", "race", "party")) %>%
+  filter(party == "D") %>% 
+  filter(date == "2018-11-05") %>%
+  select(date, race, close, prob) %>%
+  rename(markets = close, model = prob) %>%
+  gather(markets, model, key = method, value = prob) %>%
+  ggplot(mapping = aes(x = prob, fill = method)) +
+  geom_histogram(binwidth = 0.10) +
+  facet_wrap(~method, scales = "free_y", drop = TRUE) +
+  scale_fill_manual(values = c("#07A0BB", "#ED713A")) +
+  theme(legend.position = "none") +
+  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.2),
+                     minor_breaks = 0,
+                     labels = scales::percent) +
+  labs(x = "Democratic Win Probability",
+       y = "Number of Races") +
+  theme(legend.position = "none")
+```
+
+The data is then filtered to remove redundant predictions by keeping only
+Democratic predictions (or the inverse of Republican predictions). Finally, the
+data is converted in a "long" rather than "wide" format, with each row
+representing a unique prediction and a new variable indicating the method used
+to generate it. In this "tidy" format, the two groups can be easily visualized
+and compared against one another. Figure 2 depicts the difference in predictions
+in the sample. If the two methods were exactly the same, all races would fall on
+on the $x = y$ line. For races plotted in quadrant 1, the Democratic candidate
+is predicted to win by the market and predicted to lose by the mode. The inverse
+is true for quadrant 4. In quadrants 2 and 3, both methods are in agreement in
+their predictions.
+
+```{r plot_cart, fig.cap="Probability Comparisons (Nov. 5)", fig.height=6}
+messy %>%
+  mutate(party = "D") %>%
+  filter(date == "2018-11-05") %>%
+  left_join(model, by = c("date", "race", "party")) %>%
+  inner_join(results, by = "race") %>%
+  ggplot(aes(x  = model, y  = market)) +
+  geom_hline(yintercept = 0.5) +
+  geom_vline(xintercept = 0.5) +
+  geom_label(mapping = aes(x = 0.25, y = 0.75, label = "Market Predicts Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.75, y = 0.25, label = "Model Predicts Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.25, y = 0.25, label = "Both Predict Loss"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_label(mapping = aes(x = 0.75, y = 0.75, label = "Both Predict Win"),
+             label.size = 0,
+             fill = "#ebebeb",
+             size = 6) +
+  geom_abline(slope = 1, intercept = 0, lty = 2) +
+  geom_point(aes(color = winner, shape = chamber), size = 4, alpha = 0.85) +
+  scale_y_continuous(labels = scales::dollar) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_color_manual(values = c("red", "forestgreen")) +
+  labs(x = "Model Probability",
+       y = "Market Price",
+       shape = "Chamber",
+       color = "Democrat Won") +
+  theme(legend.position = "bottom")
+```
+
+# Results
+
+When assessing predictions, the most obvious metric is whether they are simply
+right or wrong. In the combined data set, there are 17,500 predictions and each
+of them ultimately makes a binary prediction on whether a candidate will win or
+lose that election. If we want to evaluate two methods of prediction, it makes
+sense to simply check which method was able to accurately predict more
+elections. The initial null hypothesis for this study held that there would be
+no difference in the overall proportion of accurate predictions over the course
+of the election. The alternative hypothesis being that there is in fact some
+difference, proving one method to be superior in prediction Congressional races.
+I chose to test the entire length of the campaign, as opposed to the “final”
+election night prediction, to evaluate each method as a daily predictive tool.
+Election prediction serves more roles than simply getting it right on election
+night; campaign operatives, party leaders, and data journalists rely on daily
+quantitative predictions to rigorously interpret changes in the campaign.
+
+## Proportion
+
+To run a two-sample hypothesis test of equal proportion, the combined prediction
+data would have to be compared with eventual election results. Those results
+were provided by the team at _FiveThirtyEight_ and the _ABC News_ decision desk.
+By formatting the results in the same was as prediction data, a third simple
+relational join can be performed. This result is compared to the binary win/loss
+prediction and a new logical value is created to represent the prediction’s
+ultimate accuracy (Table 4). The proportion of “hit” predictions for each method
+is compared. From this test, we can confidently reject our null hypothesis and
+accept the alternative hypothesis. With a chi squared value of 16.8 and a
+p-value of 0.0000417, we are confident the proportion of correct predictions is
+not equal to zero. In our sample, 86.03% of predictions made by traders on the
+PredictIt exchanged proved correct. With a 95% confidence, we know proportion
+value is 1.16 to 3.3% greater than the 83.81% of correct predictions made by the
+_FiveThirtyEight_ model (Table 5).
+
+```{r hits_data}
+hits %>% 
+  slice(1:10) %>% 
+  kable(caption = "Tidy Comparison Data",
+        col.names = c(
+          "Date", 
+          "Race", 
+          "Method", 
+          "Probability",
+          "Prediction",
+          "Election",
+          "Accurate"),
+        digits = 3)
+```
+
+```{r prop_test}
+hit_props <- hits %>%
+  select(date, race, method, hit) %>%
+  spread(key = method,
+         value = hit) %>%
+  select(market, model) %>%
+  colSums() %>%
+  prop.test(n = nrow(hits)/2 %>% rep(2))
+
+hit_props$data.name <- "Markets vs Model"
+names(hit_props$estimate) <- c("Markets", "Model")
+
+pander::pander(hit_props)
+```
+
+We can further explore these proportions over time to explore the difference in
+accuracy over time. Such an analysis confirms my hypothesis that the predictions
+markets would outperform the polling-reliant model earlier in the election
+cycle. In the early weeks of the campaign, the prediction markets were producing
+prices that accurately reflected over 90% of races eventually winner. Compare
+this to the roughly 85% accuracy from the forecasting model. It’s worth noting
+that the number of predictions made each day is not consistent. Over the course
+of the campaign, markets for more and more races were added to the exchange,
+from 121 on August 1st to 183 on November 5th (Figure 4). Over this period, the
+mean of all market prices for Democrats decreased from \$0.60 to \$0.52 (Figure
+5). This might indicate that the additional markets added over the course of the
+election might have a Republican bias. Although it's very possible that the
+overall trend of the election was shifting towards the Republican party.
+
+```{r plot_prop_week, fig.cap="Proportion of Correct Predictions by Week", fig.height=4}
+hits %>%
+  mutate(week = week(date)) %>%
+  group_by(week, method) %>%
+  summarise(prop = mean(hit, na.rm = TRUE)) %>%
+  ggplot(aes(x = week, y = prop, color = method)) +
+  geom_line(size = 3) +
+  coord_cartesian(ylim = c(0.75, 0.95)) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_manual(values = c("#07A0BB", "#ED713A")) +
+  labs(y = "Proportion",
+       x = "Week of Year",
+       color = "") +
+  theme(legend.position = "bottom")
+```
+
+```{r plot_cum_markets, fig.cap="Total Number of Election Markets Over Year", fig.height=3}
+markets %>%
+  filter(date > "2018-01-01", date < "2018-11-05") %>%
+  group_by(date) %>%
+  summarise(count = n()) %>%
+  ggplot(mapping = aes(x = date, y = count)) +
+  geom_vline(xintercept = as_date("2018-08-01"), size = 0.5, lty = 2) +
+  geom_vline(xintercept = as_date("2018-11-05"), size = 0.5, lty = 2) +
+  geom_line(color = "#07A0BB", size = 2) +
+  labs(x = "Date",
+       y = "Total Markets")
+```
+
+```{r plot_mean_price, fig.cap="Mean Democratic Price Over Election", fig.height=3}
+hits %>% 
+  filter(method == "market") %>% 
+  group_by(date) %>%
+  summarise(mean = mean(prob)) %>% 
+  ggplot(mapping = aes(x = date, y = mean)) +
+  geom_vline(xintercept = as_date("2018-08-01"), lty = 2) +
+  geom_vline(xintercept = as_date("2018-11-05"), lty = 2) +
+  geom_line(color = "#07A0BB", size = 2) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Date",
+       y = "Mean Price")
+```
+
+This type of binary hit or miss proportion test may not be the ideal statistical
+comparison of predictive capabilities. These proportions tell us how likely any
+given daily prediction is to being right, but they do not evaluate how far those
+predictions are from the truth. This reductive analysis all but eliminates the
+probabilistic nature of these two predictive methods. A prediction giving a
+candidate a 55% chance is treated as accurate and useful as another which gives
+that same candidate a 95% chance. The probabilistic nature of both prediction
+markets and forecasting models is what makes them extremely useful tools for
+election analysis. It is only at the extreme margins where elections cross that
+50% threshold. Is there really much value in a candidate’s odds shifting from
+51% one day to 49% the next? In the test of equal proportion, these two
+predictions are treated as entirely opposite despite very little actually
+changing in the underlying scenario. In the 115 race sample for the 2018
+midterms, a couple elections crossing this 50% threshold day to day can cause
+significant changes in the proportion of “correct” predictions. There are better
+ways to test the skill of probabilistic forecasts. Looking back at figure 2, You
+can see how few of the races are predicted differently. As one would expect, the
+unique predictions are all closer to 50%. It's easy to imagine how a few of
+these elections drifting across the 50% line would affect the proportion.
+
+## Calibration
+
+One way to further test the predictions is to test them against their expected
+accuracy. Inherent in probabilistic predictions is an expected rate of incorrect
+predictions. Among all predictions around 70%, you would expect only 70% of
+those predictions to be correct. From the graph below (Figure 6), we can see how
+well each predictive method is calibrated. Well-calibrated forecasts are as
+accurate as you’d expect them to be. Note that the prediction markets are
+consistently under confident in Democratic chances when they expect the Democrat
+to win. Of races where the Markets predicted the Democrat to have a roughly 60%
+chance of winning, the Democrat ended up winning those elections 85% of the
+time. This nuance is lost in the test for equal proportion.
+
+```{r plot_calibration, fig.cap="Prediction Calibration", fig.height=4}
+hits %>%
+  mutate(bin = prob %>% round(digits = 1)) %>%
+  group_by(method, bin) %>%
+  summarise(prop = mean(winner), n = n()) %>%
+  ggplot(mapping = aes(bin, prop)) +
+  geom_abline(intercept = 0, slope = 1, lty = 2)  +
+  geom_point(mapping = aes(color = method, size = n), alpha = 0.75) +
+  scale_x_continuous(breaks = seq(0, 1, 0.1), minor_breaks = 0,
+                     labels = scales::percent) +
+  scale_y_continuous(breaks = seq(0, 1, 0.1), minor_breaks = 0,
+                     labels = scales::percent) +
+  scale_color_manual(values = c("#07A0BB", "#ED713A"), guide = FALSE) +
+  scale_size(range = c(2, 12)) +
+  theme(legend.position = "none", legend.key = element_blank()) +
+  labs(y = "Proportion of Actual Victories",
+       x = "Predicted Probabilities",
+       size = "Number of Predictions")
+```
+
+## Verification
+
+The Brier score is allows us evaluate the accuracy of nuanced probabilistic
+forecasts tied to mutually exclusive discrete possibilities. Proposed by Glen
+Brier in 1950, this function measures the mean square difference between a
+probability and the binary outcome. The function is most often associated with
+weather forecasting, where probabilistic forecasts are often assessed on their
+binary accuracy [@ferro07brier]. In a probabilistic forecast, the error is
+understood to be the gap between the probability and the outcome. A correct
+prediction at 60% has inherently greater error than the same prediction at 90%.
+The inverse is true for an incorrect prediction. The Brier score evaluates these
+errors by summing the squared the difference between forecast and outcome.
+
+$$
+BS={\frac {1}{N}}\sum \limits _{t=1}^{N}(f_{t}-o_{t})^{2}
+$$
+
+In the context of these data sets the daily probability (0 to 1) is subtracted
+from the outcome (1 for win or 0 for loss). Better predictions will thus have a
+lower brier score. A near perfect prediction will have a brier score of 
+$(0.99-1)^2 = 0.0001$, the worst predictions would have a brier score of 
+$(0.01-1)^2 = 0.9801$, and a coin flip prediction would have a score of 
+$(0.50 - 1)^2 = 0.25$ regardless of outcome. This test allows us to better
+evaluate the skill inherent in prediction markets and the forecasting model.
+
+```{r plot_brier_week, fig.cap="Mean Brier Scores by Week", fig.height=4}
+hits %>%
+  mutate(brier_score = (winner - prob)^2) %>% 
+  mutate(week = week(date)) %>%
+  group_by(week, method) %>%
+  summarise(mean = mean(brier_score, na.rm = TRUE)) %>%
+  ggplot(aes(x = week, y = mean, color = method)) +
+  geom_vline(xintercept = 43, lty = 2) +
+  geom_line(size = 3) +
+  scale_color_manual(values = c("#07A0BB", "#ED713A")) +
+  labs(y = "Mean Brier",
+       x = "Week of Year",
+       color = "") +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+hits %>%
+  mutate(brier_score = (winner - prob)^2) %$%
+  t.test(formula = brier_score ~ method) %>% 
+  pander::pander()
+```
+
+Since the Brier score evaluates a historical prediction by summing the
+individual prediction scores, a paired t-test can be used to test the null
+hypothesis that prediction markets and forecasting models will have the same
+mean Brier score (Table 5). When we run such a test, the statistical
+significance of the test for equal proportion is put into question. The mean
+brier score for all market predictions is 0.1084, compared to 0.1091 for the
+model. With a p-value of 0.7346, there is no way to claim a statistically
+significant difference in these two scores across the history of the election.
+Only during the week of October 22nd was there a statistically significant
+difference in the mean Brier scores for each method, with the model slightly
+outperforming the market $(model = 0.105, market = 0.959, p = 0.0008)$. By using
+Brier scores instead of reductive proportions, we can now see that any
+difference in these two predictive methods is actually minimal and unhelpfully
+accentuated by using the 50% delineator to test right from wrong.
+
+# Conclusion
+
+Both predictive methods are fairly well calibrated and can predict elections
+with a useful degree of accuracy. Considering the sample of races compared and
+analyzed contains the most contentious races, the upwards of 80% accuracy is
+impressive. While the predictions markets were able to predict significantly
+more of the sample races correctly, especially earlier in the election, the
+actual skill difference between these two methods is negligible. This difference
+stems from the confidence in each method. From the table below, you can see the
+mean probabilities for correct and incorrect predictions. For races where the
+Democrat was predicted to win and did win, the forecasting model was 5% more
+confident. For races where the Democrat was correctly predicted to lose, the
+model is over 6% more confident (Table 6). This disparity may stem from the
+demographic bias of the traders; _PredictIt_ has acknowledged that the vast
+majority of traders are young, white, conservative men. While they appear to be
+more capable at predicting the overall winner of the election, the traders seem
+to demonstrate a bias against Democratic candidates. The traders demonstrate a
+similar underestimation of incumbent candidates, giving incumbent Democrats over
+10% lower odds compared to the forecasting model (Table 7). These potential
+biases should be kept in mind when using prediction markets as a tool. The
+trading volume should also be kept in mind and more research needs to be done
+into the effect volume has on predictive accuracy.
+
+```{r mean_prob}
+hits %>%
+  group_by(pred, winner, method) %>%
+  summarise(prob = mean(prob)) %>%
+  arrange(pred, winner) %>% 
+  spread(method, prob) %>% 
+  kable(col.names = c("Prediction", "Election", "Market", "Model"),
+        digits = 3,
+        caption = "Mean Probabilities by Prediction and Outcome")
+```
+
+```{r}
+model %>% 
+  filter(party == "D") %>% 
+  select(race, incumbent) %>% 
+  distinct() %>% 
+  right_join(hits, by = "race") %>% 
+  group_by(incumbent, method) %>% 
+  summarise(mean = mean(prob)) %>% 
+  spread(method, mean) %>% 
+  kable(caption = "Mean Probabilities by Incumbency",
+        col.names = c("Incumbent", "Market", "Model"),
+        digits = 3)
+```
+
+# Bibliography

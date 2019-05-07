@@ -1,0 +1,10 @@
+base
+pander
+readr
+dplyr
+tidyr
+stringr
+wayback
+ggplot2
+magrittr
+lubridate

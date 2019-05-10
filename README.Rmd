@@ -7,20 +7,28 @@ output:
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(knitr)
+library(lubridate)
+library(magrittr)
+library(wayback)
 library(pander)
+library(knitr)
 opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   error = FALSE,
-  echo = FALSE
+  echo = FALSE,
+  eval = FALSE
 )
 ```
 
-## Overview
+## Introduction
+
+Election prediction helps party officials, campaign operatives, and journalists
+interpret campaigns in a quantitative manner. Uncertainty is key to a useful
+election prediction.
 
 The forecast model has become a staple of political punditry in recent years.
-Popularized by the data journalism site [FiveThirtyEight][01], the forecasting
+Popularized by the data journalist at [FiveThirtyEight][01], the forecasting
 model is a statistical tool used to incorporate a number of quantitative inputs
 and output a _probabilistic_ view of all possible outcomes.
 
@@ -29,39 +37,48 @@ probabilistic views of election outcomes. Markets utilize the economic forces of
 price discovery and risk aversion to overcome the ideological bias of
 self-interested traders on a binary options exchange.
 
-Can markets help us predict elections better than the models? If so, under what
+Can markets predict elections better than the models? If so, under what
 conditions?
 
 I propose a null hypothesis of no difference between the proportion of accurate
 predictions made by forecasting models and prediction markets in the 2018
 congressional midterm elections.
 
-## Reproduce
+## Reproducibility
 
 All public input data has been saved on the [internet archive][28] and can be
 accessed through their wayback machine.
 
-Data reading, wrangling, combining, and visualization is done primarily using R
-packages from the [`tidyverse`][29] collection. Installing those packages should
-contain all functions needed to run the project.
+Data manipulation is done primarily using R packages from the [`tidyverse`][29]
+collection. Installing those packages should contain all functions needed to run
+the project.
 
-```{r install, echo=TRUE, eval=FALSE}
-install.packages("tidyverse")
+```{r install, echo=TRUE, eval = FALSE}
+# devtools::install_cran("here")
+# devtools::install_cran("tidyverse")
+# devtools::install_cran("verification")
+# devtools::install_github("hrbrmstr/wayback")
+```
+
+```{r library, echo=TRUE, eval = FALSE}
+library(verification)
 library(tidyverse)
 library(lubridate)
 library(magrittr)
+library(wayback)
 ```
 
+Package versions are maintained through [`packrat`][32].
+
 The R scripts in the [`/code`](/code) folder can be run in sequential order to
-reproduce the project findings.
+reproduce the results. There are four scripts:
 
-1. Scrape data using `readr` in [`01_read_inputs.R`](code/01_read_inputs.R)
-1. Format with `dplyr` in [`02_format_inputs.R`](code/02_format_inputs.R)
-1. Analyze with `stats` in [`03_compare_methods.R`](code/03_compare_methods.R)
-1. Visualize with `ggplot2` in [`04_explore_visually.R`](code/04_explore_viz.R)
+1. Read archived data with `wayback` and `readr`
+1. Wrangle and format with `dplyr` and `tidyr`
+1. Evaluate predictions with `stats` and `verification`
+1. Communicate results with `ggplot2` and `rmarkdown`
 
-
-```{r source, echo=TRUE}
+```{r source, echo=TRUE, eval = FALSE}
 source("code/01_read_inputs.R")
 source("code/02_format_inputs.R")
 source("code/03_compare_methods.R")
@@ -70,203 +87,108 @@ source("code/04_explore_visually.R")
 
 ## Forecasting Models
 
-As FiveThirtyEight's founder explains in their [methedological article][08]:
-
-> (Forecasting models) take lots of polls, perform various types of adjustments
-to them, and then blend them with other kinds of empirically useful indicators
-(what we sometimes call “the fundamentals”) to forecast each race. Then they
-account for the uncertainty in the forecast and simulate the election thousands
-of times.
-
-I will be using the FiveThirtyEight model data to represent the best
+I will be using the FiveThirtyEight "classic" model to represent the best
 capabilities of statistical election forecasting. FiveThirtyEight has a track
-record of accuracy over the last decade. Furthermore, they make the top-line
-output of their model free to the public.
+record of accuracy over the last decade.
 
-The goal of these mathematical forecasting models is, [according to Silver][21],
-"not to divine some magic formula that miraculously predicts every election.
-Instead, it’s to make sense of publicly available information in a rigorous and
-disciplined way."
+[According to Nate Silver][21], the goal of these models is "not to divine some
+magic formula that miraculously predicts every election. Instead, it’s to make
+sense of publicly available information in a rigorous and disciplined way."
 
-### Model Inputs
+To achieve this, [Silver explains][08] that most models "take lots of polls,
+perform various types of adjustments to them, and then blend them with other
+kinds of empirically useful indicators to forecast each race". Most importantly,
+"they account for the uncertainty in the forecast and simulate the election
+thousands of times" to generate a probabilistic forecast.
 
-FiveThirtyEight's 2018 model incorporates four types of data:
+The model incorporates three types of inputs:
 
-1. **Polling:** District level polling. [FiveThirtyEight rates pollsters][09] to
-adjust their findings.
-1. **CANTOR:** A proprietary algorithm to identify similar congressional
-districts to infer results for polling-sparce districts.
-1. **Fundamentals:** Non-polling factors that historically help in predicting
-congressional races:
+1. **Polling:** District level polling, adjusted by [pollster rating][09]
+1. **CANTOR:** An algorithm to impute polling from districts without any
+1. **Fundamentals:** Historically useful non-polling factors:
+    * Scandals
     * Incumbency
-    * Partisanship
-    * Previous margin
-    * Generic ballot
     * Fundraising
+    * Partisanship
+    * Generic ballot
+    * Previous margin
     * Incumbent voting
-    * Challenger experience
-    * [Scandals][20]
-1. **Expert forecasts:** Ratings published by the historically accurate experts 
-at the [Cook Political Report][22], [Inside Elections][23], and 
-[Sabato’s Crystal Ball][24].
+    * Challenger office
 
-FiveThirtyEight uses these inputs to generate three models. Their "classic"
-model incorporates polling, CANTOR, and fundamentals and is considered the
-default model.
+From this, model calculates the most likely split of the vote in a race. The
+probability distribution around this mean is calculated using proven variables:
 
-In [describing][26] the process of their 2014 Senate Model, Silver described the
-general process by which the above inputs are incorporated in producing a
-probabilistic output:
+1. Fewer polls
+1. Lopsided race
+1. Election further away
+1. More undecideds or third-party voters
+1. Polls disagree with other polls or fundamentals
 
-> First, (forecasting models) calculate the most likely outcome in a particular
-state (“The Republican wins by 1 point”) and then they determine the degree of
-uncertainty around that estimate. Most models do this by means of a normal
-distribution or something similar to it.
+The model is run with a Monte Carlo simulation. Simulated elections are drawn
+from the race's probability distribution. The percentage of simulated elections
+won represents the probability of victory.
 
-In an analysis of past elections, it has been proven that the degree of
-uncertainty is _greater_ when:
+FiveThirtyEight published two files with top-level daily predictions:
 
-1. There are fewer polls
-1. The race is more lopsided
-1. The election is further away
-1. The polls disagree more with one another
-1. There are more undecideds or third-party voters
-1. The polling average disagrees more with the fundamentals
-
-With these quantitative factors in mind, the model calculates the probability
-distribution in each candidate's share of the vote.
-
-The model then uses these calculations to run a Monte Carlo simulation. In each
-iteration of the simulation, a share of the vote for each candidate in a race is
-drawn from the above probability distributions. A winner is determined and the
-simulation runs again. The percentage of simulated elections won is analogous to
-the probability of victory on election night.
-
-### Model Output
-
-```{r model_stats}
-model_combined <- senate_seat_forecast %>% 
-  rename("district" = "class") %>% 
-  bind_rows(house_district_forecast)
-
-avg_daily <- model_combined %>% 
-  group_by(forecastdate) %>% 
-  summarise(n = n()) %>% 
-  select(n) %>% 
-  as_vector() %>% 
-  mean() %>% 
-  round()
-```
-
-FiveThirtyEight makes a portion of their model's output public as four files:
-
-1. [`senate_national_forecast.csv`][11]
-1. [`house_national_forecast.csv`][13]
 1. [`senate_seat_forecast.csv`][12]
 1. [`house_district_forecast.csv`][14]
 
-The two national forecast files contain FiveThirtyEight's daily calculations for
-each party's probability of winning a majority in their respective chambers.
-
-The Senate seat and House district level forecasts will be used in this project.
-Each observation represents one candidate's probability of victory on one day.
-
-There are `r nrow(model_seat)` observations in the Senate seat level file and 
-`r nrow(model_district)` for the House. Together, there are an average of 
-`r avg_daily` unique daily predictions spanning from 
-`r min(model_combined$forecastdate)` to `r max(model_combined$forecastdate)`.
-
-For each observation, there are `r length(model_combined)` variables recorded:
+These files contain over 100,000 rows, each a daily predictions from the
+"classic" model with 11 variables:
 
 1. Date
 1. State
-1. District or Senate class
-1. Election type (regular or special)
-1. Candidate
+1. District/Class
+1. Election type
+1. Candidate name
 1. Political party
 1. Model version
 1. **Probability of victory**
 1. Expected share of the vote
-1. Minimum share of the vote
-1. Maximum share of the vote
+1. Minimum share
+1. Maximum share
 
-Below is a random sample of observations from the combined House district and
-Senate seat congressional model data sets.
+```{r model_stats, echo=TRUE, eval=FALSE}
+"https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv" %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>% 
+  read_csv(col_types = "Dcdlcclcdddd")
+```
 
-```{r model_data, echo=FALSE, message=FALSE}
-model_combined %>%
-  select(-special,
-         -candidate,
-         -model,
-         -p10_voteshare, 
-         -p90_voteshare) %>% 
-  sample_n(5) %>%
-  arrange(forecastdate) %>% 
+```{r model_data, echo=FALSE, eval=TRUE}
+"https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv" %>%
+  read_memento(timestamp = "2018-11-06", as = "raw") %>% 
+  read_csv(col_types = "Dcdlcclcdddd") %>% 
+  filter(forecastdate == "2018-11-05", model == "classic") %>% 
+  select(forecastdate, state, party, incumbent, win_probability, voteshare) %>%
+  arrange(state) %>%
+  slice(1:8) %>%
   kable(format = "markdown",
         digits = 3,
         col.names = c("Date", 
                       "State", 
-                      "District",
                       "Party",
                       "Incumbent",
                       "Probability", 
                       "Vote Share"),
-        caption = "299,760 observations of 7 variables",
-        align = c("lllllrr"))
+        caption = "Senate Seat Model")
 ```
 
 ## Prediction Markets
 
-As summarized [on Wikipedia][18]:
+Prediction markets generate probabilistic forecasts by crowd-sourcing the
+collection of data from self-interested and risk averse traders. 
+[The efficient market hypothesis][30] holds that asset prices reflect _all_
+available information (including forecasting models). Markets have traders put
+their money where their mouth is when predicting elections.
 
-> Prediction markets are exchange-traded markets created for the purpose of
-trading the outcome of events. The market prices can indicate what the crowd
-thinks the probability of the event is. A prediction market contract trades
-between 0 and 100%… The main purposes of prediction markets are eliciting
-aggregating beliefs over an unknown future outcome. Traders with different
-beliefs trade on contracts whose payoffs are related to the unknown future
-outcome and the market prices of the contracts are considered as the aggregated
-belief.
+PredictIt is an exchange run by Victoria University of Wellington, New Zealand.
+The site offers a continuous double-auction exchange, where traders buy and sell
+shares of futures contracts tied to election outcomes. As a trader's perception
+of probabilities changes, they can sell owned shares, causing the market
+equilibrium price to update accordingly.
 
-I will be using the market history of the PredictIt exchange run by Victoria
-University of Wellington, New Zealand. PredictIt is one of the few prediction
-markets permitted to operate domestically. PredictIt partners with academic
-researchers to provide market history free of charge.
-
-### Market Inputs
-
-The fundamental input to a prediction market is a bet between two traders. These
-bets are made in the form of binary futures contracts that expire for a fixed
-price based on the outcome of some future event. PredictIt runs a continuous
-double-auction exchange where traders buy and sell shares of futures contracts.
-As a trader's perception of probabilities changes, they can sell owned shares,
-causing the market equilibrium price to update accordingly.
-
-Traders on PredictIt place bets using real money. The greater the volume of
-money traded on a market, the better the forces of price discovery can determine
-equilibrium.
-
-### Market Output
-
-The history of this market price is provided to researchers. 
-As [PredictIt outlines][16] in their data use agreement:
-
-> In order to take full advantage of the research opportunities presented by
-prediction markets like PredictIt, we make our data available to members of the
-academic community at no cost. PredictIt’s market data offers researchers a
-wealth of information that can be used to further our understanding of a wide
-array of subjects in fields of study as diverse as microeconomics, political
-behavior, computer science and game theory.
-
-[The PredictIt API][17] was scraped before the election to find all market ID's
-related to 2018 Congressional elections. PredictIt then provided the price
-history in the [`data/DailyMarketData.csv`](data/DailyMarketData.csv) file.
-
-Each observation represents one day's opening, closing, low, and high price for
-a single contract from a single market. There are `r nrow(DailyMarketData)` 
-observations covering `r n_distinct(DailyMarketData$ContractSymbol)` contracts
-across `r n_distinct(DailyMarketData$MarketSymbol)` markets. For each
-observation there are `r length(DailyMarketData)` variables:
+PredictIt provided the price history in the
+[`data/DailyMarketData.csv`](data/DailyMarketData.csv) file. 
 
 1. Market ID
 1. Market name
@@ -280,126 +202,111 @@ observation there are `r length(DailyMarketData)` variables:
 1. **Closing contract price**
 1. Volume of shares traded
 
-Below is a random sample of observations from the PredictIt trading markets.
+```{r read_market, echo=TRUE, eval=FALSE}
+read_delim(file = "data/DailyMarketData.csv",
+           col_types = "cccccDddddd",
+           delim = "|", 
+           na = "n/a")
+```
 
-```{r market_data, echo=FALSE, message=FALSE}
-DailyMarketData %>% 
-  select(-MarketName, 
-         -ContractName,
-         -ContractSymbol) %>% 
-  sample_n(5) %>%
-  arrange(Date) %>% 
+```{r print_market, echo=FALSE, eval=TRUE}
+here::here("data", "DailyMarketData.csv") %>% 
+  read_delim(delim = "|", na = "n/a", col_types = "cccccDddddd") %>% 
+  filter(Date == "2018-11-05") %>% 
+  select(MarketSymbol, ContractSymbol, Date, ClosePrice, Volume) %>%
+  arrange(MarketSymbol) %>%
+  slice(1:8) %>%
   kable(format = "markdown",
         digits = 3,
-        col.names = c("ID", 
-                      "Market",
-                      "Date",
-                      "Open",
-                      "Low",
-                      "High",
-                      "Close",
-                      "Volume"),
-        caption = "44,711 observations of 6 variables")
+        col.names = c("Market", "Contract", "Date", "Price", "Volume"),
+        caption = "Prediction Market Data")
 ```
 
 ## Wrangling
 
-The above data sets were both formatted to contain two variables: `date` and
-`race`. Together, these variables create a relational key that can be used to
-join the two data sets for comparison.
+The above data sets were both formatted to contain two key variables: `date` and
+`race`. Together, these can be used to join the two data sets for comparison.
 
-For model data, the new `race` variable is created by combining the old `state`
-and `district` variables. For market data, the new `race` code is extracted from
-the old `MarketSymbol` variable.
+Observations can then be gathered into a single [tidy][19] data frame, with each
+observation representing one prediction (on one day, for one party, from one
+source). Redundant complimentary predictions are then removed.
 
-Observations can then be gathered to make the single combined data frame
-[tidy][19], with each observation representing _one_ prediction (on one date,
-for one party, from one predictive method).
+These predictions are compared against the election results to evaluate the
+two methods.
 
-Redundant complimentary predictions are removed by selecting only democratic
-party probabilities. For markets comprised of yes/no contracts on a single
-Republican incumbent's re-election probability, the price can be inverted to
-reflect the Democrat's probability.
-
-Below is a sample of the tidy data frame with historical predictions. There are
-`r nrow(tidy)` observations of `r length(tidy)` variables:
-
-1. Prediction date
-1. Election code
-1. Predictive method
-1. **Win probability**
-
-```{r tidy_joined, echo=TRUE, eval=FALSE}
-inner_join(x    = markets2, 
-           y    = model2, 
-           by   = c("date", "race")) %>%
-  filter(date   > "2018-07-31",
-         date   < "2018-11-06") %>%
-  rename(model  = prob,
-         market = close) %>% 
-  gather(key    = method,
-         value  = prob,
-         model, market) %>%
-  arrange(date, race, method)
+```{r tidy_joined, echo=TRUE, message=FALSE, eval=FALSE}
+inner_join(markets2, model2) %>%
+  filter(date %>% between(17744, 17840)) %>%
+  rename(model = prob, market = close) %>% 
+  gather(model, market, key = method, value = prob) %>%
+  inner_join(results) %>%
+  mutate(hit = (prob > 0.50) == winner) %>% 
+  mutate(score = (prob - winner)^2) 
 ```
 
-```{r tidy_data, echo=FALSE, message=FALSE}
-tidy %>%
-  slice(1:10) %>% 
+```{r tidy_data, echo=FALSE, message=FALSE, eval=TRUE}
+joined <- read_csv("data/hits.csv")
+joined %>% 
+  arrange(date, race, method) %>% 
+  slice(1:10) %>%
   kable(format = "markdown",
         digits = 4,
-        col.names = c("Date", 
+        col.names = c("Date",
                       "Race",
                       "Method",
-                      "Probability"),
-        caption = "29,400 observations of 7 variables")
+                      "Probability",
+                      "Accurate",
+                      "Score"),
+        caption = "Comparison Evaluation")
 ```
 
 ## Exploration
 
-![probabiliy](plots/plot_races_hist.png)
+![probabiliy distrobutions](plots/plot_races_hist.png)
 
 ![races by cartesian points](plots/plot_cart_points.png)
 
-![accuracy by day](plots/plot_prop_day.png)
+![calibration plot](plots/plot_calibration_point.png)
 
-![accuracy by month](plots/plot_prop_month.png)
+## Results
 
-## Findings
+There is a statistically significant difference between the proportion of
+accurate predictions made by the markets vs. the model.
 
-Ultimately, a probabilistic view of an election makes a prediction about the
-winner. Whether it's a 99% probability or 51%, a winner is predicted. This is
-a unfortunately reductive view of forecasting, but will be useful to test their
-predictive capabilities.
+```{r print_brier, echo=FALSE, eval=TRUE}
+sums <- joined %>% 
+  select(date, race, method, hit) %>%
+  spread(key = method,
+         value = hit) %>%
+  select(market, model) %>%
+  colSums()
 
-An analysis asks if the prediction matches the eventual winner.
-
-```{r}
-hits <- tidy %>% 
-  mutate(pred = (prob > 0.5)) %>%
-  inner_join(results, by = "race") %>%
-  mutate(hit = (pred == winner)) %>% 
-  select(date, race, method, pred, winner, hit)
-
-hits %>%
-  slice(1:10) %>% 
-  kable(format = "markdown",
-        col.names = c("Date", 
-                      "Race",
-                      "Method",
-                      "Predicted",
-                      "Winner",
-                      "Correct"),
-        caption = "17,500 observations of 6 variables")
+test <- prop.test(x = sums, n = rep(8750, 2)) 
+test$data.name <- "proportion by method"
+names(test$estimate) <- c("market proportion", "model proportion")
+pander::pander(test)
 ```
 
-A Welch Two Sample t-test is then performed. The null hypothesis holds that the
-difference in proportion of the hits and misses will be zero. The alternative
-hypothesis holds that the market will produce a greater proportion of hits.
+![accuracy by week](plots/plot_prop_week.png)
 
-```{r echo=TRUE}
-hits %$% t.test(hit ~ method, alternative = "greater") %>% pander()
+This is not the most useful test for predictive usefulness. The model is
+generally more confident in both correct and incorrect predictions. Reducing
+probabalistic forecasts to binary correct/incorrect based on the 50% line
+removes all nuance.
+
+![confidence by week](plots/plot_confidence.png)
+
+[The Brier score][31] allows for probablistic forecasts to be meaningfully
+tested with for mean squared error. Using this test, there is no statistically
+significant difference in the respective skill scores of each predictive method.
+
+```{r print_prop, echo=FALSE, eval=TRUE}
+joined %$%
+  t.test(formula = score ~ method) %>% 
+  pander::pander()
 ```
+
+![score by week](plots/plot_brier_week.png)
 
 [01]: https://fivethirtyeight.com/
 [02]: https://projects.fivethirtyeight.com/2016-election-forecast/
@@ -430,3 +337,6 @@ hits %$% t.test(hit ~ method, alternative = "greater") %>% pander()
 [27]: https://www.predictit.org/
 [28]: https://archive.org/
 [29]: https://github.com/tidyverse/
+[30]: https://en.wikipedia.org/wiki/Efficient-market_hypothesis
+[31]: https://en.wikipedia.org/wiki/Brier_score
+[32]: https://rstudio.github.io/packrat/

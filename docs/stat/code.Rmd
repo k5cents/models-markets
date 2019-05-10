@@ -145,14 +145,14 @@ DailyMarketData %>%
 
 Market data lacks all the data needed to join it with model data, namely party
 association for members of the Senate. This data can be found in the 
-[the \\@unitedstates project's][05] legislators data set [@legislators_current].
+[the \\unitedstates project's][05] legislators data set [@legislators_current].
 
 [05]: https://theunitedstates.io/
 
 ```{r read_members}
 ## Current members of the 115th
 ## Archived: 2018-10-22 at 18:11
-  legislators_current <-
+legislators_current <-
   "https://theunitedstates.io/congress-legislators/legislators-current.csv" %>%
   read_memento(timestamp = "2018-10-22", as = "raw") %>%
   read_csv(col_types = cols(govtrack_id = col_character()))

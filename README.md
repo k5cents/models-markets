@@ -3,13 +3,14 @@
 
   - [Introduction](#introduction)
   - [Reproducibility](#reproducibility)
-  - [Forecasting Models](#forecasting-models)
-  - [Prediction Markets](#prediction-markets)
+  - [Data](#data)
+      - [Forecasting Models](#forecasting-models)
+      - [Prediction Markets](#prediction-markets)
   - [Wrangling](#wrangling)
   - [Exploration](#exploration)
   - [Results](#results)
 
-## Introduction
+# Introduction
 
 Election prediction helps party officials, campaign operatives, and
 journalists interpret campaigns in a quantitative manner. Uncertainty is
@@ -33,14 +34,13 @@ I propose a null hypothesis of no in the proportion of correct
 predictions made by forecasting models and prediction markets in the
 2018 congressional midterm elections.
 
-## Reproducibility
+# Reproducibility
 
-All public input data has been saved on the [internet
-archive](https://archive.org/) and can be accessed through their wayback
-machine.
+All public input data has been saved on the \[internet archive\]\[02\]
+and can be accessed through their wayback machine.
 
 Data manipulation is done using the R language and packages from the
-[`tidyverse`](https://github.com/tidyverse/) ecosystem.
+\[`tidyverse`\]\[03\] ecosystem.
 
 ``` r
 # library(devtools)
@@ -58,8 +58,7 @@ library(magrittr)
 library(wayback)
 ```
 
-Package versions are maintained through
-[`packrat`](https://rstudio.github.io/packrat/).
+Package versions are maintained through \[`packrat`\]\[04\].
 
 The R scripts in the [`/code`](/code) folder can be run in sequential
 order to reproduce the results. There are four scripts to perform four
@@ -79,29 +78,30 @@ source("code/03_compare_methods.R")
 source("code/04_explore_visually.R")
 ```
 
+# Data
+
 ## Forecasting Models
 
 I will be using the FiveThirtyEight “classic” model to represent the
 best capabilities of statistical election forecasting. FiveThirtyEight
 has a track record of accuracy over the last decade.
 
-[According to Nate Silver](http://53eig.ht/1u2pSbD), “\[the model’s\]
-goal is not to divine some magic formula that miraculously predicts
-every election. Instead, it’s to make sense of publicly available
-information in a rigorous and disciplined way.”
+\[According to Nate Silver\]\[05\], “\[the model’s\] goal is not to
+divine some magic formula that miraculously predicts every election.
+Instead, it’s to make sense of publicly available information in a
+rigorous and disciplined way.”
 
-To achieve this, [Silver
-explains](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/)
-that most models (**1**) “take lots of polls, perform various types of
-adjustments to them, and then blend them with other kinds of empirically
-useful indicators to forecast each race”. Importantly, they (**2**)
-“account for the uncertainty in the forecast and simulate the election
-thousands of times” to generate a probabilistic forecast.
+To achieve this, \[Silver explains\]\[06\] that most models (**1**)
+“take lots of polls, perform various types of adjustments to them, and
+then blend them with other kinds of empirically useful indicators to
+forecast each race”. Importantly, they (**2**) “account for the
+uncertainty in the forecast and simulate the election thousands of
+times” to generate a probabilistic forecast.
 
 The model incorporates three types of inputs:
 
-1.  **Polling:** District level polling, adjusted by [pollster
-    rating](https://projects.fivethirtyeight.com/pollster-ratings/)
+1.  **Polling:** District level polling, adjusted by \[pollster
+    rating\]\[07\]
 2.  **CANTOR:** polling imputation for districts without any
 3.  **Fundamentals:** Historically useful non-polling factors:
       - Scandals
@@ -118,14 +118,15 @@ the vote in a race. (**2**) The probability distribution around this
 mean is calculated using proven variables of uncertainty.
 
 The model runs [Monte Carlo
-simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method), drawing
-elections from the race’s probability distribution. The percentage of
-simulated elections won represents the probability of victory.
+simulation](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/),
+drawing elections from the race’s probability distribution. The
+percentage of simulated elections won represents the probability of
+victory.
 
 FiveThirtyEight publishes two files with top-level daily predictions:
 
-1.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
-2.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
+1.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/pollster-ratings/)
+2.  [`house_district_forecast.csv`](https://en.wikipedia.org/wiki/Monte_Carlo_method)
 
 Together, there are **110,000** daily prediction from the “classic”
 model with **11** variables:
@@ -153,28 +154,27 @@ read_memento(
 ```
 
 | Date       | State | District | Party | Incumbent | Probability | Vote Share |
-| :--------- | :---- | :------- | :---- | :-------- | ----------: | ---------: |
-| 2018-11-05 | AK    | 1        | R     | TRUE      |       0.648 |      51.42 |
-| 2018-11-05 | AK    | 1        | D     | FALSE     |       0.352 |      48.58 |
-| 2018-11-05 | AL    | 1        | R     | TRUE      |       1.000 |      65.91 |
-| 2018-11-05 | AL    | 1        | D     | FALSE     |       0.000 |      34.09 |
-| 2018-11-05 | AL    | 2        | R     | TRUE      |       0.978 |      57.93 |
+| :--------- | :---- | -------: | :---- | :-------- | ----------: | ---------: |
+| 2018-11-05 | AK    |        1 | R     | TRUE      |       0.648 |      51.42 |
+| 2018-11-05 | AK    |        1 | D     | FALSE     |       0.352 |      48.58 |
+| 2018-11-05 | AL    |        1 | R     | TRUE      |       1.000 |      65.91 |
+| 2018-11-05 | AL    |        1 | D     | FALSE     |       0.000 |      34.09 |
+| 2018-11-05 | AL    |        2 | R     | TRUE      |       0.978 |      57.93 |
 
 ## Prediction Markets
 
 Prediction markets generate probabilistic forecasts by crowd-sourcing
 the collection of data from self-interested and risk averse traders.
-[The efficient market
-hypothesis](https://en.wikipedia.org/wiki/Efficient-market_hypothesis)
-holds that asset prices reflect *all* available information (including
-forecasting models).
+\[The efficient market hypothesis\]\[11\] holds that asset prices
+reflect *all* available information (including forecasting models).
 
-[PredictIt](https://www.predictit.org/) is an exchange run by [Victoria
-University](https://www.victoria.ac.nz/) of Wellington, New Zealand. The
-site offers a continuous double-auction exchange, where traders buy and
-sell shares of futures contracts tied to election outcomes. As a
-trader’s perception of probabilities changes, they can sell owned
-shares. The market equilibrium price to updates to reflect probability.
+[PredictIt](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
+is an exchange run by \[Victoria University\]\[13\] of Wellington, New
+Zealand. The site offers a continuous double-auction exchange, where
+traders buy and sell shares of futures contracts tied to election
+outcomes. As a trader’s perception of probabilities changes, they can
+sell owned shares. The market equilibrium price to updates to reflect
+probability.
 
 PredictIt provided the price history in
 [`data/DailyMarketData.csv`](data/DailyMarketData.csv). There are nearly
@@ -211,7 +211,7 @@ read_delim(
 | 4843 | AZ02.2018 | GOP.AZ02.2018 | 2018-11-05 | 0.10 |  0.05 |    787 |
 | 3812 | AZSEN18   | DEM.AZSEN18   | 2018-11-05 | 0.47 |  0.46 |  34137 |
 
-## Wrangling
+# Wrangling
 
 The above data sets were both formatted to contain key variables:
 `date`, `race` and `party`. These are used to join the two data sets for
@@ -223,19 +223,19 @@ observation representing one prediction (on one day, for one party, from
 one source). Redundant complimentary predictions are then removed.
 
 These predictions are compared against the election results to evaluate
-the two methods. In the There are **17,500** predictions across **90**
-days, for **111** races. from **2** sources.
+the two methods. There are **17,500** predictions across **90** days,
+for **111** races. from **2** sources.
 
 ``` r
 inner_join(markets2, model2) %>%
   filter(date %>% between(17744, 17840)) %>%
-  rename(model  = prob, 
+  rename(model = prob, 
          market = close) %>% 
   gather(model, market, 
-         key   = method, 
+         key = method, 
          value = prob) %>%
   inner_join(results) %>%
-  mutate(hit   = (prob > 0.50) == winner) %>% 
+  mutate(hit = (prob > 0.50) == winner) %>% 
   mutate(score = (prob - winner)^2) 
 ```
 
@@ -252,7 +252,7 @@ inner_join(markets2, model2) %>%
 | 2018-08-01 | CA-39 | D     | market |       0.610 | TRUE    | 0.152 |
 | 2018-08-01 | CA-39 | D     | model  |       0.377 | FALSE   | 0.388 |
 
-## Exploration
+# Exploration
 
 ![probabiliy distrobutions](plots/plot_races_hist.png)
 
@@ -260,7 +260,7 @@ inner_join(markets2, model2) %>%
 
 ![calibration plot](plots/plot_calibration_point.png)
 
-## Results
+# Results
 
 There is a statistically significant difference between the proportion
 of accurate predictions made by the markets and the model.

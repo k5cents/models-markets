@@ -35,12 +35,6 @@ plot_races_hist <-
        y = "Number of Races") +
   theme(legend.position = "none")
 
-ggsave(plot = plot_races_hist,
-       filename = here::here("plots", "plot_races_hist.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
-
 # Number of polls conducted over time
 plot_cum_polls <- polling %>%
   group_by(start_date) %>%
@@ -54,12 +48,6 @@ plot_cum_polls <- polling %>%
   labs(title = "Cumulative Number of Congressional Polls",
        x = "Date",
        y = "Polls to Date")
-
-ggsave(plot = plot_cum_polls,
-       filename = here::here("plots", "plot_cum_polls.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
 
 # Number of dollars traded over time
 plot_cum_dollars <- markets %>%
@@ -77,12 +65,6 @@ plot_cum_dollars <- markets %>%
        x = "Date",
        y = "Dollars Traded to Date")
 
-ggsave(plot = plot_cum_dollars,
-       filename = here::here("plots", "plot_cum_dollars.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
-
 # Number of markets opened over time
 plot_cum_markets <- markets %>%
   filter(date > "2018-01-01", date < "2018-11-05") %>%
@@ -95,39 +77,6 @@ plot_cum_markets <- markets %>%
   labs(title = "Cumulative Number of Election Markets",
        x = "Date",
        y = "Markets to Date")
-
-ggsave(plot = plot_cum_markets,
-       filename = here::here("plots", "plot_cum_markets.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
-
-# Races by Model on X and Market on Y
-plot_cart_labels <- messy %>%
-  mutate(party = "D") %>%
-  filter(date == "2018-11-05") %>%
-  left_join(model, by = c("date", "race", "party")) %>%
-  inner_join(results, by = "race") %>%
-  ggplot(aes(x  = model, y  = market)) +
-  geom_hline(yintercept = 0.5) +
-  geom_vline(xintercept = 0.5) +
-  geom_abline(slope = 1, intercept = 0) +
-  geom_label(aes(fill = winner, label = race)) +
-  scale_y_continuous(labels = scales::dollar) +
-  scale_x_continuous(labels = scales::percent) +
-  scale_fill_manual(values = c("red", "forestgreen")) +
-  labs(title = "Midterm Races by Democrat's Chance of Winning",
-       subtitle = "November 5th, Night Before Election Day",
-       x = "Model Probability",
-       y = "Market Price",
-       shape = "Chamber",
-       color = "Incumbency")
-
-ggsave(plot = plot_cart_labels,
-       filename = here::here("plots", "plot_cart_labels.png"),
-       dpi = "retina",
-       height = 9,
-       width = 10)
 
 plot_cart_points <- messy %>%
   mutate(party = "D") %>%
@@ -159,17 +108,11 @@ plot_cart_points <- messy %>%
   scale_x_continuous(labels = scales::percent) +
   scale_color_manual(values = c("red", "forestgreen")) +
   labs(title = "Midterm Races by Democrat's Chance of Winning",
-       subtitle = "November 5th, Night Before Election Day",
+       subtitle = "November 5th",
        x = "Model Probability",
        y = "Market Price",
        shape = "Chamber",
-       color = "Democrat Won")
-
-ggsave(plot = plot_cart_points,
-       filename = here::here("plots", "plot_cart_points.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
+       color = "Dem. Winner")
 
 # Weird NJ-02 Market Error
 plot_nj_02 <- markets %>%
@@ -181,54 +124,9 @@ plot_nj_02 <- markets %>%
   scale_y_continuous(labels = scales::dollar) +
   scale_x_date() +
   labs(title = "Price History of New Jersey 2nd Betting Market",
+       color = "Method",
        x = "Date",
        y = "Closing Price")
-
-ggsave(plot = plot_nj_02,
-       filename = here::here("plots", "plot_nj_02.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
-
-plot_prop_month <- hits %>%
-  mutate(month = month(date, label = TRUE)) %>%
-  group_by(month, method) %>%
-  summarise(prop = mean(hit, na.rm = TRUE)) %>%
-  ggplot(aes(x = month, y = prop, fill = method)) +
-  geom_col(position = "dodge") +
-  scale_fill_manual(values = c(color_market, color_model)) +
-  coord_cartesian(ylim = c(0.50, 1.0)) +
-  scale_y_continuous(labels = scales::percent) +
-  labs(title = "Proportion of Correct Predictions by Month",
-       subtitle = "PredictIt Markets and FiveThirtyEight Model",
-       y = "Proportion",
-       x = "Month of Year")
-
-ggsave(plot = plot_prop_month,
-       filename = here::here("plots", "plot_prop_month.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
-
-plot_prop_week <- hits %>%
-  mutate(week = week(date)) %>%
-  group_by(week, method) %>%
-  summarise(prop = mean(hit, na.rm = TRUE)) %>%
-  ggplot(aes(x = week, y = prop, color = method)) +
-  geom_line(size = 3) +
-  coord_cartesian(ylim = c(0.75, 0.95)) +
-  scale_y_continuous(labels = scales::percent) +
-  scale_color_manual(values = c(color_market, color_model)) +
-  labs(title = "Proportion of Correct Predictions by Week",
-       subtitle = "PredictIt Markets and FiveThirtyEight Model",
-       y = "Proportion",
-       x = "Week of Year")
-
-ggsave(plot = plot_prop_week,
-       filename = here::here("plots", "plot_prop_week.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
 
 plot_prop_day <- hits %>%
   group_by(date, method) %>%
@@ -239,15 +137,50 @@ plot_prop_day <- hits %>%
   scale_y_continuous(labels = scales::percent) +
   scale_color_manual(values = c(color_market, color_model)) +
   labs(title = "Proportion of Correct Predictions by Day",
-       subtitle = "PredictIt Markets and FiveThirtyEight Model",
+       color = "Method",
        y = "Proportion",
        x = "Day of Year")
 
-ggsave(plot = plot_prop_day,
-       filename = here::here("plots", "plot_prop_day.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)
+plot_prop_week <- hits %>%
+  mutate(week = week(date)) %>%
+  group_by(week, method) %>%
+  summarise(prop = mean(hit, na.rm = TRUE)) %>%
+  ggplot(aes(x = week, y = prop, color = method)) +
+  geom_line(size = 2) +
+  coord_cartesian(ylim = c(0.75, 0.95)) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_manual(values = c(color_market, color_model)) +
+  labs(title = "Proportion Accuracy",
+       color = "Method",
+       y = "Proportion",
+       x = "Week of Year")
+
+plot_prop_month <- hits %>%
+  mutate(month = month(date, label = TRUE)) %>%
+  group_by(month, method) %>%
+  summarise(prop = mean(hit, na.rm = TRUE)) %>%
+  ggplot(aes(x = month, y = prop, fill = method)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c(color_market, color_model)) +
+  coord_cartesian(ylim = c(0.50, 1.0)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Proportion Accuracy",
+       color = "Method",
+       y = "Proportion",
+       x = "Month of Year")
+
+plot_brier_week <- hits %>%
+  mutate(brier = (prob - winner)^2) %>%
+  mutate(week = week(date)) %>%
+  group_by(week, method) %>%
+  summarise(mean = mean(brier, na.rm = TRUE)) %>%
+  ggplot(aes(x = week, y = mean, color = method)) +
+  geom_line(size = 2) +
+  scale_color_manual(values = c(color_market, color_model)) +
+  labs(title = "Prediction Score",
+       color = "Method",
+       y = "Mean Brier Score",
+       x = "Week of Year")
 
 plot_calibration_point <- hits %>%
   mutate(bin = prob %>% round(digits = 1)) %>%
@@ -263,14 +196,7 @@ plot_calibration_point <- hits %>%
   scale_color_manual(values = c(color_market, color_model), guide = FALSE) +
   scale_size(range = c(2, 12)) +
   theme(legend.position = "bottom", legend.key = element_blank()) +
-  labs(title = "Expected Probabilities and Actual Proportions of Democratic Victory",
-       subtitle = "Expected probabilities binned by rounding to the nearest 10%",
+  labs(title = "Calibration Plot",
        y = "Proportion of Actual Democratic Victory",
        x = "Predicted Probability of Democratic Victory",
        size = "Number of Predictions")
-
-ggsave(plot = plot_calibration_point,
-       filename = here::here("plots", "plot_calibration_point.png"),
-       dpi = "retina",
-       height = 5.625,
-       width = 10)

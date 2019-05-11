@@ -4,8 +4,6 @@
   - [Introduction](#introduction)
   - [Reproducibility](#reproducibility)
   - [Data](#data)
-      - [Forecasting Models](#forecasting-models)
-      - [Prediction Markets](#prediction-markets)
   - [Wrangling](#wrangling)
   - [Exploration](#exploration)
   - [Results](#results)
@@ -36,11 +34,12 @@ predictions made by forecasting models and prediction markets in the
 
 # Reproducibility
 
-All public input data has been saved on the \[internet archive\]\[02\]
-and can be accessed through their wayback machine.
+All public input data has been saved on the [internet
+archive](https://archive.org/) and can be accessed through their wayback
+machine.
 
 Data manipulation is done using the R language and packages from the
-\[`tidyverse`\]\[03\] ecosystem.
+[`tidyverse`](https://github.com/tidyverse/) ecosystem.
 
 ``` r
 # library(devtools)
@@ -58,7 +57,8 @@ library(magrittr)
 library(wayback)
 ```
 
-Package versions are maintained through \[`packrat`\]\[04\].
+Package versions are maintained through
+[`packrat`](https://rstudio.github.io/packrat/).
 
 The R scripts in the [`/code`](/code) folder can be run in sequential
 order to reproduce the results. There are four scripts to perform four
@@ -86,22 +86,23 @@ I will be using the FiveThirtyEight “classic” model to represent the
 best capabilities of statistical election forecasting. FiveThirtyEight
 has a track record of accuracy over the last decade.
 
-\[According to Nate Silver\]\[05\], “\[the model’s\] goal is not to
-divine some magic formula that miraculously predicts every election.
-Instead, it’s to make sense of publicly available information in a
-rigorous and disciplined way.”
+[According to Nate Silver](http://53eig.ht/1u2pSbD), “\[the model’s\]
+goal is not to divine some magic formula that miraculously predicts
+every election. Instead, it’s to make sense of publicly available
+information in a rigorous and disciplined way.”
 
-To achieve this, \[Silver explains\]\[06\] that most models (**1**)
-“take lots of polls, perform various types of adjustments to them, and
-then blend them with other kinds of empirically useful indicators to
-forecast each race”. Importantly, they (**2**) “account for the
-uncertainty in the forecast and simulate the election thousands of
-times” to generate a probabilistic forecast.
+To achieve this, [Silver
+explains](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/)
+that most models (**1**) “take lots of polls, perform various types of
+adjustments to them, and then blend them with other kinds of empirically
+useful indicators to forecast each race”. Importantly, they (**2**)
+“account for the uncertainty in the forecast and simulate the election
+thousands of times” to generate a probabilistic forecast.
 
 The model incorporates three types of inputs:
 
-1.  **Polling:** District level polling, adjusted by \[pollster
-    rating\]\[07\]
+1.  **Polling:** District level polling, adjusted by [pollster
+    rating](https://projects.fivethirtyeight.com/pollster-ratings/)
 2.  **CANTOR:** polling imputation for districts without any
 3.  **Fundamentals:** Historically useful non-polling factors:
       - Scandals
@@ -118,15 +119,14 @@ the vote in a race. (**2**) The probability distribution around this
 mean is calculated using proven variables of uncertainty.
 
 The model runs [Monte Carlo
-simulation](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/),
-drawing elections from the race’s probability distribution. The
-percentage of simulated elections won represents the probability of
-victory.
+simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method), drawing
+elections from the race’s probability distribution. The percentage of
+simulated elections won represents the probability of victory.
 
 FiveThirtyEight publishes two files with top-level daily predictions:
 
-1.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/pollster-ratings/)
-2.  [`house_district_forecast.csv`](https://en.wikipedia.org/wiki/Monte_Carlo_method)
+1.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
+2.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
 
 Together, there are **110,000** daily prediction from the “classic”
 model with **11** variables:
@@ -165,16 +165,17 @@ read_memento(
 
 Prediction markets generate probabilistic forecasts by crowd-sourcing
 the collection of data from self-interested and risk averse traders.
-\[The efficient market hypothesis\]\[11\] holds that asset prices
-reflect *all* available information (including forecasting models).
+[The efficient market
+hypothesis](https://en.wikipedia.org/wiki/Efficient-market_hypothesis)
+holds that asset prices reflect *all* available information (including
+forecasting models).
 
-[PredictIt](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
-is an exchange run by \[Victoria University\]\[13\] of Wellington, New
-Zealand. The site offers a continuous double-auction exchange, where
-traders buy and sell shares of futures contracts tied to election
-outcomes. As a trader’s perception of probabilities changes, they can
-sell owned shares. The market equilibrium price to updates to reflect
-probability.
+[PredictIt](https://www.predictit.org/) is an exchange run by [Victoria
+University](https://www.victoria.ac.nz/) of Wellington, New Zealand. The
+site offers a continuous double-auction exchange, where traders buy and
+sell shares of futures contracts tied to election outcomes. As a
+trader’s perception of probabilities changes, they can sell owned
+shares. The market equilibrium price to updates to reflect probability.
 
 PredictIt provided the price history in
 [`data/DailyMarketData.csv`](data/DailyMarketData.csv). There are nearly
@@ -279,14 +280,14 @@ of accurate predictions made by the markets and the model.
 ![accuracy by week](plots/plot_prop_week.png)
 
 This is not the most useful test for predictive usefulness. The model is
-generally more confident in both correct and incorrect predictions.
-Reducing a probabalistic forecast to either correct or incorrect removes
-all nuance.
+generally more confident in both correct and incorrect predictions. The
+markets are less likely to be wrong, but they are less confident when
+they are right.
 
 ![confidence by week](plots/plot_confidence.png)
 
 [The Brier score](https://en.wikipedia.org/wiki/Brier_score) allows for
-probablistic forecasts to be meaningfully tested with for mean squared
+probablistic forecasts to be meaningfully tested with mean squared
 error. Using this test, there is no statistically significant difference
 in the respective skill scores of each predictive method.
 

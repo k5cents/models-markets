@@ -255,11 +255,11 @@ inner_join(markets2, model2) %>%
 
 # Exploration
 
-![probabiliy distrobutions](plots/plot_races_hist.png)
+![probabiliy distrobutions](plots/plot_distribution.png)
 
-![races by cartesian points](plots/plot_cart_points.png)
+![races by cartesian points](plots/plot_cartesian.png)
 
-![calibration plot](plots/plot_calibration_point.png)
+![calibration plot](plots/plot_calibration.png)
 
 # Results
 
@@ -277,7 +277,7 @@ of accurate predictions made by the markets and the model.
 | :---------------: | :--------------: |
 |      0.8603       |      0.8381      |
 
-![accuracy by week](plots/plot_prop_week.png)
+![accuracy by week](plots/plot_proportion.png)
 
 This is not the most useful test for predictive usefulness. The model is
 generally more confident in both correct and incorrect predictions. The
@@ -301,4 +301,4 @@ Welch Two Sample t-test: `score` by `method` (continued below)
 | :------------------: | :-----------------: |
 |        0.1084        |       0.1091        |
 
-![score by week](plots/plot_brier_week.png)
+![score by week](plots/plot_brier.png)

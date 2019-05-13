@@ -250,8 +250,8 @@ inner_join(markets2, model2) %>%
 ```
 
 ```{r tidy_data, echo=FALSE, message=FALSE, eval=TRUE}
-hits <- read_csv("data/hits.csv")
-hits %>% 
+hits <- read_csv("data/hits.csv") %>% mutate(score = (prob - winner)^2)
+hits %>%
   arrange(date, race, method) %>% 
   slice(1:10) %>%
   mutate(party = "D") %>% 
@@ -270,11 +270,11 @@ hits %>%
 
 # Exploration
 
-![probabiliy distrobutions](plots/plot_races_hist.png)
+![probabiliy distrobutions](plots/plot_distribution.png)
 
-![races by cartesian points](plots/plot_cart_points.png)
+![races by cartesian points](plots/plot_cartesian.png)
 
-![calibration plot](plots/plot_calibration_point.png)
+![calibration plot](plots/plot_calibration.png)
 
 # Results
 
@@ -295,7 +295,7 @@ names(test$estimate) <- c("market proportion", "model proportion")
 pander::pander(test)
 ```
 
-![accuracy by week](plots/plot_prop_week.png)
+![accuracy by week](plots/plot_proportion.png)
 
 This is not the most useful test for predictive usefulness. The model is
 generally more confident in both correct and incorrect predictions. The markets
@@ -313,7 +313,7 @@ hits %$%
   pander::pander()
 ```
 
-![score by week](plots/plot_brier_week.png)
+![score by week](plots/plot_brier.png)
 
 [01]: https://fivethirtyeight.com/
 [02]: https://archive.org/

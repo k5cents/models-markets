@@ -5,6 +5,7 @@
 ### Generate exploratory visuals
 
 library(ggplot2)
+library(here)
 
 color_model  <- "#ED713A" # 538 brand color
 color_market <- "#07A0BB" # PredictIt brand color
@@ -189,14 +190,16 @@ ggsave(plot = plot_calibration,
        width = 10)
 
 plot_confidence <- hits %>%
-  group_by(date, method, hit) %>%
+  mutate(week = week(date)) %>%
+  group_by(week, method, hit) %>%
   summarise(mean = mean(prob)) %>%
-  ggplot(mapping = aes(x = date, y = mean)) +
+  ggplot(mapping = aes(x = week, y = mean)) +
   geom_hline(yintercept = 0.50, lty = 2) +
   geom_line(mapping = aes(color = method, linetype = hit),
             size = 1) +
   scale_color_manual(values = c(color_market, color_model)) +
   scale_y_continuous(labels = scales::percent) +
+  scale_linetype_manual(values = c("twodash", "solid")) +
   theme(legend.position = "bottom",
         legend.key = element_blank()) +
   labs(title = "Prediction Confidence",

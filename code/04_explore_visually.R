@@ -196,7 +196,7 @@ plot_confidence <- hits %>%
   ggplot(mapping = aes(x = week, y = mean)) +
   geom_hline(yintercept = 0.50, lty = 2) +
   geom_line(mapping = aes(color = method, linetype = hit),
-            size = 1) +
+            size = 2) +
   scale_color_manual(values = c(color_market, color_model)) +
   scale_y_continuous(labels = scales::percent) +
   scale_linetype_manual(values = c("twodash", "solid")) +

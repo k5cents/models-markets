@@ -1,12 +1,5 @@
-*predictr*
+Models and Markets
 ================
-
-  - [Introduction](#introduction)
-  - [Reproducibility](#reproducibility)
-  - [Data](#data)
-  - [Wrangling](#wrangling)
-  - [Exploration](#exploration)
-  - [Results](#results)
 
 # Introduction
 
@@ -32,7 +25,7 @@ I propose a null hypothesis of no in the proportion of correct
 predictions made by forecasting models and prediction markets in the
 2018 congressional midterm elections.
 
-# Reproducibility
+# Reproduce
 
 All public input data has been saved on the [internet
 archive](https://archive.org/) and can be accessed through their wayback
@@ -42,23 +35,15 @@ Data manipulation is done using the R language and packages from the
 [`tidyverse`](https://github.com/tidyverse/) ecosystem.
 
 ``` r
-# library(devtools)
-# install_cran("here")
-# install_cran("tidyverse")
-# install_cran("verification")
-# install_github("hrbrmstr/wayback")
+# install.package("pacman")
+pacman::p_load_gh("hrbrmstr/wayback")
+pacman::p_load(
+  verification,
+  tidyverse,
+  lubridate,
+  magrittr
+)
 ```
-
-``` r
-library(verification)
-library(tidyverse)
-library(lubridate)
-library(magrittr)
-library(wayback)
-```
-
-Package versions are maintained through
-[`packrat`](https://rstudio.github.io/packrat/).
 
 The R scripts in the [`/code`](/code) folder can be run in sequential
 order to reproduce the results. There are four scripts to perform four
@@ -123,7 +108,8 @@ simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method), drawing
 elections from the race’s probability distribution. The percentage of
 simulated elections won represents the probability of victory.
 
-FiveThirtyEight publishes two files with top-level daily predictions:
+FiveThirtyEight publishes two files with top-level daily
+    predictions:
 
 1.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
 2.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
@@ -212,7 +198,7 @@ read_delim(
 | 4843 | AZ02.2018 | GOP.AZ02.2018 | 2018-11-05 | 0.10 |  0.05 |    787 |
 | 3812 | AZSEN18   | DEM.AZSEN18   | 2018-11-05 | 0.47 |  0.46 |  34137 |
 
-# Wrangling
+# Wrangle
 
 The above data sets were both formatted to contain key variables:
 `date`, `race` and `party`. These are used to join the two data sets for
@@ -253,7 +239,7 @@ inner_join(markets2, model2) %>%
 | 2018-08-01 | CA-39 | D     | market |       0.610 | TRUE    | 0.152 |
 | 2018-08-01 | CA-39 | D     | model  |       0.377 | FALSE   | 0.388 |
 
-# Exploration
+# Explore
 
 ![probabiliy distrobutions](plots/plot_distribution.png)
 

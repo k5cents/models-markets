@@ -88,7 +88,7 @@ plot_cartesian <- messy %>%
 ggsave(plot = plot_cartesian,
        filename = here("plots", "plot_cartesian.png"),
        dpi = "retina",
-       height = 10,
+       height = 5.625,
        width = 10)
 
 # Weird NJ-02 Market Error
@@ -186,7 +186,7 @@ plot_calibration <- hits %>%
 ggsave(plot = plot_calibration,
        filename = here("plots", "plot_calibration.png"),
        dpi = "retina",
-       height = 10,
+       height = 5.625,
        width = 10)
 
 plot_confidence <- hits %>%

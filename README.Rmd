@@ -4,6 +4,8 @@ output:
   github_document:
     toc: true
     toc_depth: 1
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -16,79 +18,76 @@ opts_chunk$set(
 options(width = 99)
 ```
 
-# Introduction
-
 Election prediction helps party officials, campaign operatives, and journalists interpret campaigns
 in a quantitative manner. Uncertainty is key to a useful election prediction.
 
 The forecast model has become a staple of political punditry. Popularized by the data journalist at
-[FiveThirtyEight][01], the forecasting model is a statistical tool used to incorporate a number of
+[FiveThirtyEight][538], the forecasting model is a statistical tool used to incorporate a number of
 quantitative inputs and produce a _probabilistic_ view of all possible outcomes.
 
 Prediction markets can be used to generate similarly probabilistic views of election outcomes by
-utilizing the price discovery and risk aversion to overcome the ideological bias of self-interested
-traders on a binary options exchange.
+utilizing the economic forces of price discovery and risk aversion to overcome the ideological bias
+of self-interested traders on a binary options exchange.
 
 **Can markets predict elections better than the models? If so, under what conditions?**
  
-I propose a null hypothesis of no in the proportion of correct predictions made by forecasting
-models and prediction markets in the 2018 congressional midterm elections.
+I propose a null hypothesis of no difference in the mean [Brier score][bs] of forecasting models
+and prediction markets for the 2018 U.S. Congressional midterm elections.
 
-# Reproduce
+## Reproduce
 
-All public input data has been saved on the [internet archive][02] and can be accessed through
+All public input data has been saved on the [internet archive][ia] and can be accessed through
 their wayback machine.
 
-Data manipulation is done using the R language and packages from the [`tidyverse`][03] ecosystem.
+Data manipulation is done using the R language and packages from the [`tidyverse`][tidy] ecosystem.
 
 ```{r p_load, echo=TRUE, eval=TRUE}
-# install.package("pacman")
-pacman::p_load_gh("hrbrmstr/wayback")
-pacman::p_load(
-  verification,
-  tidyverse,
-  lubridate,
-  magrittr
-)
+# install.package("remotes")
+# remotes::install_github("hrbrmstr/wayback")
+library(tidyverse)
+library(lubridate)
+library(magrittr)
+library(wayback)
+library(here)
 ```
 
-The R scripts in the [`/code`](/code) folder can be run in sequential order to reproduce the
+The R scripts in the [`/code`](/code) directory can be run in sequential order to reproduce the
 results. There are four scripts to perform four steps:
 
 1. Read archived data with `wayback` and `readr`
-1. Wrangle and format with `dplyr` and `tidyr`
-1. Evaluate predictions with `stats` and `verification`
-1. Communicate results with `ggplot2` and `rmarkdown`
+2. Wrangle and format with `dplyr` and `tidyr`
+3. Evaluate predictions with `stats` and `verification`
+4. Communicate results with `ggplot2` and `rmarkdown`
 
 ```{r source, echo=TRUE, eval=FALSE}
-source("code/01_read_inputs.R")
-source("code/02_format_inputs.R")
-source("code/03_compare_methods.R")
-source("code/04_explore_visually.R")
+source(here("code", "01-read-inputs.R"))
+source(here("code", "02-format-inputs.R"))
+source(here("code", "03-compare-methods.R"))
+source(here("code", "04-explore-visually.R"))
 ```
 
-# Data
+## Data
 
-## Forecasting Models
+### Forecasting Models
 
 I will be using the FiveThirtyEight "classic" model to represent the best capabilities of
 statistical election forecasting. FiveThirtyEight has a track record of accuracy over the last
 decade.
 
-[According to Nate Silver][05], "[the model's] goal is not to divine some magic formula that
+[According to Nate Silver][how14], "[the model's] goal is not to divine some magic formula that
 miraculously predicts every election. Instead, it’s to make sense of publicly available information
 in a rigorous and disciplined way."
 
-To achieve this, [Silver explains][06] that most models (**1**) "take lots of polls, perform
+To achieve this, [Silver explains][how18] that most models (**1**) "take lots of polls, perform
 various types of adjustments to them, and then blend them with other kinds of empirically useful
 indicators to forecast each race". Importantly, they (**2**) "account for the uncertainty in the
 forecast and simulate the election thousands of times" to generate a probabilistic forecast.
 
 The model incorporates three types of inputs:
 
-1. **Polling:** District level polling, adjusted by [pollster rating][07]
-1. **CANTOR:** polling imputation for districts without any
-1. **Fundamentals:** Historically useful non-polling factors:
+1. **Polling:** District level polling, adjusted by [pollster rating][pr].
+2. **CANTOR:** polling imputation for districts without any.
+3. **Fundamentals:** Historically useful non-polling factors:
     * Scandals
     * Incumbency
     * Fundraising
@@ -101,27 +100,27 @@ The model incorporates three types of inputs:
 From this data, the model (**1**) calculates the most likely split of the vote in a race. (**2**) The
 probability distribution around this mean is calculated using proven variables of uncertainty.
 
-The model runs [Monte Carlo simulation][08], drawing elections from the race's probability
+The model runs [Monte Carlo simulation][mc], drawing elections from the race's probability
 distribution. The percentage of simulated elections won represents the probability of victory.
 
 FiveThirtyEight publishes two files with top-level daily predictions:
 
-1. [`senate_seat_forecast.csv`][09]
-1. [`house_district_forecast.csv`][10]
+1. [`senate_seat_forecast.csv`][sf]
+2. [`house_district_forecast.csv`][hf]
 
 Together, there are **110,000** daily prediction from the "classic" model with **11** variables:
 
 1. Date
-1. State
-1. District/Class
-1. Election type
-1. Candidate name
-1. Political party
-1. Model version
-1. **Probability of victory**
-1. Expected share of the vote
-1. Minimum share
-1. Maximum share
+2. State
+3. District/Class
+4. Election type
+5. Candidate name
+6. Political party
+7. Model version
+8. **Probability of victory**
+9. Expected share of the vote
+10. Minimum share
+11. Maximum share
 
 ```{r model_stats, echo=TRUE, eval=FALSE}
 read_memento(
@@ -147,7 +146,7 @@ read_memento(
   )
 ```
 
-## Prediction Markets
+### Prediction Markets
 
 Prediction markets generate probabilistic forecasts by crowd-sourcing the collection of data from
 self-interested and risk averse traders. [The efficient market hypothesis][11] holds that asset
@@ -197,7 +196,7 @@ here::here("data", "DailyMarketData.csv") %>%
   )
 ```
 
-# Wrangle
+## Wrangle
 
 The above data sets were both formatted to contain key variables: `date`, `race` and `party`. These
 are used to join the two data sets for comparison.
@@ -237,7 +236,7 @@ hits %>%
   )
 ```
 
-# Explore
+## Explore
 
 ![probabiliy distrobutions](plots/plot_distribution.png)
 
@@ -245,7 +244,7 @@ hits %>%
 
 ![calibration plot](plots/plot_calibration.png)
 
-# Results
+## Results
 
 There is a statistically significant difference between the proportion of accurate predictions made
 by the markets and the model.
@@ -253,8 +252,7 @@ by the markets and the model.
 ```{r print_brier, echo=FALSE, eval=TRUE}
 sums <- hits %>% 
   select(date, race, method, hit) %>%
-  spread(key = method,
-         value = hit) %>%
+  spread(key = method, value = hit) %>%
   select(market, model) %>%
   colSums()
 
@@ -284,18 +282,18 @@ hits %$%
 
 ![score by week](plots/plot_brier.png)
 
-[01]: https://fivethirtyeight.com/
-[02]: https://archive.org/
-[03]: https://github.com/tidyverse/
-[04]: https://rstudio.github.io/packrat/
-[05]: http://53eig.ht/1u2pSbD
-[06]: https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/
-[07]: https://projects.fivethirtyeight.com/pollster-ratings/
-[08]: https://en.wikipedia.org/wiki/Monte_Carlo_method
-[09]: https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv
-[10]: https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv
+[538]: https://fivethirtyeight.com/
+[ia]: https://archive.org/
+[tidy]: https://github.com/tidyverse/
+[how]: https://rstudio.github.io/packrat/
+[how14]: https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/
+[how18]: https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/
+[pr]: https://projects.fivethirtyeight.com/pollster-ratings/
+[mc]: https://en.wikipedia.org/wiki/Monte_Carlo_method
+[sf]: https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv
+[hf]: https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv
 [11]: https://en.wikipedia.org/wiki/Efficient-market_hypothesis
 [12]: https://www.predictit.org/
 [13]: https://www.victoria.ac.nz/
 [14]: http://vita.had.co.nz/papers/tidy-data.html
-[15]: https://en.wikipedia.org/wiki/Brier_score
+[bs]: https://en.wikipedia.org/wiki/Brier_score

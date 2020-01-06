@@ -182,7 +182,7 @@ read_delim(
 ```
 
 ```{r print_market, echo=FALSE, eval=TRUE}
-here::here("data", "DailyMarketData.csv") %>% 
+here::here("data", "raw", "markets", "DailyMarketData.csv") %>% 
   read_delim(delim = "|", na = "n/a", col_types = "cccccDddddd") %>% 
   filter(Date == "2018-11-05") %>% 
   select(MarketId, MarketSymbol, ContractSymbol, Date, OpenPrice, ClosePrice, Volume) %>%

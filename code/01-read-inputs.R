@@ -1,6 +1,6 @@
 ### Kiernan Nicholls
 ### American University
-### Spring, 2019
+### Spring, 2020
 ### Markets and Models
 ### Save and read raw input data
 

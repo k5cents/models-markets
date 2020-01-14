@@ -49,10 +49,11 @@ Contract_NY27 <- read_csv(
 
 write_memento <- function(url, date, dir) {
   path <- here::here("data", "raw", dir, basename(url))
-  if (fs::file_exists(path)) return()
-  data <- wayback::read_memento(url, date, as = "text")
-  fs::dir_create(dirname(path))
-  readr::write_lines(data, path)
+  if (!fs::file_exists(path)) {
+    data <- wayback::read_memento(url, date, as = "text")
+    fs::dir_create(dirname(path))
+    readr::write_lines(data, path)
+  }
 }
 
 ## Current members of the 115th
@@ -168,7 +169,7 @@ write_memento(
 )
 
 forecast_results <- read_csv(
-  file = here("data", "raw", "results", "forecast_results_2018.csv"),
+  file = here::here("data", "raw", "results", "forecast_results_2018.csv"),
   col_types  = cols(
     Democrat_Won = col_logical(),
     Republican_Won = col_logical(),

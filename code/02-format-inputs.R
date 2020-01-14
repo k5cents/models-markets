@@ -104,6 +104,14 @@ members <- inner_join(
   by = c("gid", "party", "chamber")
 )
 
+# save text file
+new_dir <- dir_create(here::here("data", "new"))
+write_csv(
+  x = members,
+  path = "data/new/members.csv",
+  na = ""
+)
+
 # format markets history ------------------------------------------------------
 
 ## source:    https://predictit.org/
@@ -127,11 +135,11 @@ markets <- DailyMarketData %>%
   select(date, everything()) %>%
   select(-ContractSymbol)
 
-# Get candidate names from full market question
+# get candidate names from full market question
 markets$name[str_which(markets$name, "Which party will")] <- NA
 markets$name <- word(markets$name, start = 2, end = 3)
 
-# Recode party variables
+# recode party variables
 markets$party <- markets$party %>%
   recode(
     "Democratic or DFL" = "D",
@@ -139,7 +147,7 @@ markets$party <- markets$party %>%
     "Republican" = "R"
   )
 
-# Remove year information from symbol strings
+# remove year information from symbol strings
 markets <- markets %>%
   mutate(
     race = symbol %>%
@@ -165,8 +173,9 @@ markets <- markets %>%
         replacement = "\\1-\\2"
       )
   ) %>%
-  # Remove markets incorectly repeated
-  # Some not running for re-election
+  select(-symbol) %>%
+  # remove markets incorectly repeated
+  # some not running for re-election
   filter(
     mid != "3455", # Paul Ryan
     mid != "3507", # Jeff Flake
@@ -177,8 +186,8 @@ markets <- markets %>%
     mid != "4824"  # Repeat of 4776
   )
 
-# Divide the data based on market question syntax
-# Market questions provided name or party, never both
+# divide the data based on market question syntax
+# market questions provided name or party, never both
 markets_with_name <- markets %>%
   filter(is.na(party)) %>%
   select(-party)
@@ -187,27 +196,28 @@ markets_with_party <- markets %>%
   filter(is.na(name)) %>%
   select(-name)
 
-# Join with members key to add party, then back with rest of market
+# join with members key to add party, then back with rest of market
 markets <- markets_with_name %>%
   inner_join(members, by = c("name", "race")) %>%
   select(date, mid, race, party, open, low, high, close, volume) %>%
   bind_rows(markets_with_party)
 
-# Add in ME-02 and NY-27 which were left out of initial data
+# add in ME-02 and NY-27 which were left out of initial data
 ny_27 <- Contract_NY27 %>%
-  rename_all(tolower) %>%
+  rename_all(str_to_lower) %>%
   slice(6:154) %>%
-  mutate(mid = "4729",
-         race = "NY-27",
-         party = "R") %>%
+  mutate(
+    mid = "4729",
+    race = "NY-27",
+    party = "R"
+  ) %>%
   select(-average)
 
 me_02 <- Market_ME02 %>%
-  rename_all(tolower) %>%
+  rename_all(str_to_lower) %>%
   rename(party = longname) %>%
   filter(date != "2018-10-10") %>%
-  mutate(mid = "4945",
-         race = "ME-02")
+  mutate(mid = "4945", race = "ME-02")
 
 markets_extra <-
   bind_rows(ny_27, me_02) %>%
@@ -216,8 +226,15 @@ markets_extra <-
 markets_extra$party[str_which(markets_extra$party, "GOP")] <- "R"
 markets_extra$party[str_which(markets_extra$party, "Dem")] <- "D"
 
-# Bind with ME-02 and NY-27
-markets %<>% bind_rows(markets_extra)
+# bind with ME-02 and NY-27
+markets <- bind_rows(markets, markets_extra)
+
+# save text file
+write_csv(
+  x = markets,
+  path = "data/new/markets.csv",
+  na = ""
+)
 
 # format model history ----------------------------------------------------
 
@@ -226,58 +243,86 @@ markets %<>% bind_rows(markets_extra)
 ## desc:      history of forecasting model top line probabilities
 ## use:       operationalize probabalistic forecasts from a forcasting model
 
-# Format district for race variable
+# format district for race variable
 model_district <- house_district_forecast %>%
-  mutate(district = str_pad(string = district,
-                            width = 2,
-                            side = "left",
-                            pad = "0"))
+  mutate(
+    district = str_pad(
+      string = district,
+      width = 2,
+      side = "left",
+      pad = "0"
+    )
+  )
 
-# Format class for race variable
+# format class for race variable
 model_seat <- senate_seat_forecast %>%
   rename(district = class) %>%
-  mutate(district = str_pad(string = district,
-                            width = 2,
-                            side = "left",
-                            pad = "S"))
+  mutate(
+    district = str_pad(
+      string = district,
+      width = 2,
+      side = "left",
+      pad = "S"
+    )
+  )
 
 model_combined <-
   bind_rows(model_district, model_seat, .id = "chamber") %>%
-  # Create race variable for relational join
-  unite(col = race,
-        state, district,
-        sep = "-",
-        remove = TRUE) %>%
-  rename(name = candidate,
-         date = forecastdate,
-         prob = win_probability,
-         min_share = p10_voteshare,
-         max_share = p90_voteshare) %>%
-  filter(name != "Others") %>%
+  # create race variable for relational join
+  unite(
+    col = race,
+    state, district,
+    sep = "-",
+    remove = TRUE
+  ) %>%
+  rename(
+    name = candidate,
+    date = forecastdate,
+    prob = win_probability,
+    min_share = p10_voteshare,
+    max_share = p90_voteshare
+  ) %>%
+  mutate(
+    chamber = recode(
+      .x = chamber,
+      "1" = "house",
+      "2" = "senate"
+    ),
+    # only special elections are for senate.
+    special = case_when(
+      is.na(special) ~ FALSE,
+      !is.na(special) ~ special
+    ),
+    # both caucus with Democrats
+    party = case_when(
+      name == "Bernard Sanders" ~ "D",
+      name == "Angus S. King Jr." ~ "D",
+      TRUE ~ party
+    )
+  ) %>%
+  # Convert percent vote share values to decimal
+  mutate_at(vars(10:12), multiply_by, 0.01) %>%
+  # keep only named candidates
+  filter(name != "Others", name != "Zak Ringelstein") %>%
+  # reorder data frame
   select(date, race, name, party, chamber, everything()) %>%
   arrange(date, name)
 
-# Recode identifying variable for clarification
-model_combined$chamber %<>% recode("1" = "house",
-                                   "2" = "senate")
+# seperate model data by model format
+model_combined <- model_combined %>%
+  group_split(model) %>%
+  set_names(c("classic", "lite", "deluxe")) %>%
+  map(select, -model)
 
-# Only special elections are for senate.
-model_combined$special[is.na(model_combined$special)] <- FALSE
+# according to 538, the "classic" model can be used as a default
+model <- model_combined$classic
 
-# Convert percent vote share values to decimal
-model_combined[, 10:12] <- model_combined[, 10:12] * 0.01
-
-# Recode incumbent Independent senators for relational joins with Markets
-# Both caucus with Democrats and were endoresed by Democratic party
-model_combined$party[model_combined$name == "Bernard Sanders"]   <- "D"
-model_combined$party[model_combined$name == "Angus S. King Jr."] <- "D"
-model_combined %<>% filter(name != "Zak Ringelstein")
-
-# Seperate model data by model format
-# According to 538, the "classic" model can be used as a default
-model <- filter(model_combined, model == "classic") %>% select(-model)
-model_lite <- filter(model_combined, model == "lite") %>% select(-model)
-model_deluxe <- filter(model_combined, model == "deluxe") %>% select(-model)
+# save text file
+write_csv(
+  x = model,
+  path = "data/new/markets.csv",
+  na = ""
+)
 
 # format election results -------------------------------------------------
 
@@ -286,19 +331,32 @@ model_deluxe <- filter(model_combined, model == "deluxe") %>% select(-model)
 ## desc:      final predictions and election results
 ## use:       assess the accuracy of both predictive methods
 
-results <- forecast_results_2018 %>%
-  filter(branch  != "Governor",
-         version == "classic") %>%
-  separate(col    = race,
-           into   = c("state", "district"),
-           sep    = "-") %>%
-  rename(winner   = Democrat_Won) %>%
+results <- forecast_results %>%
+  filter(
+    branch != "Governor",
+    version == "classic"
+  ) %>%
+  separate(
+    col = race,
+    into = c("state", "district"),
+    sep = "-"
+  ) %>%
+  rename(winner = Democrat_Won) %>%
   mutate(district = str_pad(district, width = 2,  pad   = "0")) %>%
-  unite(state, district,
-        col = race,
-        sep = "-") %>%
+  unite(
+    state, district,
+    col = race,
+    sep = "-"
+  ) %>%
   select(race, winner) %>%
   filter(race != "NC-09") # Harris fraud charges
+
+# save text file
+write_csv(
+  x = results,
+  path = "data/new/results.csv",
+  na = ""
+)
 
 # format partisan lean index ----------------------------------------------
 
@@ -309,31 +367,48 @@ results <- forecast_results_2018 %>%
 
 # Separate lean value and replace state name with state abbreviation
 lean_states <- partisan_lean_STATES %>%
-  separate(col = pvi_538,
-           into = c("party", "lean"),
-           sep = "\\+",
-           convert = TRUE) %>%
+  separate(
+    col = pvi_538,
+    into = c("party", "lean"),
+    sep = "\\+",
+    convert = TRUE
+  ) %>%
   rename(race = state) %>%
   mutate(race = paste(state.abb, "S1", sep = "-"))
 
 # Seperate lean value and pad district number for race code
 lean_district <- partisan_lean_DISTRICTS %>%
-  separate(col = pvi_538,
-           into = c("party", "lean"),
-           sep = "\\+",
-           convert = TRUE) %>%
-  separate(col = district,
-           into = c("state", "race"),
-           sep = "\\-") %>%
+  separate(
+    col = pvi_538,
+    into = c("party", "lean"),
+    sep = "\\+",
+    convert = TRUE
+  ) %>%
+  separate(
+    col = district,
+    into = c("state", "race"),
+    sep = "\\-"
+  ) %>%
   mutate(race = str_pad(race, width = 2, pad = "0")) %>%
-  unite(col = race,
-        state, race,
-        sep = "-")
+  unite(
+    col = race,
+    state, race,
+    sep = "-"
+  )
 
 # Turn single number into negative-positive spectrum
-race_lean <-
+lean <-
   bind_rows(lean_states, lean_district) %>%
-  mutate(lean = if_else(condition = party == "D",
-                        true  = lean * -1,
-                        false = lean))
+  mutate(
+    lean = case_when(
+      party == "D" ~ lean * -1,
+      party == "R" ~ lean
+    )
+  )
 
+# save text file
+write_csv(
+  x = lean,
+  path = "data/new/lean.csv",
+  na = ""
+)

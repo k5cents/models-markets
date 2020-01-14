@@ -236,6 +236,104 @@ write_csv(
   na = ""
 )
 
+# format polling data -----------------------------------------------------
+
+## source:    https://fivethirtyeight.com/
+## input:     input/*_polls.csv
+## desc:      history of individual public opinion poll results
+## use:       quantify changes in the primary input to the forecasting model
+
+# Create a key for pollster and sponsor IDs
+polling_key <-
+  bind_rows(
+    house_polls,
+    senate_polls
+  ) %>%
+  select(
+    display_name,
+    pollster_id,
+    pollster,
+    sponsor_ids,
+    sponsors
+  ) %>%
+  distinct()
+
+# Formated for relational joins and key info
+polling <-
+  bind_rows(
+    house_polls,
+    senate_polls
+  ) %>%
+  select(
+    start_date,
+    end_date,
+    poll = poll_id,
+    pollster = pollster_id,
+    sponsor = sponsor_ids,
+    n = sample_size,
+    pop = population,
+    method = methodology,
+    chamber = office_type,
+    state,
+    district = seat_number,
+    internal,
+    partisan,
+    tracking,
+    name = answer,
+    party = candidate_party,
+    support = pct
+  ) %>%
+  filter(party %in% c("DEM", "REP", "IND")) %>%
+  arrange(start_date) %>%
+  mutate(
+    chamber = chamber %>%
+      str_extract("\\w+$") %>%
+      str_to_lower(),
+    party = party %>%
+      recode(
+        "DEM" = "D",
+        "REP" = "R",
+        "IND" = "I"
+      ),
+    support = support * 0.01,
+    district = case_when(
+      chamber == "house" ~ str_pad(district, 2, pad = "0"),
+      chamber == "senate" ~ str_pad(district, 2, pad = "S") %>%
+        recode("S0" = "S1")
+    )
+  ) %>%
+  # replace state names with state abbreviations
+  inner_join(
+    y = tibble(state = state.name, abb = state.abb),
+    by = "state"
+  ) %>%
+  select(-state) %>%
+  rename(state = abb) %>%
+  unite(
+    state, district,
+    col = race,
+    sep = "-",
+    remove = TRUE
+  ) %>%
+  mutate(length = end_date - start_date) %>%
+  select(
+    start_date,
+    length,
+    race,
+    name,
+    party,
+    chamber,
+    support,
+    everything()
+  )
+
+# save text file
+write_csv(
+  x = polling,
+  path = "data/new/polling.csv",
+  na = ""
+)
+
 # format model history ----------------------------------------------------
 
 ## source:    https://fivethirtyeight.com/

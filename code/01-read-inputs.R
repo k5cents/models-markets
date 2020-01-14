@@ -161,6 +161,11 @@ senate_seat_forecast <- read_csv(
 # Used in https://53eig.ht/2PiFb0f
 # Published: 2018-12-04 at 17:56
 # Archived:  2018-04-04 at 16:08
+
+# Midterm election results via ABC and 538
+# Used in https://53eig.ht/2PiFb0f
+# Published: 2018-12-04 at 17:56
+# Archived:  2018-04-04 at 16:08
 github_538 <- "https://raw.githubusercontent.com/fivethirtyeight/data/master"
 write_memento(
   url = paste(github_538, "forecast-review", "forecast_results_2018.csv", sep = "/"),
@@ -220,4 +225,49 @@ partisan_lean_STATES <- read_csv(
     state = col_character(),
     pvi_538 = col_character()
   )
+)
+
+# Polls incorperated in the 538 models
+# Archived 2019-01-29 at 21:45
+poll_cols <- cols(
+  question_id = col_character(),
+  poll_id     = col_character(),
+  pollster_id = col_character(),
+  sponsor_ids = col_character(),
+  start_date  = col_date("%m/%d/%y"),
+  end_date    = col_date("%m/%d/%y"),
+  created_at  = col_datetime("%m/%d/%y %H:%M")
+)
+
+write_memento(
+  url = "https://projects.fivethirtyeight.com/polls-page/senate_polls.csv",
+  date = "2019-01-29",
+  dir = "polling"
+)
+
+senate_polls <- read_csv(
+  file = here("data", "raw", "polling", "senate_polls.csv"),
+  col_types = poll_cols
+)
+
+write_memento(
+  url = "https://projects.fivethirtyeight.com/polls-page/house_polls.csv",
+  date = "2019-01-29",
+  dir = "polling"
+)
+
+house_polls <- read_csv(
+  file = here("data", "raw", "polling", "house_polls.csv"),
+  col_types = poll_cols
+)
+
+write_memento(
+  url = "https://projects.fivethirtyeight.com/polls-page/generic_ballot_polls.csv",
+  date = "2019-01-29",
+  dir = "polling"
+)
+
+generic_ballot_polls <- read_csv(
+  file = here("data", "raw", "polling", "generic_ballot_polls.csv"),
+  col_types = poll_cols
 )

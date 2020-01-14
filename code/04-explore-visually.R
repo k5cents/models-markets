@@ -337,9 +337,11 @@ plot_markets <- markets %>%
   geom_line(color = color_market, size = 2) +
   geom_vline(xintercept = as_date("2018-08-01"), size = 0.5) +
   geom_vline(xintercept = as_date("2018-11-05"), size = 0.5) +
-  labs(title = "Cumulative Number of Election Markets",
-       x = "Date",
-       y = "Markets to Date")
+  labs(
+    title = "Cumulative Number of Election Markets",
+    x = "Date",
+    y = "Markets to Date"
+  )
 
 ggsave(
   plot = plot_markets,

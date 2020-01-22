@@ -1,7 +1,9 @@
 Models and Markets
 ================
 
-# Introduction
+  - [Reproduce](#reproduce)
+  - [Data](#data)
+  - [Compare](#compare)
 
 Election prediction helps party officials, campaign operatives, and
 journalists interpret campaigns in a quantitative manner. Uncertainty is
@@ -14,18 +16,17 @@ is a statistical tool used to incorporate a number of quantitative
 inputs and produce a *probabilistic* view of all possible outcomes.
 
 Prediction markets can be used to generate similarly probabilistic views
-of election outcomes by utilizing the price discovery and risk aversion
-to overcome the ideological bias of self-interested traders on a binary
-options exchange.
+of election outcomes by utilizing the economic forces of price discovery
+and risk aversion to overcome the ideological bias of self-interested
+traders on a binary options exchange.
 
-**Can markets predict elections better than the models? If so, under
-what conditions?**
+**Can markets predict elections better than the models?** If so, under
+what conditions? I propose a null hypothesis of no difference in the
+mean [Brier score](https://en.wikipedia.org/wiki/Brier_score) of
+forecasting models and prediction markets for the 2018 U.S.
+Congressional midterm elections.
 
-I propose a null hypothesis of no in the proportion of correct
-predictions made by forecasting models and prediction markets in the
-2018 congressional midterm elections.
-
-# Reproduce
+## Reproduce
 
 All public input data has been saved on the [internet
 archive](https://archive.org/) and can be accessed through their wayback
@@ -34,18 +35,7 @@ machine.
 Data manipulation is done using the R language and packages from the
 [`tidyverse`](https://github.com/tidyverse/) ecosystem.
 
-``` r
-# install.package("pacman")
-pacman::p_load_gh("hrbrmstr/wayback")
-pacman::p_load(
-  verification,
-  tidyverse,
-  lubridate,
-  magrittr
-)
-```
-
-The R scripts in the [`/code`](/code) folder can be run in sequential
+The R scripts in the [`/code`](/code) directory can be run in sequential
 order to reproduce the results. There are four scripts to perform four
 steps:
 
@@ -54,68 +44,55 @@ steps:
 3.  Evaluate predictions with `stats` and `verification`
 4.  Communicate results with `ggplot2` and `rmarkdown`
 
-<!-- end list -->
+## Data
 
-``` r
-source("code/01_read_inputs.R")
-source("code/02_format_inputs.R")
-source("code/03_compare_methods.R")
-source("code/04_explore_visually.R")
-```
-
-# Data
-
-## Forecasting Models
+### Forecasting Models
 
 I will be using the FiveThirtyEight “classic” model to represent the
 best capabilities of statistical election forecasting. FiveThirtyEight
 has a track record of accuracy over the last decade.
 
-[According to Nate Silver](http://53eig.ht/1u2pSbD), “\[the model’s\]
-goal is not to divine some magic formula that miraculously predicts
-every election. Instead, it’s to make sense of publicly available
-information in a rigorous and disciplined way.”
+[According to Nate
+Silver](https://fivethirtyeight.com/features/how-the-fivethirtyeight-senate-forecast-model-works/):
+
+> \[The model’s\] goal is not to divine some magic formula that
+> miraculously predicts every election. Instead, it’s to make sense of
+> publicly available information in a rigorous and disciplined way.
 
 To achieve this, [Silver
 explains](https://fivethirtyeight.com/methodology/how-fivethirtyeights-house-and-senate-models-work/)
-that most models (**1**) “take lots of polls, perform various types of
-adjustments to them, and then blend them with other kinds of empirically
-useful indicators to forecast each race”. Importantly, they (**2**)
-“account for the uncertainty in the forecast and simulate the election
-thousands of times” to generate a probabilistic forecast.
+that most forecasting models (1) “take lots of polls, perform various
+types of adjustments to them, and then blend them with other kinds of
+empirically useful indicators to forecast each race”. Importantly, they
+(2) “account for the uncertainty in the forecast and simulate the
+election thousands of times” to generate a probabilistic forecast.
 
 The model incorporates three types of inputs:
 
 1.  **Polling:** District level polling, adjusted by [pollster
-    rating](https://projects.fivethirtyeight.com/pollster-ratings/)
-2.  **CANTOR:** polling imputation for districts without any
+    rating](https://projects.fivethirtyeight.com/pollster-ratings/).
+2.  **CANTOR:** polling imputation for districts without any.
 3.  **Fundamentals:** Historically useful non-polling factors:
-      - Scandals
-      - Incumbency
-      - Fundraising
-      - Partisanship
-      - Generic ballot
-      - Previous margin
-      - Incumbent voting
       - Challenger office
+      - Incumbent voting
+      - Previous margin
+      - Generic ballot
+      - Partisanship
+      - Fundraising
+      - Incumbency
+      - Scandals
 
-From this data, the model (**1**) calculates the most likely split of
-the vote in a race. (**2**) The probability distribution around this
-mean is calculated using proven variables of uncertainty.
+From this data, the model calculates (1) the most likely split of the
+vote in a race, and (2) the probability distribution around this mean
+given proven variables of uncertainty.
 
-The model runs [Monte Carlo
-simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method), drawing
-elections from the race’s probability distribution. The percentage of
-simulated elections won represents the probability of victory.
-
-FiveThirtyEight publishes two files with top-level daily
-    predictions:
+FiveThirtyEight publishes two files with top-level daily predictions:
 
 1.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
 2.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
 
-Together, there are **110,000** daily prediction from the “classic”
-model with **11** variables:
+Together, there are 110,404 daily “classic” model prediction, from 470
+races, with 13 variables:
 
 1.  Date
 2.  State
@@ -129,43 +106,38 @@ model with **11** variables:
 10. Minimum share
 11. Maximum share
 
-<!-- end list -->
+| forecastdate | state | district | party | share |   prob |
+| :----------- | :---- | -------: | :---- | ----: | -----: |
+| 2018-08-23   | FL    |        7 | R     | 41.23 | 0.0197 |
+| 2018-09-24   | PA    |        7 | R     | 42.90 | 0.0631 |
+| 2018-10-03   | CA    |       28 | D     | 81.15 | 1.0000 |
+| 2018-10-26   | OR    |        3 | D     | 83.36 | 1.0000 |
+| 2018-09-08   | IL    |        4 | D     | 85.09 | 1.0000 |
+| 2018-09-13   | NY    |       25 | D     | 63.22 | 0.9995 |
+| 2018-11-02   | TX    |       22 | R     | 51.64 | 0.8045 |
+| 2018-10-09   | IN    |        2 | R     | 56.63 | 0.9481 |
+| 2018-09-26   | IA    |        1 | R     | 41.71 | 0.0284 |
+| 2018-08-18   | NY    |        2 | D     | 44.65 | 0.1700 |
 
-``` r
-read_memento(
-    url = "https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv",
-    timestamp = "2018-11-06", 
-    as = "parsed"
-)
-```
-
-| Date       | State | District | Party | Incumbent | Probability | Vote Share |
-| :--------- | :---- | -------: | :---- | :-------- | ----------: | ---------: |
-| 2018-11-05 | AK    |        1 | R     | TRUE      |       0.648 |      51.42 |
-| 2018-11-05 | AK    |        1 | D     | FALSE     |       0.352 |      48.58 |
-| 2018-11-05 | AL    |        1 | R     | TRUE      |       1.000 |      65.91 |
-| 2018-11-05 | AL    |        1 | D     | FALSE     |       0.000 |      34.09 |
-| 2018-11-05 | AL    |        2 | R     | TRUE      |       0.978 |      57.93 |
-
-## Prediction Markets
+### Prediction Markets
 
 Prediction markets generate probabilistic forecasts by crowd-sourcing
 the collection of data from self-interested and risk averse traders.
-[The efficient market
-hypothesis](https://en.wikipedia.org/wiki/Efficient-market_hypothesis)
-holds that asset prices reflect *all* available information (including
-forecasting models).
+\[The efficient market hypothesis\]\[efm\] holds that asset prices
+reflect *all* available information (including forecasting models).
 
 [PredictIt](https://www.predictit.org/) is an exchange run by [Victoria
 University](https://www.victoria.ac.nz/) of Wellington, New Zealand. The
 site offers a continuous double-auction exchange, where traders buy and
 sell shares of futures contracts tied to election outcomes. As a
 trader’s perception of probabilities changes, they can sell owned
-shares. The market equilibrium price to updates to reflect probability.
+shares. The market equilibrium price then updates to reflect current
+probability.
 
 PredictIt provided the price history in
-[`data/DailyMarketData.csv`](data/DailyMarketData.csv). There are nearly
-**45,000** daily predictions from **112** races with **11** variables:
+[`data/raw/DailyMarketData.csv`](data/raw/DailyMarketData.csv).
+Together, there are 44,711 daily market prices, from 118 races, with 11
+variables:
 
 1.  Market ID
 2.  Market name
@@ -179,112 +151,64 @@ PredictIt provided the price history in
 10. **Closing contract price**
 11. Volume of shares traded
 
-<!-- end list -->
+| Date       | MarketSymbol          | ClosePrice | Volume |
+| :--------- | :-------------------- | ---------: | -----: |
+| 2018-03-01 | NY19.2018             |       0.60 |      2 |
+| 2017-08-23 | PELO.CA12.2018        |       0.87 |      0 |
+| 2017-05-16 | MANCHIN.WVSENATE.2018 |       0.69 |      0 |
+| 2018-09-19 | NY19.2018             |       0.41 |      0 |
+| 2018-05-09 | WI01.2018             |       0.56 |      0 |
+| 2017-12-12 | PARTY.MNSEN.18        |       0.80 |    510 |
+| 2018-06-18 | PA15.2018             |       0.90 |      2 |
+| 2018-06-25 | CASE.PASENATE.2018    |       0.84 |      0 |
+| 2018-04-24 | MI08.2018             |       0.44 |      0 |
+| 2017-12-11 | RYAN.WI01.2018        |       0.77 |    443 |
 
-``` r
-read_delim(
-  file = "data/DailyMarketData.csv",
-  delim = "|",
-  col_types = "cccccDddddd",
-  na = "n/a"
-)
-```
+## Compare
 
-| ID   | Market    | Contract      | Date       | Open | Close | Volume |
-| :--- | :-------- | :------------ | :--------- | ---: | ----: | -----: |
-| 5003 | AKAL.2018 | DEM.AKAL.2018 | 2018-11-05 | 0.42 |  0.28 |    237 |
-| 5003 | AKAL.2018 | GOP.AKAL.2018 | 2018-11-05 | 0.74 |  0.72 |    553 |
-| 4843 | AZ02.2018 | DEM.AZ02.2018 | 2018-11-05 | 0.91 |  0.98 |    662 |
-| 4843 | AZ02.2018 | GOP.AZ02.2018 | 2018-11-05 | 0.10 |  0.05 |    787 |
-| 3812 | AZSEN18   | DEM.AZSEN18   | 2018-11-05 | 0.47 |  0.46 |  34137 |
+The FiveThirtyEight model and PredictIt markets data sets were joined
+using the date and unique election code. The data was then pivoted to a
+long format, which allows us to compare each method against the ultimate
+binary results of the race.
 
-# Wrangle
+| date       | race  | method |  prob | pred  | winner | hit   | brier |
+| :--------- | :---- | :----- | ----: | :---- | :----- | :---- | ----: |
+| 2018-08-01 | AZ-S1 | market | 0.660 | TRUE  | TRUE   | TRUE  | 0.116 |
+| 2018-08-01 | AZ-S1 | model  | 0.738 | TRUE  | TRUE   | TRUE  | 0.069 |
+| 2018-08-01 | CA-12 | market | 0.910 | TRUE  | TRUE   | TRUE  | 0.008 |
+| 2018-08-01 | CA-12 | model  | 1.000 | TRUE  | TRUE   | TRUE  | 0.000 |
+| 2018-08-01 | CA-22 | market | 0.300 | FALSE | FALSE  | TRUE  | 0.090 |
+| 2018-08-01 | CA-22 | model  | 0.049 | FALSE | FALSE  | TRUE  | 0.002 |
+| 2018-08-01 | CA-25 | market | 0.610 | TRUE  | TRUE   | TRUE  | 0.152 |
+| 2018-08-01 | CA-25 | model  | 0.745 | TRUE  | TRUE   | TRUE  | 0.065 |
+| 2018-08-01 | CA-39 | market | 0.610 | TRUE  | TRUE   | TRUE  | 0.152 |
+| 2018-08-01 | CA-39 | model  | 0.377 | FALSE | TRUE   | FALSE | 0.388 |
 
-The above data sets were both formatted to contain key variables:
-`date`, `race` and `party`. These are used to join the two data sets for
-comparison.
+Here we can see how each each race was predicted by each method
+highlighted by the race results.
 
-Observations are gathered into a single
-[tidy](http://vita.had.co.nz/papers/tidy-data.html) data set, with each
-observation representing one prediction (on one day, for one party, from
-one source). Redundant complimentary predictions are then removed.
+![](plots/plot_cartesian.png)<!-- -->
 
-These predictions are compared against the election results to evaluate
-the two methods. There are **17,500** predictions across **90** days,
-for **111** races. from **2** sources.
+A probabalistic prediction should find that events with a 60%
+probability occur 60% of the time. Here we see how many of each method’s
+predictions occured that frequently. Predictions with a 60% probability
+that occured 85% of the time are underconfident.
 
-``` r
-inner_join(markets2, model2) %>%
-  filter(date %>% between(17744, 17840)) %>%
-  rename(model = prob, 
-         market = close) %>% 
-  gather(model, market, 
-         key = method, 
-         value = prob) %>%
-  inner_join(results) %>%
-  mutate(hit = (prob > 0.50) == winner) %>% 
-  mutate(score = (prob - winner)^2) 
-```
-
-| Date       | Race  | Party | Method | Probability | Correct | Score |
-| :--------- | :---- | :---- | :----- | ----------: | :------ | ----: |
-| 2018-08-01 | AZ-S1 | D     | market |       0.660 | TRUE    | 0.116 |
-| 2018-08-01 | AZ-S1 | D     | model  |       0.738 | TRUE    | 0.069 |
-| 2018-08-01 | CA-12 | D     | market |       0.910 | TRUE    | 0.008 |
-| 2018-08-01 | CA-12 | D     | model  |       1.000 | TRUE    | 0.000 |
-| 2018-08-01 | CA-22 | D     | market |       0.300 | TRUE    | 0.090 |
-| 2018-08-01 | CA-22 | D     | model  |       0.049 | TRUE    | 0.002 |
-| 2018-08-01 | CA-25 | D     | market |       0.610 | TRUE    | 0.152 |
-| 2018-08-01 | CA-25 | D     | model  |       0.745 | TRUE    | 0.065 |
-| 2018-08-01 | CA-39 | D     | market |       0.610 | TRUE    | 0.152 |
-| 2018-08-01 | CA-39 | D     | model  |       0.377 | FALSE   | 0.388 |
-
-# Explore
-
-![probabiliy distrobutions](plots/plot_distribution.png)
-
-![races by cartesian points](plots/plot_cartesian.png)
-
-![calibration plot](plots/plot_calibration.png)
-
-# Results
-
-There is a statistically significant difference between the proportion
-of accurate predictions made by the markets and the model.
-
-| Test statistic | df |      P value       | Alternative hypothesis |
-| :------------: | :-: | :----------------: | :--------------------: |
-|     16.79      | 1  | 4.166e-05 \* \* \* |       two.sided        |
-
-2-sample test for equality of proportions with continuity correction:
-`proportion` by `method` (continued below)
-
-| market proportion | model proportion |
-| :---------------: | :--------------: |
-|      0.8603       |      0.8381      |
-
-![accuracy by week](plots/plot_proportion.png)
-
-This is not the most useful test for predictive usefulness. The model is
-generally more confident in both correct and incorrect predictions. The
-markets are less likely to be wrong, but they are less confident when
-they are right.
-
-![confidence by week](plots/plot_confidence.png)
+![](plots/plot_calibration.png)<!-- -->
 
 [The Brier score](https://en.wikipedia.org/wiki/Brier_score) allows for
 probablistic forecasts to be meaningfully tested with mean squared
 error. Using this test, there is no statistically significant difference
 in the respective skill scores of each predictive method.
 
-| Test statistic |  df   | P value | Alternative hypothesis |
-| :------------: | :---: | :-----: | :--------------------: |
-|    \-0.339     | 16943 | 0.7346  |       two.sided        |
+| Test statistic |  df   |    P value     | Alternative hypothesis |
+| :------------: | :---: | :------------: | :--------------------: |
+|      3.14      | 13749 | 0.001691 \* \* |       two.sided        |
 
-Welch Two Sample t-test: `score` by `method` (continued below)
+Welch Two Sample t-test: `brier` by `method` (continued below)
 
 | mean in group market | mean in group model |
 | :------------------: | :-----------------: |
-|        0.1084        |       0.1091        |
+|        0.1172        |       0.1095        |
 
-![score by week](plots/plot_brier.png)
+![](plots/plot_brier.png)<!-- -->

@@ -118,7 +118,7 @@ hits %>%
   summarise(prob = mean(prob), n = n()) %>%
   arrange(pred, winner)
 
-compare <- mutate(hits, brier_score = raise_to_power(winner - prob, 2))
+compare <- mutate(hits, brier = round((winner - prob)^2, 4))
 
 # save text file
 write_csv(
@@ -130,6 +130,6 @@ write_csv(
 # run a brier score t-test
 # p-value = 0.001691
 test_brier <- t.test(
-  formula = brier_score ~ method,
+  formula = brier ~ method,
   data = compare
 )

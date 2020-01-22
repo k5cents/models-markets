@@ -11,10 +11,11 @@
 #   "lubridate", # managing dates
 #   "magrittr", # pipe utilities
 #   "ggplot2", # visualization
-#   "scales" # string formatting
+#   "stringr" # string manipulation
 #   "readr", # reading flat files
 #   "dplyr", # data manipulation
 #   "tidyr", # data reshaping
+#   "purrr", # functional programming
 #   "here", # relative storage
 #   "fs", # storage managment
 # ))
@@ -28,10 +29,11 @@ library(lubridate)
 library(magrittr)
 library(wayback)
 library(ggplot2)
-library(scale)
+library(stringr)
 library(readr)
 library(dplyr)
 library(tidyr)
+library(purrr)
 library(here)
 library(fs)
 

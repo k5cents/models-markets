@@ -1,11 +1,8 @@
-### Kiernan Nicholls
-### American University
-### Spring, 2020
-### Markets and Models
-### Generate exploratory visuals
-
-library(ggplot2)
-library(here)
+### kiernan nicholls
+### american university
+### spring, 2020
+### markets and models
+### create exploratory visuals
 
 color_model  <- "#ED713A" # 538 brand color
 color_market <- "#07A0BB" # PredictIt brand color

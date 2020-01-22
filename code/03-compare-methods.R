@@ -1,10 +1,10 @@
-### Kiernan Nicholls
-### American University
-### Spring, 2020
-### Markets and Models
-### Check predictions against election results
+### kiernan nicholls
+### american university
+### spring, 2020
+### markets and models
+### check predictions against results
 
-library(tidyverse)
+# isolate predictions ------------------------------------------------------------------------
 
 ## we only need probability for one candidate in each race
 ## some markets only have data on candidate from 1 party
@@ -53,6 +53,8 @@ model2 <- model %>%
   filter(party == "D") %>%
   select(-party)
 
+# join wide ----------------------------------------------------------------------------------
+
 # join democratic predictions from both markets and models for comparison
 # Keep market and model data in seperate columns
 messy <-
@@ -69,6 +71,8 @@ messy <-
     market = close
   )
 
+# pivot longer -------------------------------------------------------------------------------
+
 # make the data tidy with each prediction as an observation
 tidy <- messy %>%
   pivot_longer(
@@ -78,13 +82,15 @@ tidy <- messy %>%
   ) %>%
   arrange(date, race, method)
 
-# add in results to determine binary hits/misses
+# join results -------------------------------------------------------------------------------
 
 hits <- tidy %>%
   mutate(pred = prob > 0.5) %>%
   inner_join(results, by = "race") %>%
   mutate(hit = pred == winner) %>%
   select(date, race, method, prob, pred, winner, hit)
+
+# statistical tests --------------------------------------------------------------------------
 
 # run a welch two sample t-test
 # p-value = 0.001691

@@ -1,12 +1,8 @@
-### Kiernan Nicholls
-### American University
-### Spring, 2020
-### Markets and Models
-### Format input data for joins and comparisons
-
-library(tidyverse)
-library(magrittr)
-library(lubridate)
+### kiernan nicholls
+### american university
+### spring, 2020
+### markets and models
+### format input data for joins
 
 # format member list ------------------------------------------------------
 

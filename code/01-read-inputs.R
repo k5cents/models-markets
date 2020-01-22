@@ -1,14 +1,8 @@
-### Kiernan Nicholls
-### American University
-### Spring, 2020
-### Markets and Models
-### Save and read raw input data
-
-# remotes::install_github("hrbrmstr/wayback")
-library(wayback)
-library(tidyverse)
-library(here)
-library(fs)
+### kiernan nicholls
+### american university
+### spring, 2020
+### markets and models
+### save and read raw input data
 
 # read market data from https://www.predictit.org/ ------------------------
 
@@ -46,15 +40,6 @@ Contract_NY27 <- read_csv(
 
 # save member data from https://theunitedstates.io/ -----------------------
 # for every file, save raw and read parsed
-
-write_memento <- function(url, date, dir) {
-  path <- here::here("data", "raw", dir, basename(url))
-  if (!fs::file_exists(path)) {
-    data <- wayback::read_memento(url, date, as = "text")
-    fs::dir_create(dirname(path))
-    readr::write_lines(data, path)
-  }
-}
 
 ## Current members of the 115th
 ## Archived: 2018-10-22 at 18:11

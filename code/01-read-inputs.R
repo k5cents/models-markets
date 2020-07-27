@@ -80,7 +80,7 @@ write_memento(
 )
 
 sponsorshipanalysis_s <- read_csv(
-  file = here("data", "raw", "members", "sponsorshipanalysis_h.txt"),
+  file = here("data", "raw", "members", "sponsorshipanalysis_s.txt"),
   col_types = cols(
     ID = col_character()
   )

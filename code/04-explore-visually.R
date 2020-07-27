@@ -8,6 +8,7 @@ color_model  <- "#ED713A" # 538 brand color
 color_market <- "#07A0BB" # PredictIt brand color
 color_blue   <- "royalblue3" # Democratic
 color_red    <- "red3" # Republican
+elect_date <- as_date("2018-11-06")
 
 # Distribution of original probabilities by method
 plot_distribution <-
@@ -181,12 +182,13 @@ ggsave(
 
 plot_brier <- hits %>%
   mutate(brier = (prob - winner)^2) %>%
-  mutate(week = week(date)) %>%
-  group_by(week, method) %>%
+  mutate(prior = week(date) - 45) %>%
+  group_by(prior, method) %>%
   summarise(mean = mean(brier, na.rm = TRUE)) %>%
-  ggplot(aes(x = week, y = mean, color = method)) +
+  ggplot(aes(x = prior, y = mean, color = method)) +
   geom_line(size = 2) +
   scale_color_manual(values = c(color_market, color_model)) +
+  scale_x_continuous(breaks = seq(-20, 0, by = 2), labels = abs) +
   theme(
     legend.position = "bottom",
     legend.key = element_blank()
@@ -194,8 +196,8 @@ plot_brier <- hits %>%
   labs(
     title = "Prediction Score",
     color = "Method",
-    y = "Mean Brier Score",
-    x = "Week of Year"
+    y = "Weekly Mean Brier Score",
+    x = "Weeks Until Election"
   )
 
 ggsave(

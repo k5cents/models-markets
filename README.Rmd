@@ -51,15 +51,10 @@ All public input data has been saved on the [internet archive][ia] and can be
 accessed through their wayback machine.
 
 Data manipulation is done using the R language and packages from the
-[`tidyverse`][tv] ecosystem.
+[tidyverse][tv] ecosystem.
 
 The R scripts in the [`/code`](/code) directory can be run in sequential order
-to reproduce the results. There are four scripts to perform four steps:
-
-1. Read archived data with `wayback` and `readr`
-2. Wrangle and format with `dplyr` and `tidyr`
-3. Evaluate predictions with `stats` and `verification`
-4. Communicate results with `ggplot2` and `rmarkdown`
+to reproduce the results.
 
 ## Data
 
@@ -89,7 +84,7 @@ The classic model incorporates three types of inputs, primarily direct and
 imputed polling as well as fundamentals factors like incumbency and the generic
 ballot.
 
-FiveThirtyEight publishes two files with top-level daily predictions:
+FiveThirtyEight publishes two files with daily top-level predictions:
 
 1. [`senate_seat_forecast.csv`][sf]
 2. [`house_district_forecast.csv`][hf]
@@ -164,8 +159,8 @@ kable(
     "Race",
     "Method",
     "Probability",
-    "Democrat?",
-    "Wins?",
+    "Dem. Favorite?",
+    "Won?",
     "Correct?",
     "Brier score"
   )

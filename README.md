@@ -29,16 +29,10 @@ archive](https://archive.org/) and can be accessed through their wayback
 machine.
 
 Data manipulation is done using the R language and packages from the
-[`tidyverse`](https://github.com/tidyverse/) ecosystem.
+[tidyverse](https://github.com/tidyverse/) ecosystem.
 
 The R scripts in the [`/code`](/code) directory can be run in sequential
-order to reproduce the results. There are four scripts to perform four
-steps:
-
-1.  Read archived data with `wayback` and `readr`
-2.  Wrangle and format with `dplyr` and `tidyr`
-3.  Evaluate predictions with `stats` and `verification`
-4.  Communicate results with `ggplot2` and `rmarkdown`
+order to reproduce the results.
 
 ## Data
 
@@ -60,7 +54,7 @@ The classic model incorporates three types of inputs, primarily direct
 and imputed polling as well as fundamentals factors like incumbency and
 the generic ballot.
 
-FiveThirtyEight publishes two files with top-level daily predictions:
+FiveThirtyEight publishes two files with daily top-level predictions:
 
 1.  [`senate_seat_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/senate_seat_forecast.csv)
 2.  [`house_district_forecast.csv`](https://projects.fivethirtyeight.com/congress-model-2018/house_district_forecast.csv)
@@ -97,18 +91,18 @@ using the date and a unique race code. The data was then pivoted to a
 long format, which allows us to compare each method against the ultimate
 binary results of the race.
 
-| Date       | Race  | Method | Probability | Democrat? | Wins? | Correct? | Brier score |
-| :--------- | :---- | :----- | ----------: | :-------: | :---: | :------: | ----------: |
-| 2018-08-01 | AZ-S1 | market |       0.660 |   TRUE    | TRUE  |   TRUE   |       0.116 |
-| 2018-08-01 | AZ-S1 | model  |       0.738 |   TRUE    | TRUE  |   TRUE   |       0.069 |
-| 2018-08-01 | CA-12 | market |       0.910 |   TRUE    | TRUE  |   TRUE   |       0.008 |
-| 2018-08-01 | CA-12 | model  |       1.000 |   TRUE    | TRUE  |   TRUE   |       0.000 |
-| 2018-08-01 | CA-22 | market |       0.300 |   FALSE   | FALSE |   TRUE   |       0.090 |
-| 2018-08-01 | CA-22 | model  |       0.049 |   FALSE   | FALSE |   TRUE   |       0.002 |
-| 2018-08-01 | CA-25 | market |       0.610 |   TRUE    | TRUE  |   TRUE   |       0.152 |
-| 2018-08-01 | CA-25 | model  |       0.745 |   TRUE    | TRUE  |   TRUE   |       0.065 |
-| 2018-08-01 | CA-39 | market |       0.610 |   TRUE    | TRUE  |   TRUE   |       0.152 |
-| 2018-08-01 | CA-39 | model  |       0.377 |   FALSE   | TRUE  |  FALSE   |       0.388 |
+| Date       | Race  | Method | Probability | Dem. Favorite? | Won?  | Correct? | Brier score |
+| :--------- | :---- | :----- | ----------: | :------------: | :---: | :------: | ----------: |
+| 2018-08-01 | AZ-S1 | market |       0.660 |      TRUE      | TRUE  |   TRUE   |       0.116 |
+| 2018-08-01 | AZ-S1 | model  |       0.738 |      TRUE      | TRUE  |   TRUE   |       0.069 |
+| 2018-08-01 | CA-12 | market |       0.910 |      TRUE      | TRUE  |   TRUE   |       0.008 |
+| 2018-08-01 | CA-12 | model  |       1.000 |      TRUE      | TRUE  |   TRUE   |       0.000 |
+| 2018-08-01 | CA-22 | market |       0.300 |     FALSE      | FALSE |   TRUE   |       0.090 |
+| 2018-08-01 | CA-22 | model  |       0.049 |     FALSE      | FALSE |   TRUE   |       0.002 |
+| 2018-08-01 | CA-25 | market |       0.610 |      TRUE      | TRUE  |   TRUE   |       0.152 |
+| 2018-08-01 | CA-25 | model  |       0.745 |      TRUE      | TRUE  |   TRUE   |       0.065 |
+| 2018-08-01 | CA-39 | market |       0.610 |      TRUE      | TRUE  |   TRUE   |       0.152 |
+| 2018-08-01 | CA-39 | model  |       0.377 |     FALSE      | TRUE  |  FALSE   |       0.388 |
 
 Here we can see how each each race was predicted by each method,
 highlighted by the race results.
